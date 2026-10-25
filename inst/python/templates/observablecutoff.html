@@ -1,0 +1,99 @@
+<div id="__ROOT__" class="cpj-observable">
+<style>
+#__ROOT__{font:14px system-ui,sans-serif;line-height:1.5;color:inherit;max-width:1100px}
+#__ROOT__ *{box-sizing:border-box}#__ROOT__ h3,#__ROOT__ h4{margin:.5em 0}
+#__ROOT__ .intro,#__ROOT__ .status,#__ROOT__ .snapshot{padding:12px;border:1px solid #8886;border-radius:6px;margin:10px 0}
+#__ROOT__ .controls{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+#__ROOT__ .plots{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:12px}
+#__ROOT__ .plot-box{min-width:0}#__ROOT__ .plot-box svg{max-width:100%;height:auto}
+#__ROOT__ .cards{display:flex;gap:20px;flex-wrap:wrap;margin:8px 0;font-variant-numeric:tabular-nums}
+#__ROOT__ .detail{min-height:2em}#__ROOT__ :focus-visible{outline:2px solid #3975b8;outline-offset:3px}
+#__ROOT__ .inputs-3a86ea{color:inherit;--input-width:260px;--label-width:150px}
+#__ROOT__ .inputs-3a86ea input,#__ROOT__ .inputs-3a86ea select,#__ROOT__ .inputs-3a86ea button{color:inherit;background:transparent}
+#__ROOT__ .row-table{max-height:330px;overflow:auto}
+@media(max-width:750px){#__ROOT__ .plots{grid-template-columns:1fr}}
+</style>
+<header class="intro"><h3>Observable cutoff lab</h3><div class="scope"></div>
+<div>Python computes the statistics. Observable Plot and Inputs provide local display interaction.</div></header>
+<div class="controls"><div class="direction"></div><div class="criterion"></div></div>
+<div class="controls"><div class="cutoff"></div><div class="automatic"></div><div class="reset"></div><div class="apply"></div></div>
+<div class="status" role="status" aria-live="polite"></div><div class="cards"></div>
+<div class="optimum"></div><div class="detail" role="status" aria-live="polite"></div>
+<div class="plots"><section class="plot-box"><h4>Measurements and cutoff</h4><div class="dots"></div></section>
+<section class="plot-box"><h4>Empirical ROC</h4><div class="roc"></div></section></div>
+<p>Drag the cutoff line or use the slider and numeric field. Focus the line and use arrow keys, Home or End.
+Hover for details; click a ROC point to preview its cutoff. Blue = correct, orange = error; selected rows have a black outline.</p>
+<section class="snapshot"><h4>Applied HTML snapshot</h4><div class="applied-label"></div><div class="snapshot-counts"></div><div class="snapshot-metrics"></div></section>
+<section><h4>Inspect original rows</h4><div class="search"></div><div class="row-count"></div><div class="row-table"></div></section>
+<p>Search and row selection change highlighting only; all complete rows remain in the analysis.
+Apply updates this HTML snapshot only. Native tables and exported images use saved jamovi options.
+Edit the native direction and cutoff options to persist a rule; recalculation and reopening restore those options.
+Confidence settings and FP/FN weights are set in jamovi. Fixed-cutoff intervals exclude selection uncertainty;
+AUC has no inferential interval. One independent observation per row; validate selected cutoffs separately.</p>
+<script>(()=>{
+'use strict';
+const root=document.getElementById('__ROOT__'),p=__PAYLOAD__;
+const {Plot,Inputs,d3}=window,$=s=>root.querySelector(s);
+if(!Plot||!Inputs||!d3)throw Error('Local Observable dependencies are unavailable.');
+const pct=v=>v===null?'—':d3.format('.1%')(v),fmt=v=>d3.format('.8~g')(v);
+const values=p.rows.map(r=>r.value),extent=d3.extent(values),span=Math.max(extent[1]-extent[0],Math.abs(extent[0])*.1,1);
+const domain=[Math.min(extent[0]-.14*span,p.initial,p.automatic),Math.max(extent[1]+.14*span,p.initial,p.automatic)];
+let current=p.initial,direction=p.direction,criterion=p.criterion,selected=new Set(),applied=null;
+const cutoff=Inputs.range(domain,{label:'Preview cutoff',value:current,format:value=>String(value),width:320});
+const directionInput=Inputs.select(new Map([['Measurement ≥ cutoff','ge'],['Measurement ≤ cutoff','le']]),{label:'Positive test rule',value:direction});
+const criterionInput=Inputs.select(new Map([['Fewest errors','errors'],['Maximum Youden index','youden'],['Weighted errors','cost']]),{label:'Automatic criterion',value:criterion});
+$('.cutoff').append(cutoff);$('.direction').append(directionInput);$('.criterion').append(criterionInput);
+$('.scope').textContent=`N = ${p.rows.length}; ${p.excluded} rows excluded. ${p.confidence}% ${p.method} intervals. FP weight ${p.fpCost}; FN weight ${p.fnCost}. Libraries bundled locally.`;
+function state(cut=current,dir=direction){const pts=p.curves[dir].points;let lo=0,hi=pts.length;
+while(lo<hi){const mid=(lo+hi)>>>1;if(dir==='ge'?pts[mid].cutoff<cut:pts[mid].cutoff<=cut)lo=mid+1;else hi=mid;}
+return pts[Math.max(0,Math.min(pts.length-1,dir==='ge'?lo:lo-1))];}
+function optimum(){const curve=p.curves[direction],opt=curve.optima[criterion];return {point:curve.points[opt.point],ties:opt.ties};}
+for(const key of Object.keys(p.expected))if(state()[key]!==p.expected[key])throw Error('Initial empirical state does not match Python.');
+function setCut(value){if(!Number.isFinite(value))return;current=Math.max(domain[0],Math.min(domain[1],value));cutoff.value=current;render();}
+function drawPlots(){const point=state(),best=optimum().point;
+const display=p.rows.map((r,i)=>({...r,x:(r.positive?1:0)+((i*17%29)/28-.5)*.25,correct:(direction==='ge'?r.value>=current:r.value<=current)===r.positive}));
+const dots=Plot.plot({width:600,height:410,marginLeft:65,marginBottom:65,
+ariaLabel:'Observable measurements and cutoff',style:{background:'transparent',color:'inherit'},
+x:{domain:[-.35,1.35],ticks:[0,1],tickFormat:v=>v===1?p.positive:p.negative,label:'Reference classification'},
+y:{domain,label:p.measurement,grid:true},marks:[
+Plot.dot(display,{x:'x',y:'value',fill:r=>r.correct?'#3975b8':'#df852d',stroke:r=>selected.has(r.row)?'currentColor':'none',strokeWidth:2,r:4,tip:true,title:r=>`Row ${r.row}\n${p.measurement}: ${fmt(r.value)}\nReference: ${r.positive?p.positive:p.negative}\n${r.correct?'Correct':'Error'}`}),
+Plot.ruleY([current],{stroke:'#3975b8',strokeDasharray:'5,4'}),
+Plot.ruleY([current],{stroke:'transparent',strokeWidth:18,ariaLabel:'Draggable cutoff'})]});
+const handle=dots.querySelector('g[aria-label="rule"][stroke="transparent"]');
+if(handle){handle.style.cursor='ns-resize';handle.setAttribute('tabindex','0');handle.setAttribute('role','slider');handle.setAttribute('aria-label','Draggable cutoff');handle.setAttribute('aria-valuemin',domain[0]);handle.setAttribute('aria-valuemax',domain[1]);handle.setAttribute('aria-valuenow',current);
+handle.addEventListener('keydown',event=>{let value=current;if(event.key==='ArrowUp'||event.key==='ArrowDown')value+=(event.key==='ArrowUp'?1:-1)*span/100*(event.shiftKey?10:1);else if(event.key==='Home')value=domain[0];else if(event.key==='End')value=domain[1];else return;event.preventDefault();setCut(value);$('.dots [role="slider"]')?.focus();});
+d3.select(handle).call(d3.drag().container(()=>dots).subject(()=>({x:0,y:dots.scale('y').apply(current)})).on('drag',event=>setCut(dots.scale('y').invert(event.y))));}
+$('.dots').replaceChildren(dots);
+const points=[...p.curves[direction].points].sort((a,b)=>a.fpr-b.fpr||a.tpr-b.tpr);
+const roc=Plot.plot({width:440,height:410,marginLeft:65,marginBottom:65,ariaLabel:'Observable empirical ROC',style:{background:'transparent',color:'inherit'},
+x:{domain:[0,1],label:'False positive rate',grid:true},y:{domain:[0,1],label:'Sensitivity',grid:true},marks:[
+Plot.line([{fpr:0,tpr:0},{fpr:1,tpr:1}],{x:'fpr',y:'tpr',stroke:'#888',strokeDasharray:'4,4'}),
+Plot.line(points,{x:'fpr',y:'tpr',stroke:'#3975b8',strokeWidth:2}),
+Plot.dot([best],{x:'fpr',y:'tpr',fill:'#b83a48',r:8,title:`Optimal cutoff ${fmt(best.cutoff)}`}),
+Plot.dot([point],{x:'fpr',y:'tpr',fill:'#df852d',stroke:'white',r:5}),
+Plot.dot(points,Plot.pointer({x:'fpr',y:'tpr',r:4,fill:'currentColor',maxRadius:Infinity})),
+Plot.crosshair(points,{x:'fpr',y:'tpr'})]});
+roc.addEventListener('input',()=>{const item=roc.value;if(item)$('.detail').textContent=`ROC inspection: cutoff ${fmt(item.cutoff)}; sensitivity ${pct(item.tpr)}; specificity ${pct(item.metrics[1][0])}. Click to preview.`;});
+roc.addEventListener('click',()=>{const item=roc.value;if(item&&Number.isFinite(item.cutoff))setCut(item.cutoff);});
+$('.roc').replaceChildren(roc);
+}
+function render(){const c=state(),opt=optimum(),same=applied&&applied.cutoff===current&&applied.direction===direction;
+$('.status').textContent=`${same?'Applied HTML snapshot.':'Preview only — snapshot unchanged.'} Cutoff ${fmt(current)}; TP ${c.tp} · FP ${c.fp} · FN ${c.fn} · TN ${c.tn}. Native results use saved jamovi options.`;
+$('.cards').replaceChildren(...p.metricNames.map((name,i)=>{const item=document.createElement('span');item.textContent=`${name}: ${pct(c.metrics[i][0])}`;return item;}));
+$('.optimum').textContent=`AUC ${d3.format('.3f')(p.curves[direction].auc)} · Youden J ${d3.format('.3f')(c.youden)} · Weighted errors ${fmt(c.cost)} · Automatic cutoff ${fmt(opt.point.cutoff)} (${opt.ties} tied boundaries; lowest numeric cutoff).`;
+drawPlots();}
+function apply(){const c=state();applied={cutoff:current,direction};$('.applied-label').textContent=`Local snapshot: ${p.measurement} ${direction==='ge'?'≥':'≤'} ${fmt(current)}. Reopening restores saved jamovi options.`;
+$('.snapshot-counts').replaceChildren(Inputs.table([{TP:c.tp,FP:c.fp,FN:c.fn,TN:c.tn}],{select:false,rows:1,maxHeight:null}));
+$('.snapshot-metrics').replaceChildren(Inputs.table(p.metricNames.map((name,i)=>({Metric:name,Estimate:pct(c.metrics[i][0]),Lower:pct(c.metrics[i][1]),Upper:pct(c.metrics[i][2])})),{select:false,rows:5,maxHeight:null}));render();}
+$('.automatic').append(Inputs.button('Automatic cutoff',{reduce:()=>{setCut(optimum().point.cutoff);}}));
+$('.apply').append(Inputs.button('Apply to HTML tables',{reduce:apply}));
+$('.reset').append(Inputs.button('Reset explorer',{reduce:()=>{direction=p.direction;criterion=p.criterion;directionInput.value=direction;criterionInput.value=criterion;selected.clear();const text=search.querySelector('input');text.value='';text.dispatchEvent(new Event('input',{bubbles:true}));setCut(p.initial);apply();}}));
+cutoff.addEventListener('input',()=>setCut(cutoff.value));
+directionInput.addEventListener('input',()=>{direction=directionInput.value;render();});
+criterionInput.addEventListener('input',()=>{criterion=criterionInput.value;render();});
+const search=Inputs.search(p.rows,{label:'Original row search',columns:['row'],placeholder:'Original row ID'});$('.search').append(search);
+function showRows(){const visible=search.value;selected.clear();$('.row-count').textContent=`${visible.length} of ${p.rows.length} complete rows shown; search changes display only.`;
+const table=Inputs.table(visible,{columns:['row','value','positive'],header:{row:'Original row',value:p.measurement,positive:'Reference positive'},required:false,rows:7,value:[]});
+table.addEventListener('input',()=>{selected=new Set(table.value.map(r=>r.row));drawPlots();});$('.row-table').replaceChildren(table);}
+search.addEventListener('input',()=>{showRows();drawPlots();});showRows();apply();
+})();</script></div>

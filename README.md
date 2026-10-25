@@ -5,7 +5,7 @@ analysis: a literal `SPEC` (options, results and organized UI) plus a `run()` fu
 into the jamovi files, and the statistics run in **the Python bundled with jamovi** (numpy, scipy),
 so users install nothing.
 
-Status: experimental, 0.3.3 (descriptive ports; full migration remains incomplete). Verified only on jamovi 28.13 for macOS (Apple Silicon), with
+Status: experimental, 0.3.5 (descriptive ports; full migration remains incomplete). Verified only on jamovi 28.13 for macOS (Apple Silicon), with
 jmvtools 28.4.
 
 | Analysis | What it does | Checked against |
@@ -26,7 +26,7 @@ Open **Data Library > ClinicoPathPj > Python Core Examples**, or import
 `data/python_core_examples.csv`, for the synthetic examples.
 
 Build the single standard module without installing it:
-`Rscript --vanilla tools/build.R --build-only` → `ClinicoPathPj_0.3.3.jmo`.
+`Rscript --vanilla tools/build.R --build-only` → `ClinicoPathPj_0.3.5.jmo`.
 After replacing a loaded development build, use a fresh jamovi engine to avoid stale namespaces.
 
 `pywelch` reports the mean difference as *comparison minus reference*. The reference defaults to
@@ -37,6 +37,20 @@ p and the interval empty, as R's `t.test` refuses such data. scipy would report 
 `pyexacttests` defaults the reference group to the first level, the orientation of
 `fisher.test(table(group, outcome))`. Its odds ratio then equals jamovi's Contingency Tables odds
 ratio when the event is the outcome's second level, and is the reciprocal when it is the first.
+
+## Observable comparison in 0.3.5
+
+`pyobservablecutoff` adds locally bundled Observable Plot and Inputs, including linked
+cutoff/ROC views, crosshairs, tooltips and searchable row highlighting. It shares the
+Python workflow with `pyd3cutoff`, preserving native results for direct comparison.
+See [the three-way comparison and usage guide](docs/python-observable-cutoff.md).
+
+## Separate cutoff experiment in 0.3.4
+
+`pyd3cutoff` adds linked D3 dotplot/ROC exploration with Python-computed threshold
+results, three optimization criteria, exact/Wilson intervals and native static plots.
+Apply updates a local HTML snapshot; saved jamovi options control native results.
+The existing dotplot remains available. See [comparison and example](docs/python-d3-cutoff.md).
 
 ## New descriptive analyses in 0.3.1
 

@@ -2368,6 +2368,30 @@
       "coverage": {
         "full_parity": false
       }
+    },
+    {
+      "id": "pyd3cutoff",
+      "family": "meddecide",
+      "menu": "Medical Decisions",
+      "title": "Experimental D3 Cutoff and ROC Explorer (Python)",
+      "aliases": [],
+      "source": "analyses/meddecide/pyd3cutoff.py",
+      "status": "utility",
+      "coverage": {
+        "full_parity": false
+      }
+    },
+    {
+      "id": "pyobservablecutoff",
+      "family": "meddecide",
+      "menu": "Medical Decisions",
+      "title": "Experimental Observable Cutoff and ROC Explorer (Python)",
+      "aliases": [],
+      "source": "analyses/meddecide/pyobservablecutoff.py",
+      "status": "utility",
+      "coverage": {
+        "full_parity": false
+      }
     }
   ]
 }

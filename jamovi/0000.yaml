@@ -1,7 +1,7 @@
 ---
 title: ClinicoPathPj - Python-Backed Analyses
 name: ClinicoPathPj
-version: 0.3.3
+version: 0.3.5
 jms: '1.0'
 authors: Serdar Balci
 maintainer: Serdar Balci <serdarbalci@serdarbalci.com>
@@ -172,6 +172,22 @@ analyses:
     menuGroup: ClinicoPathPj
     menuSubgroup: Descriptives
     menuTitle: Multi-Variable Visual Quality
+  - name: pyd3cutoff
+    ns: ClinicoPathPj
+    hidden: false
+    title: Experimental D3 Cutoff and ROC Explorer (Python)
+    category: analyses
+    menuGroup: ClinicoPathPj
+    menuSubgroup: Medical Decisions
+    menuTitle: Experimental D3 Cutoff and ROC Explorer (Python)
+  - name: pyobservablecutoff
+    ns: ClinicoPathPj
+    hidden: false
+    title: Experimental Observable Cutoff and ROC Explorer (Python)
+    category: analyses
+    menuGroup: ClinicoPathPj
+    menuSubgroup: Medical Decisions
+    menuTitle: Experimental Observable Cutoff and ROC Explorer (Python)
 usesNative: 'yes'
 datasets:
   - name: Python Core Examples

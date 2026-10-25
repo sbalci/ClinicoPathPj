@@ -14,7 +14,7 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parent.parent
 VERSION=re.search(r'^Version: (.+)$',(ROOT/'DESCRIPTION').read_text(),re.M)[1]
 REGISTRY=json.loads((ROOT/'inst/python/registry.json').read_text())
-NAMES=['pydecision','pydecisioncalculator','pysequentialtests','pychisqposttest','pybenford','pydecisioncurve','pysummarydata','pycategorize','pyagepyramid','pydataquality']
+NAMES=['pyobservablecutoff','pyd3cutoff','pydecision','pydecisioncalculator','pysequentialtests','pychisqposttest','pybenford','pydecisioncurve','pysummarydata','pycategorize','pyagepyramid','pydataquality']
 
 
 def numeric(x):return dict(kind='number',values=x)
@@ -40,12 +40,14 @@ def check(path):
                 member='ClinicoPathPj/R/ClinicoPathPj/python/'+entry['source']
                 assert archive.read(member)==(ROOT/'inst/python'/entry['source']).read_bytes()
                 assert f"name: {entry['id']}\n" in manifest
-            for file in ['cpj_runtime.py','cpj_accuracy.py','cpj_registry.py','cpj_plots.py','cpj_descriptive.py','cpj_binning.py','cpj_demographics.py','cpj_quality.py','templates/quality.html','registry.json','font-cache.json']:
+            for file in ['cpj_runtime.py','cpj_accuracy.py','cpj_registry.py','cpj_plots.py','cpj_descriptive.py','cpj_binning.py','cpj_demographics.py','cpj_quality.py','templates/quality.html','cpj_cutoff.py','cpj_cutoff_analysis.py','templates/d3cutoff.html','templates/observablecutoff.html','vendor/observable-plot-0.6.17.min.js','vendor/observable-inputs-0.12.0.min.js','vendor/htl-0.3.1.min.js','vendor/observable-plot-LICENSE.txt','vendor/observable-inputs-LICENSE.txt','vendor/htl-LICENSE.txt','vendor/observable-manifest.json','vendor/d3-7.9.0.min.js','vendor/d3-LICENSE.txt','registry.json','font-cache.json']:
                 assert archive.read(f'ClinicoPathPj/R/ClinicoPathPj/python/{file}')==(ROOT/'inst/python'/file).read_bytes()
             assert archive.read('ClinicoPathPj/data/python_core_examples.omv')==(ROOT/'data/python_core_examples.omv').read_bytes()
             archive.extractall(temp)
         runtime=temp/'ClinicoPathPj/R/ClinicoPathPj/python/cpj_runtime.py'
-        cases=[('pydataquality',{'x':numeric([1,1,None]),'g':factor(['A','A','B'])},dict(vars=['x','g'],check_missing=True,check_duplicates=True,row_level_duplicates=True,showInteractive=True)),
+        cases=[('pyobservablecutoff',{'x':numeric([1,2,2,4,5,6]),'g':factor(['N','N','P','N','P','P'])},dict(marker='x',reference='g',positive='P',cutoff='2')),
+          ('pyd3cutoff',{'x':numeric([1,2,2,4,5,6]),'g':factor(['N','N','P','N','P','P'])},dict(marker='x',reference='g',positive='P',cutoff='2')),
+          ('pydataquality',{'x':numeric([1,1,None]),'g':factor(['A','A','B'])},dict(vars=['x','g'],check_missing=True,check_duplicates=True,row_level_duplicates=True,showInteractive=True)),
           ('pyagepyramid',{'a':numeric([0,5,65,85]),'g':factor(['F','M','F','M'])},dict(age='a',gender='g',female='F',male='M',age_groups='who')),
           ('pysummarydata',{'x':numeric([1,2,3,4,100])},dict(vars=['x'],distr=True,outliers=True)),
           ('pycategorize',{'x':numeric([1,2,3,4,100])},dict(var='x',method='quantile',nbins=4)),

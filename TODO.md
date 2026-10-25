@@ -1,3 +1,29 @@
+# Observable cutoff comparison — 0.3.5
+
+- [x] Add pyobservablecutoff under the same module and Medical Decisions menu.
+- [x] Share the Python cutoff workflow and preserve existing native result contracts.
+- [x] Bundle pinned local Plot, Inputs and htl assets with licenses.
+- [x] Check numeric/automatic results, missingness, undefined values, payload bounds and script escaping.
+- [x] Exercise real Observable libraries in an offline DOM harness.
+- [x] Pass 204 Python tests, 569 R expectations and twelve packaged runtimes.
+- [x] Verify GUI numeric preview, drag, ROC selection, row search/highlighting and HTML-only Apply.
+- [x] Save the three-way comparison and export the native ROC PNG.
+- [x] Complete final table-layout correction and fresh-engine reopen checks.
+- [ ] Gather three-way user feedback and qualify larger GUI payloads/additional platforms.
+
+# Separate D3 cutoff experiment — 0.3.4
+
+- [x] Add pyd3cutoff beside the existing dotplot, using the same isolated Python bridge.
+- [x] Precompute counts, exact/Wilson intervals, empirical AUC and three optimum criteria in Python.
+- [x] Bundle local D3 with license; add organized native controls, tables and static plots.
+- [x] Validate tied boundaries, rank AUC, R intervals and agreement with the existing dotplot.
+- [x] Verify numeric preview, line drag, ROC click and HTML-only Apply in jamovi.
+- [x] Save/reopen with a fresh engine and export the native ROC PNG.
+- [x] Pass 199 Python tests, 526 full-suite R expectations and 27 focused R expectations.
+- [x] Add a reproducible teaching CSV and a comparison guide.
+- [ ] Gather user comparison feedback; qualify large-data UI performance and additional platforms.
+- [ ] A public Pj background-service integration remains exploratory and is not used here.
+
 # Visual data-quality port — 0.3.3
 
 - [x] Implement pydataquality full-data missingness and duplicate accounting with native tables.

@@ -1,0 +1,144 @@
+<!-- Adapted from Maurizio Agosti, 52_d3_cutoff_explorer.py (2026-10-25). Python threshold-state lookup variant. -->
+
+<div id="__ROOT__" class="mzpj-cutoff">
+<style>
+#__ROOT__{position:relative;font:14px system-ui,sans-serif;background:white;color:#334155;max-width:1080px;line-height:1.5;--blue:#3e6da9;--orange:#e78b38}
+#__ROOT__ *{box-sizing:border-box}#__ROOT__ .hero{border-top:3px solid var(--blue);background:linear-gradient(110deg,#edf4fd,#fff 80%);padding:16px 18px;border-radius:8px}
+#__ROOT__ .eyebrow{font-size:10px;letter-spacing:1.6px;font-weight:700;color:var(--blue)}#__ROOT__ h3{color:var(--blue);margin:3px 0 7px;font-size:20px}
+#__ROOT__ .subtle{color:#64748b;font-size:12px}#__ROOT__ .toolbar{display:flex;gap:12px;align-items:end;flex-wrap:wrap;padding:12px 0}
+#__ROOT__ label.field{display:flex;flex-direction:column;gap:4px;font-size:11px;font-weight:600;color:#64748b}
+#__ROOT__ input,#__ROOT__ select,#__ROOT__ button{font:13px system-ui,sans-serif;border:1px solid #b8cce5;border-radius:6px;padding:7px 10px;background:white;color:#334155}
+#__ROOT__ input.cutoff{width:168px}#__ROOT__ input.cost{width:70px}#__ROOT__ button{cursor:pointer;color:var(--blue)}#__ROOT__ button:hover{background:#edf4fc}
+#__ROOT__ .auto{background:var(--blue);color:white}#__ROOT__ .auto:hover{background:#31598d}
+#__ROOT__ :focus-visible{outline:2px solid var(--blue);outline-offset:3px}#__ROOT__ .status{min-height:24px;color:var(--blue);font-size:12px}
+#__ROOT__ .cards{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin:8px 0 4px}
+#__ROOT__ .card{background:#f2f6fb;border-radius:7px;padding:8px 12px;border-bottom:2px solid #d9e6f7}#__ROOT__ .card strong{display:block;font-size:23px;color:var(--blue);font-variant-numeric:tabular-nums}
+#__ROOT__ .card span{font-size:11px;color:#64748b}#__ROOT__ .summary{font-variant-numeric:tabular-nums;font-size:12px;color:#64748b;margin:5px 0}
+#__ROOT__ .plot-grid{display:grid;grid-template-columns:minmax(0,1.8fr) minmax(0,1fr);gap:14px}
+#__ROOT__ .plot-panel{border:1px solid #e1e9f3;border-radius:9px;padding:10px 6px;background:white;min-width:0}
+#__ROOT__ h4{font-size:12px;color:#475569;margin:0 8px 4px}#__ROOT__ svg{width:100%;height:auto;display:block}
+#__ROOT__ svg.dots-plot{touch-action:pan-x}#__ROOT__ .grid .domain{display:none}#__ROOT__ .grid line{stroke:#e6edf5}
+#__ROOT__ .observations circle{transition:fill .18s,opacity .18s}#__ROOT__ .tip{min-height:44px;background:#f5f8fc;padding:9px 12px;border-left:3px solid var(--blue);margin-top:10px;font-size:12px}
+#__ROOT__ .plot-tools{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:8px 0;font-size:12px}
+#__ROOT__ .plot-tools label{display:flex;align-items:center;gap:6px}#__ROOT__ input[type=checkbox]{accent-color:var(--blue)}
+#__ROOT__ .roc-note{margin:4px 12px;font-size:11px;color:#64748b;min-height:34px}
+#__ROOT__ .optimum-tooltip{position:absolute;z-index:20;pointer-events:none;width:282px;max-width:calc(100% - 16px);padding:11px 13px;border-radius:8px;background:#fff7f7;border:1px solid #e8b9b9;border-left:4px solid #c63e45;color:#692d34;box-shadow:0 5px 18px #1e293b20;font-size:12px;white-space:pre-line;line-height:1.6}
+#__ROOT__ .panels{display:grid;grid-template-columns:1fr 1.5fr;gap:24px;margin-top:12px}
+#__ROOT__ table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums;font-size:12px}#__ROOT__ th,#__ROOT__ td{padding:6px 9px;text-align:right}
+#__ROOT__ th:first-child,#__ROOT__ td:first-child{text-align:left}#__ROOT__ thead{border-top:1px solid #64748b;border-bottom:1px solid #94a3b8}#__ROOT__ tbody{border-bottom:2px solid #64748b}
+#__ROOT__ tbody tr:nth-child(even){background:#f2f6fb}#__ROOT__ .applied{border-top:1px solid #d9e4f1;margin-top:16px;padding-top:10px}
+#__ROOT__ .applied h3{font-size:16px}#__ROOT__ .cost-fields[hidden]{display:none}
+@media(max-width:700px){#__ROOT__ .plot-grid,#__ROOT__ .panels{grid-template-columns:1fr}#__ROOT__ .cards{grid-template-columns:repeat(3,1fr)}}
+@media(prefers-reduced-motion:reduce){#__ROOT__ .observations circle{transition:none}}
+</style>
+<header class="hero"><div class="eyebrow">CLINICOPATHPJ · EXPERIMENTAL PYTHON × D3</div>
+<h3>Diagnostic decision lab</h3><div class="source subtle"></div></header>
+<div class="toolbar">
+<label class="field">Positive test rule<select class="direction"><option value="ge">Measurement ≥ cutoff</option><option value="le">Measurement ≤ cutoff</option></select></label>
+<label class="field">Automatic criterion<select class="criterion"><option value="errors">Fewest errors · FP + FN</option><option value="youden">Maximize Youden J</option><option value="cost">Minimum weighted error cost</option></select></label>
+<label class="field cost-fields" hidden>FP cost<input class="cost fp-cost" type="number" value="1" readonly></label>
+<label class="field cost-fields" hidden>FN cost<input class="cost fn-cost" type="number" value="4" readonly></label>
+<button class="auto" type="button">Automatic cutoff</button><button class="reset" type="button">Reset lab</button>
+</div>
+<div class="toolbar" style="padding-top:0"><label class="field">Preview cutoff<input class="cutoff" type="number" aria-label="Preview cutoff"></label>
+<button class="apply" type="button">Apply to HTML tables</button><span class="optimization subtle"></span></div>
+<div class="status" role="status" aria-live="polite"></div><div class="cards"></div><div class="summary"></div>
+<div class="plot-tools"><span>Blue: correct · Orange: error · Shaded region: test positive</span><label><input class="errors-only" type="checkbox">Show errors only</label></div>
+<div class="plot-grid">
+<section class="plot-panel"><h4>Observed measurements · drag the threshold</h4><svg class="dots-plot" viewBox="0 0 630 420" role="img" aria-label="Measurements by reference group and draggable threshold"></svg></section>
+<section class="plot-panel"><h4>Empirical ROC · select an operating point</h4><svg class="roc-plot" viewBox="0 0 370 370" role="img" aria-label="Empirical ROC with a linked operating point"></svg><div class="roc-note"></div></section>
+</div>
+<div class="tip">Hover or focus an observation. Click the ROC to select its nearest evaluated operating point.</div>
+<div class="optimum-tooltip" role="tooltip" id="__ROOT___optimum_tip" hidden></div>
+<div class="subtle">The number field and dashed line are synchronized. Focus the line and use ↑/↓ (Shift: larger step). ROC/AUC use every complete row; hiding correct classifications is visual only.</div>
+<section class="applied"><h3>Applied decision — HTML snapshot</h3><div class="applied-label subtle"></div>
+<div class="panels"><table class="counts"><thead><tr><th>Classification</th><th>Count</th></tr></thead><tbody></tbody></table>
+<table class="accuracy"><thead><tr><th>Metric</th><th>Estimate</th><th>CI</th></tr></thead><tbody></tbody></table></div></section>
+<p class="subtle">Exploratory teaching example, not clinical validation. Cutoff optimization uses these same observations. Youden J weights sensitivity and specificity equally; fewest errors also depends on class frequencies. Weighted error cost is FP × FP cost + FN × FN cost. Tied optima use the lowest evaluated numeric cutoff. Intervals do not account for selecting the cutoff. Browser controls update this HTML result only, not native jamovi tables, options or dataset columns. Recalculation restores the saved jamovi options. Change Applied cutoff and direction in the analysis options to update native tables and exports. Costs come from the analysis options.</p>
+<script>(function(){'use strict';
+const root=document.getElementById('__ROOT__'),d3=window.d3,p=__PAYLOAD__,rows=p.rows;
+const $=selector=>root.querySelector(selector),input=$('.cutoff'),status=$('.status');
+const fmt=d3.format('.5~g'),pct=v=>v===null?'—':d3.format('.1%')(v),number=v=>d3.format('.3f')(v);
+const extent=d3.extent(rows,d=>d.value),span=Math.max(extent[1]-extent[0],Math.abs(extent[0])*.1,1);
+const domain=[Math.min(extent[0]-.14*span,p.initial,p.automatic),Math.max(extent[1]+.14*span,p.initial,p.automatic)];
+const y=d3.scaleLinear().domain(domain).range([340,28]),x=d3.scalePoint().domain([false,true]).range([220,440]);
+const step=Number((span/100).toPrecision(3));input.step=String(step);input.min=String(domain[0]);input.max=String(domain[1]);
+let current=p.initial,direction=p.direction,criterion=p.criterion,fpCost=p.fpCost,fnCost=p.fnCost,applied=null,errorsOnly=false;
+$('.direction').value=direction;$('.criterion').value=criterion;$('.fp-cost').value=fpCost;$('.fn-cost').value=fnCost;root.querySelectorAll('.cost-fields').forEach(el=>el.hidden=criterion!=='cost');
+const positive=r=>direction==='ge'?r.value>=current:r.value<=current;
+$('.source').textContent=`${p.source} · N = ${rows.length}; ${p.excluded} rows excluded · Python computes all threshold statistics, intervals, optima and AUC; D3 displays precomputed results. ${p.confidence}% ${p.method} intervals.`;
+function state(cut=current,dir=direction){const pts=p.curves[dir].points;let lo=0,hi=pts.length;
+while(lo<hi){const mid=(lo+hi)>>1;if(dir==='ge'?pts[mid].cutoff<cut:pts[mid].cutoff<=cut)lo=mid+1;else hi=mid;}
+return pts[Math.max(0,Math.min(pts.length-1,dir==='ge'?lo:lo-1))];}
+function counts(cut=current,dir=direction){return state(cut,dir);}
+function sensitivity(c){return c.tpr;}function specificity(c){return c.metrics[1][0];}
+function youden(c){return c.youden;}
+function optimum(){const opt=p.curves[direction].optima[criterion];return {point:p.curves[direction].points[opt.point],ties:opt.ties};}
+const initialCounts=counts();for(const key of Object.keys(p.expected))if(initialCounts[key]!==p.expected[key])throw Error('Python/JavaScript classification mismatch');
+const svg=d3.select($('.dots-plot'));svg.append('g').attr('class','grid').attr('transform','translate(60,0)').call(d3.axisLeft(y).ticks(7).tickSize(-490).tickFormat(''));
+svg.append('g').attr('transform','translate(60,0)').call(d3.axisLeft(y).ticks(7));
+svg.append('text').attr('x',16).attr('y',180).attr('transform','rotate(-90 16 180)').attr('text-anchor','middle').attr('fill','#64748b').attr('font-size',12).text(p.measurement);
+for(const pos of [false,true]){svg.append('text').attr('x',x(pos)).attr('y',374).attr('text-anchor','middle').attr('font-size',12).attr('fill','#475569').text(pos?p.positive:p.negative);svg.append('text').attr('x',x(pos)).attr('y',392).attr('text-anchor','middle').attr('font-size',10).attr('fill','#64748b').text(pos?'REFERENCE POSITIVE':'REFERENCE NEGATIVE');}
+const shade=svg.append('rect').attr('x',60).attr('width',490).attr('fill','#eaf3fc').attr('opacity',.65).style('pointer-events','none');
+const background=svg.append('rect').attr('x',60).attr('y',28).attr('width',490).attr('height',312).attr('fill','transparent').style('cursor','crosshair');
+const dots=svg.append('g').attr('class','observations').selectAll('circle').data(rows).join('circle').attr('cx',r=>x(r.positive)+((Math.sin(r.row*127.1)*43758.5453)%1)*48).attr('cy',r=>y(r.value)).attr('r',4.1).attr('stroke','white').attr('stroke-width',.8).attr('tabindex',0);
+function inspect(r){$('.tip').textContent=`Row ${r.row} · ${p.measurement}: ${fmt(r.value)} · reference: ${r.positive?p.positive:p.negative} · ${positive(r)?'test positive':'test negative'} · ${positive(r)===r.positive?'correct classification':'classification error'}`;}
+dots.on('pointerenter',(_,r)=>inspect(r)).on('focus',(_,r)=>inspect(r)).on('pointerleave',()=>{$('.tip').textContent='Hover or focus an observation. Click the ROC to select its nearest evaluated operating point.';});
+const line=svg.append('g').attr('role','slider').attr('tabindex',0).attr('aria-label','Classification cutoff').attr('aria-orientation','vertical').style('cursor','ns-resize');
+line.append('line').attr('x1',60).attr('x2',550).attr('stroke','#334155').attr('stroke-width',1.7).attr('stroke-dasharray','6 4');line.append('line').attr('x1',60).attr('x2',550).attr('stroke','transparent').attr('stroke-width',22);
+line.append('rect').attr('x',292).attr('y',-10).attr('width',28).attr('height',20).attr('rx',8).attr('fill','white').attr('stroke','#b8cce5');line.append('text').attr('x',306).attr('y',4).attr('text-anchor','middle').attr('font-size',14).attr('fill','#3e6da9').style('pointer-events','none').text('↕');
+const cutoffLabel=line.append('text').attr('x',558).attr('y',4).attr('font-size',11).attr('fill','#334155');
+const cards=d3.select($('.cards')).selectAll('div').data(['Sensitivity','Specificity','PPV','NPV','Youden J']).join('div').attr('class','card');cards.append('span').text(d=>d);cards.append('strong');
+const roc=d3.select($('.roc-plot')),rx=d3.scaleLinear().domain([0,1]).range([52,340]),ry=d3.scaleLinear().domain([0,1]).range([305,30]);
+roc.append('g').attr('class','grid').attr('transform','translate(52,0)').call(d3.axisLeft(ry).ticks(5).tickSize(-288).tickFormat(''));
+roc.append('g').attr('transform','translate(0,305)').call(d3.axisBottom(rx).ticks(5));roc.append('g').attr('transform','translate(52,0)').call(d3.axisLeft(ry).ticks(5));
+roc.append('text').attr('x',196).attr('y',345).attr('text-anchor','middle').attr('font-size',11).attr('fill','#64748b').text('False-positive rate · 1 − specificity');
+roc.append('text').attr('x',14).attr('y',167).attr('transform','rotate(-90 14 167)').attr('text-anchor','middle').attr('font-size',11).attr('fill','#64748b').text('Sensitivity');
+roc.append('line').attr('x1',rx(0)).attr('y1',ry(0)).attr('x2',rx(1)).attr('y2',ry(1)).attr('stroke','#cbd5e1').attr('stroke-dasharray','4 4');
+const rocArea=roc.append('path').attr('fill','#e7effa').attr('opacity',.7),rocPath=roc.append('path').attr('fill','none').attr('stroke','#3e6da9').attr('stroke-width',2.4);
+const rocHit=roc.append('rect').attr('x',52).attr('y',30).attr('width',288).attr('height',275).attr('fill','transparent').style('cursor','crosshair');
+const cross=roc.append('g').style('pointer-events','none');cross.append('line').attr('class','vx').attr('stroke','#e78b38').attr('stroke-dasharray','3 4');cross.append('line').attr('class','hy').attr('stroke','#e78b38').attr('stroke-dasharray','3 4');
+const optimumMark=roc.append('circle').attr('class','optimum-marker').attr('r',8).attr('fill','#c63e45').attr('stroke','white').attr('stroke-width',1.5).attr('tabindex',0).attr('role','button').attr('aria-describedby','__ROOT___optimum_tip').style('cursor','pointer');
+const operating=roc.append('circle').attr('class','operating').attr('r',6).attr('fill','#e78b38').attr('stroke','white').attr('stroke-width',2).attr('tabindex',0);
+const optimumTooltip=$('.optimum-tooltip');let optimumTipOpen=false;
+function coincident(){const c=counts(),o=optimum().point;return c.tp===o.tp&&c.fp===o.fp;}
+function showOptimum(){const o=optimum(),c=o.point,criterionLabel=$('.criterion').selectedOptions[0].textContent;
+optimumTooltip.textContent=`Optimal cutoff · ${criterionLabel}\n${p.measurement} ${direction==='ge'?'≥':'≤'} ${fmt(c.cutoff)}\nSensitivity ${pct(sensitivity(c))} · Specificity ${pct(specificity(c))}\nYouden J ${number(youden(c))}\nFP ${c.fp} · FN ${c.fn} · Weighted error cost ${fmt(c.cost)}\n${o.ties} tied optimal boundary/boundaries; lowest numeric cutoff selected.\n${coincident()?'Current and optimal cutoffs share this ROC position.\n':''}Click or press Enter to preview this cutoff.`;
+optimumTooltip.hidden=false;optimumTipOpen=true;
+const host=root.getBoundingClientRect(),anchor=optimumMark.node().getBoundingClientRect(),box=optimumTooltip.getBoundingClientRect();
+const left=Math.max(8,Math.min(host.width-box.width-8,anchor.left-host.left+anchor.width/2-box.width/2));
+const above=anchor.top-host.top-box.height-10;optimumTooltip.style.left=`${left}px`;optimumTooltip.style.top=`${above>=8?above:anchor.bottom-host.top+10}px`;
+}
+function hideOptimum(force=false){const active=document.activeElement;if(!force&&(active===optimumMark.node()||(active===operating.node()&&coincident())))return;optimumTipOpen=false;optimumTooltip.hidden=true;}
+optimumMark.on('pointerenter',showOptimum).on('pointerleave',()=>hideOptimum()).on('focus',showOptimum).on('blur',()=>hideOptimum(true)).on('click',()=>{setCut(optimum().point.cutoff);showOptimum();}).on('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();setCut(optimum().point.cutoff);showOptimum();}if(event.key==='Escape'){event.preventDefault();hideOptimum(true);}});
+const aucLabel=roc.append('text').attr('x',330).attr('y',53).attr('text-anchor','end').attr('font-size',14).attr('font-weight',700).attr('fill','#3e6da9');
+function drawCurve(){const pts=[...p.curves[direction].points].sort((a,b)=>a.fpr-b.fpr||a.tpr-b.tpr);rocPath.attr('d',d3.line().x(d=>rx(d.fpr)).y(d=>ry(d.tpr))(pts));rocArea.attr('d',d3.area().x(d=>rx(d.fpr)).y0(305).y1(d=>ry(d.tpr))(pts));aucLabel.text(`AUC ${number(p.curves[direction].auc)}`);}
+function draw(){const c=counts(),se=sensitivity(c),sp=specificity(c),fpr=1-sp,opt=optimum(),ly=y(current);
+line.attr('transform',`translate(0,${ly})`).attr('aria-valuemin',domain[0]).attr('aria-valuemax',domain[1]).attr('aria-valuenow',current);cutoffLabel.text(fmt(current));shade.attr('y',direction==='ge'?28:ly).attr('height',direction==='ge'?ly-28:340-ly);
+dots.attr('fill',r=>positive(r)===r.positive?'#3e6da9':'#e78b38').attr('opacity',r=>errorsOnly&&positive(r)===r.positive?0:.82).attr('pointer-events',r=>errorsOnly&&positive(r)===r.positive?'none':null).attr('tabindex',r=>errorsOnly&&positive(r)===r.positive?-1:0).attr('aria-hidden',r=>errorsOnly&&positive(r)===r.positive?'true':null).attr('aria-label',r=>`Row ${r.row}, ${fmt(r.value)}, ${r.positive?p.positive:p.negative}`);
+cards.select('strong').text((_,i)=>i===4?number(youden(c)):(()=>{const m=c.metrics[i];return pct(m[0]);})());
+const same=applied&&applied.cutoff===current&&applied.direction===direction;status.textContent=`${same?'Applied decision.':'Preview only — applied tables unchanged.'} TP ${c.tp} · FP ${c.fp} · FN ${c.fn} · TN ${c.tn}`;
+$('.summary').textContent=`Accuracy ${pct(c.metrics[4][0])} · Errors ${c.fp+c.fn}/${rows.length} · Weighted error cost ${fmt(c.cost)} · Sample prevalence ${pct(p.prevalence)}`;
+operating.attr('cx',rx(fpr)).attr('cy',ry(se)).attr('aria-label',`Current operating point: sensitivity ${pct(se)}, specificity ${pct(sp)}`);
+cross.select('.vx').attr('x1',rx(fpr)).attr('x2',rx(fpr)).attr('y1',ry(se)).attr('y2',305);cross.select('.hy').attr('x1',52).attr('x2',rx(fpr)).attr('y1',ry(se)).attr('y2',ry(se));
+optimumMark.attr('cx',rx(opt.point.fpr)).attr('cy',ry(opt.point.tpr)).attr('aria-label',`Optimal cutoff ${fmt(opt.point.cutoff)} for ${$('.criterion').selectedOptions[0].textContent}. Sensitivity ${pct(sensitivity(opt.point))}, specificity ${pct(specificity(opt.point))}, Youden J ${number(youden(opt.point))}. Press Enter to preview.`);
+$('.roc-note').textContent='Orange: current cutoff · Red: selected criterion optimum (red rim when overlapping). Hover or focus the red marker for details. AUC is independent of the current cutoff.';
+$('.optimization').textContent=`${$('.criterion').selectedOptions[0].textContent}: optimum ${fmt(opt.point.cutoff)} (${opt.ties} tied boundary/boundaries).`;
+if(optimumTipOpen)showOptimum();
+}
+function setCut(value,fromInput=false){if(!Number.isFinite(value))return;current=Math.max(domain[0],Math.min(domain[1],value));if(!fromInput||current!==value)input.value=String(current);draw();}
+function apply(){applied={cutoff:current,direction};const c=counts();$('.applied-label').textContent=`${p.measurement} ${direction==='ge'?'≥':'≤'} ${fmt(current)} · Local snapshot; Recalculation restores saved jamovi options.`;
+d3.select($('.counts tbody')).selectAll('tr').data([['True positive',c.tp],['False positive',c.fp],['False negative',c.fn],['True negative',c.tn]]).join('tr').selectAll('td').data(d=>d).join('td').text(d=>d);
+const table=c.metrics.map((m,i)=>[p.metricNames[i],pct(m[0]),m[1]===null?'—':`${pct(m[1])} – ${pct(m[2])}`]);table.push(['Youden J',number(youden(c)),'—']);d3.select($('.accuracy tbody')).selectAll('tr').data(table).join('tr').selectAll('td').data(d=>d).join('td').text(d=>d);draw();}
+input.addEventListener('input',()=>{if(input.value!==''&&Number.isFinite(input.valueAsNumber))setCut(input.valueAsNumber,true);});input.addEventListener('change',()=>{if(input.value===''||!Number.isFinite(input.valueAsNumber))input.value=String(current);else setCut(input.valueAsNumber);});
+$('.apply').addEventListener('click',apply);$('.auto').addEventListener('click',()=>setCut(optimum().point.cutoff));
+$('.criterion').addEventListener('change',event=>{criterion=event.target.value;root.querySelectorAll('.cost-fields').forEach(el=>el.hidden=criterion!=='cost');draw();});
+$('.direction').addEventListener('change',event=>{direction=event.target.value;drawCurve();draw();});
+$('.errors-only').addEventListener('change',event=>{errorsOnly=event.target.checked;draw();});
+$('.reset').addEventListener('click',()=>{direction=p.direction;criterion=p.criterion;fpCost=p.fpCost;fnCost=p.fnCost;errorsOnly=false;$('.direction').value=direction;$('.criterion').value=criterion;$('.fp-cost').value=fpCost;$('.fn-cost').value=fnCost;$('.errors-only').checked=false;root.querySelectorAll('.cost-fields').forEach(el=>el.hidden=criterion!=='cost');drawCurve();setCut(p.initial);apply();});
+background.on('click',event=>setCut(y.invert(d3.pointer(event,svg.node())[1])));line.call(d3.drag().container(()=>svg.node()).subject(()=>({x:306,y:y(current)})).on('drag',event=>setCut(y.invert(event.y))));
+line.on('keydown',event=>{if(event.key==='ArrowUp'||event.key==='ArrowDown'){event.preventDefault();setCut(current+(event.key==='ArrowUp'?1:-1)*step*(event.shiftKey?10:1));}if(event.key==='Home'){event.preventDefault();setCut(domain[0]);}if(event.key==='End'){event.preventDefault();setCut(domain[1]);}});
+function pickRoc(event){const [px,py]=d3.pointer(event,roc.node());const point=p.curves[direction].points.reduce((a,b)=>Math.hypot(rx(a.fpr)-px,ry(a.tpr)-py)<=Math.hypot(rx(b.fpr)-px,ry(b.tpr)-py)?a:b);setCut(point.cutoff);}
+rocHit.on('click',pickRoc);operating.on('click',pickRoc).on('pointerenter',()=>{if(coincident())showOptimum();}).on('pointerleave',()=>hideOptimum()).on('focus',()=>{if(coincident())showOptimum();$('.tip').textContent=`ROC operating point: sensitivity ${pct(sensitivity(counts()))}; specificity ${pct(specificity(counts()))}; Youden J ${number(youden(counts()))}.`;}).on('blur',()=>hideOptimum(true)).on('keydown',event=>{if(event.key==='Escape')hideOptimum(true);});
+drawCurve();setCut(current);apply();
+})();</script></div>
