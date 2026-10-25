@@ -9,7 +9,7 @@
       "menu": "Descriptives",
       "title": "Age Pyramid",
       "aliases": [],
-      "source": null,
+      "source": "analyses/descriptives/pyagepyramid.py",
       "baseline": {
         "module": "ClinicoPathDescriptives",
         "version": "1.0.82.03",
@@ -23,13 +23,17 @@
         }
       },
       "wave": 1,
-      "status": "planned",
+      "status": "partial",
       "coverage": {
         "full_parity": false,
-        "numerical": "pending",
-        "gui": "pending",
-        "compatibility": "existing Python identifier preserved",
-        "platforms": []
+        "numerical": "76 frozen-R label/base-R count and percentage fixtures; boundary, exclusion and geometry checks",
+        "gui": "fresh-engine run, custom-boundary/denominator rerun, .omv reopen and native PNG export verified",
+        "compatibility": "new Python entry point; original R module retained",
+        "platforms": [],
+        "omissions": [
+          "Alternate ggcharts renderer and bespoke color/theme settings",
+          "Interactive exploration; native static pyramid implemented"
+        ]
       },
       "methods": "Plot only: counts and percentages by age band and sex, drawn as an age pyramid.",
       "oracle": "base R table counts",

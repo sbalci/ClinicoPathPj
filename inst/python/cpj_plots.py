@@ -47,7 +47,7 @@ def figure(state, width=600, height=400, palette=None, background='white', foreg
     palette = palette or DEFAULT_PALETTE
     columns = state['columns']; kind = state['kind']
     n = len(next(iter(columns.values()), []))
-    if n > {'interval':200, 'line':20000, 'box':20000, 'bar':2000, 'scatter':5000, 'histogram':2000}.get(kind, 0):
+    if n > {'interval':200, 'line':20000, 'box':20000, 'bar':2000, 'scatter':5000, 'histogram':2000, 'pyramid':200}.get(kind, 0):
         raise ValueError('Unsupported plot kind or excessive plot rows')
     if any(len(c) != n for c in columns.values()): raise ValueError('Plot columns have unequal lengths')
     if kind == 'histogram':
@@ -114,6 +114,22 @@ def figure(state, width=600, height=400, palette=None, background='white', foreg
         for i, values in enumerate(data):
             ax.scatter(i+rng.uniform(-.15,.15,len(values)), values, s=12, alpha=.6, color=palette[0])
         ax.set_xticks(np.arange(len(groups)), groups)
+    elif kind == 'pyramid':
+        if not n: raise ValueError('Pyramid requires occupied age bands')
+        left=np.asarray(columns['left']); right=np.asarray(columns['right'])
+        if np.any(~np.isfinite(left)) or np.any(~np.isfinite(right)) or np.any(left<0) or np.any(right<0):
+            raise ValueError('Pyramid values must be finite and nonnegative')
+        y=np.arange(n)
+        ax.barh(y,-left,color=palette[0],label=columns['leftLabel'][0])
+        ax.barh(y,right,color=palette[1%len(palette)],label=columns['rightLabel'][0])
+        limit=max(float(left.max()),float(right.max()),1)*1.1
+        ax.set_xlim(-limit,limit)
+        ax.set_yticks(y,columns['label'])
+        from matplotlib.ticker import FuncFormatter
+        ax.xaxis.set_major_formatter(FuncFormatter(lambda x,pos:format(abs(x),'.4g')))
+        ax.axvline(0,color=foreground,linewidth=.8)
+        ax.set_title(columns['title'][0],color=foreground)
+        ax.legend()
     elif kind == 'bar':
         labels = list(dict.fromkeys(columns['label'])); groups = list(dict.fromkeys(columns['group']))
         width = .8 / max(1,len(groups))

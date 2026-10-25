@@ -1,3 +1,13 @@
+# Age pyramid port — 0.3.2
+
+- [x] Implement pyagepyramid core, six presets, custom intervals and native Python pyramid.
+- [x] Compare 76 fixtures with frozen R labels and independent base-R counts/percentages.
+- [x] Cover missingness, factor labels, single gender and disjoint exclusions.
+- [x] Pass 185 Python tests and 492 R checks; execute nine packaged analysis runtimes.
+- [x] Install via GUI; verify custom-boundary/denominator rerun, fresh-engine .omv reopen and PNG export.
+- [ ] Complete per-preset GUI transitions, percentage-bar export and additional-platform qualification.
+- [ ] Port alternate styling and interactive exploration; full parity remains pending.
+
 # Descriptive ports — 0.3.1
 
 - [x] Add pysummarydata with distribution diagnostics, outliers and native histograms.
