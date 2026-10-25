@@ -47,7 +47,7 @@ def figure(state, width=600, height=400, palette=None, background='white', foreg
     palette = palette or DEFAULT_PALETTE
     columns = state['columns']; kind = state['kind']
     n = len(next(iter(columns.values()), []))
-    if n > {'interval':200, 'line':20000, 'box':20000, 'bar':2000, 'scatter':5000, 'histogram':2000, 'pyramid':200}.get(kind, 0):
+    if n > {'interval':200, 'line':20000, 'box':20000, 'bar':2000, 'scatter':5000, 'histogram':2000, 'pyramid':200, 'qualitymap':4000}.get(kind, 0):
         raise ValueError('Unsupported plot kind or excessive plot rows')
     if any(len(c) != n for c in columns.values()): raise ValueError('Plot columns have unequal lengths')
     if kind == 'histogram':
@@ -114,6 +114,25 @@ def figure(state, width=600, height=400, palette=None, background='white', foreg
         for i, values in enumerate(data):
             ax.scatter(i+rng.uniform(-.15,.15,len(values)), values, s=12, alpha=.6, color=palette[0])
         ax.set_xticks(np.arange(len(groups)), groups)
+    elif kind == 'qualitymap':
+        variables=list(dict.fromkeys(columns['variable'])); rows=list(dict.fromkeys(columns['row']))
+        states=list(dict.fromkeys(columns['state']))
+        if not n or len(variables)>20 or len(rows)>200 or len(states)>5:
+            raise ValueError('Quality maps support at most 200 rows, 20 variables and 5 states')
+        matrix=np.full((len(rows),len(variables)),-1,dtype=int)
+        vi={v:i for i,v in enumerate(variables)};ri={v:i for i,v in enumerate(rows)}
+        for v,r,s in zip(columns['variable'],columns['row'],columns['state']):
+            if matrix[ri[r],vi[v]]!=-1:raise ValueError('Duplicate quality-map cell')
+            matrix[ri[r],vi[v]]=states.index(s)
+        if np.any(matrix<0):raise ValueError('Quality map must be rectangular')
+        from matplotlib.colors import ListedColormap
+        from matplotlib.patches import Patch
+        colors=['#B0B0B0' if s=='Missing' else palette[i%len(palette)] for i,s in enumerate(states)]
+        ax.imshow(matrix,aspect='auto',interpolation='nearest',cmap=ListedColormap(colors),vmin=-.5,vmax=len(states)-.5)
+        ax.set_xticks(range(len(variables)),variables,rotation=45,ha='right')
+        step=max(1,int(np.ceil(len(rows)/20))); ticks=list(range(0,len(rows),step))
+        ax.set_yticks(ticks,[rows[i] for i in ticks])
+        ax.legend(handles=[Patch(color=c,label=s) for c,s in zip(colors,states)],loc='upper left',bbox_to_anchor=(1,1))
     elif kind == 'pyramid':
         if not n: raise ValueError('Pyramid requires occupied age bands')
         left=np.asarray(columns['left']); right=np.asarray(columns['right'])

@@ -18,7 +18,7 @@ parity and GUI/platform acceptance remain separate gates.
 | pycheckdata | checkdata | descriptives | 1 | planned | pending | pending |
 | pychisqposttest | chisqposttest | descriptives | 1 | partial | pending | pending |
 | pycrosstable | crosstable | descriptives | 1 | planned | pending | pending |
-| pydataquality | dataquality | descriptives | 1 | planned | pending | pending |
+| pydataquality | dataquality | descriptives | 1 | partial | pending | fresh-engine native tables/maps, local paging/filter/focus events, .omv reopen and native PNG export verified |
 | pyoutlierdetection | outlierdetection | descriptives | 1 | planned | pending | pending |
 | pyreportcat | reportcat | descriptives | 1 | partial | pending | fresh-engine native tables and plot verified |
 | pysummarydata | summarydata | descriptives | 1 | partial | pending | fresh-engine run, .omv reopen and native histogram PNG export verified |

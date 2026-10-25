@@ -1,7 +1,7 @@
 ---
 title: ClinicoPathPj - Python-Backed Analyses
 name: ClinicoPathPj
-version: 0.3.2
+version: 0.3.3
 jms: '1.0'
 authors: Serdar Balci
 maintainer: Serdar Balci <serdarbalci@serdarbalci.com>
@@ -164,6 +164,14 @@ analyses:
     menuGroup: ClinicoPathPj
     menuSubgroup: Descriptives
     menuTitle: Age Pyramid
+  - name: pydataquality
+    ns: ClinicoPathPj
+    hidden: false
+    title: Multi-Variable Visual Quality
+    category: analyses
+    menuGroup: ClinicoPathPj
+    menuSubgroup: Descriptives
+    menuTitle: Multi-Variable Visual Quality
 usesNative: 'yes'
 datasets:
   - name: Python Core Examples

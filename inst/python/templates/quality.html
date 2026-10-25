@@ -1,0 +1,49 @@
+<div id="__ROOT__" style="color:inherit;font:14px system-ui;max-width:950px">
+  <p class="scope"></p>
+  <p>Display controls only: these do not alter the cohort, calculations or native tables. M = missing; O = observed. Values are not stored in this view.</p>
+  <label>Variable <select class="variable" aria-label="Preview variable"></select></label>
+  <label><input class="missingOnly" type="checkbox"> Rows with missing cells in this preview</label>
+  <button class="previous" type="button">Previous page</button>
+  <button class="next" type="button">Next page</button>
+  <p class="page" role="status"></p>
+  <div style="overflow:auto;max-height:480px"><table style="border-collapse:collapse"><caption>Missingness preview; original row IDs</caption><thead></thead><tbody></tbody></table></div>
+  <p class="detail" role="status" aria-live="polite">Focus or select a cell to inspect its original row and variable.</p>
+  <noscript>JavaScript is unavailable. Use the native tables and missing-pattern plot.</noscript>
+</div>
+<script>
+(function(){
+'use strict';
+const root=document.getElementById('__ROOT__'), p=__PAYLOAD__;
+const select=root.querySelector('.variable'), only=root.querySelector('.missingOnly');
+const prev=root.querySelector('.previous'), next=root.querySelector('.next');
+let page=0;
+function option(value,label){const x=document.createElement('option');x.value=value;x.textContent=label;select.appendChild(x);}
+option('all','All preview variables');p.variables.forEach((v,i)=>option(String(i),v));
+root.querySelector('.scope').textContent='First '+p.row_ids.length+' of '+p.total_rows+' rows and first '+p.variables.length+' of '+p.total_variables+' variables, in selection order. This is a bounded preview, not a random sample. Full-data summaries use all rows and selected variables.';
+function draw(){
+ const variables=select.value==='all'?p.variables.map((v,i)=>i):[Number(select.value)];
+ const rows=p.row_ids.map((v,i)=>i).filter(i=>!only.checked||p.missing[i].some(Boolean));
+ const pages=Math.max(1,Math.ceil(rows.length/10));page=Math.min(page,pages-1);
+ const head=root.querySelector('thead'),body=root.querySelector('tbody');head.replaceChildren();body.replaceChildren();
+ const tr=document.createElement('tr');head.appendChild(tr);
+ function th(text,parent,scope){const e=document.createElement('th');e.scope=scope;e.textContent=text;e.style.padding='5px';parent.appendChild(e);}
+ th('Original row',tr,'col');variables.forEach(j=>th(p.variables[j],tr,'col'));
+ rows.slice(page*10,page*10+10).forEach(i=>{
+  const row=document.createElement('tr');body.appendChild(row);th(p.row_ids[i],row,'row');
+  variables.forEach(j=>{const cell=document.createElement('td'),button=document.createElement('button');
+   const missing=Boolean(p.missing[i][j]),label='Row '+p.row_ids[i]+', '+p.variables[j]+': '+(missing?'missing':'observed');
+   button.type='button';button.textContent=missing?'M':'O';button.title=label;button.setAttribute('aria-label',label);
+   button.style.cssText='min-width:32px;padding:5px;border:1px solid currentColor;color:inherit;background:'+(missing?'rgba(230,159,0,.22)':'rgba(0,114,178,.12)');
+   function detail(){root.querySelector('.detail').textContent=label;}
+   button.addEventListener('focus',detail);button.addEventListener('click',detail);button.addEventListener('mouseenter',detail);
+   cell.appendChild(button);row.appendChild(cell);
+  });
+ });
+ prev.disabled=page===0;next.disabled=page>=pages-1;
+ root.querySelector('.page').textContent=rows.length+' matching preview rows. Page '+(page+1)+' of '+pages+'.';
+ root.querySelector('.detail').textContent='Focus or select a cell to inspect its original row and variable.';
+}
+select.addEventListener('change',()=>{page=0;draw();});only.addEventListener('change',()=>{page=0;draw();});
+prev.addEventListener('click',()=>{page--;draw();});next.addEventListener('click',()=>{page++;draw();});draw();
+})();
+</script>
