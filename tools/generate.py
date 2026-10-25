@@ -1,14 +1,15 @@
 """Generate the jamovi files of every ClinicoPathPj analysis from its Python file.
 
-Each inst/python/analyses/<name>.py holds one literal SPEC dict and a run() function.
+Each registered family source holds one literal SPEC dict and a run() function.
 SPEC is read with ast (the analysis is never imported), validated, and written out as
-jamovi/<name>.a.yaml, jamovi/<name>.r.yaml (JSON, which is valid YAML) and R/<name>.b.R.
-jmvtools creates jamovi/<name>.u.yaml and R/<name>.h.R on the next build.
+jamovi/<name>.a.yaml, .r.yaml, .u.yaml (JSON, which is valid YAML) and R/<name>.b.R.
+jmvtools creates R/<name>.h.R on the next build.
 
     python tools/generate.py           write the generated files
     python tools/generate.py --check   write nothing; exit 1 when any generated file is stale
 """
 import ast
+import copy
 import json
 import math
 import re
@@ -17,9 +18,11 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 ANALYSES = ROOT / "inst" / "python" / "analyses"
+sys.path.insert(0, str(ANALYSES.parent))
+from cpj_registry import read_registry
 
-ANALYSIS_NAME = re.compile(r"[a-z][a-z0-9]*\Z")
-NAME = re.compile(r"[a-z][A-Za-z0-9]*\Z")
+ANALYSIS_NAME = re.compile(r"[a-z][A-Za-z0-9]*\Z")
+NAME = re.compile(r"[a-z][A-Za-z0-9_]*\Z")
 VERSION = re.compile(r"\d+\.\d+\.\d+\Z")
 RESERVED = {"data", "showConsole", "console"}
 # Names jmvtools turns into R formals and R6 members: an R keyword does not parse, and a member of
@@ -35,7 +38,7 @@ RESULT_MEMBERS = {"add", "analysis", "asDF", "asProtoBuf", "asString", "clear", 
                   "itemNames", "items", "key", "name", "options", "parent", "path", "print", "remove",
                   "requiresData", "resetVisible", "root", "saveAs", "setError", "setRefs", "setState",
                   "setStatus", "setTitle", "setVisible", "state", "status", "title", "visible"}
-SPEC_KEYS = {"name", "title", "menuGroup", "menuSubgroup", "version", "options", "results"}
+SPEC_KEYS = {"name", "title", "menuGroup", "menuSubgroup", "version", "options", "results", "ui"}
 OPTION_KEYS = {  # keys an option may carry besides name/type/title
     "Variable": {"permitted", "suggested", "required"},
     "Variables": {"permitted", "suggested", "required"},
@@ -45,13 +48,16 @@ OPTION_KEYS = {  # keys an option may carry besides name/type/title
     "Bool": {"default"},
     "List": {"options", "default"},
     "String": {"default"},
+    "Terms": {"default"},
+    "Action": {"action"},
+    "Output": set(),
 }
 PERMITTED = {"numeric", "factor", "id"}
 SUGGESTED = {"continuous", "nominal", "ordinal", "id"}
 COLUMN_KEYS = {"name", "title", "type", "format", "superTitle", "visible"}
 COLUMN_TYPES = {"text", "integer", "number"}
 FORMAT_TOKENS = {"zto", "pvalue", "pc", "log10"}
-PLOT_KINDS = {"interval", "line", "box", "bar"}  # drawn by R/ggplot2 from Python data (R/utils-plots.R)
+PLOT_KINDS = {"interval", "line", "box", "bar", "scatter", "histogram"}
 IMAGE_KEYS = {"name", "type", "title", "plot", "width", "height", "xlab", "ylab", "visible"}
 
 
@@ -109,12 +115,10 @@ def validate(spec, stem):
     if not isinstance(spec, dict):
         fail("SPEC must be a dict")
     unknown = set(spec) - SPEC_KEYS
-    missing = SPEC_KEYS - {"menuSubgroup"} - set(spec)
+    missing = SPEC_KEYS - {"menuSubgroup", "ui"} - set(spec)
     if unknown or missing:
         fail(f"SPEC keys: unknown {sorted(unknown)}, missing {sorted(missing)}")
     check_name(spec["name"], "analysis name", ANALYSIS_NAME)
-    if spec["name"] != stem:
-        fail(f"SPEC name {spec['name']!r} must equal the file name {stem!r}")
     for key in ("title", "menuGroup") + (("menuSubgroup",) if "menuSubgroup" in spec else ()):
         check_text(spec[key], key)
         if not spec[key].strip():
@@ -155,7 +159,7 @@ def validate(spec, stem):
         else:
             seen_other = True
         if kind == "Level":
-            match = re.fullmatch(r"\(([a-z][A-Za-z0-9]*)\)", str(option.get("variable", "")))
+            match = re.fullmatch(r"\(([a-z][A-Za-z0-9_]*)\)", str(option.get("variable", "")))
             if not match or variables.get(match.group(1)) != "Variable":
                 fail(f"Level {name!r} needs variable: '(x)' naming an earlier single Variable option")
             if not isinstance(option.get("allowNone", False), bool):
@@ -188,7 +192,15 @@ def validate(spec, stem):
                 fail(f"List {name!r}: default must be one of {sorted(seen_choices)}")
         if kind == "String":
             check_text(option.get("default"), f"String {name!r} default")
+        if kind == "Terms":
+            value = option.get("default", [])
+            if not isinstance(value, list) or any(not isinstance(t, list) or not t or
+                    any(not isinstance(v, str) or not v for v in t) for t in value):
+                fail(f"Terms {name!r}: default must be a list of non-empty lists of variable names")
+        if kind == "Action" and option.get("action") not in ("open", "openExternal"):
+            fail(f"Action {name!r}: action must be open or openExternal")
 
+    validate_ui(spec)
     if not spec["results"]:
         fail("SPEC needs at least one result")
     bools = {o["name"] for o in spec["options"] if o["type"] == "Bool"}
@@ -199,11 +211,21 @@ def validate(spec, stem):
         check_name(result.get("name"), "result name", members=RESULT_MEMBERS)
         rname = result["name"]
         check_title(result, f"result {rname!r}", evaluated=True)
-        if rname in results or rname in names:
+        if rname in results or (rname in names and result.get("type") != "Output"):
             fail(f"result name {rname!r} is already used")
         results.add(rname)
+        if result.get("type") == "Output":
+            if not any(o["name"] == rname and o["type"] == "Output" for o in spec["options"]):
+                fail(f"Output {rname!r} needs an Output option with the same name")
+            if set(result) - {"name", "type", "title", "varTitle", "varDescription", "measureType"}:
+                fail(f"Output {rname!r}: unsupported properties")
+            if result.get("measureType") not in ("continuous", "nominal", "ordinal"):
+                fail(f"Output {rname!r}: choose continuous, nominal or ordinal")
+            for key in ("varTitle", "varDescription"):
+                if key in result: check_text(result[key], key)
+            continue
         if "visible" in result:  # option-driven visibility only: '(boolOption)'
-            match = re.fullmatch(r"\(([a-z][A-Za-z0-9]*)\)", str(result["visible"]))
+            match = re.fullmatch(r"\(([a-z][A-Za-z0-9_]*)\)", str(result["visible"]))
             if not match or match.group(1) not in bools:
                 fail(f"result {rname!r}: visible must be '(x)' naming a Bool option")
         if result.get("type") in ("Preformatted", "Text", "Html"):
@@ -248,9 +270,65 @@ def validate(spec, stem):
             # shown, and left out of asDF (jmvcore skips hidden columns; read it with table$columns$<name>)
             if "visible" in column:
                 shown = column["visible"]
-                match = re.fullmatch(r"\(([a-z][A-Za-z0-9]*)\)", shown) if isinstance(shown, str) else None
+                match = re.fullmatch(r"\(([a-z][A-Za-z0-9_]*)\)", shown) if isinstance(shown, str) else None
                 if not (isinstance(shown, bool) or (match and match.group(1) in bools)):
                     fail(f"column {rname}.{cname}: visible must be True, False or '(x)' naming a Bool option")
+
+
+def validate_ui(spec):
+    """Check bindings and completeness before asking the real compiler to validate controls."""
+    if "ui" not in spec:
+        return
+    ui = spec["ui"]
+    if not isinstance(ui, dict) or set(ui) != {"children"} or not isinstance(ui["children"], list):
+        raise SpecError("ui must contain a children list")
+    options = {o["name"]: o for o in spec["options"]}
+    options["showConsole"] = {"type": "Bool"}
+    bindings, controls = set(), set()
+    containers = {"VariableSupplier", "Supplier", "CollapseBox", "Label", "LayoutBox", "TargetLayoutBox"}
+    types = {"Variable": {"VariablesListBox"}, "Variables": {"VariablesListBox"},
+             "Level": {"LevelSelector"}, "Number": {"TextBox"}, "Integer": {"TextBox"},
+             "String": {"TextBox"}, "Bool": {"CheckBox"}, "List": {"ComboBox", "RadioButton"},
+             "Output": {"Output"}, "Terms": {"ListBox"}, "Action": {"ActionButton"}}
+
+    def visit(children):
+        for control in children:
+            if not isinstance(control, dict) or "type" not in control:
+                raise SpecError("Every UI control needs a type")
+            name = control.get("name")
+            if name:
+                if name in controls:
+                    raise SpecError(f"Duplicate UI control {name!r}")
+                controls.add(name)
+            if control["type"] not in containers:
+                binding = control.get("optionName", name)
+                if binding not in options:
+                    raise SpecError(f"Unbound UI control {binding!r}")
+                if control["type"] not in types[options[binding]["type"]]:
+                    raise SpecError(f"Wrong UI type for {binding!r}")
+                if binding in bindings and "optionPart" not in control:
+                    raise SpecError(f"Repeated UI binding {binding!r}")
+                bindings.add(binding)
+            if "enable" in control:
+                expression = control["enable"]
+                if not isinstance(expression, str) or not re.fullmatch(r"[()!&|: A-Za-z0-9_]+", expression):
+                    raise SpecError("Invalid UI enable expression")
+                for reference in re.findall(r"(?<![A-Za-z0-9_:])[A-Za-z][A-Za-z0-9_]*", expression):
+                    if reference not in options:
+                        raise SpecError(f"UI enable references unknown option {reference!r}")
+            if "children" in control:
+                visit(control["children"])
+    visit(ui["children"])
+    if bindings != set(options):
+        raise SpecError(f"UI omits options {sorted(set(options) - bindings)}")
+
+
+def u_yaml(spec):
+    validate_ui(spec)
+    if "ui" not in spec:
+        raise SpecError(f"{spec['name']}: explicit ui is required for generation")
+    return dict(name=spec["name"], title=spec["title"], jus="3.0", stage=0,
+                compilerMode="tame", children=copy.deepcopy(spec["ui"]["children"]))
 
 
 def a_yaml(spec):
@@ -282,6 +360,9 @@ def r_yaml(spec):
         if result["type"] == "Image":  # the renderer reads only image$state, never self$data
             item.update(width=result.get("width", 500), height=result.get("height", 400),
                         renderFun=".plot", requiresData=False)
+        if result["type"] == "Output":
+            item.update({key: result[key] for key in ("varTitle", "varDescription", "measureType") if key in result})
+            item["clearWith"] = [o["name"] for o in spec["options"]]
         items.append(item)
     items.append({"name": "console", "title": "Python console", "type": "Preformatted",
                   "visible": "(showConsole)"})
@@ -296,6 +377,7 @@ def b_r(spec, header):
     name = spec["name"]
     options = [option["name"] for option in spec["options"]]
     arrays = [option["name"] for option in spec["options"] if option["type"] == "Variables"]
+    terms = [option["name"] for option in spec["options"] if option["type"] == "Terms"]
     # jamovi lets integer Nominal/Ordinal columns into numeric-only boxes as factors carrying their
     # values; the bridge converts the columns of these options back to numbers.
     numeric = [option["name"] for option in spec["options"] if option["type"] in ("Variable", "Variables")
@@ -320,6 +402,7 @@ def b_r(spec, header):
         f"            .cpjRun(self, \"{name}\",\n"
         f"                options = {vector(r_string(o) for o in options)},\n"
         f"                arrays = {vector(r_string(o) for o in arrays)},\n"
+        f"                terms = {vector(r_string(o) for o in terms)},\n"
         f"                numeric = {vector(r_string(o) for o in numeric)},\n"
         f"                required = {vector(o['name'] + ' = ' + r_string(o['title']) for o in required)},\n"
         f"                events = {vector(o['name'] + ' = ' + r_string(o['variable'][1:-1]) for o in events)},\n"
@@ -334,26 +417,45 @@ def render(path):
     """Return {output path: content} for one analysis file."""
     spec = read_spec(path)
     validate(spec, path.stem)
-    header = f"Generated by tools/generate.py from inst/python/analyses/{path.name} - do not edit."
-    name = spec["name"]
+    header = f"Generated by tools/generate.py from {path.relative_to(ROOT)} - do not edit."
 
     def as_yaml(obj):
         return f"# {header}\n" + json.dumps(obj, indent=2, ensure_ascii=True, allow_nan=False) + "\n"
 
-    return {
-        ROOT / "jamovi" / f"{name}.a.yaml": as_yaml(a_yaml(spec)),
-        ROOT / "jamovi" / f"{name}.r.yaml": as_yaml(r_yaml(spec)),
-        ROOT / "R" / f"{name}.b.R": b_r(spec, header),
-    }
+    entry = next((e for e in read_registry(ANALYSES.parent)["analyses"]
+                  if e["id"] == spec["name"]), None)
+    if entry is None or entry.get("source") != str(path.relative_to(ANALYSES.parent)):
+        raise SpecError(f"{path.name}: source/name must agree with the registry")
+    files = {}
+    for name in [entry["id"]] + entry.get("aliases", []):
+        variant = copy.deepcopy(spec)
+        variant["name"] = name
+        if name != entry["id"]:
+            variant["title"] = entry["legacy_title"]
+        files.update({
+            ROOT / "jamovi" / f"{name}.a.yaml": as_yaml(a_yaml(variant)),
+            ROOT / "jamovi" / f"{name}.r.yaml": as_yaml(r_yaml(variant)),
+            ROOT / "jamovi" / f"{name}.u.yaml": as_yaml(u_yaml(variant)),
+            ROOT / "R" / f"{name}.b.R": b_r(variant, header),
+        })
+    return files
 
 
 def main(argv):
     check = "--check" in argv
     files = {}
     try:
-        for path in sorted(ANALYSES.glob("*.py")):
-            files.update(render(path))  # validate everything before writing anything
-    except SpecError as error:
+        entries = read_registry(ANALYSES.parent)["analyses"]
+        registered = {ANALYSES.parent / e["source"] for e in entries if e.get("source")}
+        discovered = set(ANALYSES.rglob("*.py"))
+        if registered != discovered:
+            raise SpecError("Analysis sources must match registry entries exactly")
+        for path in sorted(registered):
+            rendered = render(path)
+            if files.keys() & rendered.keys():
+                raise SpecError("Duplicate generated entry point")
+            files.update(rendered)  # validate everything before writing anything
+    except (SpecError, ValueError) as error:
         print(f"generate.py: {error}", file=sys.stderr)
         return 2
     stale = [path for path, text in files.items()
@@ -365,7 +467,7 @@ def main(argv):
     for path in stale:
         path.write_text(files[path], encoding="utf-8")
         print(f"wrote {path.relative_to(ROOT)}")
-    print(f"{len(files) // 3} analyses, {len(stale)} file(s) updated")
+    print(f"{len(files) // 4} entry points, {len(stale)} file(s) updated")
     return 0
 
 

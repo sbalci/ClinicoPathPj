@@ -34,11 +34,11 @@ class GeneratedFiles(unittest.TestCase):
         self.assertEqual(generate.main(["--check"]), 0, "run tools/build.R (or tools/generate.py)")
 
     def test_render_is_deterministic(self):
-        for path in sorted(generate.ANALYSES.glob("*.py")):
+        for path in sorted(generate.ANALYSES.rglob("*.py")):
             self.assertEqual(generate.render(path), generate.render(path))
 
     def test_pywelch_contract(self):
-        files = generate.render(generate.ANALYSES / "pywelch.py")
+        files = generate.render(generate.ANALYSES / "jjstatsplot/pywelch.py")
         options = parse_generated(files[ROOT / "jamovi" / "pywelch.a.yaml"])["options"]
         self.assertEqual([options[0]["name"], options[-1]["name"]], ["data", "showConsole"])
         self.assertFalse(any("required" in option for option in options))  # jamovi would skip .run()
@@ -53,14 +53,14 @@ class GeneratedFiles(unittest.TestCase):
         self.assertIn("arrays = character(0)", b_r)
 
     def test_variables_are_sent_as_arrays(self):
-        b_r = generate.render(generate.ANALYSES / "pydescriptives.py")[ROOT / "R" / "pydescriptives.b.R"]
+        b_r = generate.render(generate.ANALYSES / "descriptives/pydescriptives.py")[ROOT / "R" / "pydescriptives.b.R"]
         self.assertIn('arrays = c("vars")', b_r)
 
     def test_numeric_only_options_are_marked_for_conversion(self):
         self.assertIn('numeric = c("vars")', generate.render(
-            generate.ANALYSES / "pydescriptives.py")[ROOT / "R" / "pydescriptives.b.R"])
+            generate.ANALYSES / "descriptives/pydescriptives.py")[ROOT / "R" / "pydescriptives.b.R"])
         self.assertIn('numeric = c("dep")', generate.render(
-            generate.ANALYSES / "pywelch.py")[ROOT / "R" / "pywelch.b.R"])  # group (factor) is not
+            generate.ANALYSES / "jjstatsplot/pywelch.py")[ROOT / "R" / "pywelch.b.R"])  # group (factor) is not
 
 
 class Validation(unittest.TestCase):
@@ -91,12 +91,11 @@ class Validation(unittest.TestCase):
         self.assertRejected(lambda s: s["options"][2].update(default=100), "between min and max")
 
     def test_unsupported_option_type(self):
-        self.assertRejected(lambda s: s["options"].append({"name": "alt", "type": "Terms", "title": "Alt"}),
+        self.assertRejected(lambda s: s["options"].append({"name": "alt", "type": "Unknown", "title": "Alt"}),
                             "not supported")
 
-    def test_name_must_match_file(self):
-        with self.assertRaisesRegex(generate.SpecError, "must equal the file name"):
-            generate.validate(copy.deepcopy(VALID), "other")
+    def test_name_is_independent_of_source_filename(self):
+        generate.validate(copy.deepcopy(VALID), "other")
 
     def test_names_jamovi_or_r_cannot_use(self):
         self.assertRejected(lambda s: s["options"][2].update(name="next"), "reserved")    # R keyword

@@ -43,7 +43,7 @@ def _load():
     sys.path.insert(0, str(ROOT / "inst" / "python"))
     handler = signal.getsignal(signal.SIGINT)  # importing cpj_runtime resets SIGINT for its own process
     spec = importlib.util.spec_from_file_location(
-        "pyexacttests", ROOT / "inst" / "python" / "analyses" / "pyexacttests.py")
+        "pyexacttests", ROOT / "inst" / "python" / "analyses" / "meddecide/pyexacttests.py")
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     signal.signal(signal.SIGINT, handler)

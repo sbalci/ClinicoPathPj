@@ -1,0 +1,2364 @@
+{
+  "schema_version": 1,
+  "module": "ClinicoPathPj",
+  "baseline_date": "2026-10-25",
+  "analyses": [
+    {
+      "id": "pyagepyramid",
+      "family": "descriptives",
+      "menu": "Descriptives",
+      "title": "Age Pyramid",
+      "aliases": [],
+      "source": null,
+      "baseline": {
+        "module": "ClinicoPathDescriptives",
+        "version": "1.0.82.03",
+        "commit": "7162149586afc8992f1ba17e56887e2fbcb0835d",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/agepyramid.a.yaml": "3f55fb50f825cad950bf9db053bfad0af95e55fc712947b4ce24946f049425cc",
+          "jamovi/agepyramid.r.yaml": "37ab15e2fb290f43a6eba478b61920f457580375e8307d63080b14e83241fd42",
+          "jamovi/agepyramid.u.yaml": "4ce22fc8ddf2be7badfce0145b44a59c9a77a3b718ec8c9db72d88e2d09f0660",
+          "R/agepyramid.b.R": "6726619f2ae2ce88cac142d1aee0a1351cdf2e85cf93794d570eb5717fd92f56"
+        }
+      },
+      "wave": 1,
+      "status": "planned",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "pending",
+        "gui": "pending",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "Plot only: counts and percentages by age band and sex, drawn as an age pyramid.",
+      "oracle": "base R table counts",
+      "dependencies": {
+        "bundled": [],
+        "candidates": []
+      },
+      "source_name": "agepyramid"
+    },
+    {
+      "id": "pyalluvial",
+      "family": "descriptives",
+      "menu": "Descriptives",
+      "title": "Alluvial Diagrams",
+      "aliases": [],
+      "source": null,
+      "baseline": {
+        "module": "ClinicoPathDescriptives",
+        "version": "1.0.82.03",
+        "commit": "7162149586afc8992f1ba17e56887e2fbcb0835d",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/alluvial.a.yaml": "d19af09651da95e140991e7d60d2f40f2fec4c003dac28b234b5c4ece869f5f3",
+          "jamovi/alluvial.r.yaml": "b22ff280aee67cf34523bca6d313748346dc536e8cd6223adba55ce0528f0a1b",
+          "jamovi/alluvial.u.yaml": "8b20b410e9b1a87ddd826a79a74138726a7ee589ca04ec6248325e5c53a03c9f",
+          "R/alluvial.b.R": "5483a859fa9cfa09f6a0f2cf608c37a16328714a5e7f837f3eaac95a9306fe07"
+        }
+      },
+      "wave": 1,
+      "status": "planned",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "pending",
+        "gui": "pending",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "Plot only: alluvial/Sankey flow diagrams (easyalluvial / ggalluvial) with an optional flow-count table.",
+      "oracle": "none (plot)",
+      "dependencies": {
+        "bundled": [],
+        "candidates": []
+      },
+      "source_name": "alluvial"
+    },
+    {
+      "id": "pybenford",
+      "family": "descriptives",
+      "menu": "Descriptives",
+      "title": "Benford Analysis",
+      "aliases": [],
+      "source": "analyses/descriptives/pybenford.py",
+      "baseline": {
+        "module": "ClinicoPathDescriptives",
+        "version": "1.0.82.03",
+        "commit": "7162149586afc8992f1ba17e56887e2fbcb0835d",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/benford.a.yaml": "f55a8f21b0ca66a41e1cb030e22a3ef68cb2dd077a2a3b986ddb5753cfbe4bef",
+          "jamovi/benford.r.yaml": "e662b08e818da5d988c2871eb6985736f84f6c4896e3d1d1c70651471c15f1c4",
+          "jamovi/benford.u.yaml": "4b5dbdf68f1778bf5dd9af3e538cf5949a8a50143298e396cf4d5637d1d63a72",
+          "R/benford.b.R": "e7fd3d3674e2979edb0cd3b1cc9403ec704a0630572ac2a82964d92bc9cc1c20"
+        }
+      },
+      "wave": 1,
+      "status": "partial",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "existing core tests",
+        "gui": "pending",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "Benford first-digit or first-two-digit test: digit frequencies vs log10(1+1/d), chi-square goodness of fit, MAD with Nigrini conformity labels, mantissa arc test, and the largest-deviation suspects.",
+      "oracle": "benford.analysis::benford (MAD, MAD.conformity, stats$chisq, stats$mantissa.arc.test); benford.analysis::getSuspects",
+      "dependencies": {
+        "bundled": [
+          "numpy",
+          "scipy"
+        ],
+        "candidates": []
+      },
+      "source_name": "benford"
+    },
+    {
+      "id": "pycategorize",
+      "family": "descriptives",
+      "menu": "Descriptives",
+      "title": "Categorize Continuous Variables",
+      "aliases": [],
+      "source": "analyses/descriptives/pycategorize.py",
+      "baseline": {
+        "module": "ClinicoPathDescriptives",
+        "version": "1.0.82.03",
+        "commit": "7162149586afc8992f1ba17e56887e2fbcb0835d",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/categorize.a.yaml": "9a06d0cb7aa91f9f117cc15209e8f2a9a172c4bdaf307f01c9ef8525182bb8ee",
+          "jamovi/categorize.r.yaml": "f3c99581cee4b073103ffc194fbfa2332c33a2c9f56329625aefff110c919922",
+          "jamovi/categorize.u.yaml": "82844135df46ed3711bb13daf7d2196eae65bdbae954b910b85d415c04dd0ca8",
+          "R/categorize.b.R": "e573c35e51ba094c33c5e4257499b3070a129f15a6609c2cf83aa7f73aeb526b"
+        }
+      },
+      "wave": 1,
+      "status": "partial",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "140 frozen-R binning fixtures; independent exhaustive Jenks partitions; saved-column protobuf checks",
+        "gui": "fresh-engine run, ordinal saved column and .omv reopen verified; category plot export pending",
+        "compatibility": "new Python entry point; original R module retained",
+        "platforms": [],
+        "omissions": [
+          "Seeded Jenks subsampling when n > 20000 and distinct values > 3000",
+          "Original histogram with boundary lines (current plot shows category counts)",
+          "Original HTML styling; exported R code applies frozen displayed boundaries"
+        ]
+      },
+      "methods": "Data transformation: bins a continuous variable (equal width, quantiles, manual, mean +/- SD, median, Fisher-Jenks via classInt) into a new column, with a frequency table.",
+      "oracle": "classInt::classIntervals(style='fisher'); stats::quantile(type=7); base::cut",
+      "dependencies": {
+        "bundled": [
+          "numpy",
+          "scipy"
+        ],
+        "candidates": []
+      },
+      "source_name": "categorize"
+    },
+    {
+      "id": "pycheckdata",
+      "family": "descriptives",
+      "menu": "Descriptives",
+      "title": "Single Variable Quality Check",
+      "aliases": [],
+      "source": null,
+      "baseline": {
+        "module": "ClinicoPathDescriptives",
+        "version": "1.0.82.03",
+        "commit": "7162149586afc8992f1ba17e56887e2fbcb0835d",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/checkdata.a.yaml": "614c4cdd2e66084ffdbfeb1428a259ef3981a513d8809f4b6415e9a48548bfd6",
+          "jamovi/checkdata.r.yaml": "21bb769572c0b299729aae46f708930fbf7f19510ae7050d19d2118414f4fe92",
+          "jamovi/checkdata.u.yaml": "cd2eae7a690feb3db9ffebb858e28d6aa59eae3aa527ce96f0789e58edfd8416",
+          "R/checkdata.b.R": "486ec227557da7bc94fe0a1437ddbdc45725debef26e207ff6c478d7e3dfcebb"
+        }
+      },
+      "wave": 1,
+      "status": "planned",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "pending",
+        "gui": "pending",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "Single-variable QC report: missingness, z/IQR/MAD outlier flags, distribution summary, duplicates and a missingness-run heuristic. No inferential test; the MCAR test is explicitly declared not applicable.",
+      "oracle": "base R",
+      "dependencies": {
+        "bundled": [],
+        "candidates": []
+      },
+      "source_name": "checkdata"
+    },
+    {
+      "id": "pychisqposttest",
+      "family": "descriptives",
+      "menu": "Descriptives",
+      "title": "Chi-Square Post-Tests",
+      "aliases": [],
+      "source": "analyses/descriptives/pychisqposttest.py",
+      "baseline": {
+        "module": "ClinicoPathDescriptives",
+        "version": "1.0.82.03",
+        "commit": "7162149586afc8992f1ba17e56887e2fbcb0835d",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/chisqposttest.a.yaml": "48f50b8de935e0a2ae1519e80df5c7117463a0ea4ed7427e52d3d1e0bfb324cd",
+          "jamovi/chisqposttest.r.yaml": "d6268f81e77d60f1bf06516509ca980d3f9652792c12e39edd2d1c5599f25e1d",
+          "jamovi/chisqposttest.u.yaml": "7aeda06008945e5383155c6b524f0147069afd371aa6a38e2f1c702e858169df",
+          "R/chisqposttest.b.R": "c54b0075b15d84511ce3cadf7cfe8a3c53257f67cf00db869aa59199395cde6e"
+        }
+      },
+      "wave": 1,
+      "status": "partial",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "existing core tests",
+        "gui": "pending",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "Chi-square or Fisher test of an RxC table with expected counts, adjusted standardized residuals (Bonferroni criterion), pairwise 2x2 post-hoc tests with p-adjustment, Cramer's V with a bootstrap CI, and chi-square power.",
+      "oracle": "stats::chisq.test ($statistic, $expected, $stdres); stats::fisher.test (2x2 is exact in both; for RxC R uses the exact network algorithm while scipy defaults to Monte Carlo); stats::p.adjust; pwr::pwr.chisq.test; boot::boot.ci",
+      "dependencies": {
+        "bundled": [
+          "numpy",
+          "scipy"
+        ],
+        "candidates": []
+      },
+      "source_name": "chisqposttest",
+      "baseline_title": "Chi-Square Post-Hoc Tests"
+    },
+    {
+      "id": "pycrosstable",
+      "family": "descriptives",
+      "menu": "Descriptives",
+      "title": "Cross Tables",
+      "aliases": [],
+      "source": null,
+      "baseline": {
+        "module": "ClinicoPathDescriptives",
+        "version": "1.0.82.03",
+        "commit": "7162149586afc8992f1ba17e56887e2fbcb0835d",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/crosstable.a.yaml": "8f387fb3110e9dc9aac4608ae058c35b1e97d4d5b4100c1038c94b0e7df8409e",
+          "jamovi/crosstable.r.yaml": "c9c9c7eec8ba986b0b1fbba3ebba2d382772aa1916015ce5f9e7ea460edd625d",
+          "jamovi/crosstable.u.yaml": "9cc3e49cadcc6f09bcfeb650daec705d1fd711a4eec4c2e3dae4b4e9a2476d90",
+          "R/crosstable.b.R": "a4151bc632327eee28c0927e788d7ddea7d87476a802cab4ffc3cbcd316664e2"
+        }
+      },
+      "wave": 1,
+      "status": "planned",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "pending",
+        "gui": "pending",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "Table formatting: grouped descriptive cross-tables via gtsummary, arsenal, finalfit or tangram, with their embedded tests (chi-square/Fisher, t/ANOVA/Kruskal), q-values and an SMD table.",
+      "oracle": "gtsummary::tbl_summary + add_p; arsenal::tableby; finalfit::summary_factorlist",
+      "dependencies": {
+        "bundled": [],
+        "candidates": []
+      },
+      "source_name": "crosstable"
+    },
+    {
+      "id": "pydataquality",
+      "family": "descriptives",
+      "menu": "Descriptives",
+      "title": "Multi-Variable Visual Quality",
+      "aliases": [],
+      "source": null,
+      "baseline": {
+        "module": "ClinicoPathDescriptives",
+        "version": "1.0.82.03",
+        "commit": "7162149586afc8992f1ba17e56887e2fbcb0835d",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/dataquality.a.yaml": "e73ac577b77df69b165aa416a07a511799cd8891bae2f64854776d4aa9177584",
+          "jamovi/dataquality.r.yaml": "8489f46a41450983a86bb5716b079a0c6f3dcdd7fb3c70d688718c3dbc0170dd",
+          "jamovi/dataquality.u.yaml": "bd4fdf9407bd26f4332dcc055eb1d1a8369f84426e1567d3b6cccefbdbdfba2c",
+          "R/dataquality.b.R": "80ff60974d484ea70db8cd3570d383ba0904be3a6a2e9b4baf353c7e6be8342d"
+        }
+      },
+      "wave": 1,
+      "status": "planned",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "pending",
+        "gui": "pending",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "Plot-first QC: visdat overview, missingness and type plots, plus duplicate and constant-variable flags. The only inferential statistic is Little's MCAR test (naniar::mcar_test).",
+      "oracle": "naniar::mcar_test",
+      "dependencies": {
+        "bundled": [],
+        "candidates": []
+      },
+      "source_name": "dataquality"
+    },
+    {
+      "id": "pyoutlierdetection",
+      "family": "descriptives",
+      "menu": "Descriptives",
+      "title": "Outlier Detection",
+      "aliases": [],
+      "source": null,
+      "baseline": {
+        "module": "ClinicoPathDescriptives",
+        "version": "1.0.82.03",
+        "commit": "7162149586afc8992f1ba17e56887e2fbcb0835d",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/outlierdetection.a.yaml": "769d9bb49c9bc223bb62a3d2f10b28c22bfab11a78238a38cc51ef1001fdd84f",
+          "jamovi/outlierdetection.r.yaml": "1fd5cf4307a002bcf828b76a802189ad20510ef4b627c47f817b847b9e851184",
+          "jamovi/outlierdetection.u.yaml": "a2b528c85a941edf5e9cb1492424edd22baffb34a48756d003fd458bb8dcd140",
+          "R/outlierdetection.b.R": "f14dcd8e91f4d537a3beb075a671558e6ac07eaa9a1196ec452c99b3512a2272"
+        }
+      },
+      "wave": 1,
+      "status": "planned",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "pending",
+        "gui": "pending",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "Outlier screening via performance::check_outliers. The default composite combines robust z (MAD), IQR (x1.7) and classical Mahalanobis (chi-square cut-off) with a vote threshold. Optional methods: ETI/HDI, robust Mahalanobis, MCD, OPTICS, LOF. Data above 10,000 rows is subsampled.",
+      "oracle": "performance::check_outliers(method=c('zscore_robust','iqr','mahalanobis'), threshold=...) per-method flags and composite score",
+      "dependencies": {
+        "bundled": [],
+        "candidates": [
+          "scikit-learn (MinCovDet, OPTICS, LocalOutlierFactor), only for the optional multivariate methods"
+        ]
+      },
+      "source_name": "outlierdetection"
+    },
+    {
+      "id": "pyreportcat",
+      "family": "descriptives",
+      "menu": "Descriptives",
+      "title": "Summary of Categorical Variables",
+      "aliases": [],
+      "source": "analyses/descriptives/pyreportcat.py",
+      "baseline": {
+        "module": "ClinicoPathDescriptives",
+        "version": "1.0.82.03",
+        "commit": "7162149586afc8992f1ba17e56887e2fbcb0835d",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/reportcat.a.yaml": "d3e31d57d35080c1b59f93a86b4707476a2ea3d83ced424bf00a13d2b35703c1",
+          "jamovi/reportcat.r.yaml": "8de52fdf61ba1e632f56efc2db9b442d6f32f228411e7fda57098510e431acdd",
+          "jamovi/reportcat.u.yaml": "73eab9c8b87f606b76b94f291ee8938d9f85a1ed61ceef93e485506fd41d5a31",
+          "R/reportcat.b.R": "3a8e54b84ba80e904de0da17ac4deeda7653766311db5495bb628346fa75a643"
+        }
+      },
+      "wave": 1,
+      "status": "partial",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "base R table fixtures and edge-case tests",
+        "gui": "fresh-engine native tables and plot verified",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "Report formatting: categorical frequency summaries rendered as gt/gtExtras HTML, with report sentences.",
+      "oracle": "base R table() counts",
+      "dependencies": {
+        "bundled": [
+          "numpy"
+        ],
+        "candidates": []
+      },
+      "source_name": "reportcat"
+    },
+    {
+      "id": "pysummarydata",
+      "family": "descriptives",
+      "menu": "Descriptives",
+      "title": "Summary of Continuous Variables",
+      "aliases": [],
+      "source": "analyses/descriptives/pysummarydata.py",
+      "baseline": {
+        "module": "ClinicoPathDescriptives",
+        "version": "1.0.82.03",
+        "commit": "7162149586afc8992f1ba17e56887e2fbcb0835d",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/summarydata.a.yaml": "8559c6ec232a90a4f3a413c60409e735ce69b81cb25551c3857de321b6f73340",
+          "jamovi/summarydata.r.yaml": "a52453db37f02843fe9ca289e9d56cdfe9e495df35521c004a913c49c2575806",
+          "jamovi/summarydata.u.yaml": "1f73b416b3cd6208f018a14dd49e19f2490fce77c305a032929f5dfdb7065083",
+          "R/summarydata.b.R": "b8bce184bf57cf41c3100b763635f33feebe304c1210d2d947f6318ee5facc67"
+        }
+      },
+      "wave": 1,
+      "status": "partial",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "8 independent R summary/moments/Shapiro fixtures; native R lifecycle checks",
+        "gui": "fresh-engine run, .omv reopen and native histogram PNG export verified",
+        "compatibility": "new Python entry point; original R module retained",
+        "platforms": [],
+        "omissions": [
+          "Original gt HTML styling; histogram display capped at 12 variables and 2000 aggregate bins"
+        ]
+      },
+      "methods": "Report formatting: continuous descriptives (mean, SD, median, IQR, skewness/kurtosis, Shapiro) rendered as gt/gtExtras HTML. pydescriptives already covers the numbers.",
+      "oracle": "moments::skewness/kurtosis; stats::shapiro.test",
+      "dependencies": {
+        "bundled": [
+          "numpy",
+          "scipy"
+        ],
+        "candidates": []
+      },
+      "source_name": "summarydata"
+    },
+    {
+      "id": "pytableone",
+      "family": "descriptives",
+      "menu": "Descriptives",
+      "title": "Table One",
+      "aliases": [],
+      "source": null,
+      "baseline": {
+        "module": "ClinicoPathDescriptives",
+        "version": "1.0.82.03",
+        "commit": "7162149586afc8992f1ba17e56887e2fbcb0835d",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/tableone.a.yaml": "1bdf6c0ffde856d205acacec6e0edcad66f1e61d8dd88da8fe277ee99dd36c29",
+          "jamovi/tableone.r.yaml": "afa6d2f8b5cd3743ce5c17d9095d87e3e50409ef0f4da424a68a358409c4bf46",
+          "jamovi/tableone.u.yaml": "c9a78f375a2b99fef99e9134dda0f2a6dec2b20d0a11e55bfd6264eac1915b21",
+          "R/tableone.b.R": "be47a105957c951604f33fec8622fea618b6246168b91fb4b3a9de675201b7a4"
+        }
+      },
+      "wave": 1,
+      "status": "planned",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "pending",
+        "gui": "pending",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "Table formatting: a Table 1 via tableone, gtsummary, arsenal or janitor.",
+      "oracle": "tableone::CreateTableOne; gtsummary::tbl_summary",
+      "dependencies": {
+        "bundled": [],
+        "candidates": []
+      },
+      "source_name": "tableone"
+    },
+    {
+      "id": "pyvartree",
+      "family": "descriptives",
+      "menu": "Descriptives",
+      "title": "Variable Tree",
+      "aliases": [],
+      "source": null,
+      "baseline": {
+        "module": "ClinicoPathDescriptives",
+        "version": "1.0.82.03",
+        "commit": "7162149586afc8992f1ba17e56887e2fbcb0835d",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/vartree.a.yaml": "0c696e203c5c37254f0e3ac00f0fe21d1155f274bce8901ceecba0ab5ed4446f",
+          "jamovi/vartree.r.yaml": "643635e6fc0b00bb56ef9b96e393b8890afb7c22578650f1a317a209600eccae",
+          "jamovi/vartree.u.yaml": "07e4488a6e18462be486d7aad3650335142bcf6c44fa6e59e6700e554a447477",
+          "R/vartree.b.R": "183d47f391ade4910bb0cdebe5a268f58a398d55a93aa862595265a14d85621d"
+        }
+      },
+      "wave": 1,
+      "status": "planned",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "pending",
+        "gui": "pending",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "Plot only: vtree variable-tree diagram (DiagrammeR, exported as SVG).",
+      "oracle": "vtree::vtree",
+      "dependencies": {
+        "bundled": [],
+        "candidates": []
+      },
+      "source_name": "vartree"
+    },
+    {
+      "id": "pyvenn",
+      "family": "descriptives",
+      "menu": "Descriptives",
+      "title": "Venn Diagram",
+      "aliases": [],
+      "source": null,
+      "baseline": {
+        "module": "ClinicoPathDescriptives",
+        "version": "1.0.82.03",
+        "commit": "7162149586afc8992f1ba17e56887e2fbcb0835d",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/venn.a.yaml": "44ec470fe633cd57c74c8f10043204ac176320f3fdd3c1c46553f352d0a35c07",
+          "jamovi/venn.r.yaml": "19d54e61fe78fe1e7fc93d3067326d5440378ac1e3469fde66745ec3c572e3d3",
+          "jamovi/venn.u.yaml": "9189ad94b9391a152c116546321bc9bba69269daf650de504f36e0975e283ed8",
+          "R/venn.b.R": "9520d49767e2d33d984fa9708b9529fac45fdc99b72cbf86a1f11b137339febe"
+        }
+      },
+      "wave": 1,
+      "status": "planned",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "pending",
+        "gui": "pending",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "Plot-first: Venn and UpSet diagrams (ggvenn, ggVennDiagram, UpSetR, ComplexUpset) with set-intersection counts and a membership table.",
+      "oracle": "base R set counts",
+      "dependencies": {
+        "bundled": [],
+        "candidates": []
+      },
+      "source_name": "venn"
+    },
+    {
+      "id": "pyadvancedraincloud",
+      "family": "jjstatsplot",
+      "menu": "Statistical Plots",
+      "title": "Advanced Raincloud Plot",
+      "aliases": [],
+      "source": null,
+      "baseline": {
+        "module": "jjstatsplot",
+        "version": "1.0.82.03",
+        "commit": "4c3cbe8de39d6259ee61d5fde28704f45e9cc8ed",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/advancedraincloud.a.yaml": "94adadf0da0442cc8caca5a797395229b356c3726068bd6af89b10bc1ee5f7c2",
+          "jamovi/advancedraincloud.r.yaml": "6f7763f9f10b596fc8ab4e2a7448e4868ae6198aeb8b6ba84b5bc88ff441ae77",
+          "jamovi/advancedraincloud.u.yaml": "df30c099d24a5546c53800a256fda323c6bc4fca0662d56154872b9806a4fa80",
+          "R/advancedraincloud.b.R": "4c5060346fe08aca36e93e3d13a9a1330e99500c28b6368e43226e71d6f7e1ec"
+        }
+      },
+      "wave": 3,
+      "status": "planned",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "pending",
+        "gui": "pending",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "plot first: ggrain raincloud with longitudinal ID lines, covariate colouring and Likert jitter. Html panels give group descriptives, a Wilcoxon (2 groups) or Kruskal-Wallis p, d-type effect sizes, change scores and responder rates, MCID/reference/CV bands and outlier filtering.",
+      "oracle": "stats::wilcox.test, stats::kruskal.test, stats::density",
+      "dependencies": {
+        "bundled": [],
+        "candidates": [
+          "plot renderer (matplotlib not bundled; R/ggplot2 or HTML/D3 from Python data; excluded from effort)"
+        ]
+      },
+      "source_name": "advancedraincloud"
+    },
+    {
+      "id": "pyhullplot",
+      "family": "jjstatsplot",
+      "menu": "Statistical Plots",
+      "title": "Hull Plot",
+      "aliases": [],
+      "source": null,
+      "baseline": {
+        "module": "jjstatsplot",
+        "version": "1.0.82.03",
+        "commit": "4c3cbe8de39d6259ee61d5fde28704f45e9cc8ed",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/hullplot.a.yaml": "7ebe9738a891a0c155d81f778a08c3f48e65a84fba19d4608952b69c15af454b",
+          "jamovi/hullplot.r.yaml": "c81c999ad5d165521bd4f424a2d37700a4633346363d686ff376f9db2d6fe977",
+          "jamovi/hullplot.u.yaml": "190233194924a1769ba5551916bd934a811bf49ad31789efce4cb2db8dce2a79",
+          "R/hullplot.b.R": "e780bd40feefc508ec513c87ebf6ebe56b36950ff94aafae0a1467c8558b3f1f"
+        }
+      },
+      "wave": 3,
+      "status": "planned",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "pending",
+        "gui": "pending",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "plot only: ggforce concave hulls (geom_mark_hull, concavity/expand) around groups on an x-y scatter. Optional 95% data ellipses (stat_ellipse, multivariate t), per-group quartiles, and the smallest centroid distance in within-group SD units.",
+      "oracle": "ggforce::geom_mark_hull (layer data), ggplot2::stat_ellipse (MASS::cov.trob)",
+      "dependencies": {
+        "bundled": [],
+        "candidates": [
+          "concave-hull algorithm (ggforce uses concaveman; scipy has only ConvexHull)",
+          "plot renderer (excluded from effort)"
+        ]
+      },
+      "source_name": "hullplot"
+    },
+    {
+      "id": "pyjjarcdiagram",
+      "family": "jjstatsplot",
+      "menu": "Statistical Plots",
+      "title": "Arc Diagram",
+      "aliases": [],
+      "source": null,
+      "baseline": {
+        "module": "jjstatsplot",
+        "version": "1.0.82.03",
+        "commit": "4c3cbe8de39d6259ee61d5fde28704f45e9cc8ed",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/jjarcdiagram.a.yaml": "f7b84f23d81aa2ed9721bca30b21cc58242f97f82bdeab86627d8fc5ec62b207",
+          "jamovi/jjarcdiagram.r.yaml": "d4cd98e77001357272801f8eb879484aa1515cb6032ffa0896a3c80177ae1480",
+          "jamovi/jjarcdiagram.u.yaml": "d6fc492dd97b6c0f307db6e954dc69f436ee71aab8741139859e00c90e10eeec",
+          "R/jjarcdiagram.b.R": "f0761abc6b9fbec3bd4cf9fe6f4ebbf48cdff733693f9eb2216644561e220c51"
+        }
+      },
+      "wave": 3,
+      "status": "planned",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "pending",
+        "gui": "pending",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "plot first: arc diagram of an edge list (igraph), with nodes sized by degree or strength and sorted by name, degree or group. Network summary: density, connectedness, degree/strength, betweenness (weighted via inverse weights) and the most central node.",
+      "oracle": "igraph::degree, igraph::strength, igraph::betweenness, igraph::edge_density, igraph::is_connected",
+      "dependencies": {
+        "bundled": [],
+        "candidates": [
+          "plot renderer (excluded from effort)",
+          "networkx optional (Brandes betweenness is about 40 lines of own code)"
+        ]
+      },
+      "source_name": "jjarcdiagram"
+    },
+    {
+      "id": "pyjjbarstats",
+      "family": "jjstatsplot",
+      "menu": "Statistical Plots",
+      "title": "Bar Charts",
+      "aliases": [],
+      "source": null,
+      "baseline": {
+        "module": "jjstatsplot",
+        "version": "1.0.82.03",
+        "commit": "4c3cbe8de39d6259ee61d5fde28704f45e9cc8ed",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/jjbarstats.a.yaml": "e1be1d79d1e7f98c57bfcb23e86ab62d8be11b54c1cb0b7df466cfd8e611d6d2",
+          "jamovi/jjbarstats.r.yaml": "3736b2a3abead2f335fa9511138047727b5821bba59f11bcbc886fc7d0fdc4fd",
+          "jamovi/jjbarstats.u.yaml": "751d291df5d5b036dedba6fc23b8387a73c4bebd00a88a264a53e873c7a33ec3",
+          "R/jjbarstats.b.R": "2c2515fe7a2643fc5d74754f9f17db08dd582c66e7ff9aabc5b8549a8dd911b6"
+        }
+      },
+      "wave": 3,
+      "status": "planned",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "pending",
+        "gui": "pending",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "plot first: ggstatsplot::ggbarstats stacked bars with a statsExpressions subtitle: Pearson chi-square of independence with a Cramer's V CI, McNemar for paired data (no correction), a contingencyTableBF Bayes factor, and per-bar proportion (goodness-of-fit) tests. Its own Fisher exact fallback runs when expected counts are below 5; an optional ggpubr balloon plot is also offered.",
+      "oracle": "statsExpressions::contingency_table, stats::chisq.test, stats::mcnemar.test(correct = FALSE), stats::fisher.test, BayesFactor::contingencyTableBF",
+      "dependencies": {
+        "bundled": [],
+        "candidates": [
+          "plot renderer (excluded from effort)"
+        ]
+      },
+      "source_name": "jjbarstats"
+    },
+    {
+      "id": "pyjjbetweenstats",
+      "family": "jjstatsplot",
+      "menu": "Statistical Plots",
+      "title": "Box-Violin Plots to Compare Between Groups",
+      "aliases": [],
+      "source": null,
+      "baseline": {
+        "module": "jjstatsplot",
+        "version": "1.0.82.03",
+        "commit": "4c3cbe8de39d6259ee61d5fde28704f45e9cc8ed",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/jjbetweenstats.a.yaml": "7f5a5f365d69c1b18149dae3a96d327bf946527b0660eedbfb7ac604e5af85d0",
+          "jamovi/jjbetweenstats.r.yaml": "268cfdaeae94f0bc67c831d50c652d16a834fe36b5d04da9d3bff74379e80561",
+          "jamovi/jjbetweenstats.u.yaml": "ac7fc062aacb1c7a0e0269a0c29a728d01585e9f07c1035fdb26691ddd097fe7",
+          "R/jjbetweenstats.b.R": "0c93805b31adac65d59d29f54cbebdf9b374c34f4fd140e0c8283ac7d98bd9f0"
+        }
+      },
+      "wave": 3,
+      "status": "planned",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "pending",
+        "gui": "pending",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "plot first: ggstatsplot::ggbetweenstats box-violin plot. Subtitle: Welch or Fisher one-way ANOVA (omega^2/eta^2 CI), Kruskal-Wallis (epsilon^2), trimmed-means ANOVA (WRS2::t1way) or anovaBF; with 2 groups: Welch t, Mann-Whitney, Yuen or ttestBF. Pairwise Games-Howell, Student, Dunn or Yuen with p-adjustment; Levene check; ggpubr variants.",
+      "oracle": "statsExpressions::oneway_anova, statsExpressions::two_sample_test, statsExpressions::pairwise_comparisons (PMCMRplus::gamesHowellTest, PMCMRplus::kwAllPairsDunnTest, WRS2::lincon), stats::oneway.test, WRS2::t1way, BayesFactor::anovaBF",
+      "dependencies": {
+        "bundled": [],
+        "candidates": [
+          "plot renderer (excluded from effort)"
+        ]
+      },
+      "source_name": "jjbetweenstats"
+    },
+    {
+      "id": "pyjjcorrmat",
+      "family": "jjstatsplot",
+      "menu": "Statistical Plots",
+      "title": "Correlation Matrix",
+      "aliases": [],
+      "source": null,
+      "baseline": {
+        "module": "jjstatsplot",
+        "version": "1.0.82.03",
+        "commit": "4c3cbe8de39d6259ee61d5fde28704f45e9cc8ed",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/jjcorrmat.a.yaml": "a4ef0e60f1a2e7908da19bcc5041821ca952ef2224213a5f8996d0c11e36a2cb",
+          "jamovi/jjcorrmat.r.yaml": "8e5c8c3f3572f4750ebf7e54eb0157ac7d2159ac7adb57117b30a5ae58161532",
+          "jamovi/jjcorrmat.u.yaml": "b03ac628e6198c9f42364de1ecfa207a6e17029fefa72eb6f50825f3c334e3cd",
+          "R/jjcorrmat.b.R": "54af399a2024f4725adf46f89a45c339e80adc57d63930400dfc7126610484ba"
+        }
+      },
+      "wave": 3,
+      "status": "planned",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "pending",
+        "gui": "pending",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "plot first: ggcorrmat heatmap plus a correlation table from correlation::correlation: Pearson, Spearman, 20% winsorized ('robust'), or Bayesian (BF10 with an MCMC posterior-median rho). Optional partial correlations, p-adjustment (Holm by default) and CIs.",
+      "oracle": "correlation::correlation, WRS2::wincor, stats::cor.test, stats::p.adjust, BayesFactor::correlationBF",
+      "dependencies": {
+        "bundled": [],
+        "candidates": [
+          "plot renderer (excluded from effort)"
+        ]
+      },
+      "source_name": "jjcorrmat"
+    },
+    {
+      "id": "pyjjdotchart",
+      "family": "jjstatsplot",
+      "menu": "Statistical Plots",
+      "title": "Dot Chart (Summary vs Reference Value)",
+      "aliases": [],
+      "source": null,
+      "baseline": {
+        "module": "jjstatsplot",
+        "version": "1.0.82.03",
+        "commit": "4c3cbe8de39d6259ee61d5fde28704f45e9cc8ed",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/jjdotchart.a.yaml": "3b5e5844f286936f558593a40c497b22c4265a977f754186f072c3c1ebf0a0fc",
+          "jamovi/jjdotchart.r.yaml": "88cfd33710271fd6a89c906503f11ce3fc4a2b34105e89c34f6425823a7859b3",
+          "jamovi/jjdotchart.u.yaml": "74551cd58780c2af8bab6860a026604f79d21f5dc3b3c3ca33ce8af1a9728f41",
+          "R/jjdotchart.b.R": "c062808be9df85fa93eaa2f9aac0857c7e4afc2fa39c2ea12a8a4cb347cca050"
+        }
+      },
+      "wave": 3,
+      "status": "planned",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "pending",
+        "gui": "pending",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "plot first: ggdotplotstats dot chart of one centrality per group (mean, median, trimmed mean or MAP), with a group summaries table. The k group summaries are tested against a reference value with a one-sample t, a Wilcoxon signed-rank (normal approximation, continuity-corrected), a trimmed-mean bootstrap-t, or a Bayes factor.",
+      "oracle": "statsExpressions::one_sample_test, statsExpressions::centrality_description, WRS2::trimcibt; the signed-rank test matches scipy wilcoxon(method='asymptotic', correction=True)",
+      "dependencies": {
+        "bundled": [],
+        "candidates": [
+          "plot renderer (excluded from effort)"
+        ]
+      },
+      "source_name": "jjdotchart"
+    },
+    {
+      "id": "pyjjdotplotstats",
+      "family": "jjstatsplot",
+      "menu": "Statistical Plots",
+      "title": "Horizontal Box-Violin Comparison",
+      "aliases": [],
+      "source": null,
+      "baseline": {
+        "module": "jjstatsplot",
+        "version": "1.0.82.03",
+        "commit": "4c3cbe8de39d6259ee61d5fde28704f45e9cc8ed",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/jjdotplotstats.a.yaml": "84744fb14798dbc4544a863da21ae7daff50938f31ce3af678ce8a25f4531b4b",
+          "jamovi/jjdotplotstats.r.yaml": "2ed736f3cf68e3edbae5b61f69caa8d732e776c4bcb9c50339a12428bd46f930",
+          "jamovi/jjdotplotstats.u.yaml": "aeb747ca453df276e70c62f9209f357a3b211f01796f6e6e92c6ea4e8d9538eb",
+          "R/jjdotplotstats.b.R": "2663d0afd1232c82611bcd90adbefa1cb2b31b610c10a32110ad63257a7405ce"
+        }
+      },
+      "wave": 3,
+      "status": "planned",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "pending",
+        "gui": "pending",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "plot first: 'Horizontal Box-Violin Comparison' is ggbetweenstats with coord_flip(), plus an optional reference line. Its subtitle tests are those of jjbetweenstats: Welch/Fisher ANOVA or t, Kruskal-Wallis or Mann-Whitney, Yuen/t1way, BF, and pairwise comparisons.",
+      "oracle": "statsExpressions::oneway_anova, statsExpressions::two_sample_test, stats::oneway.test",
+      "dependencies": {
+        "bundled": [],
+        "candidates": [
+          "plot renderer (excluded from effort)"
+        ]
+      },
+      "source_name": "jjdotplotstats"
+    },
+    {
+      "id": "pyjjhistostats",
+      "family": "jjstatsplot",
+      "menu": "Statistical Plots",
+      "title": "Histogram",
+      "aliases": [],
+      "source": null,
+      "baseline": {
+        "module": "jjstatsplot",
+        "version": "1.0.82.03",
+        "commit": "4c3cbe8de39d6259ee61d5fde28704f45e9cc8ed",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/jjhistostats.a.yaml": "d8470d9f1531e662534bdf7040b4e32b18dca77ff8987daa3bdc4bbf1b3b0e32",
+          "jamovi/jjhistostats.r.yaml": "d04dc3870dc2cbe29c55a4f2461fe5ba69c95c34593218ef55db2352201462f6",
+          "jamovi/jjhistostats.u.yaml": "3d8e4b41cd0f221b9a997c4128638164bc7845b3f6bcdf4e29bc8f20e121c4f2",
+          "R/jjhistostats.b.R": "088186317fff2416c800646a04f6feaecd454f6f2553a0d3a8bfce2d4b0ee800"
+        }
+      },
+      "wave": 3,
+      "status": "planned",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "pending",
+        "gui": "pending",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "plot first: gghistostats histogram with a centrality line. Optional one-sample test against test.value: t (Hedges' g), Wilcoxon signed-rank, trimmed-mean bootstrap-t, or ttestBF with a chosen prior. Shapiro-Wilk and a skewness interpretation; ggpubr histogram, density, QQ and ECDF panels.",
+      "oracle": "statsExpressions::one_sample_test, stats::shapiro.test, WRS2::trimcibt, BayesFactor::ttestBF",
+      "dependencies": {
+        "bundled": [],
+        "candidates": [
+          "plot renderer (excluded from effort)"
+        ]
+      },
+      "source_name": "jjhistostats"
+    },
+    {
+      "id": "pyjjpiestats",
+      "family": "jjstatsplot",
+      "menu": "Statistical Plots",
+      "title": "Pie Charts",
+      "aliases": [],
+      "source": null,
+      "baseline": {
+        "module": "jjstatsplot",
+        "version": "1.0.82.03",
+        "commit": "4c3cbe8de39d6259ee61d5fde28704f45e9cc8ed",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/jjpiestats.a.yaml": "2e14eee5a85dd4aa4652705365faf9aaab16a7106307cd6dacf028f0965da479",
+          "jamovi/jjpiestats.r.yaml": "e0b4088af05f4d30524fc5d609e87b6fe7cc86c28c6ab8a8c1845ed8292d1caf",
+          "jamovi/jjpiestats.u.yaml": "a2705ca49fab258a4b835e1afd78f9bcdb9fb97885896503289b48f44e70639e",
+          "R/jjpiestats.b.R": "e6567a450eeb312ab92ada066ead0a9821e6fb695ac65b52edf81f17e4b0d9b4"
+        }
+      },
+      "wave": 3,
+      "status": "planned",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "pending",
+        "gui": "pending",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "plot first: ggpiestats pie, or a ggpubr donut. With one variable: chi-square goodness of fit (equal proportions or a user ratio). With two: chi-square of independence with a Cramer's V CI, McNemar for paired data, or a BF. Per-slice proportion tests, and its own Fisher fallback when expected counts are below 5.",
+      "oracle": "statsExpressions::contingency_table, stats::chisq.test, stats::mcnemar.test(correct = FALSE), stats::fisher.test, BayesFactor::contingencyTableBF",
+      "dependencies": {
+        "bundled": [],
+        "candidates": [
+          "plot renderer (excluded from effort)"
+        ]
+      },
+      "source_name": "jjpiestats"
+    },
+    {
+      "id": "pyjjridges",
+      "family": "jjstatsplot",
+      "menu": "Statistical Plots",
+      "title": "Advanced Ridge Plot",
+      "aliases": [],
+      "source": null,
+      "baseline": {
+        "module": "jjstatsplot",
+        "version": "1.0.82.03",
+        "commit": "4c3cbe8de39d6259ee61d5fde28704f45e9cc8ed",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/jjridges.a.yaml": "8b9161fcb6c35a09fc0e83e9b2b9cb01747bef1d45897eee86fda9cfcdcdedbd",
+          "jamovi/jjridges.r.yaml": "f1d5037b9926cd2475be5e435bd9a782ea7e8985796c3a00008dd4bb4c569ec6",
+          "jamovi/jjridges.u.yaml": "a45f107bb4e4d635d91225e537fb21d426ac12d94f2393f4d8b8dfb90f3ea73f",
+          "R/jjridges.b.R": "5cbe214ef8f23c5ad73ada31367fd032d83aa9d879e92f1aacbc8e86480945cc"
+        }
+      },
+      "wave": 3,
+      "status": "planned",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "pending",
+        "gui": "pending",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "plot first: ggridges ridgeline densities (nrd0/nrd/SJ bandwidths, gradient fill). Two tables. 'Statistical Summary': n, mean, SD, median, IQR, skewness. 'Statistical Tests': pairwise Welch t, Wilcoxon with a Hodges-Lehmann CI, Yuen or ttestBF; Levene and Shapiro checks; Cohen's d, Hedges' g, eta^2 and omega^2 with CIs; percentile bootstrap CI.",
+      "oracle": "stats::t.test, stats::wilcox.test(conf.int = TRUE), WRS2::yuen, BayesFactor::ttestBF, effectsize::cohens_d/hedges_g/eta_squared/omega_squared, car::leveneTest(center = median), boot::boot.ci(type = 'perc')",
+      "dependencies": {
+        "bundled": [],
+        "candidates": [
+          "plot renderer (excluded from effort)"
+        ]
+      },
+      "source_name": "jjridges"
+    },
+    {
+      "id": "pyjjscatterstats",
+      "family": "jjstatsplot",
+      "menu": "Statistical Plots",
+      "title": "Scatter Plot",
+      "aliases": [],
+      "source": null,
+      "baseline": {
+        "module": "jjstatsplot",
+        "version": "1.0.82.03",
+        "commit": "4c3cbe8de39d6259ee61d5fde28704f45e9cc8ed",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/jjscatterstats.a.yaml": "7c3e69b9900dfe171d75d42c8232657f3f61636cf4b430c6d257ca6c352437a5",
+          "jamovi/jjscatterstats.r.yaml": "4a522dea64b773018886b04dcf8447afe1898fc610d5406b79e8ae74476635ff",
+          "jamovi/jjscatterstats.u.yaml": "73c70bfedabb4302d598d7284fd8dbb1eca5427dfede94b3f30606594b833a06",
+          "R/jjscatterstats.b.R": "3c5c58ffa6365d973230c3cbfe50bcc2714d42050005e6a390a120f0691341d8"
+        }
+      },
+      "wave": 3,
+      "status": "planned",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "pending",
+        "gui": "pending",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "plot first: ggscatterstats scatter with an lm/loess/gam smooth and ggExtra marginals. Subtitle: Pearson r (Fisher-z CI), Spearman rho, 20% winsorized r, or Bayesian BF10 with a posterior rho. Also a ggpubr scatter with stat_cor, and grouped panels.",
+      "oracle": "statsExpressions::corr_test, stats::cor.test, correlation::correlation(winsorize = 0.2), BayesFactor::correlationBF",
+      "dependencies": {
+        "bundled": [],
+        "candidates": [
+          "plot renderer (excluded from effort)"
+        ]
+      },
+      "source_name": "jjscatterstats"
+    },
+    {
+      "id": "pyjjsegmentedtotalbar",
+      "family": "jjstatsplot",
+      "menu": "Statistical Plots",
+      "title": "Segmented Total Bar Charts",
+      "aliases": [],
+      "source": null,
+      "baseline": {
+        "module": "jjstatsplot",
+        "version": "1.0.82.03",
+        "commit": "4c3cbe8de39d6259ee61d5fde28704f45e9cc8ed",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/jjsegmentedtotalbar.a.yaml": "3f452a45da27c3eba2e0159991f673b8e3923851e32ee26e692cab94effcd918",
+          "jamovi/jjsegmentedtotalbar.r.yaml": "e87ed8a0550ef54f56ccfd30696f922ed5f973d2a4486677c16cafdc974c8a9f",
+          "jamovi/jjsegmentedtotalbar.u.yaml": "96afc4ec6c6e27e9386ceb2b058a6aeeecb782587db0bf93e1e56111cb4883f2",
+          "R/jjsegmentedtotalbar.b.R": "f3629ae54392775ddb7ffa9bfcb73573637c4bc89a289240e314213a63ca8f4b"
+        }
+      },
+      "wave": 3,
+      "status": "planned",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "pending",
+        "gui": "pending",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "plot first: ggsegmentedtotalbar 100% (segmented-total) bars with composition and summary tables. A Pearson chi-square of independence without correction runs on the summed values, reporting the largest adjusted standardized residual; a note says it is valid only when the value variable is a count.",
+      "oracle": "stats::chisq.test(correct = FALSE), including $stdres",
+      "dependencies": {
+        "bundled": [],
+        "candidates": [
+          "plot renderer (excluded from effort)"
+        ]
+      },
+      "source_name": "jjsegmentedtotalbar"
+    },
+    {
+      "id": "pyjwaffle",
+      "family": "jjstatsplot",
+      "menu": "Statistical Plots",
+      "title": "Waffle Charts",
+      "aliases": [],
+      "source": null,
+      "baseline": {
+        "module": "jjstatsplot",
+        "version": "1.0.82.03",
+        "commit": "4c3cbe8de39d6259ee61d5fde28704f45e9cc8ed",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/jwaffle.a.yaml": "38807eeecbf6f8ce0a9cfca27a9dd2b4ebf89340c453af210723c3ad074d4414",
+          "jamovi/jwaffle.r.yaml": "b19821ddd7f9f9444b6b571ee0c47d6903576f9b473c925a80005c22a5206ba9",
+          "jamovi/jwaffle.u.yaml": "b9ecd8fe360f3e562290c4e627cf5d90667e58fdb4b687a161dbc1a0554405fd",
+          "R/jwaffle.b.R": "2e02bf5c67912d52c69eebdc04faf945d284348c8ac061a09b4caeb3b5d9b982"
+        }
+      },
+      "wave": 3,
+      "status": "planned",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "pending",
+        "gui": "pending",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "plot only: waffle chart of category proportions (waffle::geom_waffle), with optional facets and count or percent labels.",
+      "oracle": "none (figure only); the square allocation in waffle::geom_waffle layer data",
+      "dependencies": {
+        "bundled": [],
+        "candidates": [
+          "plot renderer (excluded from effort)"
+        ]
+      },
+      "source_name": "jwaffle"
+    },
+    {
+      "id": "pyjjwithinstats",
+      "family": "jjstatsplot",
+      "menu": "Statistical Plots",
+      "title": "Box-Violin Plots to Compare Within Groups",
+      "aliases": [],
+      "source": null,
+      "baseline": {
+        "module": "jjstatsplot",
+        "version": "1.0.82.03",
+        "commit": "4c3cbe8de39d6259ee61d5fde28704f45e9cc8ed",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/jjwithinstats.a.yaml": "889fee7d0945002113bd9ef2306eb27505be3d545a7eeb4f538703e6a655ed71",
+          "jamovi/jjwithinstats.r.yaml": "e7f8ef0f663741897e6939647d6222e47ea9be2975491868c9b8367f7fdc4622",
+          "jamovi/jjwithinstats.u.yaml": "08bcaf4691d51139f5a002ca86acd84f9987ac305a63ba86ac66f85b4bef2503",
+          "R/jjwithinstats.b.R": "a32fecc07edce644ed57f305181f5e39b255fd0cf407f706a6cf539fbe7cafc2"
+        }
+      },
+      "wave": 3,
+      "status": "planned",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "pending",
+        "gui": "pending",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "plot first: ggwithinstats paired box-violin with connecting paths. Subtitle: repeated-measures ANOVA (afex), Friedman, WRS2 rmanova or anovaBF; with 2 levels: paired t, signed-rank, Yuen or BF. Pairwise Student, Durbin-Conover or Yuen with p-adjustment. Its own 'Paired Changes' table gives mean/median/Hodges-Lehmann changes with a t, signed-rank (normal approximation) or seeded whole-case bootstrap CI, plus geometric-mean time ratios.",
+      "oracle": "statsExpressions::oneway_anova(paired = TRUE), statsExpressions::two_sample_test(paired = TRUE), statsExpressions::pairwise_comparisons (PMCMRplus::durbinAllPairsTest, WRS2::rmmcp), WRS2::rmanova, stats::wilcox.test(paired, conf.int = TRUE, exact = FALSE, correct = TRUE), DescTools::HodgesLehmann",
+      "dependencies": {
+        "bundled": [],
+        "candidates": [
+          "plot renderer (excluded from effort)"
+        ]
+      },
+      "source_name": "jjwithinstats"
+    },
+    {
+      "id": "pylinechart",
+      "family": "jjstatsplot",
+      "menu": "Statistical Plots",
+      "title": "Line Chart",
+      "aliases": [],
+      "source": null,
+      "baseline": {
+        "module": "jjstatsplot",
+        "version": "1.0.82.03",
+        "commit": "4c3cbe8de39d6259ee61d5fde28704f45e9cc8ed",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/linechart.a.yaml": "c6d7aad50bb6abf9a6d3b396e4e9fb1e76c14cc5ab716e3d0671cd69f31e6180",
+          "jamovi/linechart.r.yaml": "fa8f0e308ffd5d1c3a2fef1e4a05154e62fa48940936e8a4d84b1c40f3b19a7a",
+          "jamovi/linechart.u.yaml": "f2cbedba8f12b9cb69e14c93b162c8b470c849c3deea0fba8e499e19e3354e42",
+          "R/linechart.b.R": "dec65dae981333b68a92cd9b63d40d1945ad49b621a6e56000b1e18c38f1567d"
+        }
+      },
+      "wave": 3,
+      "status": "planned",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "pending",
+        "gui": "pending",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "plot first: line chart by group with CI ribbons, an lm/polynomial trend line and a reference line. A summary table, plus a 'naive' correlation table: Pearson r with CI, Spearman rho (asymptotic when tied), and OLS slope, intercept, R^2 and p, with a caveat that repeated measures are ignored.",
+      "oracle": "stats::cor.test (pearson, spearman), stats::lm",
+      "dependencies": {
+        "bundled": [],
+        "candidates": [
+          "plot renderer (excluded from effort)"
+        ]
+      },
+      "source_name": "linechart"
+    },
+    {
+      "id": "pylollipop",
+      "family": "jjstatsplot",
+      "menu": "Statistical Plots",
+      "title": "Lollipop Chart",
+      "aliases": [],
+      "source": null,
+      "baseline": {
+        "module": "jjstatsplot",
+        "version": "1.0.82.03",
+        "commit": "4c3cbe8de39d6259ee61d5fde28704f45e9cc8ed",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/lollipop.a.yaml": "0594e81c1f28863012e06aecdf0f31b2d9134b71a508da29319b5affc0a89490",
+          "jamovi/lollipop.r.yaml": "ee2e850006e3f54d4c3d552e7b7593bcee70d5fc8941ca3e1dc8eb1c92a69efd",
+          "jamovi/lollipop.u.yaml": "99352b63e6c46d33e9eb935f85731eb8cf7bceab3fa72c5d0685315f8621ed57",
+          "R/lollipop.b.R": "6b28da8c498b647173eb382843bb14389c9e2863a03c56050b12c8b4ce43faf4"
+        }
+      },
+      "wave": 3,
+      "status": "planned",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "pending",
+        "gui": "pending",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "plot only: lollipop chart of a value per category, with optional mean/median aggregation, sorting, highlighting and a reference line. A data summary table gives n, mean, median, SD and quartiles.",
+      "oracle": "stats::aggregate, stats::quantile (type 7)",
+      "dependencies": {
+        "bundled": [],
+        "candidates": [
+          "plot renderer (excluded from effort)"
+        ]
+      },
+      "source_name": "lollipop"
+    },
+    {
+      "id": "pyraincloud",
+      "family": "jjstatsplot",
+      "menu": "Statistical Plots",
+      "title": "Raincloud Plot",
+      "aliases": [],
+      "source": null,
+      "baseline": {
+        "module": "jjstatsplot",
+        "version": "1.0.82.03",
+        "commit": "4c3cbe8de39d6259ee61d5fde28704f45e9cc8ed",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/raincloud.a.yaml": "1cde1497fbdd9332dbc048c4757c7c299899bf16b03c5343a0add9f1cb45108a",
+          "jamovi/raincloud.r.yaml": "8be4ecbb15dad797236e7479b951ee35cf696fba7a6899ba411f7902172f1acf",
+          "jamovi/raincloud.u.yaml": "3e13e4d10b523a373704a86c05e2dc77719c474885a650702d3b65df9e0f3496",
+          "R/raincloud.b.R": "a742cc477cc9e1cf31005edaa575acb6acb4136c2dc8f45b6e111de76d5320ea"
+        }
+      },
+      "wave": 3,
+      "status": "planned",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "pending",
+        "gui": "pending",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "plot first: ggdist raincloud (half-eye + dots + box). Html panels give per-group n, mean, median, SD, IQR, skewness and kurtosis, then Shapiro-Wilk and Bartlett checks. These choose a t, Welch t or Wilcoxon test, or an ANOVA, Welch ANOVA or Kruskal-Wallis, followed by pairwise t or Wilcoxon tests with p-adjustment.",
+      "oracle": "stats::oneway.test, stats::t.test, stats::wilcox.test, stats::kruskal.test, stats::pairwise.t.test, stats::pairwise.wilcox.test, stats::bartlett.test, moments::skewness, moments::kurtosis (= scipy kurtosis(fisher=False))",
+      "dependencies": {
+        "bundled": [],
+        "candidates": [
+          "plot renderer (excluded from effort)"
+        ]
+      },
+      "source_name": "raincloud"
+    },
+    {
+      "id": "pystatsplot2",
+      "family": "jjstatsplot",
+      "menu": "Statistical Plots",
+      "title": "Automatic Plot Selection",
+      "aliases": [],
+      "source": null,
+      "baseline": {
+        "module": "jjstatsplot",
+        "version": "1.0.82.03",
+        "commit": "4c3cbe8de39d6259ee61d5fde28704f45e9cc8ed",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/statsplot2.a.yaml": "e4e61061548892f495ac7b4970ae4549c8d3c4a17cb7c8e1ac9997afc284f602",
+          "jamovi/statsplot2.r.yaml": "240551ea826db8ebe434911cc036716176b7241d7bce17b28e6ddfe042a26a73",
+          "jamovi/statsplot2.u.yaml": "c929a27accdb1602afba88b8490bd5751af7f31bd705fec87fa991778938c275",
+          "R/statsplot2.b.R": "61acada52d82017914684bbf92849ceac5d5222f0f6926b5eedf808c63d5dfad"
+        }
+      },
+      "wave": 3,
+      "status": "planned",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "pending",
+        "gui": "pending",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "plot only: chooses a ggstatsplot plot from the variable types. Continuous by factor gives ggbetweenstats or ggwithinstats; continuous by continuous gives ggscatterstats; factor by factor gives ggbarstats or an alluvial plot (ggalluvial/easyalluvial). Grouped variants exist, and the statistics come from those engines.",
+      "oracle": "ggstatsplot::ggbetweenstats, ggwithinstats, ggscatterstats, ggbarstats (statsExpressions engines)",
+      "dependencies": {
+        "bundled": [],
+        "candidates": [
+          "plot renderer (excluded from effort)"
+        ]
+      },
+      "source_name": "statsplot2"
+    },
+    {
+      "id": "pyagreement",
+      "family": "meddecide",
+      "menu": "Medical Decisions",
+      "title": "Interrater Reliability",
+      "aliases": [],
+      "source": null,
+      "baseline": {
+        "module": "meddecide",
+        "version": "1.1.2",
+        "commit": "c343bf8a2f9f711e7a0f6ed3941415170d1e3f58",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/agreement.a.yaml": "cb3547d42a59d78998df7514b846eb0d86a7efea04ee2793b4f3e17dca78567f",
+          "jamovi/agreement.r.yaml": "3131d23bd036e50eb976482a69d41812e375e79e087851dd2cfeae5a0b21ead8",
+          "jamovi/agreement.u.yaml": "abe372e484ec73a2961728c376f9829e1608a2e080f5ea225e958d620ece4438",
+          "R/agreement.b.R": "18939ee1429eaaba05a0fed64b9f175f659d1c269b2eadf87b4ad0ac157a5d71"
+        }
+      },
+      "wave": 4,
+      "status": "planned",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "pending",
+        "gui": "pending",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "Interrater reliability suite: Cohen's kappa (weighted, exact), Fleiss/Conger kappa, Krippendorff alpha (bootstrap CI), Gwet AC1/AC2, PABAK, ICC (irr::icc forms with F CIs), Lin's CCC, Bland-Altman/TDI, Kendall W, Light/Finn/Robinson/iota, Stuart-Maxwell/Bhapkar/rater bias, pairwise kappas, specific agreement, rater/case clustering, kappaSize sample size. Also lme4/ordinal mixed-effects and latent-model branches.",
+      "oracle": "irr::kappa2, irr::kappam.fleiss, irr::icc, irr::kripp.alpha, irr::kendall, irrCAC::gwet.ac1.raw, irrCAC::conger.kappa.raw, DescTools::CCC, DescTools::StuartMaxwellTest, vcd::Kappa",
+      "dependencies": {
+        "bundled": [],
+        "candidates": []
+      },
+      "source_name": "agreement"
+    },
+    {
+      "id": "pycotest",
+      "family": "meddecide",
+      "menu": "Medical Decisions",
+      "title": "Co-Testing Analysis",
+      "aliases": [],
+      "source": "analyses/meddecide/pycotest.py",
+      "baseline": {
+        "module": "meddecide",
+        "version": "1.1.2",
+        "commit": "c343bf8a2f9f711e7a0f6ed3941415170d1e3f58",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/cotest.a.yaml": "84978790c9adcafc1c1325bf3befbcb826c766c686fb1d76c17985dcea1d058b",
+          "jamovi/cotest.r.yaml": "ced7618ee5f72ffb3b5f66dce7e77c2b68264c4f21cf4792254d0f92f1a8e61e",
+          "jamovi/cotest.u.yaml": "8346028250738705eee4fc48a99216132052ced3b7d54c159a099403c53e47c6",
+          "R/cotest.b.R": "2176f22f4d23401a892bf421839fcaa144a26b180907399b2d56d2f801bb0989"
+        }
+      },
+      "wave": 2,
+      "status": "partial",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "existing core tests",
+        "gui": "pending",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "Calculator, no data: post-test probabilities for two tests used in parallel, from sensitivity, specificity, prevalence and conditional dependence (phi covariance among diseased and non-diseased). Fagan nomogram.",
+      "oracle": "the R analysis itself (closed-form Bayes, Gardner et al. 2000 covariance model)",
+      "dependencies": {
+        "bundled": [
+          "numpy",
+          "scipy"
+        ],
+        "candidates": []
+      },
+      "source_name": "cotest"
+    },
+    {
+      "id": "pydecision",
+      "family": "meddecide",
+      "menu": "Medical Decisions",
+      "title": "Diagnostic Accuracy",
+      "aliases": [],
+      "source": "analyses/meddecide/pydecision.py",
+      "baseline": {
+        "module": "meddecide",
+        "version": "1.1.2",
+        "commit": "c343bf8a2f9f711e7a0f6ed3941415170d1e3f58",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/decision.a.yaml": "0a13c1e3b07cef8a78e3e0d61c7332e5053a8472740c615c606b0d37c840782e",
+          "jamovi/decision.r.yaml": "fa28d8615628ff67e771e2731ad7a77438cb093234aac50feb0edbf062b962b5",
+          "jamovi/decision.u.yaml": "a62beec9e005f99726c43650404f31f31062a97161f2948bf22b1c5c2e220dbe",
+          "R/decision.b.R": "f6892113e42ca1ff773ed0f3363783a395f8da9ae5c47be09167ff6263be338b"
+        }
+      },
+      "wave": 2,
+      "status": "partial",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "existing core tests",
+        "gui": "pending",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "2x2 diagnostic accuracy against a gold standard: sensitivity, specificity, PPV, NPV, LR+/-, accuracy, DOR with epiR::epi.tests Clopper-Pearson CIs, Bayes recalculation at a prior prevalence, Fagan nomogram, and a misclassified-case listing and export (Output option).",
+      "oracle": "epiR::epi.tests(method = 'exact')",
+      "dependencies": {
+        "bundled": [
+          "numpy",
+          "scipy"
+        ],
+        "candidates": []
+      },
+      "source_name": "decision",
+      "baseline_title": "Medical Decision"
+    },
+    {
+      "id": "pydecisioncalculator",
+      "family": "meddecide",
+      "menu": "Medical Decisions",
+      "title": "Diagnostic Accuracy Calculator",
+      "aliases": [],
+      "source": "analyses/meddecide/pydecisioncalculator.py",
+      "baseline": {
+        "module": "meddecide",
+        "version": "1.1.2",
+        "commit": "c343bf8a2f9f711e7a0f6ed3941415170d1e3f58",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/decisioncalculator.a.yaml": "b84cb68d308f7e878204d593d652205e53db03783a6d97b6d14e59543c47d65b",
+          "jamovi/decisioncalculator.r.yaml": "35cf45620ced4a1e546804c346aae240437f5907427d97ea3524d78d0ba9fd99",
+          "jamovi/decisioncalculator.u.yaml": "e63e808e1931e7eca09757765570840627af1963805ed21bec3ddb8bbec4a9e4",
+          "R/decisioncalculator.b.R": "8915b122f9e678ab902200f32c393ae28fe8e66b6da858602c8d23428d4d62a2"
+        }
+      },
+      "wave": 2,
+      "status": "partial",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "existing core tests",
+        "gui": "pending",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "The same diagnostic-accuracy metrics as decision, from entered TP/FP/FN/TN counts (up to three cut-offs): epiR::epi.tests CIs, prevalence scenarios, workload.",
+      "oracle": "epiR::epi.tests(method = 'exact')",
+      "dependencies": {
+        "bundled": [
+          "numpy",
+          "scipy"
+        ],
+        "candidates": []
+      },
+      "source_name": "decisioncalculator",
+      "baseline_title": "Medical Decision Calculator"
+    },
+    {
+      "id": "pydecisioncombine",
+      "family": "meddecide",
+      "menu": "Medical Decisions",
+      "title": "Combine Medical Decision Tests",
+      "aliases": [],
+      "source": null,
+      "baseline": {
+        "module": "meddecide",
+        "version": "1.1.2",
+        "commit": "c343bf8a2f9f711e7a0f6ed3941415170d1e3f58",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/decisioncombine.a.yaml": "285c2dc33f93bbae16c74c24a444891f68b61c7598ed50aa928968eed40e672d",
+          "jamovi/decisioncombine.r.yaml": "c8ff68cf4337e9019f56b6a3e889cb0be932af607a232eee2dab28c64bb994de",
+          "jamovi/decisioncombine.u.yaml": "af8e194de0f51d416fcfcf8a5a19a5868c502337674179392acad93dc42483ac",
+          "R/decisioncombine.b.R": "216694ac56c1969a2a7e7692023646eec7eaa90daf996375e9703b26aeed313e"
+        }
+      },
+      "wave": 2,
+      "status": "planned",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "pending",
+        "gui": "pending",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "Combination rules for 2-3 binary tests (all, any, majority, patterns): epi.tests metrics per pattern, paired comparisons (Newcombe, Agresti-Caffo CIs), stratified association tests (Fisher, exact conditional Mantel-Haenszel), and rmultinom bootstrap optimism correction.",
+      "oracle": "epiR::epi.tests, stats::mantelhaen.test(exact = TRUE), stats::fisher.test, DescTools::BinomDiffCI(method = 'ac')",
+      "dependencies": {
+        "bundled": [],
+        "candidates": []
+      },
+      "source_name": "decisioncombine"
+    },
+    {
+      "id": "pydecisioncompare",
+      "family": "meddecide",
+      "menu": "Medical Decisions",
+      "title": "Compare Medical Decision Tests",
+      "aliases": [],
+      "source": null,
+      "baseline": {
+        "module": "meddecide",
+        "version": "1.1.2",
+        "commit": "c343bf8a2f9f711e7a0f6ed3941415170d1e3f58",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/decisioncompare.a.yaml": "9ddbd4ab70fb107108b7da4b143b78bef1221882e8e430c31dd42cf3f02eba56",
+          "jamovi/decisioncompare.r.yaml": "28c3b54bd8bb997c0a623637478a1ce6243aaebbd503d9354e5aa514f4bddcc3",
+          "jamovi/decisioncompare.u.yaml": "430a07c762a6f55cbb5a91dd141ccdff3ba1ef81b2aa82ec83ce545a5d7c0ecf",
+          "R/decisioncompare.b.R": "752f0325ac1b725e7ddf5ed16a5806ad108217277b177d3302de792e9904c110"
+        }
+      },
+      "wave": 2,
+      "status": "planned",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "pending",
+        "gui": "pending",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "Compares 2-3 tests on the same cases: per-test epi.tests metrics, paired McNemar (exact, mid-p or asymptotic) with Holm adjustment, Newcombe method-10 CIs for paired differences, Cochran's Q, OPA with a non-inferiority margin, and stratified tables.",
+      "oracle": "epiR::epi.tests, stats::mcnemar.test, stats::binom.test, stats::p.adjust(method = 'holm'), DescTools::CochranQTest",
+      "dependencies": {
+        "bundled": [],
+        "candidates": []
+      },
+      "source_name": "decisioncompare"
+    },
+    {
+      "id": "pydecisioncurve",
+      "family": "meddecide",
+      "menu": "Medical Decisions",
+      "title": "Decision Curve Analysis",
+      "aliases": [],
+      "source": "analyses/meddecide/pydecisioncurve.py",
+      "baseline": {
+        "module": "meddecide",
+        "version": "1.1.2",
+        "commit": "c343bf8a2f9f711e7a0f6ed3941415170d1e3f58",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/decisioncurve.a.yaml": "b67f615ef0dc081d405e36ab68fa5c1010b9901014294b25042b31ab46720e16",
+          "jamovi/decisioncurve.r.yaml": "aaa171e8806df90c18598164f32361b2042146aea0e40b0b260c1d3b06ed9dfc",
+          "jamovi/decisioncurve.u.yaml": "458f68bd5fc876747b846c264074572094ed5b49df00393fc79104a0a76c3466",
+          "R/decisioncurve.b.R": "2d236d08d4902678974af2a2d679ad99441ccf4ef791b0e76e393076172db1b7"
+        }
+      },
+      "wave": 2,
+      "status": "partial",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "existing core tests",
+        "gui": "pending",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "Decision curve analysis for a binary outcome: net benefit of model probability columns vs treat-all and treat-none over a threshold grid, bootstrap CIs and pairwise model comparisons, interventions avoided, clinical impact, standardized net benefit, relative utility, cost-benefit.",
+      "oracle": "dcurves::dca (net benefit, interventions avoided)",
+      "dependencies": {
+        "bundled": [
+          "numpy",
+          "scipy"
+        ],
+        "candidates": []
+      },
+      "source_name": "decisioncurve"
+    },
+    {
+      "id": "pyenhancedroc",
+      "family": "meddecide",
+      "menu": "Medical Decisions",
+      "title": "Clinical ROC Analysis",
+      "aliases": [],
+      "source": null,
+      "baseline": {
+        "module": "meddecide",
+        "version": "1.1.2",
+        "commit": "c343bf8a2f9f711e7a0f6ed3941415170d1e3f58",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/enhancedROC.a.yaml": "bda5a55f3a656bae1c78ec533cbbda56e6b221d38ed3ade62374d08c31e214f2",
+          "jamovi/enhancedROC.r.yaml": "21d26b3ae7f032eacb832f4e6ea085a55ac7db6eca198060b5787d82185d7aca",
+          "jamovi/enhancedROC.u.yaml": "3b74d8840321e47d4175ca2f6cb7eccb26f68c832024834e4b92f205db763090",
+          "R/enhancedROC.b.R": "2092dd82113f4d94491cf189bf5175ecf252c92609f059e21cef3a45f0fd91e4"
+        }
+      },
+      "wave": 2,
+      "status": "planned",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "pending",
+        "gui": "pending",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "Clinical ROC: pROC AUC with DeLong or bootstrap CIs, Youden and constrained cut-points, partial AUC, smoothing, CROC, convex hull, DeLong comparisons, multiclass (Hand-Till), calibration (logistic recalibration, Hosmer-Lemeshow, Brier, ns() spline calibration, E:O), NNT/decision impact, internal validation.",
+      "oracle": "pROC::roc, pROC::ci.auc (DeLong), pROC::coords, pROC::roc.test, pROC::smooth, pROC::multiclass.roc, boot::boot.ci, stats::glm",
+      "dependencies": {
+        "bundled": [],
+        "candidates": []
+      },
+      "source_name": "enhancedROC"
+    },
+    {
+      "id": "pykappaci",
+      "family": "meddecide",
+      "menu": "Medical Decisions",
+      "title": "Kappa Sample Size by Confidence Interval",
+      "aliases": [],
+      "source": "analyses/meddecide/pykappaci.py",
+      "baseline": {
+        "module": "meddecide",
+        "version": "1.1.2",
+        "commit": "c343bf8a2f9f711e7a0f6ed3941415170d1e3f58",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/kappaSizeCI.a.yaml": "693a3167a937ba97cd83ca6a6f68e87103e045d6010f6b588b6a148419199a1d",
+          "jamovi/kappaSizeCI.r.yaml": "50abe90e2d2cb0a50c8eece499b0cc760fff70c7dd7d45674b80cbebcbce31ec",
+          "jamovi/kappaSizeCI.u.yaml": "9856a3e6d64d423cf15362c31c0f64e9e98f2755c468196672509d3dc3dac32e",
+          "R/kappaSizeCI.b.R": "ca361d6b3d273fbd98cd45c5d4a578c6a4a1059eb43890afd05391ae2636c137"
+        }
+      },
+      "wave": 2,
+      "status": "partial",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "existing core tests",
+        "gui": "pending",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "Number of subjects needed so the kappa CI excludes a lower bound, via kappaSize::CIBinary/CI3Cats/CI4Cats/CI5Cats. Goodness-of-fit model: Donner-Eliasziw for 2 raters; Altaye-Donner-Klar/Eliasziw cells for multiple raters and 2-5 categories.",
+      "oracle": "kappaSize::CIBinary, kappaSize::CI3Cats, kappaSize::CI4Cats, kappaSize::CI5Cats",
+      "dependencies": {
+        "bundled": [
+          "numpy",
+          "scipy"
+        ],
+        "candidates": []
+      },
+      "source_name": "kappaSizeCI",
+      "baseline_title": "Confidence Interval Approach for the Number of Subjects Required"
+    },
+    {
+      "id": "pykappafixedn",
+      "family": "meddecide",
+      "menu": "Medical Decisions",
+      "title": "Kappa Lower Limit for a Fixed Sample Size",
+      "aliases": [],
+      "source": "analyses/meddecide/pykappafixedn.py",
+      "baseline": {
+        "module": "meddecide",
+        "version": "1.1.2",
+        "commit": "c343bf8a2f9f711e7a0f6ed3941415170d1e3f58",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/kappaSizeFixedN.a.yaml": "16b0d6612062f86f1aff78366d2be0264664cfdcf1ea46b2c3197e5a29fc265a",
+          "jamovi/kappaSizeFixedN.r.yaml": "6c96e34da56ef669e51fabc37e9762962853de6bc6c776105989cb7fa14d3a64",
+          "jamovi/kappaSizeFixedN.u.yaml": "ea9f596a8aabd3396bdc413b073ed54d32218e820e17559f7bbbb09600eb91b7",
+          "R/kappaSizeFixedN.b.R": "113c78d65d31ce46fb4f1ff5ef9d4e1d9e68f31fd417436a842f0a62f8591e3c"
+        }
+      },
+      "wave": 2,
+      "status": "partial",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "existing core tests",
+        "gui": "pending",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "Lowest expected kappa (lower CI bound) for a fixed N, via kappaSize::FixedNBinary/FixedN3Cats/FixedN4Cats/FixedN5Cats, same goodness-of-fit model.",
+      "oracle": "kappaSize::FixedNBinary, kappaSize::FixedN3Cats, kappaSize::FixedN4Cats, kappaSize::FixedN5Cats",
+      "dependencies": {
+        "bundled": [
+          "numpy",
+          "scipy"
+        ],
+        "candidates": []
+      },
+      "source_name": "kappaSizeFixedN",
+      "baseline_title": "Lowest Expected Kappa for a Fixed Sample Size"
+    },
+    {
+      "id": "pykappapower",
+      "family": "meddecide",
+      "menu": "Medical Decisions",
+      "title": "Kappa Sample Size by Power",
+      "aliases": [],
+      "source": "analyses/meddecide/pykappapower.py",
+      "baseline": {
+        "module": "meddecide",
+        "version": "1.1.2",
+        "commit": "c343bf8a2f9f711e7a0f6ed3941415170d1e3f58",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/kappaSizePower.a.yaml": "62c78720ed4498f80f0d02c75ff62eb82ef17fcbded0ca840663ad1f4aa1011d",
+          "jamovi/kappaSizePower.r.yaml": "166f34dfef015dcfc1b1fba0affd617d7772c8f224effac131e9de06afd37480",
+          "jamovi/kappaSizePower.u.yaml": "aebdc532aff6e74df1789d6b318d0cc9c6337792352e08a455a3816eec4e8439",
+          "R/kappaSizePower.b.R": "809cdfcd5c6598fc6197fb954d0ec8a22485583b472869b0b333d13f827d8dd1"
+        }
+      },
+      "wave": 2,
+      "status": "partial",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "existing core tests",
+        "gui": "legacy .omv reopen and power 0.8 -> 0.9 -> 0.8 rerun verified",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "Power-based sample size for testing kappa0 against kappa1 (kappaSize::PowerBinary/Power3Cats/Power4Cats/Power5Cats, noncentral chi-square), plus an in-R Monte Carlo of the pooled-cell goodness-of-fit test for binary outcomes (seeded rmultinom, vectorized bisection ML).",
+      "oracle": "kappaSize::PowerBinary, kappaSize::Power3Cats, kappaSize::Power4Cats, kappaSize::Power5Cats, and the analysis's own .simPowerBinary",
+      "dependencies": {
+        "bundled": [
+          "numpy",
+          "scipy"
+        ],
+        "candidates": []
+      },
+      "source_name": "kappaSizePower",
+      "baseline_title": "Power Approach for the Number of Subjects Required"
+    },
+    {
+      "id": "pylassologistic",
+      "family": "meddecide",
+      "menu": "Medical Decisions",
+      "title": "LASSO Logistic Regression",
+      "aliases": [],
+      "source": null,
+      "baseline": {
+        "module": "meddecide",
+        "version": "1.1.2",
+        "commit": "c343bf8a2f9f711e7a0f6ed3941415170d1e3f58",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/lassologistic.a.yaml": "f721fc952c7d214b48b47b2961827aff43ae39b75d901d38600c2f5a18b2ce81",
+          "jamovi/lassologistic.r.yaml": "b0c634cf0c4bd379e69b0b329d8466ec62d58f906403b1214df38649935ec423",
+          "jamovi/lassologistic.u.yaml": "8d166e40ee0bbff42c8036860669ad6283bf18d76803dadade47943c7ea36254",
+          "R/lassologistic.b.R": "073fb5c15f7f2131e9c85c7211ad3e175e12abe34defcec1c044202742add31e"
+        }
+      },
+      "wave": 4,
+      "status": "planned",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "pending",
+        "gui": "pending",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "Penalized logistic regression with glmnet (lasso, ridge or elastic net; cv.glmnet lambda.min/1se), bootstrap validation, pROC AUC, a coefficient-based points score with cut-offs, and a predictions export (Output option).",
+      "oracle": "glmnet::cv.glmnet(family = 'binomial'), glmnet::glmnet, pROC::roc",
+      "dependencies": {
+        "bundled": [],
+        "candidates": [
+          "scikit-learn (L1 logistic; would not reproduce glmnet's lambda path and standardization exactly; not bundled)"
+        ]
+      },
+      "source_name": "lassologistic"
+    },
+    {
+      "id": "pynogoldstandard",
+      "family": "meddecide",
+      "menu": "Medical Decisions",
+      "title": "Analysis Without Gold Standard",
+      "aliases": [],
+      "source": null,
+      "baseline": {
+        "module": "meddecide",
+        "version": "1.1.2",
+        "commit": "c343bf8a2f9f711e7a0f6ed3941415170d1e3f58",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/nogoldstandard.a.yaml": "249d56382fa384c64131e0f74d82ab9cfe0123ea654db070410424b7fb622468",
+          "jamovi/nogoldstandard.r.yaml": "bfadf02fa7eb7a383570ad79aad8cb42c04721503d26eeadb4a7d8d54d38d796",
+          "jamovi/nogoldstandard.u.yaml": "a3ffc12a602e3ef6009abe53b2024f9805f90c78710e20a009f70c9939b17f2e",
+          "R/nogoldstandard.b.R": "ca7525c3b035d66630a756e8abb2e73aa0018fca11dd5a52c71085ce6e4ab1b4"
+        }
+      },
+      "wave": 4,
+      "status": "planned",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "pending",
+        "gui": "pending",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "Diagnostic accuracy without a gold standard for 2-5 binary tests: 2-class latent class model (poLCA EM, conditional independence), own penalized EM (Beta(2,1) priors, MAP point estimate), composite reference, all/any-positive rules, kappa between tests, case-bootstrap CIs.",
+      "oracle": "poLCA::poLCA (nclass = 2), irr::kappa2",
+      "dependencies": {
+        "bundled": [],
+        "candidates": []
+      },
+      "source_name": "nogoldstandard"
+    },
+    {
+      "id": "pypsychopdaroc",
+      "family": "meddecide",
+      "menu": "Medical Decisions",
+      "title": "Advanced ROC Analysis",
+      "aliases": [],
+      "source": null,
+      "baseline": {
+        "module": "meddecide",
+        "version": "1.1.2",
+        "commit": "c343bf8a2f9f711e7a0f6ed3941415170d1e3f58",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/psychopdaROC.a.yaml": "1c927326037b8234685ab463ddef37a2f3fabe35e9c5820ae921a457c2320503",
+          "jamovi/psychopdaROC.r.yaml": "4e25aee4c815f09a1b52d0077a4cd69a4d3071882b8ae59d28de6402444e6571",
+          "jamovi/psychopdaROC.u.yaml": "4b31a841363b2046d2bb27e559ce56ce406c23540731d779873dd798f1217e6b",
+          "R/psychopdaROC.b.R": "3346f63183088c45838d502bd08df1edb0285592c5b64149cf4d389c62af1bf9"
+        }
+      },
+      "wave": 2,
+      "status": "planned",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "pending",
+        "gui": "pending",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "Optimal cut-point ROC with cutpointr: maximize/minimize a metric, Youden, cost/utility, loess-smoothed, bootstrapped, or normal/kernel Youden. Also pROC AUC/DeLong, partial AUC, IDI/NRI, power for AUC, Bayesian AUC, fixed-sens/spec interpolation, and meta-analysis of AUCs.",
+      "oracle": "cutpointr::cutpointr (method/metric), pROC::roc, pROC::ci.auc, pROC::roc.test, pROC::coords, pROC::var, pROC::cov",
+      "dependencies": {
+        "bundled": [],
+        "candidates": []
+      },
+      "source_name": "psychopdaROC"
+    },
+    {
+      "id": "pysequentialtests",
+      "family": "meddecide",
+      "menu": "Medical Decisions",
+      "title": "Sequential Testing",
+      "aliases": [],
+      "source": "analyses/meddecide/pysequentialtests.py",
+      "baseline": {
+        "module": "meddecide",
+        "version": "1.1.2",
+        "commit": "c343bf8a2f9f711e7a0f6ed3941415170d1e3f58",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/sequentialtests.a.yaml": "6d79a471970fadcb7aae77c7490449af1c47303f97c0f70ed51fac4fb3d88918",
+          "jamovi/sequentialtests.r.yaml": "8f09ba0ce29513315523ead96ebb765471fc31da84a30b89bc6de7106165dac6",
+          "jamovi/sequentialtests.u.yaml": "8d2bb574cb1e455ea7de777eb29b6858a5a54dd9f03f066a20908adf69bb96ad",
+          "R/sequentialtests.b.R": "23ca7de44e0aaab2724aa7b8c5400015e7b0efe28d49c5b6bd3bab18e20afd46"
+        }
+      },
+      "wave": 2,
+      "status": "partial",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "existing core tests",
+        "gui": "pending",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "Closed-form combined Se/Sp/PPV/NPV/LR+/LR-/NNT for two tests (serial-positive, serial-negative, parallel) under conditional independence, per-population flow counts and cost per strategy; five ggplot figures (flow diagram, population flow, sensitivity analysis).",
+      "oracle": "sequentialtests() itself / hand-computed identities (serial+: Se1*Se2, Sp1+(1-Sp1)*Sp2; serial-/parallel: Se1+(1-Se1)*Se2, Sp1*Sp2) for each preset",
+      "dependencies": {
+        "bundled": [
+          "numpy",
+          "scipy"
+        ],
+        "candidates": []
+      },
+      "source_name": "sequentialtests",
+      "baseline_title": "Sequential Testing Analysis"
+    },
+    {
+      "id": "pydatetimeconverter",
+      "family": "jsurvival",
+      "menu": "Survival",
+      "title": "DateTime Converter",
+      "aliases": [],
+      "source": null,
+      "baseline": {
+        "module": "jsurvival",
+        "version": "1.1.1",
+        "commit": "283a8275e3dd6704f6bba2164215442d3d293b8c",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/datetimeconverter.a.yaml": "a8d7160a48a2bdc1be4c9a4c56308e2cb0e40b92cfb647568d1a2c34698d9cd7",
+          "jamovi/datetimeconverter.r.yaml": "9235339b15caf026bf42d0183b9e44959e2c90c8b5c9286e93b5ca850a95287e",
+          "jamovi/datetimeconverter.u.yaml": "3706ab5fc2444fefc3c6a9c8f189f179f07e335c1ea9bd733d4d5e3ba9f209f4",
+          "R/datetimeconverter.b.R": "0b993257e0667c87034265e72bee6e163432a7ed718f0c46680ff4e68ae59b55"
+        }
+      },
+      "wave": 1,
+      "status": "planned",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "pending",
+        "gui": "pending",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "Data wrangling, not statistics: lubridate parsing of date-time text, Excel serials (1900/1904) and Unix epochs with format auto-detection and two-digit-year rules, timezone handling, then component extraction (year, month, weekday, week, quarter, day of year) written back as Output columns, plus parse-quality tables",
+      "oracle": "lubridate::ymd_hms / dmy_hms / mdy_hms and date-only variants, lubridate::with_tz, lubridate::force_tz, lubridate::week, lubridate::quarter, lubridate::yday",
+      "dependencies": {
+        "bundled": [],
+        "candidates": [
+          "zoneinfo + tzdata (absent from the trimmed bundled stdlib; the free-text timezone option needs it)"
+        ]
+      },
+      "source_name": "datetimeconverter"
+    },
+    {
+      "id": "pylassocox",
+      "family": "jsurvival",
+      "menu": "Survival",
+      "title": "Lasso-Cox Regression",
+      "aliases": [],
+      "source": null,
+      "baseline": {
+        "module": "jsurvival",
+        "version": "1.1.1",
+        "commit": "283a8275e3dd6704f6bba2164215442d3d293b8c",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/lassocox.a.yaml": "ad0d347d1c1cff4ef9288164a0946ee82d5939174ee43f68e7e7264a113968bb",
+          "jamovi/lassocox.r.yaml": "cf41e33d2ed5fac3be402377f6a75ab21cf3b782ed29af3a8f51b8af298ea510",
+          "jamovi/lassocox.u.yaml": "46d65456f5399b48dacc228b9117ca538be97dba87f9c75bd8fc6b533f990a80",
+          "R/lassocox.b.R": "c78929a81c3b29375f9473261ea6c297b1c038cfa66dc1ed546faf7dd52f9af2"
+        }
+      },
+      "wave": 4,
+      "status": "planned",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "pending",
+        "gui": "pending",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "Cross-validated LASSO Cox (glmnet::cv.glmnet family='cox', lambda.min or lambda.1se, seeded folds), selected-coefficient/HR table, Harrell C (survival::concordance), cox.zph on the refit, linear-predictor risk groups with KM; CV/path/coefficient/survival plots",
+      "oracle": "glmnet::cv.glmnet(family = 'cox'), glmnet::coef.glmnet, survival::concordance, survival::coxph, survival::cox.zph",
+      "dependencies": {
+        "bundled": [],
+        "candidates": [
+          "scikit-survival (CoxnetSurvivalAnalysis), or an own coordinate-descent Cox-lasso path"
+        ]
+      },
+      "source_name": "lassocox"
+    },
+    {
+      "id": "pymultisurvival",
+      "family": "jsurvival",
+      "menu": "Survival",
+      "title": "Multivariable Survival Analysis",
+      "aliases": [],
+      "source": null,
+      "baseline": {
+        "module": "jsurvival",
+        "version": "1.1.1",
+        "commit": "283a8275e3dd6704f6bba2164215442d3d293b8c",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/multisurvival.a.yaml": "d5b8f5eb178fff1878f2a1543e45f5db8ab62cbb3c6423e035043fdb63267554",
+          "jamovi/multisurvival.r.yaml": "73ae8298b14a2adf7354368a3af54d334e2726be795a65a1c6903b69e1fdad94",
+          "jamovi/multisurvival.u.yaml": "e465b4ef6abf61274fe0d1c53067aaa5b42b0a4f5e773cd4dfaff51a997a093d",
+          "R/multisurvival.b.R": "c4a832902ec6d053647991bd14af8a2caef98aed2c0f7b907fe7f7b675c5c3a0"
+        }
+      },
+      "wave": 4,
+      "status": "planned",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "pending",
+        "gui": "pending",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "Multivariable Cox PH (coxph, Efron ties, interactions, strata, landmark), finalfit HR tables, cox.zph, KM and adjusted curves, risk-score groups, bootstrap optimism-corrected C, riskRegression::Score time-dependent AUC/Brier, rms::cph nomogram, Fine-Gray via survival::finegray, person-time rates, AIC/LR/drop1 model comparison",
+      "oracle": "survival::coxph, survival::cox.zph, survival::finegray, finalfit::finalfit, rms::cph, rms::nomogram, riskRegression::Score, survminer::ggadjustedcurves",
+      "dependencies": {
+        "bundled": [],
+        "candidates": []
+      },
+      "source_name": "multisurvival"
+    },
+    {
+      "id": "pyoddsratio",
+      "family": "jsurvival",
+      "menu": "Survival",
+      "title": "Odds Ratio Table and Plot",
+      "aliases": [],
+      "source": null,
+      "baseline": {
+        "module": "jsurvival",
+        "version": "1.1.1",
+        "commit": "283a8275e3dd6704f6bba2164215442d3d293b8c",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/oddsratio.a.yaml": "3b7bc37f12adad6c42efeca19120e3d7f754a8cb23aff5d7d25012927685b253",
+          "jamovi/oddsratio.r.yaml": "31ed7fac5dc3df73ef53ac2c564ded3b2b5243a9a460302b37a93c4116fbfb60",
+          "jamovi/oddsratio.u.yaml": "2dffa547e62fe1687ab6db43af2c730c8749569d253dcbe07a58dbccfec809eb",
+          "R/oddsratio.b.R": "ce954b26a10e380ce7dfa7305d5553800ed362c44eab59af45889842ea020efa"
+        }
+      },
+      "wave": 4,
+      "status": "planned",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "pending",
+        "gui": "pending",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "Binary logistic regression OR table via finalfit (univariable + multivariable glm, profile-likelihood CIs, AIC/C-statistic/H&L metrics), optional Firth penalized logistic (logistf), 2x2 diagnostic metrics for one predictor (sens/spec with Clopper-Pearson, LR+/LR- by the Simel log method, as epiR::epi.tests), forest plot and rms::lrm nomogram",
+      "oracle": "stats::glm(family = binomial) with stats::confint (profile), finalfit::finalfit(metrics = TRUE), logistf::logistf, epiR::epi.tests, rms::lrm",
+      "dependencies": {
+        "bundled": [],
+        "candidates": []
+      },
+      "source_name": "oddsratio"
+    },
+    {
+      "id": "pyoutcomeorganizer",
+      "family": "jsurvival",
+      "menu": "Survival",
+      "title": "Outcome Organizer for Survival Analysis",
+      "aliases": [],
+      "source": null,
+      "baseline": {
+        "module": "jsurvival",
+        "version": "1.1.1",
+        "commit": "283a8275e3dd6704f6bba2164215442d3d293b8c",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/outcomeorganizer.a.yaml": "5f89908efaeff168cc463aa713f6ab1d1cef38c0c01852327ae2e6bf90e15e0e",
+          "jamovi/outcomeorganizer.r.yaml": "e59962c43a7e8443ef16b3de00b4d7ffa1fbfeccb0b75bb85f7beefe5f3021b4",
+          "jamovi/outcomeorganizer.u.yaml": "6dd7740cd6abadd064d5758d5ee263455f20ac8c2c5091341ec416e58aeb77c0",
+          "R/outcomeorganizer.b.R": "a9236d65295b8898fd33ce0fe68157b79539193947d7f4abda3d35f1005727c0"
+        }
+      },
+      "wave": 1,
+      "status": "planned",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "pending",
+        "gui": "pending",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "Data recoding: derives event indicators for overall, cause-specific, competing-risk, progression-free and multistate analyses from outcome/recurrence levels, with an event-priority hierarchy and interval/administrative censoring; writes Output columns and frequency/diagnostic tables",
+      "oracle": "no statistical oracle; the recoding rules in R/outcomeorganizer.b.R",
+      "dependencies": {
+        "bundled": [],
+        "candidates": []
+      },
+      "source_name": "outcomeorganizer"
+    },
+    {
+      "id": "pysinglearm",
+      "family": "jsurvival",
+      "menu": "Survival",
+      "title": "Single Arm Survival",
+      "aliases": [],
+      "source": null,
+      "baseline": {
+        "module": "jsurvival",
+        "version": "1.1.1",
+        "commit": "283a8275e3dd6704f6bba2164215442d3d293b8c",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/singlearm.a.yaml": "6f913349c47e6330d0aacf54713095fbafb8db2591aea1e5de996a836989eaea",
+          "jamovi/singlearm.r.yaml": "5740efc983a2725ddea40e93b93b61e33e8f0d97ec68ef17fffc312176f88d6e",
+          "jamovi/singlearm.u.yaml": "56146e6fa6d1938e93e020c51002b71884a9c1cc607e527903356ce5cc51c2d3",
+          "R/singlearm.b.R": "46cee355442612a98d97df3a21caed19c3bdc40adfd3d1760898f3fc5a37e91c"
+        }
+      },
+      "wave": 4,
+      "status": "planned",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "pending",
+        "gui": "pending",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "Single-cohort Kaplan-Meier: median survival with CI, survival at user cut points (Greenwood, survfit 'log' CI), reverse-KM follow-up, person-time incidence rates with exact Poisson CIs, competing-risk cumulative incidence (cmprsk::cuminc), Nelson-Aalen baseline hazard, landmark and date-derived follow-up; KM/cumulative-event/cumulative-hazard/KMunicate plots",
+      "oracle": "survival::survfit + summary.survfit(times =) and its median/0.95LCL/0.95UCL table, cmprsk::cuminc, survival::basehaz, exact Poisson limits via stats::qchisq",
+      "dependencies": {
+        "bundled": [],
+        "candidates": []
+      },
+      "source_name": "singlearm"
+    },
+    {
+      "id": "pysurvival",
+      "family": "jsurvival",
+      "menu": "Survival",
+      "title": "Survival Analysis",
+      "aliases": [],
+      "source": null,
+      "baseline": {
+        "module": "jsurvival",
+        "version": "1.1.1",
+        "commit": "283a8275e3dd6704f6bba2164215442d3d293b8c",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/survival.a.yaml": "1454e4edd9480fa05c697ed39d966e38739190512b6bfa19c3ad9614303b7830",
+          "jamovi/survival.r.yaml": "8675e4d7be145df8c1d9a60bbb51d215822e254299a595c75fbdf675cc8d11e6",
+          "jamovi/survival.u.yaml": "33ead3242aacbbfdc7a30045399f131a7d8a98073e4ab058568afcf983e4d22d",
+          "R/survival.b.R": "dbfa6b283fc3d6348905b68a888cbc42ca0755636d818e53f7915d94f7db12f2"
+        }
+      },
+      "wave": 4,
+      "status": "planned",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "pending",
+        "gui": "pending",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "Univariable time-to-event comparison: KM by group, log-rank and Fleming-Harrington weighted log-rank (survdiff rho), pairwise tests with p-adjust, Cox HR (coxph Efron) with cox.zph, stratified and age-adjusted Cox (including age as time scale), RMST (survfit rmean), person-time rates, adjusted curves, flexsurv parametric fits, calibration, restricted cubic splines; many plots",
+      "oracle": "survival::survfit, survival::survdiff(rho =), survminer::pairwise_survdiff, survival::coxph, survival::cox.zph, summary(survfit, rmean =), flexsurv::flexsurvreg",
+      "dependencies": {
+        "bundled": [],
+        "candidates": []
+      },
+      "source_name": "survival"
+    },
+    {
+      "id": "pysurvivalcont",
+      "family": "jsurvival",
+      "menu": "Survival",
+      "title": "Survival Analysis for Continuous Explanatory Variable",
+      "aliases": [],
+      "source": null,
+      "baseline": {
+        "module": "jsurvival",
+        "version": "1.1.1",
+        "commit": "283a8275e3dd6704f6bba2164215442d3d293b8c",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/survivalcont.a.yaml": "fe8613bc04bde6f14f4316162c23f6378fe0d14e991d6e4e981d5c8b30181766",
+          "jamovi/survivalcont.r.yaml": "881798e80c2e4df7177c85f0f1c3850215b45775d60d35d11414571c3f945d66",
+          "jamovi/survivalcont.u.yaml": "090464b70d381e759ff0db9e66f6b993690fc988e252896bd283fe97d73d4c35",
+          "R/survivalcont.b.R": "38761335c1b3f0bd8951145143928e8ac5c7c649cd1435fef672bd40e3256345"
+        }
+      },
+      "wave": 4,
+      "status": "planned",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "pending",
+        "gui": "pending",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "Continuous-predictor survival: Cox HR per unit, optimal cut-off by maximally selected log-rank statistic (survminer::surv_cutpoint / maxstat), multiple cut-offs (quantile, recursive maxstat, rpart survival tree, min-p), KM/log-rank of the derived groups, RMST, stratified Cox, cox.zph, residual diagnostics",
+      "oracle": "survival::coxph, survminer::surv_cutpoint, maxstat::maxstat.test(smethod = 'LogRank'), rpart::rpart(method = 'exp'), survival::survdiff, survival::cox.zph",
+      "dependencies": {
+        "bundled": [],
+        "candidates": []
+      },
+      "source_name": "survivalcont"
+    },
+    {
+      "id": "pytimeinterval",
+      "family": "jsurvival",
+      "menu": "Survival",
+      "title": "Comprehensive Time Interval Calculator",
+      "aliases": [],
+      "source": null,
+      "baseline": {
+        "module": "ClinicoPathJamoviModule",
+        "version": "1.0.81.01",
+        "commit": "9fae7c5c7af84e65dfff9262d3bb2a031618753e",
+        "provenance": "production-routing candidate",
+        "files": {
+          "jamovi/timeinterval.a.yaml": "221e586a99f969d864d338a7e83d7e979f364afe721085cfb8683f508650c911",
+          "jamovi/timeinterval.r.yaml": "69495710f3bf59c564d45838fe4a7b2feaf83d2f5daeac5d3045a848bcc166c7",
+          "jamovi/timeinterval.u.yaml": "6c32c907b0a7ca21e0ccf1779c2300ea0618fb7b34b0a966872aaabf9ac41c55",
+          "R/timeinterval.b.R": "a4767c3bf04017bee4c129d49b68e71f525ced23c6e0fa13ab9115139b543067"
+        }
+      },
+      "wave": 1,
+      "status": "planned",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "pending",
+        "gui": "pending",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "Date arithmetic: parses start/end dates (lubridate formats), computes intervals in days/weeks/months/years on a calendar or average-length basis, landmark subsetting, negative/extreme flags, summary (mean with t CI, median, IQR) and person-time totals; writes an Output column",
+      "oracle": "lubridate::interval, lubridate::time_length, stats::qt",
+      "dependencies": {
+        "bundled": [],
+        "candidates": []
+      },
+      "source_name": "timeinterval"
+    },
+    {
+      "id": "pydiagnosticmeta",
+      "family": "oncopath",
+      "menu": "Oncology",
+      "title": "Diagnostic Test Meta-Analysis for Pathology",
+      "aliases": [],
+      "source": null,
+      "baseline": {
+        "module": "OncoPath",
+        "version": "1.1.2",
+        "commit": "0cf453ac9085a576d1d32094be60fd07adb65d27",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/diagnosticmeta.a.yaml": "b065903605b86ed60a3e8dd07d817c52ff382f0e9dc2e6bd4dd3d94eff348fdf",
+          "jamovi/diagnosticmeta.r.yaml": "308b1d5d47926b86ff8a9b68a6c74347bf8596232dc41984888218b8b5f0ccbf",
+          "jamovi/diagnosticmeta.u.yaml": "879acc8e0766eda01847745ba2a492dc386eda538cb7d8c349fba41ecfe311ad",
+          "R/diagnosticmeta.b.R": "cc7f2ba27987c8a57ab0c3a27adeb4f40b8dca42ec01dd5f25ba77759a36e5a9"
+        }
+      },
+      "wave": 5,
+      "status": "planned",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "pending",
+        "gui": "pending",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "DTA meta-analysis. Reitsma bivariate random-effects model (mada::reitsma REML/ML/fixed) gives summary Se/Sp, LRs, DOR and the SROC (mada::sroc); also PHM SROC (mada::phm), univariate logit Se/Sp heterogeneity (metafor::rma: tau^2, I^2, Q), moderator meta-regression, Deeks funnel test (weighted lm on 1/sqrt(ESS)), continuity corrections and Wilson study CIs",
+      "oracle": "mada::reitsma, mada::sroc, mada::phm, metafor::rma (REML; tau2, I2, QE), stats::lm(weights = ESS) for the Deeks test",
+      "dependencies": {
+        "bundled": [],
+        "candidates": []
+      },
+      "source_name": "diagnosticmeta"
+    },
+    {
+      "id": "pyihcheterogeneity",
+      "family": "oncopath",
+      "menu": "Oncology",
+      "title": "IHC Heterogeneity Analysis",
+      "aliases": [],
+      "source": null,
+      "baseline": {
+        "module": "OncoPath",
+        "version": "1.1.2",
+        "commit": "0cf453ac9085a576d1d32094be60fd07adb65d27",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/ihcheterogeneity.a.yaml": "c5fe9546d730ab7bf3fb334222b4818358f7943d13f6fc52024426d4b592b613",
+          "jamovi/ihcheterogeneity.r.yaml": "62a3da425d4404d1c821789cf0de20d136248de9254eb69692d815178f1aedfc",
+          "jamovi/ihcheterogeneity.u.yaml": "424c517fa0b1e867ca0ed6c4b222ee5e64a01ad8f2d18452e4b17f60fd3abb61",
+          "R/ihcheterogeneity.b.R": "887767d6f45990f6a0719698051563457fd40c7ca71056f5c8dfe3114653795a"
+        }
+      },
+      "wave": 5,
+      "status": "planned",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "pending",
+        "gui": "pending",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "Biopsy-vs-whole-section reproducibility: ICC from mean squares with F-based CIs, robust/RMS CV, Bland-Altman bias and limits of agreement (t CIs), Spearman with Fisher-z CI, one-way variance components, ICC-precision sample-size planning (integrate/uniroot), Kruskal-Wallis across spatial compartments",
+      "oracle": "psych::ICC (ICC1/ICC2/ICC3 with F CIs), stats::cor.test(method = 'spearman'), stats::t.test, stats::kruskal.test, stats::aov",
+      "dependencies": {
+        "bundled": [],
+        "candidates": []
+      },
+      "source_name": "ihcheterogeneity"
+    },
+    {
+      "id": "pyswimmerplot",
+      "family": "oncopath",
+      "menu": "Oncology",
+      "title": "Swimmer Plot",
+      "aliases": [],
+      "source": null,
+      "baseline": {
+        "module": "OncoPath",
+        "version": "1.1.2",
+        "commit": "0cf453ac9085a576d1d32094be60fd07adb65d27",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/swimmerplot.a.yaml": "a1eaaac66a4c1eb531a0248accac699028646ae555b5b7e65068483eb359ba25",
+          "jamovi/swimmerplot.r.yaml": "e126ef365e43de4283d31967e944ae4fff4c2dcfe90ec26aefd6e3c1775d1e54",
+          "jamovi/swimmerplot.u.yaml": "7125a6b0f7cf8fcf1921473f685a9c66266be1449fd3beb45e78b13bc07cf26f",
+          "R/swimmerplot.b.R": "93a6be421bceb8412c8b04b4af452a820f25f5fde3ee96ff567225a09ce05fb0"
+        }
+      },
+      "wave": 5,
+      "status": "planned",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "pending",
+        "gui": "pending",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "plot only: ggswim swimmer lanes with event markers. Side tables give person-time, milestone/event counts and medians, reverse-KM follow-up, response rates with Clopper-Pearson CIs, and a Fisher group test",
+      "oracle": "stats::binom.test, stats::fisher.test, survival::survfit (reverse KM)",
+      "dependencies": {
+        "bundled": [],
+        "candidates": []
+      },
+      "source_name": "swimmerplot"
+    },
+    {
+      "id": "pywaterfall",
+      "family": "oncopath",
+      "menu": "Oncology",
+      "title": "Treatment Response: Patient-Level Burden",
+      "aliases": [],
+      "source": null,
+      "baseline": {
+        "module": "OncoPath",
+        "version": "1.1.2",
+        "commit": "0cf453ac9085a576d1d32094be60fd07adb65d27",
+        "provenance": "sibling manifest",
+        "files": {
+          "jamovi/waterfall.a.yaml": "24ec2e10a070315c3d38e6e5dfdbbd6b70a131856df54de0e25fd929b99052d0",
+          "jamovi/waterfall.r.yaml": "7e2c6164a6324b0c432678d3ac78d4531d5f4328efce9e96f57d1292d565f8a8",
+          "jamovi/waterfall.u.yaml": "9de604f66b004bea7868bb7959f7dd81f1a355d5e315dc13f0c4214e59138acc",
+          "R/waterfall.b.R": "03c15e9798c99d6b76b2e494b522bfcaa588a4c8ba6c8778aa4a5e9964ec52bf"
+        }
+      },
+      "wave": 5,
+      "status": "planned",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "pending",
+        "gui": "pending",
+        "compatibility": "existing Python identifier preserved",
+        "platforms": []
+      },
+      "methods": "plot first: waterfall and spider plots of best % change. Tables give RECIST category counts, ORR/DCR with Clopper-Pearson CIs, person-time, a Fisher exact OR between groups, KM duration of response and reverse-KM follow-up",
+      "oracle": "stats::binom.test, stats::fisher.test, survival::survfit",
+      "dependencies": {
+        "bundled": [],
+        "candidates": []
+      },
+      "source_name": "waterfall"
+    },
+    {
+      "id": "pydescriptives",
+      "family": "descriptives",
+      "menu": "Descriptives",
+      "title": "Descriptives (Python)",
+      "aliases": [],
+      "source": "analyses/descriptives/pydescriptives.py",
+      "status": "utility",
+      "coverage": {
+        "full_parity": false
+      }
+    },
+    {
+      "id": "pydotdecision",
+      "family": "meddecide",
+      "menu": "Medical Decisions",
+      "title": "Interactive Diagnostic Dotplot (Python)",
+      "aliases": [],
+      "source": "analyses/meddecide/pydotdecision.py",
+      "status": "utility",
+      "coverage": {
+        "full_parity": false
+      }
+    },
+    {
+      "id": "pyexacttests",
+      "family": "meddecide",
+      "menu": "Medical Decisions",
+      "title": "Exact Tests for 2x2 Tables (Python)",
+      "aliases": [],
+      "source": "analyses/meddecide/pyexacttests.py",
+      "status": "utility",
+      "coverage": {
+        "full_parity": false
+      }
+    },
+    {
+      "id": "pyruntime",
+      "family": "utilities",
+      "menu": "Utilities",
+      "title": "Python Runtime Check",
+      "aliases": [],
+      "source": "analyses/utilities/pyruntime.py",
+      "status": "utility",
+      "coverage": {
+        "full_parity": false
+      }
+    },
+    {
+      "id": "pywelch",
+      "family": "jjstatsplot",
+      "menu": "Statistical Plots",
+      "title": "Welch Two-Sample t-Test (Python)",
+      "aliases": [],
+      "source": "analyses/jjstatsplot/pywelch.py",
+      "status": "utility",
+      "coverage": {
+        "full_parity": false
+      }
+    }
+  ]
+}

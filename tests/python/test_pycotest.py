@@ -44,7 +44,7 @@ from pathlib import Path
 from cpjtest import rows, run_analysis
 
 ROOT = Path(__file__).resolve().parents[2]
-_tree = ast.parse((ROOT / "inst" / "python" / "analyses" / "pycotest.py").read_text(encoding="utf-8"))
+_tree = ast.parse((ROOT / "inst" / "python" / "analyses" / "meddecide" / "pycotest.py").read_text(encoding="utf-8"))
 SPEC = next(ast.literal_eval(node.value) for node in _tree.body
             if isinstance(node, ast.Assign) and getattr(node.targets[0], "id", None) == "SPEC")
 DEFAULTS = {option["name"]: option["default"] for option in SPEC["options"]}

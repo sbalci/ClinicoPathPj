@@ -7,13 +7,20 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 APP=/Applications/jamovi.app/Contents
 RSCRIPT=/Library/Frameworks/R.framework/Versions/4.6/Resources/bin/Rscript
+CPJ_LIBRARY="${CPJ_LIBRARY:-$HOME/Library/Application Support/jamovi/modules/ClinicoPathPj/R}"
+if [[ ! -f "$CPJ_LIBRARY/ClinicoPathPj/DESCRIPTION" ]]; then
+    echo "No installed ClinicoPathPj package in CPJ_LIBRARY=$CPJ_LIBRARY" >&2
+    exit 2
+fi
 
+if [[ "${1:-}" != "--r-only" ]]; then
 echo "== Python unit tests (jamovi's bundled Python)"
 # The bundled standard library ships without unittest/__main__, so "-m unittest" cannot run.
 (cd "$ROOT" && PYTHONHOME="$APP/Resources" "$APP/MacOS/python" -B -c '
 import sys, unittest
 result = unittest.main(module=None, argv=["check", "discover", "-s", "tests/python", "-v"], exit=False).result
 sys.exit(not result.wasSuccessful())')
+fi
 
 echo "== R tests against the installed module (engine-like environment)"
 cd "$APP/MacOS"
@@ -22,9 +29,13 @@ cd "$APP/MacOS"
 env -i HOME="$HOME" LC_CTYPE=C.UTF-8 PATH= \
     PYTHONHOME="$APP/Resources" PYTHONPATH="$APP/Resources/jamovi/server" PYTHONIOENCODING=utf-8 \
     CPJ_ROOT="$ROOT" \
+    CPJ_LIBRARY="$CPJ_LIBRARY" \
     "$RSCRIPT" --vanilla -e '
-        .libPaths(c(path.expand("~/Library/Application Support/jamovi/modules/ClinicoPathPj/R"),
+        .libPaths(c(Sys.getenv("CPJ_LIBRARY"),
                     "/Applications/jamovi.app/Contents/Resources/modules/base/R", .libPaths()))
         suppressPackageStartupMessages({ library(testthat); library(ClinicoPathPj) })
+        expected <- read.dcf(file.path(Sys.getenv("CPJ_ROOT"), "DESCRIPTION"))[1, "Version"]
+        if (as.character(packageVersion("ClinicoPathPj")) != expected)
+            stop("The test package version does not match the source DESCRIPTION")
         testthat::test_dir(file.path(Sys.getenv("CPJ_ROOT"), "tests", "testthat"), stop_on_failure = TRUE)
     ' 2>&1 | grep -v "^sh: rm: No such file or directory$"

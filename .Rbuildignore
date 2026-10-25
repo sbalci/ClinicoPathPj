@@ -6,3 +6,5 @@
 ^.*\.jmo$
 ^build$
 ^temp$
+
+^vendor$

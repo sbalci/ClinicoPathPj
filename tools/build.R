@@ -16,6 +16,9 @@ app <- "/Applications/jamovi.app/Contents"
 status <- system2(file.path(app, "MacOS", "python"), c("-B", "tools/generate.py"),
                   env = paste0("PYTHONHOME=", shQuote(file.path(app, "Resources"))))
 if (status != 0) quit(status = status)
+status <- system2(file.path(app, "MacOS", "python"), c("-B", "tools/vendor-python.py"),
+                  env = paste0("PYTHONHOME=", shQuote(file.path(app, "Resources"))))
+if (status != 0) quit(status = status)
 
 if ("--build-only" %in% commandArgs(TRUE)) {
     # The GUI app probe can fail in a restricted shell. Use the installed app's real

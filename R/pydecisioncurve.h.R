@@ -113,7 +113,7 @@ pydecisioncurveResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6C
             super$initialize(
                 options=options,
                 name="",
-                title="Decision Curve Analysis (Python)")
+                title="Decision Curve Analysis")
             self$add(jmvcore::Text$new(
                 options=options,
                 name="summary",
@@ -207,7 +207,7 @@ pydecisioncurveBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Clas
                 weightsSupport = 'auto')
         }))
 
-#' Decision Curve Analysis (Python)
+#' Decision Curve Analysis
 #'
 #' 
 #' @param data .

@@ -1,3 +1,27 @@
+# 0.3.1 — Continuous summaries and categorization (experimental)
+
+- Added pysummarydata: native summaries, optional normality/moment diagnostics, IQR outlier rows, narrative reports and separate-scale histograms.
+- Added pycategorize: equal/quantile/manual/mean-SD/median/exact Fisher-Jenks methods, category previews, endpoint and denominator controls, and ordered/nominal saved columns.
+- Exported R cut code uses exact hexadecimal boundaries and escaped names/labels.
+- Added eight R summary fixtures and 140 frozen-R categorization fixtures, including ties and interval closure combinations; independently checked Jenks objectives.
+- Extended native Output metadata delivery to retain titles, descriptions, measure types and original row mapping.
+- Repaired successful/pending bridge reruns to replace table/plot state and reuse computed notices.
+- Large-sample seeded Jenks subsampling and the source histogram with boundary lines remain pending; these ports do not claim full released-feature parity.
+
+# 0.3.0 — Python migration foundation (experimental)
+
+- Added a frozen 61-analysis registry and five source/menu families; planned analyses are not placeholders.
+- Kept all public analysis identifiers prefixed with py and preserved existing kappa identifiers.
+- Added explicit generator-owned, organized tame interfaces and binding validation.
+- Added pinned, offline Matplotlib Agg dependencies with wheel hashes and bundled licenses.
+- Moved existing static plot construction to Python, retaining saved legacy plot states.
+- Added a native static counterpart for the interactive diagnostic dotplot.
+- Preserved ordinal factor status, normalized genuine missing factor levels, and transported original row IDs.
+- Added Terms transport and validated native Output payloads; Action delivery remains pending.
+- Added pyreportcat categorical native tables, missingness, tied-mode narratives and distribution plots.
+- Validation: 166 Python tests and 425 installed-package R expectations passed; GUI installation, legacy kappa rerun, and pyreportcat native PNG export verified.
+- Full supported parity across all 61 targets, platform qualification and remaining GUI acceptance are pending.
+
 # Changelog
 
 ## 0.2.0 — Six Python cores — 2026-10-25

@@ -1,3 +1,42 @@
+# Descriptive ports — 0.3.1
+
+- [x] Add pysummarydata with distribution diagnostics, outliers and native histograms.
+- [x] Add pycategorize with six exact/computed methods, previews and saved columns.
+- [x] Match eight independent summary fixtures and 140 frozen-R category fixtures.
+- [x] Check Fisher-Jenks against exhaustive partitions and benchmark 20,000 values.
+- [x] Preserve saved column names, measure types, level order and original row IDs.
+- [x] Reproduce and repair duplicate table rows/stale plots on bridge reruns.
+- [x] Check new ports and saved-column protobuf payloads in R.
+- [x] Pass all 176 Python tests and 464 R expectations; inspect and execute the packaged runtime.
+- [x] Install via GUI; verify both ports in fresh engines, ordinal Output and .omv reopen.
+- [x] Export and inspect the native summary histogram PNG.
+- [ ] Complete category-plot export and exhaustive per-method GUI lifecycle qualification.
+- [ ] Add the seeded large-sample Fisher-Jenks branch and the original boundary histogram.
+
+# Migration implementation — 0.3.0
+
+- [x] Freeze all 61 targets, source hashes, and R option/result/UI definitions.
+- [x] Use one module and a registry with five analysis families; retain utilities.
+- [x] Keep every analysis identifier prefixed with `py`, including existing kappa IDs.
+- [x] Generate organized tame UI definitions with complete option-binding checks.
+- [x] Bundle pinned offline Python plotting dependencies and license provenance.
+- [x] Move existing static plot construction to Python and retain legacy plot-state input.
+- [x] Add native static export for the diagnostic dotplot.
+- [x] Preserve ordinal factor metadata and original row IDs; validate saved-column alignment.
+- [x] Add Terms normalization and native Output result/payload support.
+- [x] Add `pyreportcat` native categorical summaries with independent R fixtures.
+- [x] Verify GUI installation, legacy kappa power rerun, and pyreportcat save/reopen/native PNG export.
+- [ ] Complete the remaining per-analysis GUI lifecycle and export gates.
+- [ ] Qualify Output/Terms/Action workflows end to end; complete Action file delivery.
+- [ ] Complete full statistical feature parity in waves 1–5; see docs/python-migration-status.md.
+- [ ] Qualify additional macOS architectures, Windows, and Linux.
+
+The earlier work log below is historical. Its R/ggplot2 renderer and compiler-owned UI
+statements describe earlier versions; the current implementation uses Python drawing and
+generator-owned UI. The explicit-NA factor follow-up below is now fixed in the bridge.
+
+---
+
 # TODO — ClinicoPathPj experiment (started 2026-10-18)
 
 ## Increment 2 (2026-10-18): faster and cancellable runs, plots, narrative text, first ports

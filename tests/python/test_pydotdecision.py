@@ -7,7 +7,7 @@ import numpy as np
 from cpjtest import ROOT, factor, number, rows, run_analysis
 
 sys.path.insert(0, str(ROOT / "inst/python"))
-spec = importlib.util.spec_from_file_location("dotdecision", ROOT / "inst/python/analyses/pydotdecision.py")
+spec = importlib.util.spec_from_file_location("dotdecision", ROOT / "inst/python/analyses/meddecide/pydotdecision.py")
 dot = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(dot)
 

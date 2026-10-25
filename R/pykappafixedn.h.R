@@ -105,7 +105,7 @@ pykappafixednResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
             super$initialize(
                 options=options,
                 name="",
-                title="Kappa Lower Limit for a Fixed Sample Size (Python)")
+                title="Kappa Lower Limit for a Fixed Sample Size")
             self$add(jmvcore::Text$new(
                 options=options,
                 name="summary",
@@ -171,7 +171,7 @@ pykappafixednBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 weightsSupport = 'auto')
         }))
 
-#' Kappa Lower Limit for a Fixed Sample Size (Python)
+#' Kappa Lower Limit for a Fixed Sample Size
 #'
 #' 
 #' @param data .

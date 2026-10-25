@@ -101,7 +101,7 @@ pychisqposttestResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6C
             super$initialize(
                 options=options,
                 name="",
-                title="Chi-Square Post-Tests (Python)")
+                title="Chi-Square Post-Tests")
             self$add(jmvcore::Text$new(
                 options=options,
                 name="summary",
@@ -240,7 +240,7 @@ pychisqposttestBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Clas
                 weightsSupport = 'auto')
         }))
 
-#' Chi-Square Post-Tests (Python)
+#' Chi-Square Post-Tests
 #'
 #' 
 #' @param data .

@@ -22,7 +22,31 @@ sync_module_metadata <- function(root = ".") {
             "    description: Six Python core analyses using 36 synthetic observations.",
             "    tags: [Python, Diagnostic accuracy, Decision curves, Data quality]")
     }
-    yaml::yaml.load(paste(metadata, collapse = "\n"))  # reject an invalid generated document
-    writeLines(metadata, path)
+    document <- yaml::yaml.load(paste(metadata, collapse = "\n"))
+    registry_path <- file.path(root, "inst", "python", "registry.json")
+    if (file.exists(registry_path)) {
+        registry <- jsonlite::fromJSON(registry_path, simplifyVector = FALSE)
+        installed_names <- unlist(lapply(registry$analyses, function(entry)
+            if (!is.null(entry$source)) c(entry$id, unlist(entry$aliases, use.names = FALSE))), use.names = FALSE)
+        document$analyses <- Filter(function(a) a$name %in% installed_names, document$analyses)
+        # The compiler preserves metadata for existing entries. Seed hidden aliases here,
+        # because its analysis schema rejects `hidden` although the module schema supports it.
+        for (entry in registry$analyses) {
+            if (is.null(entry$source)) next
+            for (name in c(entry$id, unlist(entry$aliases, use.names = FALSE))) {
+                index <- which(vapply(document$analyses, function(a) identical(a$name, name), logical(1)))
+                hidden <- !identical(name, entry$id)
+                if (!length(index)) {
+                    document$analyses[[length(document$analyses) + 1L]] <- list(
+                        name = name, ns = "ClinicoPathPj", hidden = hidden)
+                } else {
+                    document$analyses[[index]]$hidden <- hidden
+                }
+            }
+        }
+    }
+    # js-yaml uses YAML 1.2: R yaml's default yes/no would become strings.
+    writeLines(yaml::as.yaml(document, handlers = list(logical = function(x)
+        structure(tolower(as.character(x)), class = "verbatim"))), path)
     invisible(NULL)
 }
