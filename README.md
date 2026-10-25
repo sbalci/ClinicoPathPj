@@ -5,7 +5,7 @@ analysis: a literal `SPEC` (options, results and organized UI) plus a `run()` fu
 into the jamovi files, and the statistics run in **the Python bundled with jamovi** (numpy, scipy),
 so users install nothing.
 
-Status: experimental, 0.3.2 (descriptive ports; full migration remains incomplete). Verified only on jamovi 28.13 for macOS (Apple Silicon), with
+Status: experimental, 0.3.3 (descriptive ports; full migration remains incomplete). Verified only on jamovi 28.13 for macOS (Apple Silicon), with
 jmvtools 28.4.
 
 | Analysis | What it does | Checked against |
@@ -26,7 +26,7 @@ Open **Data Library > ClinicoPathPj > Python Core Examples**, or import
 `data/python_core_examples.csv`, for the synthetic examples.
 
 Build the single standard module without installing it:
-`Rscript --vanilla tools/build.R --build-only` → `ClinicoPathPj_0.3.2.jmo`.
+`Rscript --vanilla tools/build.R --build-only` → `ClinicoPathPj_0.3.3.jmo`.
 After replacing a loaded development build, use a fresh jamovi engine to avoid stale namespaces.
 
 `pywelch` reports the mean difference as *comparison minus reference*. The reference defaults to
@@ -334,3 +334,5 @@ Descriptive-port verification and limitations are recorded in [the 0.3.1 validat
 `pyagepyramid` adds demographic age-band counts, percentages, explicit exclusions and a native Python pyramid. See [methods, synthetic example and limits](docs/python-agepyramid.md).
 
 For numeric roles that also permit factors, `coerceNumeric: True` in SPEC requests numeric-metadata conversion in the R bridge; the Python engine must explicitly validate any remaining factor labels. Number/Integer options may omit either bound while keeping a finite default and finite supplied bounds.
+
+`pydataquality` adds native missingness and duplicate accounting, quality maps and a local keyboard-accessible missingness preview. See [methods, examples and limits](docs/python-dataquality.md).

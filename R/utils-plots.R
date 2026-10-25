@@ -5,6 +5,7 @@
     box = c(group = "text", value = "number"),
     bar = c(label = "text", value = "number", group = "text"),
     scatter = c(x = "number", y = "number", group = "text"),
+    qualitymap = c(variable = "text", row = "text", state = "text"),
     pyramid = c(label = "text", left = "number", right = "number", leftLabel = "text", rightLabel = "text", title = "text"),
     histogram = c(group = "text", lower = "number", upper = "number", count = "integer"))
 

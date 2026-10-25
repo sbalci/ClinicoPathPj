@@ -280,7 +280,7 @@
       "menu": "Descriptives",
       "title": "Multi-Variable Visual Quality",
       "aliases": [],
-      "source": null,
+      "source": "analyses/descriptives/pydataquality.py",
       "baseline": {
         "module": "ClinicoPathDescriptives",
         "version": "1.0.82.03",
@@ -294,13 +294,18 @@
         }
       },
       "wave": 1,
-      "status": "planned",
+      "status": "partial",
       "coverage": {
         "full_parity": false,
-        "numerical": "pending",
-        "gui": "pending",
-        "compatibility": "existing Python identifier preserved",
-        "platforms": []
+        "numerical": "32 independent base-R profile/duplicate fixtures; strict threshold, missing-code and geometry checks",
+        "gui": "fresh-engine native tables/maps, local paging/filter/focus events, .omv reopen and native PNG export verified",
+        "compatibility": "new Python entry point; original R module retained",
+        "platforms": [],
+        "omissions": [
+          "Little's MCAR test",
+          "Parsing-based vis_guess type detection and original visdat styling",
+          "Heuristic quality grades; native descriptive counts supplied instead"
+        ]
       },
       "methods": "Plot-first QC: visdat overview, missingness and type plots, plus duplicate and constant-variable flags. The only inferential statistic is Little's MCAR test (naniar::mcar_test).",
       "oracle": "naniar::mcar_test",

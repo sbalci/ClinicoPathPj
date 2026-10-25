@@ -1,3 +1,14 @@
+# Visual data-quality port — 0.3.3
+
+- [x] Implement pydataquality full-data missingness and duplicate accounting with native tables.
+- [x] Add native bounded quality maps, type counts and local interactive missingness inspection.
+- [x] Compare 32 independent R fixtures; test threshold edges, separator collisions and missing codes.
+- [x] Check local JavaScript paging, filtering, keyboard focus and cell selection.
+- [x] Pass 192 Python tests and 515 R checks; execute ten packaged analysis runtimes.
+- [x] Install via GUI; verify display filtering, paging, keyboard inspection, fresh-engine .omv reopen and native map PNG export.
+- [ ] Qualify overview/type plots across GUI transitions, large previews, additional platforms and per-analysis cancellation.
+- [ ] Port Little's MCAR inference and parsing-based type guessing; full parity remains pending.
+
 # Age pyramid port — 0.3.2
 
 - [x] Implement pyagepyramid core, six presets, custom intervals and native Python pyramid.

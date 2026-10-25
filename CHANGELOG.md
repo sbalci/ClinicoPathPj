@@ -1,3 +1,14 @@
+# 0.3.3
+
+- Add `pydataquality` under Descriptives, preserving the ClinicoPathPj identity and py identifiers.
+- Add full-data completeness, per-variable missingness, distinct/repeated values, constants,
+  high-cardinality flags, exploratory IQR flags and collision-safe row-duplicate accounting.
+- Add native quality maps and declared-type counts with bounded aggregate display state.
+- Add a local missingness preview with paging, filtering, keyboard/cell inspection and a
+  paired native static map; display controls do not change cohorts or calculations.
+- Add independent R fixtures, lifecycle tests, an offline JavaScript DOM harness and a synthetic CSV.
+- Little's MCAR inference, parsing-based type guessing and heuristic quality grades remain omitted.
+
 # 0.3.2
 
 - Add `pyagepyramid` under Descriptives, retaining the single module identity and stable py identifiers.

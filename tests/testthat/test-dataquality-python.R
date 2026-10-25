@@ -1,0 +1,51 @@
+test_that("quality profiles match native R missingness distinct and outlier counts", {
+ d<-data.frame(x=c(1:10,100,NA),g=factor(c(rep('NA',5),rep('B',6),NA),levels=c('B','NA','unused')))
+ got<-pydataquality(data=d,vars=names(d),check_missing=TRUE,check_duplicates=TRUE)
+ rows<-got$overview$asDF
+ expect_equal(rows$missing,unname(colSums(is.na(d))))
+ expect_equal(rows$unique,c(length(unique(na.omit(d$x))),length(unique(na.omit(d$g)))))
+ q<-quantile(d$x,c(.25,.75),na.rm=TRUE);expected<-sum(d$x<q[1]-1.5*diff(q)|d$x>q[2]+1.5*diff(q),na.rm=TRUE)
+ expect_equal(rows$outliers[1],expected)
+ expect_true(is.na(rows$outliers[2]))
+ expect_equal(got$completeness$asDF$complete,sum(complete.cases(d)))
+ expect_equal(got$duplicates$asDF$excess,c(0,9))
+})
+
+test_that("row duplicate signatures preserve separators missing values and original IDs", {
+ d<-data.frame(sep=c('a||b','a','a||b',NA,NA),collapse=c('c','b||c','c',NA,NA),row.names=c('2','5','9','12','15'))
+ got<-pydataquality(data=d,vars=names(d),check_duplicates=TRUE,row_level_duplicates=TRUE,showInteractive=TRUE)
+ expect_equal(got$duplicates$asDF$excess,sum(duplicated(d)))
+ expect_equal(got$duplicatePatterns$asDF$firstRow,c('2','12'))
+ expect_equal(got$duplicatePatterns$asDF$n,c(2,2))
+ expect_equal(got$previewMap$state$data$row[1:4],c('2','2','5','5'))
+ expect_match(got$explorer$content,'Display controls only')
+})
+
+test_that("threshold flags do not round before comparison and genuine NA levels stay missing", {
+ d<-data.frame(x=c(rep(NA_real_,251),seq_len(2249)),g=factor(c(rep('NA',2499),NA),exclude=NULL))
+ got<-pydataquality(data=d,vars=names(d),missing_threshold_visual=10,showSummary=TRUE)
+ expect_equal(got$overview$asDF$aboveThreshold,c('Yes','No'))
+ expect_equal(got$overview$asDF$missing,c(251,1))
+ expect_match(got$summary$content,'1 variables exceed')
+})
+
+test_that("quality lifecycle clears native tables HTML and map states on pending selection", {
+ d<-data.frame(x=c(1,1,NA),g=factor(c('A','A',NA)))
+ a<-pydataqualityClass$new(options=pydataqualityOptions$new(vars=names(d),showInteractive=TRUE,check_duplicates=TRUE,row_level_duplicates=TRUE),data=d)
+ a$init();a$run()
+ expect_equal(a$results$overview$rowCount,2L)
+ selected<-a$options$option('vars');selected$value<-'x'
+ a$.__enclos_env__$private$.run()
+ expect_equal(a$results$overview$rowCount,1L)
+ expect_equal(a$results$duplicatePatterns$rowCount,0L)
+ expect_equal(a$results$duplicates$asDF$total,2)
+ selected$value<-character()
+ a$.__enclos_env__$private$.run()
+ expect_equal(a$results$overview$rowCount,0L)
+ expect_equal(a$results$explorer$content,'<div></div>')
+ expect_null(a$results$previewMap$state)
+ selected$value<-names(d)
+ a$.__enclos_env__$private$.run()
+ expect_equal(a$results$overview$rowCount,2L)
+ expect_match(a$results$explorer$content,'Display controls only')
+})
