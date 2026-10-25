@@ -106,6 +106,7 @@ pydotdecisionResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
         explorer = function() private$.items[["explorer"]],
         counts = function() private$.items[["counts"]],
         metrics = function() private$.items[["metrics"]],
+        staticDotplot = function() private$.items[["staticDotplot"]],
         console = function() private$.items[["console"]]),
     private = list(),
     public=list(
@@ -161,6 +162,14 @@ pydotdecisionResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
                         `title`="95% CI Upper", 
                         `type`="number", 
                         `format`="pc"))))
+            self$add(jmvcore::Image$new(
+                options=options,
+                name="staticDotplot",
+                title="Applied Cutoff Dotplot",
+                width=600,
+                height=400,
+                renderFun=".plot",
+                requiresData=FALSE))
             self$add(jmvcore::Preformatted$new(
                 options=options,
                 name="console",
@@ -206,6 +215,7 @@ pydotdecisionBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'   \code{results$explorer} \tab \tab \tab \tab \tab a html \cr
 #'   \code{results$counts} \tab \tab \tab \tab \tab a table \cr
 #'   \code{results$metrics} \tab \tab \tab \tab \tab a table \cr
+#'   \code{results$staticDotplot} \tab \tab \tab \tab \tab an image \cr
 #'   \code{results$console} \tab \tab \tab \tab \tab a preformatted \cr
 #' }
 #'

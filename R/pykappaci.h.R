@@ -155,7 +155,7 @@ pykappaciResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             super$initialize(
                 options=options,
                 name="",
-                title="Kappa Sample Size by Confidence Interval (Python)")
+                title="Kappa Sample Size by Confidence Interval")
             self$add(jmvcore::Text$new(
                 options=options,
                 name="summary",
@@ -250,7 +250,7 @@ pykappaciBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 weightsSupport = 'auto')
         }))
 
-#' Kappa Sample Size by Confidence Interval (Python)
+#' Kappa Sample Size by Confidence Interval
 #'
 #' 
 #' @param data .

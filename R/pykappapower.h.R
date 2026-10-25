@@ -144,7 +144,7 @@ pykappapowerResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Clas
             super$initialize(
                 options=options,
                 name="",
-                title="Kappa Sample Size by Power (Python)")
+                title="Kappa Sample Size by Power")
             self$add(jmvcore::Text$new(
                 options=options,
                 name="summary",
@@ -237,7 +237,7 @@ pykappapowerBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 weightsSupport = 'auto')
         }))
 
-#' Kappa Sample Size by Power (Python)
+#' Kappa Sample Size by Power
 #'
 #' 
 #' @param data .

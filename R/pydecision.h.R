@@ -113,7 +113,7 @@ pydecisionResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             super$initialize(
                 options=options,
                 name="",
-                title="Diagnostic Accuracy (Python)")
+                title="Diagnostic Accuracy")
             self$add(jmvcore::Text$new(
                 options=options,
                 name="summary",
@@ -218,7 +218,7 @@ pydecisionBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 weightsSupport = 'auto')
         }))
 
-#' Diagnostic Accuracy (Python)
+#' Diagnostic Accuracy
 #'
 #' 
 #' @param data .

@@ -111,7 +111,7 @@ pydecisioncalculatorResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6
             super$initialize(
                 options=options,
                 name="",
-                title="Diagnostic Accuracy Calculator (Python)")
+                title="Diagnostic Accuracy Calculator")
             self$add(jmvcore::Text$new(
                 options=options,
                 name="summary",
@@ -216,7 +216,7 @@ pydecisioncalculatorBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R
                 weightsSupport = 'auto')
         }))
 
-#' Diagnostic Accuracy Calculator (Python)
+#' Diagnostic Accuracy Calculator
 #'
 #' 
 #' @param data .

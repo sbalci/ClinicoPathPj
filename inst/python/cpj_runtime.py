@@ -40,13 +40,15 @@ MAX_CONSOLE = 100_000
 SELF_LIMIT = 75  # seconds; R stops runs after 60 s, this only matters if R itself was killed
 
 
-MAX_PLOT_ROWS = {"interval": 200, "line": 20_000, "box": 20_000, "bar": 2_000}  # image state is saved in the .omv
+MAX_PLOT_ROWS = {"interval": 200, "line": 20_000, "box": 20_000, "bar": 2_000, "scatter": 5000, "histogram": 2000}
 PLOT_COLUMNS = {  # column -> (type, required); drawn by R/utils-plots.R
     "interval": {"label": ("text", True), "estimate": ("number", True),
                  "lower": ("number", False), "upper": ("number", False)},
     "line": {"x": ("number", True), "y": ("number", True), "group": ("text", False)},
     "box": {"group": ("text", True), "value": ("number", True)},
     "bar": {"label": ("text", True), "value": ("number", True), "group": ("text", True)},
+    "scatter": {"x": ("number", True), "y": ("number", True), "group": ("text", True)},
+    "histogram": {"group": ("text", True), "lower": ("number", True), "upper": ("number", True), "count": ("integer", True)},
 }
 
 
@@ -54,7 +56,7 @@ class InputError(Exception):
     """A problem with the user's data or options; jamovi shows the message as the error."""
 
 
-Factor = namedtuple("Factor", "codes levels")  # codes: int ndarray (-1 = missing); levels: list of str
+Factor = namedtuple("Factor", "codes levels ordered", defaults=[False])
 
 
 def md_escape(text):
@@ -110,7 +112,7 @@ def _cell(value, kind, where):
 class Output:
     """What run() reports, checked against the analysis SPEC as it is reported."""
 
-    def __init__(self, spec):
+    def __init__(self, spec, row_ids=None):
         self._tables = {r["name"]: {c["name"]: c["type"] for c in r["columns"]}
                         for r in spec["results"] if r["type"] == "Table"}
         self._texts = {r["name"] for r in spec["results"] if r["type"] == "Preformatted"}
@@ -122,6 +124,38 @@ class Output:
         self.texts = {}
         self.plots = {}
         self.notices = []
+        self._outputs = {r["name"]: r for r in spec["results"] if r["type"] == "Output"}
+        self.outputs = {}
+        self.row_ids = row_ids
+
+    def column(self, name, values, *, levels=None, title=None, description=None, measure_type=None):
+        """A saved column in input-row order. Missing rows stay present as None."""
+        if name not in self._outputs:
+            raise KeyError(f"SPEC declares no Output named {name!r}")
+        values = list(values)
+        if self.row_ids is None or len(values) != len(self.row_ids):
+            raise ValueError('Saved columns must retain every input row and its original row ID')
+        categorical = self._outputs[name]['measureType'] != 'continuous'
+        if categorical:
+            if not isinstance(levels, list) or not levels or any(not isinstance(v, str) for v in levels) or len(set(levels)) != len(levels):
+                raise ValueError('Categorical outputs need distinct string levels')
+            values = [_cell(v, 'integer', name) for v in values]
+            if any(v is not None and not 0 <= v < len(levels) for v in values):
+                raise ValueError('Saved category code is outside its levels')
+        else:
+            if levels is not None: raise ValueError('Continuous outputs have no category levels')
+            values = [_cell(v, 'number', name) for v in values]
+        meta={}
+        for key,value,limit in [('title',title,256),('description',description,2048)]:
+            if value is not None:
+                if not isinstance(value,str) or not value.strip() or len(value)>limit or any(ord(c)<32 for c in value):
+                    raise ValueError(f'Invalid saved column {key}')
+                meta[key]=value
+        if measure_type is not None:
+            if measure_type not in (('nominal','ordinal') if categorical else ('continuous',)):
+                raise ValueError('Saved column measure type conflicts with its declared type')
+            meta['measure_type']=measure_type
+        self.outputs[name] = dict(values=values, row_ids=self.row_ids, levels=levels, **meta)
 
     def _table(self, name):
         if name not in self._tables:
@@ -200,16 +234,21 @@ def _decode(columns):
             data[name] = np.array([np.nan if v is None else v for v in column["values"]], dtype=float)
         elif column["kind"] == "factor":
             codes = np.array([-1 if c is None else c for c in column["codes"]], dtype=int)
-            data[name] = Factor(codes, list(column["levels"]))
+            data[name] = Factor(codes, list(column["levels"]), bool(column.get('ordered', False)))
         else:
             data[name] = list(column["values"])
     return data
 
 
 def _load(name):
-    if not isinstance(name, str) or not re.fullmatch(r"[a-z][a-z0-9]*", name):
+    if not isinstance(name, str) or not re.fullmatch(r"[a-z][A-Za-z0-9]*", name):
         raise ValueError(f"invalid analysis name {name!r}")
-    path = Path(__file__).resolve().parent / "analyses" / f"{name}.py"
+    root = Path(__file__).resolve().parent
+    if (root / "registry.json").is_file():
+        from cpj_registry import resolve
+        _, path = resolve(name, root)
+    else:  # standalone development probes; shipped modules always use the registry
+        path = root / "analyses" / f"{name}.py"
     if not path.is_file():
         raise FileNotFoundError(f"analysis {name!r} is not installed ({path})")
     spec = importlib.util.spec_from_file_location(f"cpj_analysis_{name}", path)
@@ -285,7 +324,7 @@ def _describe(error):
 
 def execute(request):
     """Run the requested analysis; return the response dict. Never raises."""
-    response = {"status": "exception", "error": None, "tables": {}, "texts": {}, "plots": {},
+    response = {"schema_version": 1, "status": "exception", "error": None, "tables": {}, "texts": {}, "plots": {},
                 "notices": [], "console": "", "report": ""}
     console = _BoundedText()
     module = started = scipy_before = None
@@ -295,14 +334,26 @@ def execute(request):
         warnings.simplefilter("always")
         out = None
         try:
+            if request.get("operation") == "render_plot":
+                from cpj_plots import render
+                response.update(status="ok", asset=render(request["plot"], **request.get("settings", {})))
+                return response
             module = _load(request.get("analysis"))
-            out = Output(module.SPEC)
+            row_ids = request.get('row_ids')
+            if row_ids is not None:
+                if not isinstance(row_ids, list) or len(set(row_ids)) != len(row_ids) or any(
+                        not isinstance(v, str) or not re.fullmatch(r'[1-9][0-9]*', v) for v in row_ids):
+                    raise ValueError('Row IDs must be distinct positive integer strings')
+                lengths = {len(c.get('codes', c.get('values', []))) for c in (request.get('columns') or {}).values()}
+                if lengths and lengths != {len(row_ids)}: raise ValueError('Row IDs and columns have unequal lengths')
+            out = Output(module.SPEC, row_ids)
             data = _decode(request.get("columns"))
             scipy_before = "scipy" in sys.modules
             started = time.perf_counter()
             # a copy: the report shows the options as received, whatever run() does with its own
             module.run(data, copy.deepcopy(request.get("options") or {}), out)
-            response.update(status="ok", tables=out.tables, texts=out.texts, plots=out.plots, htmls=out.htmls)
+            response.update(status="ok", tables=out.tables, texts=out.texts, plots=out.plots, htmls=out.htmls,
+                            outputs=out.outputs)
         except InputError as error:
             response.update(status="input_error", error={"message": str(error)})
         except (Exception, SystemExit) as error:  # SystemExit would otherwise lose the response

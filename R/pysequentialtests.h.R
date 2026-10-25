@@ -139,7 +139,7 @@ pysequentialtestsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R
             super$initialize(
                 options=options,
                 name="",
-                title="Sequential Testing (Python)")
+                title="Sequential Testing")
             self$add(jmvcore::Text$new(
                 options=options,
                 name="summary",
@@ -271,7 +271,7 @@ pysequentialtestsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cl
                 weightsSupport = 'auto')
         }))
 
-#' Sequential Testing (Python)
+#' Sequential Testing
 #'
 #' 
 #' @param data .

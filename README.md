@@ -1,11 +1,11 @@
 # ClinicoPathPj
 
 An experiment in **generating jamovi analyses from Python**. You write one Python file per
-analysis: a literal `SPEC` (options and results) plus a `run()` function. A generator turns it
+analysis: a literal `SPEC` (options, results and organized UI) plus a `run()` function. A generator turns it
 into the jamovi files, and the statistics run in **the Python bundled with jamovi** (numpy, scipy),
 so users install nothing.
 
-Status: experimental, 0.2.0. Verified only on jamovi 28.13 for macOS (Apple Silicon), with
+Status: experimental, 0.3.1 (descriptive ports; full migration remains incomplete). Verified only on jamovi 28.13 for macOS (Apple Silicon), with
 jmvtools 28.4.
 
 | Analysis | What it does | Checked against |
@@ -26,7 +26,7 @@ Open **Data Library > ClinicoPathPj > Python Core Examples**, or import
 `data/python_core_examples.csv`, for the synthetic examples.
 
 Build the single standard module without installing it:
-`Rscript --vanilla tools/build.R --build-only` → `ClinicoPathPj_0.2.0.jmo`.
+`Rscript --vanilla tools/build.R --build-only` → `ClinicoPathPj_0.3.1.jmo`.
 After replacing a loaded development build, use a fresh jamovi engine to avoid stale namespaces.
 
 `pywelch` reports the mean difference as *comparison minus reference*. The reference defaults to
@@ -38,17 +38,54 @@ p and the interval empty, as R's `t.test` refuses such data. scipy would report 
 `fisher.test(table(group, outcome))`. Its odds ratio then equals jamovi's Contingency Tables odds
 ratio when the event is the outcome's second level, and is the reciprocal when it is the first.
 
+## New descriptive analyses in 0.3.1
+
+- `pysummarydata`: continuous summaries, Shapiro-Wilk diagnostics, skewness/Pearson kurtosis,
+  IQR outlier rows, draft reporting, and native histograms with separate variable scales.
+- `pycategorize`: equal, quantile, manual, mean/SD, median, and exact Fisher-Jenks bins;
+  endpoint/denominator controls; row previews; ordered or nominal saved columns; and R
+  code that applies the exact displayed boundaries.
+
+See [methods, examples and current limits](docs/python-descriptive-ports.md). Large-sample
+seeded Jenks subsampling remains unsupported and is rejected explicitly. The existing
+`pydescriptives` utility remains available with its original contract.
+
+## Migration foundation
+
+The single module follows five families: Descriptives, Statistical Plots, Medical Decisions,
+Survival, and Oncology. All public identifiers start with `py`; existing identifiers,
+including `pykappaci`, `pykappafixedn`, and `pykappapower`, are unchanged. Original R names
+are recorded only as baseline provenance. There are no duplicate unprefixed menu entries.
+
+The [61-analysis status matrix](docs/python-migration-status.md) distinguishes planned,
+partial, and fully qualified ports. Frozen R specifications and source hashes live in
+`docs/baselines/`; normal builds never refresh them from mutable sibling repositories.
+
+The organized UI is now generator-owned (`compilerMode: tame`). Variable roles and adjacent
+level selectors come first; method controls, uncertainty, plots, and advanced settings are
+grouped and enabled only when applicable. Statistical defaults are preserved.
+
+`pyreportcat` adds native categorical frequency/summary tables, missingness and tied-mode
+reporting, ordinal level ordering, copy-ready text, and a native distribution plot.
+Its full release acceptance remains tracked separately in the matrix.
+
+Static plots now use Python/Matplotlib Agg. The diagnostic explorer has a native static
+applied-cutoff plot for export. Ten pinned plotting dependencies, their licenses, and hashes
+are bundled for CPython 3.11 on macOS arm64; users install nothing. See
+[vendor provenance](vendor/README.md). R only supplies theme/palette metadata and displays PNGs.
+
 ## The author loop
 
-1. Create `inst/python/analyses/<name>.py`. `<name>` is lowercase letters and digits, e.g.
-   `pykappa`. Copy one of the existing analyses as a starting point.
+1. Register a stable `py…` identifier in `inst/python/registry.json` and create its source in
+   `inst/python/analyses/<family>/`. The public identifier and source filename are independent.
+   Copy an existing literal `SPEC`, including its explicit `ui` tree, as a starting point.
 2. `Rscript --vanilla tools/build.R` regenerates the jamovi files, builds the module and installs
    it into jamovi. It exits non-zero on any failure.
 3. `tools/check.sh` runs the Python unit tests, then testthat against the *installed* module in an
    environment like jamovi's engine.
 
 Never edit the generated files (`jamovi/<name>.a.yaml`, `jamovi/<name>.r.yaml`, `R/<name>.b.R`).
-jmvtools writes `jamovi/<name>.u.yaml`, `R/<name>.h.R` and the `analyses:` list in
+The Python generator also owns `jamovi/<name>.u.yaml`. jmvtools writes `R/<name>.h.R` and the `analyses:` list in
 `jamovi/0000.yaml`. `python tools/generate.py --check` exits 1 if any generated file is stale.
 
 ## SPEC reference
@@ -57,13 +94,14 @@ jmvtools writes `jamovi/<name>.u.yaml`, `R/<name>.h.R` and the `analyses:` list 
 from cpj_runtime import Factor, InputError
 
 SPEC = {
-    "name": "pywelch",                    # equals the file name
+    "name": "pywelch",                    # stable registry identifier
     "title": "Welch Two-Sample t-Test (Python)",
     "menuGroup": "ClinicoPathPj",
-    "menuSubgroup": "Comparisons",        # optional
+    "menuSubgroup": "Statistical Plots",
     "version": "0.1.0",
     "options": [...],
     "results": [...],
+    "ui": {"children": [...]},           # explicit native jamovi layout
 }
 ```
 
@@ -106,13 +144,14 @@ could not be shown.
 - `Preformatted`: plain text.
 - `Text`: Markdown, e.g. a narrative interpretation. Pass user strings through `md_escape()`, and
   numbers through `fmt_num()` (3 significant digits, never scientific notation).
-- `Image`: a plot that Python fills with data and R draws with ggplot2. It follows jamovi's theme
+- `Image`: a plot constructed by Python/Matplotlib; R displays the completed PNG. It follows jamovi's theme
   and palette, resizes, and exports like any jamovi plot. Keys: `plot` (the kind), `width`,
   `height`, `xlab`, `ylab`. The kinds and the columns `out.plot` rows carry are:
   - `interval`: `label`, `estimate`, `lower`, `upper` (forest/CI plot; optional reference line);
   - `line`: `x`, `y`, optional `group` (`step=True` draws step curves, e.g. survival-type);
   - `box`: `group`, `value` (box plot with seeded jitter);
   - `bar`: `label`, `value`, `group` (grouped bars, up to 2,000 rows).
+  - `scatter`: `x`, `y`, `group` (diagnostic dotplots, up to 5,000 rows).
 
   An interval plot takes at most 200 rows, a line or box plot 20,000, because the data is saved in
   the `.omv`. A plot with no rows shows jamovi's empty placeholder.
@@ -289,3 +328,5 @@ jmvtools ≥ 28.4, because 28.3.1 rejects its `File` UI control and its `openExt
 
 GPL (>= 2). See `COPYING`. The bridge design was informed by Pj (Maurizio Agosti, GPL >= 2), but no
 Pj code is included.
+
+Descriptive-port verification and limitations are recorded in [the 0.3.1 validation report](docs/python-descriptive-validation.md).

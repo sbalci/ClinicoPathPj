@@ -235,7 +235,7 @@ pycotestResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             super$initialize(
                 options=options,
                 name="",
-                title="Co-Testing Analysis (Python)")
+                title="Co-Testing Analysis")
             self$add(jmvcore::Text$new(
                 options=options,
                 name="summary",
@@ -435,7 +435,7 @@ pycotestBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 weightsSupport = 'auto')
         }))
 
-#' Co-Testing Analysis (Python)
+#' Co-Testing Analysis
 #'
 #' 
 #' @param data .

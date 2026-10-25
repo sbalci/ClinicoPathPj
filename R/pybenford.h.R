@@ -72,7 +72,7 @@ pybenfordResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             super$initialize(
                 options=options,
                 name="",
-                title="Benford Analysis (Python)")
+                title="Benford Analysis")
             self$add(jmvcore::Text$new(
                 options=options,
                 name="summary",
@@ -176,7 +176,7 @@ pybenfordBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 weightsSupport = 'auto')
         }))
 
-#' Benford Analysis (Python)
+#' Benford Analysis
 #'
 #' 
 #' @param data .

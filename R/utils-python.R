@@ -27,10 +27,11 @@
 
 .cpjColumn <- function(x, name) {
     if (is.factor(x)) {  # preserve labels/unused levels, including a literal "NA" label
+        if (anyNA(levels(x))) levels(x) <- levels(x)
         codes <- as.integer(x) - 1L
         # A genuine NA factor level is not is.na(x); encode its observations as missing.
         codes[codes %in% (which(is.na(levels(x))) - 1L)] <- NA_integer_
-        return(list(kind = "factor", levels = I(levels(x)), codes = I(codes)))
+        return(list(kind = "factor", levels = I(levels(x)), codes = I(codes), ordered = is.ordered(x)))
     }
     if (is.numeric(x)) {
         if (any(is.infinite(x)))
@@ -41,10 +42,31 @@
 }
 
 .cpjNotice <- function(self, type, text, index) {
-    notice <- jmvcore::Notice$new(self$options, name = paste0("cpjNotice", index),
-        type = if (identical(type, "INFO")) jmvcore::NoticeType$INFO else jmvcore::NoticeType$WARNING)
-    notice$setContent(.cpjSafeText(gsub("\\s+", " ", text), brackets = TRUE))
-    self$results$insert(1, notice)  # the results group always holds the declared items
+    name <- paste0("cpjNotice", index)
+    severity <- if (identical(type, "INFO")) jmvcore::NoticeType$INFO else jmvcore::NoticeType$WARNING
+    notice <- self$results$get(name)
+    if (is.null(notice)) {
+        notice <- jmvcore::Notice$new(self$options, name = name, type = severity)
+        self$results$insert(1, notice)  # the results group always holds the declared items
+    }
+    notice$set(severity, .cpjSafeText(gsub("\\s+", " ", text), brackets = TRUE))
+    notice$setVisible(TRUE)
+}
+
+# Replace computed native state only on successful or pending runs. On failure,
+# jamovi keeps the previous results greyed behind its error, as usual.
+.cpjClearNative <- function(self) {
+    for (item in self$results$items) {
+        if (inherits(item, "Table")) {
+            item$deleteRows()
+            for (key in names(item$notes)) item$setNote(key, NULL)
+        } else if (inherits(item, "Image")) {
+            item$setState(NULL)
+        } else if (inherits(item, "Notice") && startsWith(item$name, "cpjNotice")) {
+            # A prior computed advisory no longer applies; this never signals failure.
+            item$setVisible(FALSE)
+        }
+    }
 }
 
 .cpjTail <- function(text) {
@@ -113,7 +135,7 @@
 }
 
 .cpjRun <- function(self, name, options, arrays = character(0), numeric = character(0),
-                    required = character(0), events = character(0), checkpoint = NULL) {
+                    required = character(0), events = character(0), terms = character(0), checkpoint = NULL) {
     # jmvcore restores Preformatted and Text content from the saved state, so clear it first:
     # otherwise an earlier run's traceback or interpretation would still show under this run's results.
     for (item in self$results$items)
@@ -132,6 +154,7 @@
     # Unconfigured is not an error: nothing chosen -> stay quiet; partly chosen -> say what is missing.
     unset <- vapply(names(required), function(option) length(values[[option]]) == 0, logical(1))
     if (any(unset)) {
+        .cpjClearNative(self)
         if (!all(unset))
             .cpjNotice(self, "INFO", paste0("To run this analysis, also choose: ",
                                             paste(required[unset], collapse = ", "), "."), 1)
@@ -141,6 +164,7 @@
     for (level in names(events)) {
         variable <- values[[events[[level]]]]
         if (length(variable) == 1 && is.null(values[[level]])) {
+            .cpjClearNative(self)
             counts <- table(self$data[[variable]])  # data rows, not weighted counts
             .cpjNotice(self, "INFO", paste0("Choose which level of ", variable, " is the event: ",
                 paste0(names(counts), " (", as.integer(counts), " rows)", collapse = ", "), "."), 1)
@@ -149,6 +173,8 @@
     }
     for (option in arrays)  # a single chosen variable must still reach Python as a list
         values[[option]] <- as.list(as.character(values[[option]]))
+    for (option in terms)
+        values[[option]] <- lapply(values[[option]], function(term) as.list(as.character(term)))
 
     # Integer Nominal/Ordinal columns reach numeric-only boxes as factors carrying their values.
     numericColumns <- unlist(values[numeric], use.names = FALSE)
@@ -164,7 +190,8 @@
     on.exit(unlink(dir, recursive = TRUE), add = TRUE)
     request <- file.path(dir, "request.json")
     response <- file.path(dir, "response.json")
-    json <- jsonlite::toJSON(list(analysis = name, options = values, columns = columns),
+    json <- jsonlite::toJSON(list(schema_version = 1, analysis = name, options = values,
+                             row_ids = as.list(rownames(self$data)), columns = columns),
                              auto_unbox = TRUE, na = "null", null = "null", digits = I(17))
     writeBin(charToRaw(enc2utf8(as.character(json))), request)
 
@@ -188,6 +215,7 @@
     self$results$console$setContent(paste(c(if (is.character(result$report)) result$report,
         "----- Python output -----", if (nzchar(output)) output else "(the analysis printed nothing)"),
         collapse = "\n"))
+    if (identical(result$status, "ok")) .cpjClearNative(self)
     for (i in rev(seq_along(result$notices)))
         .cpjNotice(self, result$notices[[i]]$type, result$notices[[i]]$text, i)
 
@@ -226,6 +254,24 @@
         if (!inherits(element, "Image"))
             stop("Python returned a plot for '", plot, "', which is not an image of this analysis.", call. = FALSE)
         element$setState(.cpjPlotState(result$plots[[plot]]))
+    }
+    for (name in names(result$outputs)) {
+        element <- self$results$get(name)
+        if (!inherits(element, "Output")) stop("Python returned an undeclared saved column.", call. = FALSE)
+        column <- result$outputs[[name]]
+        if (!is.null(column$title) || !is.null(column$measure_type)) {
+            element$set(keys = 1L, titles = column$title,
+                descriptions = column$description, measureTypes = column$measure_type)
+        }
+        ids <- unlist(column$row_ids, use.names = FALSE)
+        if (!identical(ids, rownames(self$data)) || length(column$values) != nrow(self$data))
+            stop("Saved column row alignment does not match the input data.", call. = FALSE)
+        values <- vapply(column$values, function(x) if (is.null(x)) NA_real_ else as.numeric(x), numeric(1))
+        if (!is.null(column$levels)) values <- factor(values,
+            levels = seq_along(column$levels) - 1L, labels = unlist(column$levels, use.names = FALSE),
+            ordered = identical(column$measure_type, "ordinal"))
+        element$setRowNums(ids)
+        element$setValues(values)
     }
     invisible(NULL)
 }

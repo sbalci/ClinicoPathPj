@@ -4,6 +4,7 @@
       /Applications/jamovi.app/Contents/MacOS/python -B tools/check-core-package.py
 """
 import json
+import re
 import subprocess
 import sys
 import tempfile
@@ -11,7 +12,9 @@ import zipfile
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parent.parent
-NAMES=['pydecision','pydecisioncalculator','pysequentialtests','pychisqposttest','pybenford','pydecisioncurve']
+VERSION=re.search(r'^Version: (.+)$',(ROOT/'DESCRIPTION').read_text(),re.M)[1]
+REGISTRY=json.loads((ROOT/'inst/python/registry.json').read_text())
+NAMES=['pydecision','pydecisioncalculator','pysequentialtests','pychisqposttest','pybenford','pydecisioncurve','pysummarydata','pycategorize']
 
 
 def numeric(x):return dict(kind='number',values=x)
@@ -28,18 +31,23 @@ def check(path):
             names=archive.namelist()
             assert {p.split('/')[0] for p in names}=={'ClinicoPathPj'}
             manifest=archive.read('ClinicoPathPj/jamovi.yaml').decode()
-            assert 'version: 0.2.0' in manifest
+            assert f'version: {VERSION}' in manifest
             assert 'python_core_examples.omv' in manifest
+            assert all(n.startswith('py') for n in re.findall(r'^    name: (\w+)$',manifest,re.M))
             for name in NAMES:
                 assert f'name: {name}\n' in manifest
-                member=f'ClinicoPathPj/R/ClinicoPathPj/python/analyses/{name}.py'
-                assert archive.read(member)==(ROOT/'inst/python/analyses'/f'{name}.py').read_bytes()
-            for file in ['cpj_runtime.py','cpj_accuracy.py']:
+                entry=next(e for e in REGISTRY['analyses'] if name==e['id'] or name in e.get('aliases',[]))
+                member='ClinicoPathPj/R/ClinicoPathPj/python/'+entry['source']
+                assert archive.read(member)==(ROOT/'inst/python'/entry['source']).read_bytes()
+                assert f"name: {entry['id']}\n" in manifest
+            for file in ['cpj_runtime.py','cpj_accuracy.py','cpj_registry.py','cpj_plots.py','cpj_descriptive.py','cpj_binning.py','registry.json','font-cache.json']:
                 assert archive.read(f'ClinicoPathPj/R/ClinicoPathPj/python/{file}')==(ROOT/'inst/python'/file).read_bytes()
             assert archive.read('ClinicoPathPj/data/python_core_examples.omv')==(ROOT/'data/python_core_examples.omv').read_bytes()
             archive.extractall(temp)
         runtime=temp/'ClinicoPathPj/R/ClinicoPathPj/python/cpj_runtime.py'
-        cases=[('pydecisioncalculator',{},{}),('pysequentialtests',{},{}),
+        cases=[('pysummarydata',{'x':numeric([1,2,3,4,100])},dict(vars=['x'],distr=True,outliers=True)),
+          ('pycategorize',{'x':numeric([1,2,3,4,100])},dict(var='x',method='quantile',nbins=4)),
+          ('pydecisioncalculator',{},{}),('pysequentialtests',{},{}),
           ('pydecision',{'r':factor(['N','P']),'t':factor(['N','P'])},dict(reference='r',test='t',referencePositive='P',testPositive='P')),
           ('pychisqposttest',{'r':factor(['a','a','b','b']),'c':factor(['x','y','x','y'])},dict(rows='r',cols='c')),
           ('pybenford',{'x':numeric([.3,1,20,333,4444,55555])},dict(measurement='x')),
@@ -59,8 +67,8 @@ def check(path):
             if name=='pydecisioncurve':
                 assert len(result['plots']['netBenefitPlot']['columns']['x'])==138
             results.append(dict(analysis=name,status='ok',tables=list(result['tables']),plots=list(result['plots'])))
-        print(json.dumps(dict(package=str(path),integrity='ok',module='ClinicoPathPj',version='0.2.0',analyses=results),indent=2))
+        print(json.dumps(dict(package=str(path),integrity='ok',module='ClinicoPathPj',version=VERSION,analyses=results),indent=2))
 
 
 if __name__=='__main__':
-    check(Path(sys.argv[1]) if len(sys.argv)>1 else ROOT/'ClinicoPathPj_0.2.0.jmo')
+    check(Path(sys.argv[1]) if len(sys.argv)>1 else ROOT/f'ClinicoPathPj_{VERSION}.jmo')

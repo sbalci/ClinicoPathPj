@@ -1,10 +1,9 @@
 ---
 title: ClinicoPathPj - Python-Backed Analyses
 name: ClinicoPathPj
-version: 0.2.0
+version: 0.3.1
 jms: '1.0'
-authors:
-  - Serdar Balci
+authors: Serdar Balci
 maintainer: Serdar Balci <serdarbalci@serdarbalci.com>
 date: '2026-10-25'
 type: R
@@ -20,105 +19,144 @@ analyses:
     menuGroup: ClinicoPathPj
     menuSubgroup: Descriptives
     menuTitle: Descriptives (Python)
+    hidden: false
   - title: Python Runtime Check
     name: pyruntime
     ns: ClinicoPathPj
     category: analyses
     menuGroup: ClinicoPathPj
-    menuSubgroup: Diagnostics
+    menuSubgroup: Utilities
     menuTitle: Python Runtime Check
+    hidden: false
   - title: Welch Two-Sample t-Test (Python)
     name: pywelch
     ns: ClinicoPathPj
     category: analyses
     menuGroup: ClinicoPathPj
-    menuSubgroup: Comparisons
+    menuSubgroup: Statistical Plots
     menuTitle: Welch Two-Sample t-Test (Python)
-  - title: Co-Testing Analysis (Python)
+    hidden: false
+  - title: Co-Testing Analysis
     name: pycotest
     ns: ClinicoPathPj
     category: analyses
     menuGroup: ClinicoPathPj
-    menuSubgroup: Diagnostic tests
-    menuTitle: Co-Testing Analysis (Python)
+    menuSubgroup: Medical Decisions
+    menuTitle: Co-Testing Analysis
+    hidden: false
   - title: Exact Tests for 2x2 Tables (Python)
     name: pyexacttests
     ns: ClinicoPathPj
     category: analyses
     menuGroup: ClinicoPathPj
-    menuSubgroup: Comparisons
+    menuSubgroup: Medical Decisions
     menuTitle: Exact Tests for 2x2 Tables (Python)
-  - title: Kappa Sample Size by Confidence Interval (Python)
+    hidden: false
+  - title: Kappa Sample Size by Confidence Interval
     name: pykappaci
     ns: ClinicoPathPj
     category: analyses
     menuGroup: ClinicoPathPj
-    menuSubgroup: Agreement
-    menuTitle: Kappa Sample Size by Confidence Interval (Python)
-  - title: Kappa Lower Limit for a Fixed Sample Size (Python)
+    menuSubgroup: Medical Decisions
+    menuTitle: Kappa Sample Size by Confidence Interval
+    hidden: false
+  - title: Kappa Lower Limit for a Fixed Sample Size
     name: pykappafixedn
     ns: ClinicoPathPj
     category: analyses
     menuGroup: ClinicoPathPj
-    menuSubgroup: Agreement
-    menuTitle: Kappa Lower Limit for a Fixed Sample Size (Python)
-  - title: Kappa Sample Size by Power (Python)
+    menuSubgroup: Medical Decisions
+    menuTitle: Kappa Lower Limit for a Fixed Sample Size
+    hidden: false
+  - title: Kappa Sample Size by Power
     name: pykappapower
     ns: ClinicoPathPj
     category: analyses
     menuGroup: ClinicoPathPj
-    menuSubgroup: Agreement
-    menuTitle: Kappa Sample Size by Power (Python)
+    menuSubgroup: Medical Decisions
+    menuTitle: Kappa Sample Size by Power
+    hidden: false
   - title: Interactive Diagnostic Dotplot (Python)
     name: pydotdecision
     ns: ClinicoPathPj
     category: analyses
     menuGroup: ClinicoPathPj
-    menuSubgroup: Diagnostic tests
+    menuSubgroup: Medical Decisions
     menuTitle: Interactive Diagnostic Dotplot (Python)
-  - title: Benford Analysis (Python)
+    hidden: false
+  - title: Benford Analysis
     name: pybenford
     ns: ClinicoPathPj
     category: analyses
     menuGroup: ClinicoPathPj
-    menuSubgroup: Data quality
-    menuTitle: Benford Analysis (Python)
-  - title: Chi-Square Post-Tests (Python)
+    menuSubgroup: Descriptives
+    menuTitle: Benford Analysis
+    hidden: false
+  - title: Chi-Square Post-Tests
     name: pychisqposttest
     ns: ClinicoPathPj
     category: analyses
     menuGroup: ClinicoPathPj
-    menuSubgroup: Comparisons
-    menuTitle: Chi-Square Post-Tests (Python)
-  - title: Diagnostic Accuracy (Python)
+    menuSubgroup: Descriptives
+    menuTitle: Chi-Square Post-Tests
+    hidden: false
+  - title: Diagnostic Accuracy
     name: pydecision
     ns: ClinicoPathPj
     category: analyses
     menuGroup: ClinicoPathPj
-    menuSubgroup: Diagnostic tests
-    menuTitle: Diagnostic Accuracy (Python)
-  - title: Diagnostic Accuracy Calculator (Python)
+    menuSubgroup: Medical Decisions
+    menuTitle: Diagnostic Accuracy
+    hidden: false
+  - title: Diagnostic Accuracy Calculator
     name: pydecisioncalculator
     ns: ClinicoPathPj
     category: analyses
     menuGroup: ClinicoPathPj
-    menuSubgroup: Diagnostic tests
-    menuTitle: Diagnostic Accuracy Calculator (Python)
-  - title: Decision Curve Analysis (Python)
+    menuSubgroup: Medical Decisions
+    menuTitle: Diagnostic Accuracy Calculator
+    hidden: false
+  - title: Decision Curve Analysis
     name: pydecisioncurve
     ns: ClinicoPathPj
     category: analyses
     menuGroup: ClinicoPathPj
-    menuSubgroup: Diagnostic tests
-    menuTitle: Decision Curve Analysis (Python)
-  - title: Sequential Testing (Python)
+    menuSubgroup: Medical Decisions
+    menuTitle: Decision Curve Analysis
+    hidden: false
+  - title: Sequential Testing
     name: pysequentialtests
     ns: ClinicoPathPj
     category: analyses
     menuGroup: ClinicoPathPj
-    menuSubgroup: Diagnostic tests
-    menuTitle: Sequential Testing (Python)
-usesNative: true
+    menuSubgroup: Medical Decisions
+    menuTitle: Sequential Testing
+    hidden: false
+  - name: pyreportcat
+    ns: ClinicoPathPj
+    hidden: false
+    title: Summary of Categorical Variables
+    category: analyses
+    menuGroup: ClinicoPathPj
+    menuSubgroup: Descriptives
+    menuTitle: Summary of Categorical Variables
+  - name: pycategorize
+    ns: ClinicoPathPj
+    hidden: false
+    title: Categorize Continuous Variables
+    category: analyses
+    menuGroup: ClinicoPathPj
+    menuSubgroup: Descriptives
+    menuTitle: Categorize Continuous Variables
+  - name: pysummarydata
+    ns: ClinicoPathPj
+    hidden: false
+    title: Summary of Continuous Variables
+    category: analyses
+    menuGroup: ClinicoPathPj
+    menuSubgroup: Descriptives
+    menuTitle: Summary of Continuous Variables
+usesNative: 'yes'
 datasets:
   - name: Python Core Examples
     path: python_core_examples.omv
