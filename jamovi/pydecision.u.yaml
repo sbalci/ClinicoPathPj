@@ -1,0 +1,56 @@
+title: Diagnostic Accuracy (Python)
+name: pydecision
+jus: '3.0'
+stage: 0
+compilerMode: aggressive
+children:
+  - type: VariableSupplier
+    persistentItems: false
+    stretchFactor: 1
+    children:
+      - type: TargetLayoutBox
+        label: Binary reference classification
+        children:
+          - type: VariablesListBox
+            name: reference
+            maxItemCount: 1
+            isTarget: true
+      - type: TargetLayoutBox
+        label: Binary test result
+        children:
+          - type: VariablesListBox
+            name: test
+            maxItemCount: 1
+            isTarget: true
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: LevelSelector
+        name: referencePositive
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: LevelSelector
+        name: testPositive
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: TextBox
+        name: ciWidth
+        format: number
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: CheckBox
+        name: usePrevalence
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: TextBox
+        name: prevalence
+        format: number
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: CheckBox
+        name: showConsole

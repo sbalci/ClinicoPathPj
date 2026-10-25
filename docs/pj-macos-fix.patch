@@ -1,0 +1,54 @@
+diff -ru pj-baseline/R/mzPj_python_service.R pj-macos/R/mzPj_python_service.R
+--- pj-baseline/R/mzPj_python_service.R	2026-10-18 13:57:49
++++ pj-macos/R/mzPj_python_service.R	2026-10-18 16:24:53
+@@ -90,6 +90,11 @@
+                 'bin',
+                 'python3'
+             )
++
++        # jamovi su macOS: l'interprete incorporato sta in Contents/MacOS, accanto a PYTHONHOME.
++        pythonHome <- Sys.getenv('PYTHONHOME')
++        if (!file.exists(pythonPath) && nzchar(pythonHome))
++            pythonPath <- file.path(dirname(pythonHome), 'MacOS', 'python')
+     } else {
+         pythonPath <- Sys.which('python3')
+ 
+@@ -206,11 +211,11 @@
+         pythonPath <- '/usr/bin/flatpak-spawn'
+ 
+     } else {
+-        # Linux/macOS non-Flatpak
+-        pythonPath <- Sys.which('python3')
+-
+-        if (nchar(pythonPath) == 0)
+-            pythonPath <- Sys.which('python')
++        # Linux/macOS non-Flatpak. Solo percorsi assoluti: in jamovi PATH e' vuoto e
++        # Sys.which('python') restituirebbe './python', cioe' l'interprete di jamovi.
++        candidates <- c(Sys.which('python3'), '/opt/homebrew/bin/python3',
++                        '/usr/local/bin/python3', '/usr/bin/python3')
++        pythonPath <- c(candidates[startsWith(candidates, '/') & file.exists(candidates)], '')[1]
+     }
+ 
+     if (nchar(pythonPath) == 0)
+diff -ru pj-baseline/R/pj.b.R pj-macos/R/pj.b.R
+--- pj-baseline/R/pj.b.R	2026-10-18 13:57:49
++++ pj-macos/R/pj.b.R	2026-10-18 16:24:56
+@@ -157,11 +157,18 @@
+ 
+ 
+ 
++            # Un Python di sistema non deve ereditare PYTHONHOME/PYTHONPATH di jamovi.
++            pythonEnv <- if (self$options$python == 'external')
++                c('PYTHONHOME=', 'PYTHONPATH=')
++            else
++                character()
++
+             result <- system2(
+                 command=pythonPath,
+                 args=pythonArgs,
+                 stdout=TRUE,
+                 stderr=TRUE,
++                env=pythonEnv,
+                 input=script)
+ 
+             hasError <- FALSE

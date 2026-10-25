@@ -1,0 +1,11 @@
+*.jmo
+build/
+build*/
+temp/
+man/
+inst/i18n/
+__pycache__/
+*.pyc
+.DS_Store
+.Rproj.user
+.Rhistory

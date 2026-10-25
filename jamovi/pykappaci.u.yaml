@@ -1,0 +1,73 @@
+title: Kappa Sample Size by Confidence Interval (Python)
+name: pykappaci
+jus: '3.0'
+stage: 0
+compilerMode: aggressive
+children:
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: ComboBox
+        name: outcome
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: TextBox
+        name: props
+        format: string
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: ComboBox
+        name: raters
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: TextBox
+        name: kappa0
+        format: number
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: ComboBox
+        name: citype
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: TextBox
+        name: kappaL
+        format: number
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: TextBox
+        name: kappaU
+        format: number
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: TextBox
+        name: alpha
+        format: number
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: CheckBox
+        name: simulate
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: TextBox
+        name: draws
+        format: number
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: TextBox
+        name: seed
+        format: number
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: CheckBox
+        name: showConsole

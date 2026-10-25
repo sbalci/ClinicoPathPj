@@ -1,0 +1,66 @@
+title: Sequential Testing (Python)
+name: pysequentialtests
+jus: '3.0'
+stage: 0
+compilerMode: aggressive
+children:
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: TextBox
+        name: sens1
+        format: number
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: TextBox
+        name: spec1
+        format: number
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: TextBox
+        name: sens2
+        format: number
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: TextBox
+        name: spec2
+        format: number
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: TextBox
+        name: prevalence
+        format: number
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: TextBox
+        name: populationSize
+        format: number
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: CheckBox
+        name: showCosts
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: TextBox
+        name: cost1
+        format: number
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: TextBox
+        name: cost2
+        format: number
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: CheckBox
+        name: showPlot
+      - type: CheckBox
+        name: showConsole

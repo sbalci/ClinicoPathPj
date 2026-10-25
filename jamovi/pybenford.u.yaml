@@ -1,0 +1,30 @@
+title: Benford Analysis (Python)
+name: pybenford
+jus: '3.0'
+stage: 0
+compilerMode: aggressive
+children:
+  - type: VariableSupplier
+    persistentItems: false
+    stretchFactor: 1
+    children:
+      - type: TargetLayoutBox
+        label: Positive numeric measurement
+        children:
+          - type: VariablesListBox
+            name: measurement
+            maxItemCount: 1
+            isTarget: true
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: TextBox
+        name: digits
+        format: number
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: CheckBox
+        name: showPlot
+      - type: CheckBox
+        name: showConsole

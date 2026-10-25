@@ -1,0 +1,8 @@
+^tools$
+^docs$
+^tests/python$
+^TODO\.md$
+^CHANGELOG\.md$
+^.*\.jmo$
+^build$
+^temp$

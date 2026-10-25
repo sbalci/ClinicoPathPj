@@ -1,0 +1,132 @@
+---
+title: ClinicoPathPj - Python-Backed Analyses
+name: ClinicoPathPj
+version: 0.2.0
+jms: '1.0'
+authors:
+  - Serdar Balci
+maintainer: Serdar Balci <serdarbalci@serdarbalci.com>
+date: '2026-10-25'
+type: R
+description: >-
+  Experimental analyses generated from Python specifications and computed in the
+  Python bundled with jamovi (numpy, scipy). Verified on jamovi for macOS.
+minApp: 28.3.0
+analyses:
+  - title: Descriptives (Python)
+    name: pydescriptives
+    ns: ClinicoPathPj
+    category: analyses
+    menuGroup: ClinicoPathPj
+    menuSubgroup: Descriptives
+    menuTitle: Descriptives (Python)
+  - title: Python Runtime Check
+    name: pyruntime
+    ns: ClinicoPathPj
+    category: analyses
+    menuGroup: ClinicoPathPj
+    menuSubgroup: Diagnostics
+    menuTitle: Python Runtime Check
+  - title: Welch Two-Sample t-Test (Python)
+    name: pywelch
+    ns: ClinicoPathPj
+    category: analyses
+    menuGroup: ClinicoPathPj
+    menuSubgroup: Comparisons
+    menuTitle: Welch Two-Sample t-Test (Python)
+  - title: Co-Testing Analysis (Python)
+    name: pycotest
+    ns: ClinicoPathPj
+    category: analyses
+    menuGroup: ClinicoPathPj
+    menuSubgroup: Diagnostic tests
+    menuTitle: Co-Testing Analysis (Python)
+  - title: Exact Tests for 2x2 Tables (Python)
+    name: pyexacttests
+    ns: ClinicoPathPj
+    category: analyses
+    menuGroup: ClinicoPathPj
+    menuSubgroup: Comparisons
+    menuTitle: Exact Tests for 2x2 Tables (Python)
+  - title: Kappa Sample Size by Confidence Interval (Python)
+    name: pykappaci
+    ns: ClinicoPathPj
+    category: analyses
+    menuGroup: ClinicoPathPj
+    menuSubgroup: Agreement
+    menuTitle: Kappa Sample Size by Confidence Interval (Python)
+  - title: Kappa Lower Limit for a Fixed Sample Size (Python)
+    name: pykappafixedn
+    ns: ClinicoPathPj
+    category: analyses
+    menuGroup: ClinicoPathPj
+    menuSubgroup: Agreement
+    menuTitle: Kappa Lower Limit for a Fixed Sample Size (Python)
+  - title: Kappa Sample Size by Power (Python)
+    name: pykappapower
+    ns: ClinicoPathPj
+    category: analyses
+    menuGroup: ClinicoPathPj
+    menuSubgroup: Agreement
+    menuTitle: Kappa Sample Size by Power (Python)
+  - title: Interactive Diagnostic Dotplot (Python)
+    name: pydotdecision
+    ns: ClinicoPathPj
+    category: analyses
+    menuGroup: ClinicoPathPj
+    menuSubgroup: Diagnostic tests
+    menuTitle: Interactive Diagnostic Dotplot (Python)
+  - title: Benford Analysis (Python)
+    name: pybenford
+    ns: ClinicoPathPj
+    category: analyses
+    menuGroup: ClinicoPathPj
+    menuSubgroup: Data quality
+    menuTitle: Benford Analysis (Python)
+  - title: Chi-Square Post-Tests (Python)
+    name: pychisqposttest
+    ns: ClinicoPathPj
+    category: analyses
+    menuGroup: ClinicoPathPj
+    menuSubgroup: Comparisons
+    menuTitle: Chi-Square Post-Tests (Python)
+  - title: Diagnostic Accuracy (Python)
+    name: pydecision
+    ns: ClinicoPathPj
+    category: analyses
+    menuGroup: ClinicoPathPj
+    menuSubgroup: Diagnostic tests
+    menuTitle: Diagnostic Accuracy (Python)
+  - title: Diagnostic Accuracy Calculator (Python)
+    name: pydecisioncalculator
+    ns: ClinicoPathPj
+    category: analyses
+    menuGroup: ClinicoPathPj
+    menuSubgroup: Diagnostic tests
+    menuTitle: Diagnostic Accuracy Calculator (Python)
+  - title: Decision Curve Analysis (Python)
+    name: pydecisioncurve
+    ns: ClinicoPathPj
+    category: analyses
+    menuGroup: ClinicoPathPj
+    menuSubgroup: Diagnostic tests
+    menuTitle: Decision Curve Analysis (Python)
+  - title: Sequential Testing (Python)
+    name: pysequentialtests
+    ns: ClinicoPathPj
+    category: analyses
+    menuGroup: ClinicoPathPj
+    menuSubgroup: Diagnostic tests
+    menuTitle: Sequential Testing (Python)
+usesNative: true
+datasets:
+  - name: Python Core Examples
+    path: python_core_examples.omv
+    description: Six Python core analyses using 36 synthetic observations.
+    tags:
+      - Python
+      - Diagnostic accuracy
+      - Decision curves
+      - Data quality
+
+...

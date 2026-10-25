@@ -1,0 +1,9 @@
+cwd: /Applications/jamovi.app/Contents/MacOS  PATH: ''  PYTHONHOME: /Applications/jamovi.app/Contents/Resources 
+
+=== python = bundled ===
+OUTPUT: /Applications/jamovi.app/Contents/MacOS/python 3.11.9 /Applications/jamovi.app/Contents/MacOS ''
+ 
+
+=== python = external ===
+OUTPUT: /opt/homebrew/opt/python@3.15/bin/python3.15 3.15.0 /Applications/jamovi.app/Contents/MacOS ''
+ 

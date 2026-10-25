@@ -1,0 +1,36 @@
+cwd: /Applications/jamovi.app/Contents/MacOS  PATH: ''  PYTHONHOME: /Applications/jamovi.app/Contents/Resources 
+
+=== python = bundled ===
+sh: - : invalid option
+Usage:	sh [GNU long option] [option] ...
+	sh [GNU long option] [option] script-file ...
+GNU long options:
+	--debug
+	--debugger
+	--dump-po-strings
+	--dump-strings
+	--help
+	--init-file
+	--login
+	--noediting
+	--noprofile
+	--norc
+	--posix
+	--protected
+	--rcfile
+	--restricted
+	--verbose
+	--version
+	--wordexp
+Shell options:
+	-irsD or -c command or -O shopt_option		(invocation only)
+	-abefhkmnptuvxBCHP or -o option
+ERROR: Python stopped with exit status 2.
+ 
+
+=== python = external ===
+OUTPUT: /Applications/jamovi.app/Contents/MacOS/python 3.11.9 /Applications/jamovi.app/Contents/MacOS ''
+ 
+Warning message:
+In system2(command = pythonPath, args = pythonArgs, stdout = TRUE,  :
+  running command '- 2>&1 < '/tmp/RtmpB98h0o/file9cda66c68ccf'' had status 2

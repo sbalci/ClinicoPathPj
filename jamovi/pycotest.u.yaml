@@ -1,0 +1,125 @@
+title: Co-Testing Analysis (Python)
+name: pycotest
+jus: '3.0'
+stage: 0
+compilerMode: aggressive
+children:
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: TextBox
+        name: name1
+        format: string
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: TextBox
+        name: sens1
+        format: number
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: TextBox
+        name: spec1
+        format: number
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: TextBox
+        name: name2
+        format: string
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: TextBox
+        name: sens2
+        format: number
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: TextBox
+        name: spec2
+        format: number
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: TextBox
+        name: prevalence
+        format: number
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: CheckBox
+        name: indep
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: TextBox
+        name: depPos
+        format: number
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: TextBox
+        name: depNeg
+        format: number
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: CheckBox
+        name: ci
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: TextBox
+        name: nSens1
+        format: number
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: TextBox
+        name: nSpec1
+        format: number
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: TextBox
+        name: nSens2
+        format: number
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: TextBox
+        name: nSpec2
+        format: number
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: TextBox
+        name: nPrev
+        format: number
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: TextBox
+        name: ciWidth
+        format: number
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: TextBox
+        name: draws
+        format: number
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: TextBox
+        name: seed
+        format: number
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: CheckBox
+        name: showPlot
+      - type: CheckBox
+        name: showConsole

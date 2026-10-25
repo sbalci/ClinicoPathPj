@@ -1,0 +1,11 @@
+title: Python Runtime Check
+name: pyruntime
+jus: '3.0'
+stage: 0
+compilerMode: aggressive
+children:
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: CheckBox
+        name: showConsole

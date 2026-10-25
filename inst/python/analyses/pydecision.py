@@ -1,0 +1,100 @@
+"""Diagnostic Accuracy (Python). Validated core; see docs/python-core-analyses.md for limits."""
+from cpj_runtime import InputError, md_escape
+
+SPEC = {'name': 'pydecision',
+ 'title': 'Diagnostic Accuracy (Python)',
+ 'menuGroup': 'ClinicoPathPj',
+ 'menuSubgroup': 'Diagnostic tests',
+ 'version': '0.2.0',
+ 'options': [{'name': 'reference',
+              'title': 'Binary reference classification',
+              'type': 'Variable',
+              'permitted': ['factor'],
+              'suggested': ['nominal'],
+              'required': True},
+             {'name': 'test',
+              'title': 'Binary test result',
+              'type': 'Variable',
+              'permitted': ['factor'],
+              'suggested': ['nominal'],
+              'required': True},
+             {'name': 'referencePositive',
+              'title': 'Reference positive level',
+              'type': 'Level',
+              'variable': '(reference)',
+              'role': 'event'},
+             {'name': 'testPositive',
+              'title': 'Test positive level',
+              'type': 'Level',
+              'variable': '(test)',
+              'role': 'event'},
+             {'name': 'ciWidth',
+              'title': 'Confidence level (%)',
+              'type': 'Number',
+              'default': 95,
+              'min': 50,
+              'max': 99.9},
+             {'name': 'usePrevalence',
+              'title': 'Calculate predictive values at supplied prevalence',
+              'type': 'Bool',
+              'default': False},
+             {'name': 'prevalence',
+              'title': 'Supplied prevalence (0-1)',
+              'type': 'Number',
+              'default': 0.3,
+              'min': 1e-09,
+              'max': 0.999999999}],
+ 'results': [{'name': 'summary', 'title': 'Interpretation', 'type': 'Text'},
+             {'name': 'counts',
+              'title': 'Confusion Counts',
+              'type': 'Table',
+              'columns': [{'name': 'cell', 'title': 'Classification', 'type': 'text'},
+                          {'name': 'n', 'title': 'Count', 'type': 'integer'}]},
+             {'name': 'accuracy',
+              'title': 'Sample Accuracy',
+              'type': 'Table',
+              'columns': [{'name': 'metric', 'title': 'Metric', 'type': 'text'},
+                          {'name': 'estimate',
+                           'title': 'Estimate',
+                           'type': 'number',
+                           'format': 'pc'},
+                          {'name': 'lower', 'title': 'CI Lower', 'type': 'number', 'format': 'pc'},
+                          {'name': 'upper',
+                           'title': 'CI Upper',
+                           'type': 'number',
+                           'format': 'pc'}]},
+             {'name': 'ratios',
+              'title': 'Diagnostic Ratios and Youden Index',
+              'type': 'Table',
+              'columns': [{'name': 'metric', 'title': 'Metric', 'type': 'text'},
+                          {'name': 'estimate', 'title': 'Estimate', 'type': 'number'},
+                          {'name': 'display', 'title': 'Value or Status', 'type': 'text'}]},
+             {'name': 'population',
+              'title': 'Predictive Values at Supplied Prevalence',
+              'type': 'Table',
+              'columns': [{'name': 'metric', 'title': 'Metric', 'type': 'text'},
+                          {'name': 'estimate',
+                           'title': 'Estimate',
+                           'type': 'number',
+                           'format': 'pc'}],
+              'visible': '(usePrevalence)'}]}
+
+
+def run(data, options, out):
+    import numpy as np
+    from cpj_accuracy import binary, report
+    a, b = data[options['reference']], data[options['test']]
+    ra = binary(a, options.get('referencePositive'), 'reference')
+    tb = binary(b, options.get('testPositive'), 'test')
+    keep = (a.codes >= 0) & (b.codes >= 0)
+    if not keep.any():
+        raise InputError('No complete reference/test pairs remain.')
+    # Zero reference margins remain explicit undefined metrics, not invented intervals.
+    truth, pred = ra[keep], tb[keep]
+    counts = [int(np.sum(pred & truth)), int(np.sum(pred & ~truth)),
+              int(np.sum(~pred & truth)), int(np.sum(~pred & ~truth))]
+    report(counts, options, out)
+    out.markdown('summary', md_escape(
+        f"Reference positive: {options['referencePositive']}; test positive: {options['testPositive']}. "
+        f"Complete pairs: {int(keep.sum())}; excluded: {int((~keep).sum())}. "
+        'One independent observation per row. Predictive values reflect the sample composition.'))

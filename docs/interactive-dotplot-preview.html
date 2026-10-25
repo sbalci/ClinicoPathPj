@@ -1,0 +1,104 @@
+<!doctype html><html><meta charset=utf-8><title>Diagnostic cutoff prototype</title><body><div id="cpjdot7fc7ff53f78e4f50b52b1780cad7c01a" style="color:inherit;font:14px system-ui;max-width:850px">
+  <p>Drag the cutoff line or click the chart. Edit the number for an exact cutoff.</p>
+  <label>Preview cutoff <input class="cut" type="number" step="any" style="width:180px"></label>
+  <button class="apply" type="button">Apply cutoff</button>
+  <button class="reset" type="button">Preview automatic cutoff</button>
+  <p class="status" role="status"></p>
+  <svg viewBox="0 0 800 440" style="width:100%;touch-action:none" aria-label="Diagnostic dotplot"></svg>
+  <p class="metrics" aria-live="polite"></p>
+  <p>Dots: blue = correct classification; orange = classification error. Hover a dot for its
+  included-data row and measurement. The display stores measurements in the saved analysis.</p>
+  <noscript>The interactive view requires JavaScript. Use the applied cutoff option and native tables.</noscript>
+</div>
+<script>
+(function () {
+  'use strict';
+  const root = document.getElementById('cpjdot7fc7ff53f78e4f50b52b1780cad7c01a'), p = {"marker": "Ki-67", "reference": "Diagnosis", "positive": "P", "negative": "N", "values": [1.0, 2.0, 2.0, 4.0, 5.0, 6.0], "truth": [0, 0, 1, 0, 1, 1], "rows": [1, 2, 3, 4, 5, 6], "cutoff": 2.0, "automatic": 5.0, "direction": "high", "log": false};
+  const svg = root.querySelector('svg'), input = root.querySelector('.cut');
+  const status = root.querySelector('.status'), metrics = root.querySelector('.metrics');
+  const ns = 'http://www.w3.org/2000/svg';
+  function node(tag, attrs, text) {
+    const el = document.createElementNS(ns, tag);
+    Object.entries(attrs).forEach(([key, value]) => el.setAttribute(key, value));
+    if (text !== undefined) el.textContent = text;
+    svg.appendChild(el); return el;
+  }
+  const trans = x => p.log ? Math.log10(x) : x;
+  const vals = p.values.map(trans);
+  let lo = Math.min(...vals), hi = Math.max(...vals);
+  let pad = (hi - lo) * .08 || Math.max(Math.abs(lo) * .05, .5);
+  lo -= pad; hi += pad;
+  const y = v => 375 - (trans(v) - lo) / (hi - lo) * 335;
+  const inverse = pix => { const z = lo + (375 - pix) / 335 * (hi - lo);
+    return p.log ? 10 ** z : z; };
+  for (let i = 0; i <= 5; i++) {
+    const py = 375 - i * 67, z = lo + (hi - lo) * i / 5;
+    node('line', {x1:105, x2:700, y1:py, y2:py, stroke:'currentColor', opacity:.15});
+    node('text', {x:96, y:py+4, 'text-anchor':'end', fill:'currentColor'},
+         (p.log ? 10 ** z : z).toPrecision(4));
+  }
+  node('text', {x:250,y:405,'text-anchor':'middle',fill:'currentColor'}, 'Reference negative: ' + p.negative);
+  node('text', {x:550,y:405,'text-anchor':'middle',fill:'currentColor'}, 'Reference positive: ' + p.positive);
+  node('text', {x:400,y:22,'text-anchor':'middle',fill:'currentColor'},
+       p.marker + (p.log ? ' (log axis)' : '') + ' — ' + (p.direction === 'high' ? 'positive >= cutoff' : 'positive <= cutoff'));
+  const dots = p.values.map((value, i) => {
+    // Deterministic jitter is visual only; it does not change the measurement.
+    const jitter = (((i * 2654435761) >>> 0) % 1000 / 1000 - .5) * 100;
+    const dot = node('circle', {cx:(p.truth[i] ? 550 : 250) + jitter, cy:y(value), r:3.5, opacity:.7});
+    const title = document.createElementNS(ns, 'title');
+    title.textContent = 'Included-data row ' + p.rows[i] + ': ' + value + '; reference ' +
+      (p.truth[i] ? p.positive : p.negative);
+    dot.appendChild(title); return dot;
+  });
+  const line = node('line', {x1:105,x2:700,y1:0,y2:0,stroke:'currentColor','stroke-width':3,
+                            'stroke-dasharray':'8 4',style:'cursor:ns-resize'});
+  const label = node('text', {x:705,y:0,fill:'currentColor'});
+  let cutoff = p.cutoff;
+  function update(value, syncInput = true) {
+    if (!Number.isFinite(value)) return;
+    cutoff = value;
+    if (syncInput) input.value = String(value);
+    let tp=0, fp=0, fn=0, tn=0;
+    p.values.forEach((v,i) => {
+      const positive = p.direction === 'high' ? v >= value : v <= value;
+      if (positive) { if (p.truth[i]) tp++; else fp++; }
+      else { if (p.truth[i]) fn++; else tn++; }
+      dots[i].setAttribute('fill', positive === Boolean(p.truth[i]) ? '#3478b8' : '#c45b18');
+    });
+    let py = p.log && value <= 0 ? 375 : y(value);
+    py = Math.max(40, Math.min(375, py));
+    line.setAttribute('y1',py); line.setAttribute('y2',py);
+    label.setAttribute('y',py-7); label.textContent = value.toPrecision(4);
+    const pct = (a,b) => b ? (100*a/b).toFixed(1)+'%' : 'undefined';
+    metrics.textContent = 'Preview: TP '+tp+' | FP '+fp+' | FN '+fn+' | TN '+tn+
+      ' — Sensitivity '+pct(tp,tp+fn)+'; specificity '+pct(tn,tn+fp)+
+      '; PPV '+pct(tp,tp+fp)+'; NPV '+pct(tn,tn+fn);
+    status.textContent = value === p.cutoff ? 'Showing the applied cutoff.' :
+      'Preview only. Apply cutoff updates jamovi tables and the saved option.';
+  }
+  input.addEventListener('input', () => {
+    if (input.value !== '') update(Number(input.value), false);
+  });
+  let dragging = false;
+  function move(event) {
+    const point = svg.createSVGPoint(); point.x=event.clientX; point.y=event.clientY;
+    const at = point.matrixTransform(svg.getScreenCTM().inverse());
+    update(inverse(Math.max(40,Math.min(375,at.y))));
+  }
+  svg.addEventListener('pointerdown', e => {
+    dragging=true; svg.setPointerCapture(e.pointerId); move(e);
+  });
+  svg.addEventListener('pointermove', e => { if (dragging) move(e); });
+  svg.addEventListener('pointerup', () => { dragging=false; });
+  svg.addEventListener('pointercancel', () => { dragging=false; });
+  root.querySelector('.reset').addEventListener('click', () => update(p.automatic));
+  root.querySelector('.apply').addEventListener('click', () => {
+    if (typeof window.setOption === 'function') {
+      window.setOption('cutoff',String(cutoff));
+      status.textContent='Cutoff sent to jamovi; waiting for the recomputed tables.';
+    } else status.textContent='Standalone preview: copy '+cutoff+' to the applied cutoff option in jamovi.';
+  });
+  update(cutoff);
+})();
+</script>
+</body></html>

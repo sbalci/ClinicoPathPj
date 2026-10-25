@@ -1,0 +1,52 @@
+title: Diagnostic Accuracy Calculator (Python)
+name: pydecisioncalculator
+jus: '3.0'
+stage: 0
+compilerMode: aggressive
+children:
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: TextBox
+        name: tp
+        format: number
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: TextBox
+        name: fp
+        format: number
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: TextBox
+        name: fn
+        format: number
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: TextBox
+        name: tn
+        format: number
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: TextBox
+        name: ciWidth
+        format: number
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: CheckBox
+        name: usePrevalence
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: TextBox
+        name: prevalence
+        format: number
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: CheckBox
+        name: showConsole

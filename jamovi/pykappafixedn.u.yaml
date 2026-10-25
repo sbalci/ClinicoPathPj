@@ -1,0 +1,45 @@
+title: Kappa Lower Limit for a Fixed Sample Size (Python)
+name: pykappafixedn
+jus: '3.0'
+stage: 0
+compilerMode: aggressive
+children:
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: ComboBox
+        name: outcome
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: TextBox
+        name: props
+        format: string
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: ComboBox
+        name: raters
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: TextBox
+        name: kappa0
+        format: number
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: TextBox
+        name: 'n'
+        format: number
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: TextBox
+        name: alpha
+        format: number
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: CheckBox
+        name: showConsole
