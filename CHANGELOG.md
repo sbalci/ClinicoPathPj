@@ -1,3 +1,21 @@
+# 0.3.5
+
+- Add separate `pyobservablecutoff` utility beside SVG and D3 experiments.
+- Bundle pinned Observable Plot 0.6.17, Inputs 0.12.0 and htl 0.3.1 with licenses and source hashes.
+- Share the existing D3 Python workflow without changing its option/result contracts.
+- Add Plot tips/crosshairs, synchronized cutoff controls, ROC selection and original-row search/highlighting.
+- Keep HTML-only Apply explicit; native results and exportable images use saved jamovi options.
+- Add numerical agreement, lifecycle, offline DOM and packaged-runtime checks.
+
+# 0.3.4
+
+- Add separate `pyd3cutoff` experiment under Medical Decisions, retaining the existing dotplot.
+- Adapt Maurizio Agosti's D3 demonstration using locally bundled D3 7.9.0 with license.
+- Precompute empirical ROC, all threshold counts/intervals and three optimization criteria in Python.
+- Add configurable exact/Wilson intervals, native tables and native dotplot/ROC images.
+- Explicitly distinguish local HTML Apply from persistent jamovi options and native outputs.
+- Add independent numerical checks, synthetic demo CSV, comparison documentation and package smoke checks.
+
 # 0.3.3
 
 - Add `pydataquality` under Descriptives, preserving the ClinicoPathPj identity and py identifiers.

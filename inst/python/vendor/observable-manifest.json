@@ -1,0 +1,20 @@
+{
+  "libraries": [
+    {
+      "file": "observable-plot-0.6.17.min.js",
+      "source": "https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6.17/dist/plot.umd.min.js",
+      "sha256": "4358086467740777dd788d6b27a95cebdbaefdd50c730a3060117073bd7134cb"
+    },
+    {
+      "file": "observable-inputs-0.12.0.min.js",
+      "source": "https://cdn.jsdelivr.net/npm/@observablehq/inputs@0.12.0/dist/inputs.min.js",
+      "sha256": "62d0a3880b5709e6f218dd8fed4626c8cb35652774f063c3464249b6648b192b"
+    },
+    {
+      "file": "htl-0.3.1.min.js",
+      "source": "https://cdn.jsdelivr.net/npm/htl@0.3.1/dist/htl.min.js",
+      "sha256": "87517615f7162564c1faf09ed4a06384d15584bb2e1b4fe5153025d35afbee0d"
+    }
+  ],
+  "runtime_network_required": false
+}
