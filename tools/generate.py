@@ -40,8 +40,8 @@ RESULT_MEMBERS = {"add", "analysis", "asDF", "asProtoBuf", "asString", "clear", 
                   "setStatus", "setTitle", "setVisible", "state", "status", "title", "visible"}
 SPEC_KEYS = {"name", "title", "menuGroup", "menuSubgroup", "version", "options", "results", "ui"}
 OPTION_KEYS = {  # keys an option may carry besides name/type/title
-    "Variable": {"permitted", "suggested", "required"},
-    "Variables": {"permitted", "suggested", "required"},
+    "Variable": {"permitted", "suggested", "required", "coerceNumeric"},
+    "Variables": {"permitted", "suggested", "required", "coerceNumeric"},
     "Level": {"variable", "allowNone", "role"},
     "Number": {"default", "min", "max"},
     "Integer": {"default", "min", "max"},
@@ -57,7 +57,7 @@ SUGGESTED = {"continuous", "nominal", "ordinal", "id"}
 COLUMN_KEYS = {"name", "title", "type", "format", "superTitle", "visible"}
 COLUMN_TYPES = {"text", "integer", "number"}
 FORMAT_TOKENS = {"zto", "pvalue", "pc", "log10"}
-PLOT_KINDS = {"interval", "line", "box", "bar", "scatter", "histogram"}
+PLOT_KINDS = {"interval", "line", "box", "bar", "scatter", "histogram", "pyramid"}
 IMAGE_KEYS = {"name", "type", "title", "plot", "width", "height", "xlab", "ylab", "visible"}
 
 
@@ -166,12 +166,15 @@ def validate(spec, stem):
                 fail(f"Level {name!r}: allowNone must be True or False")
             if option.get("role", "event") != "event":
                 fail(f"Level {name!r}: role must be 'event' (the user must choose it; nothing is preselected)")
+        if "coerceNumeric" in option:
+            if not isinstance(option["coerceNumeric"], bool) or "numeric" not in option.get("permitted", []):
+                fail(f"{kind} {name!r}: coerceNumeric requires a boolean and permitted numeric input")
         if kind in ("Number", "Integer"):
             numbers = (int,) if kind == "Integer" else (int, float)
-            values = [option.get(key) for key in ("default", "min", "max")]
+            values = [option.get("default")] + [option[key] for key in ("min", "max") if key in option]
             if any(isinstance(v, bool) or not isinstance(v, numbers) or not math.isfinite(v) for v in values):
-                fail(f"{kind} {name!r} needs finite {'whole-number ' if kind == 'Integer' else ''}default, min and max")
-            if not values[1] <= values[0] <= values[2]:
+                fail(f"{kind} {name!r} needs a finite {'whole-number ' if kind == 'Integer' else ''}default and finite supplied bounds")
+            if not option.get("min", -math.inf) <= option["default"] <= option.get("max", math.inf):
                 fail(f"{kind} {name!r}: default must lie between min and max")
         if kind == "Bool" and not isinstance(option.get("default"), bool):
             fail(f"Bool {name!r} needs default True or False")
@@ -337,7 +340,7 @@ def a_yaml(spec):
         out = {"name": option["name"], "title": option["title"], "type": option["type"]}
         # required stays out of the .a.yaml: jamovi would skip .run() while the box is empty,
         # and the bridge reports partly filled boxes instead (generated .b.R, required = ...).
-        out.update((k, v) for k, v in option.items() if k not in ("name", "title", "type", "required", "role"))
+        out.update((k, v) for k, v in option.items() if k not in ("name", "title", "type", "required", "role", "coerceNumeric"))
         if option["type"] in ("Variable", "Variables"):
             out["default"] = None  # optional wrapper argument
         if option.get("role") == "event":
@@ -381,7 +384,7 @@ def b_r(spec, header):
     # jamovi lets integer Nominal/Ordinal columns into numeric-only boxes as factors carrying their
     # values; the bridge converts the columns of these options back to numbers.
     numeric = [option["name"] for option in spec["options"] if option["type"] in ("Variable", "Variables")
-               and option.get("permitted") and "factor" not in option["permitted"]]
+               and (option.get("coerceNumeric", False) or (option.get("permitted") and "factor" not in option["permitted"]))]
     required = [option for option in spec["options"] if option.get("required")]
     events = [option for option in spec["options"] if option.get("role") == "event"]
     plots = any(result["type"] == "Image" for result in spec["results"])

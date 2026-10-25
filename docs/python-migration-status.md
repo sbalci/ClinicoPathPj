@@ -11,7 +11,7 @@ parity and GUI/platform acceptance remain separate gates.
 
 | Python identifier | Original R analysis | Family | Wave | Implementation | Full parity | GUI |
 |---|---|---|---:|---|---|---|
-| pyagepyramid | agepyramid | descriptives | 1 | planned | pending | pending |
+| pyagepyramid | agepyramid | descriptives | 1 | partial | pending | fresh-engine run, custom-boundary/denominator rerun, .omv reopen and native PNG export verified |
 | pyalluvial | alluvial | descriptives | 1 | planned | pending | pending |
 | pybenford | benford | descriptives | 1 | partial | pending | pending |
 | pycategorize | categorize | descriptives | 1 | partial | pending | fresh-engine run, ordinal saved column and .omv reopen verified; category plot export pending |

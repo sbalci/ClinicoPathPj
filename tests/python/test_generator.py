@@ -109,6 +109,21 @@ class Validation(unittest.TestCase):
         self.assertRejected(lambda s: s["results"][0].update(title="Mean {x}"), "parentheses")
         self.assertRejected(lambda s: s["results"][0]["columns"][0].update(title="p [ref]"), "translation")
 
+    def test_numeric_options_can_have_one_sided_bounds(self):
+        spec=copy.deepcopy(VALID)
+        del spec['options'][2]['max']
+        generate.validate(spec,'example')
+        spec['options'][2]['min']=100
+        with self.assertRaisesRegex(generate.SpecError,'between min and max'):
+            generate.validate(spec,'example')
+
+    def test_explicit_numeric_factor_conversion_is_bridge_only(self):
+        spec=copy.deepcopy(VALID)
+        spec['options'][0].update(permitted=['numeric','factor'],coerceNumeric=True)
+        generate.validate(spec,'example')
+        self.assertNotIn('coerceNumeric',generate.a_yaml(spec)['options'][1])
+        self.assertIn('numeric = c("dep")',generate.b_r(spec,'example'))
+
     def test_option_value_types(self):
         self.assertRejected(lambda s: s["options"][1].update(allowNone="yes"), "allowNone")
         self.assertRejected(lambda s: s["options"][2].update(max=float("inf")), "finite")

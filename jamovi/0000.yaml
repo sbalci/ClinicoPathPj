@@ -1,7 +1,7 @@
 ---
 title: ClinicoPathPj - Python-Backed Analyses
 name: ClinicoPathPj
-version: 0.3.1
+version: 0.3.2
 jms: '1.0'
 authors: Serdar Balci
 maintainer: Serdar Balci <serdarbalci@serdarbalci.com>
@@ -156,6 +156,14 @@ analyses:
     menuGroup: ClinicoPathPj
     menuSubgroup: Descriptives
     menuTitle: Summary of Continuous Variables
+  - name: pyagepyramid
+    ns: ClinicoPathPj
+    hidden: false
+    title: Age Pyramid
+    category: analyses
+    menuGroup: ClinicoPathPj
+    menuSubgroup: Descriptives
+    menuTitle: Age Pyramid
 usesNative: 'yes'
 datasets:
   - name: Python Core Examples

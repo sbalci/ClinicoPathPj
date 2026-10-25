@@ -1,3 +1,14 @@
+# 0.3.2
+
+- Add `pyagepyramid` under Descriptives, retaining the single module identity and stable py identifiers.
+- Port six demographic age-band presets, custom widths/bounds, closure rules, gender-level
+  assignment, reconciled exclusions and both percentage denominators to Python.
+- Add native Population Data/Data Summary tables and a Python static pyramid renderer using
+  aggregate saved state and jamovi's global palette.
+- Support explicit numeric factor conversion in SPEC and one-sided numeric option bounds.
+- Add frozen-R/base-R fixtures, boundary/denominator/plot geometry tests and a synthetic CSV.
+- Alternate R plotting styles and interactive exploration remain pending; full migration is incomplete.
+
 # 0.3.1 — Continuous summaries and categorization (experimental)
 
 - Added pysummarydata: native summaries, optional normality/moment diagnostics, IQR outlier rows, narrative reports and separate-scale histograms.
