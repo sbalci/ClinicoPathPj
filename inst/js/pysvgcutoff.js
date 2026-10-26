@@ -1,6 +1,8 @@
 /* Native Svg uses only local, Python-computed states. No backend communication. */
 (() => {
     'use strict';
+    if (window.cpjSvgCutoffObserverInstalled) return;
+    window.cpjSvgCutoffObserverInstalled = true;
     function start() {
         for (const root of document.querySelectorAll('.cpj-svg-cutoff')) {
             if (root.dataset.ready) continue;
@@ -90,6 +92,10 @@
             handle.addEventListener('lostpointercapture', end);
         }
     }
+    // Native Svg loads assets before inserting content; initialize each new root once.
+    const observer = new MutationObserver(start);
+    observer.observe(document, {childList: true, subtree: true});
+    window.addEventListener('pagehide', () => observer.disconnect(), {once: true});
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start, {once: true});
     else start();
 })();

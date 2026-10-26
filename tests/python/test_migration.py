@@ -29,7 +29,7 @@ class Registry(unittest.TestCase):
                     data=archive.extractfile(entry['baseline']['module']+'/'+path).read()
                     self.assertEqual(hashlib.sha256(data).hexdigest(),digest)
         self.assertTrue(all(not e['coverage']['full_parity'] for e in targets))
-        self.assertEqual(sum(e['status']=='utility' for e in entries),7)
+        self.assertEqual(sum(e['status']=='utility' for e in entries),8)
 
     def test_planned_sources_and_invalid_paths_cannot_execute(self):
         for name in ['../decision','Decision/evil','decision.py','kappaSizeCI;print(1)']:

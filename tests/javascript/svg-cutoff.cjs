@@ -1,10 +1,16 @@
 // Uses only local files in jsdom; native coordinate conversion is separately GUI-tested.
 const assert=require('node:assert/strict'),fs=require('node:fs'),{JSDOM}=require('jsdom');
 const markup=fs.readFileSync(process.argv[2],'utf8');
-const dom=new JSDOM(markup,{runScripts:'outside-only',pretendToBeVisual:true});
-const w=dom.window,root=w.document.querySelector('.cpj-svg-cutoff'),svg=root.querySelector('svg');
+const dom=new JSDOM('',{runScripts:'outside-only',pretendToBeVisual:true});
+const w=dom.window;
+(async()=>{
 w.eval(fs.readFileSync('inst/js/pysvgcutoff.js','utf8'));
+// Match native jamovi: asset first, then result insertion into an already loaded document.
 w.document.dispatchEvent(new w.Event('DOMContentLoaded'));
+w.document.body.innerHTML=markup;
+await new Promise(resolve=>setTimeout(resolve,0));
+const root=w.document.querySelector('.cpj-svg-cutoff'),svg=root.querySelector('svg');
+assert.equal(root.dataset.ready,'true');
 const input=root.querySelector('input'),preview=svg.querySelector('.preview'),snapshot=svg.querySelector('.snapshot');
 assert.match(preview.textContent,/TP 3 · FP 2 · FN 0 · TN 1/);
 input.value='3';input.dispatchEvent(new w.Event('input'));
@@ -29,4 +35,6 @@ assert.match(preview.textContent,/TP 3 · FP 2 · FN 0 · TN 1/);
 input.value='3';input.dispatchEvent(new w.Event('input'));const exported=svg.outerHTML;
 assert.match(exported,/Preview cutoff 3: TP 2/);assert.doesNotMatch(exported,/<script/);
 assert.equal(svg.querySelectorAll('.observation').length,6);
-w.close();console.log('SVG DOM passed: input, tied cutoff, lookup, snapshot, native-rule separation, ROC keyboard, reset, endpoints, invalid input, export content.');
+w.dispatchEvent(new w.Event('pagehide'));w.close();console.log('SVG DOM passed: input, tied cutoff, lookup, snapshot, native-rule separation, ROC keyboard, reset, endpoints, invalid input, export content.');
+
+})().catch(e=>{console.error(e);process.exitCode=1});

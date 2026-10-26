@@ -4,6 +4,9 @@ pysvgcutoffClass <- R6::R6Class(
     "pysvgcutoffClass",
     inherit = pysvgcutoffBase,
     private = list(
+        .init = function() {
+            self$results$explorer$setScripts(c("js/pysvgcutoff.js"))
+        },
         .run = function() {
             self$results$explorer$setScripts(c("js/pysvgcutoff.js"))
             .cpjRun(self, "pysvgcutoff",
