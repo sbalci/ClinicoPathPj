@@ -4,7 +4,7 @@ import numpy as np
 from cpj_runtime import Factor, InputError, md_escape
 from cpj_cutoff import states, select, METRICS
 
-def run_cutoff(data, options, out, render_html):
+def run_cutoff(data, options, out, render_html, *, result_type="html"):
     marker, reference = options.get("marker"), options.get("reference")
     if not marker or not reference:
         raise InputError("Choose a measurement and a binary reference classification.")
@@ -61,7 +61,11 @@ def run_cutoff(data, options, out, render_html):
     out.note("rocSummary", "Empirical AUC uses tied observations together; no AUC inference. Optimal boundaries include both endpoint classifications; ties select the lowest numeric cutoff. Error weights are simple FP/FN weights, not an economic model.")
     out.info("Experimental comparison with the existing dotplot. Use independent rows and validate selected cutoffs in separate data. Browser snapshots are not saved analysis options.")
     payload = dict(rows=[dict(row=str(r), value=float(v), positive=bool(t)) for r,v,t in zip(row_ids,values,truth)], initial=cutoff, automatic=auto, curves=curves, expected={k:point[k] for k in ("tp","fp","fn","tn")}, measurement=marker, positive=options["positive"], negative=negative, source="Python threshold-state lookup", excluded=len(keep)-len(values), direction=direction, criterion=criterion, fpCost=fp_cost, fnCost=fn_cost, method=method, confidence=confidence, prevalence=float(truth.mean()), metricNames=METRICS)
-    out.html("explorer", render_html(payload))
+    if result_type == "svg":
+        out.svg("explorer", render_html(payload))
+        out.markdown("summary", md_escape(f"Native applied rule: {marker} {rule} {cutoff!r}; reference positive: {options['positive']}. Complete rows: {len(values)}; excluded: {len(keep)-len(values)}. Native tables and static images use saved jamovi options. The SVG previews Python-computed threshold states locally. Apply updates only its local snapshot label. Export captures the displayed SVG. Edit native options to persist an analysis rule; reopening interactive content starts from saved options."))
+    else:
+        out.html("explorer", render_html(payload))
     out.plot("staticDotplot", [dict(x=float(v), y=int(t), group=options["positive"] if t else negative) for v,t in zip(values,truth)], reference=cutoff, xlab=marker, ylab=reference)
     plot = [dict(x=p["fpr"], y=p["tpr"], group="Empirical ROC") for p in sorted(curve["points"], key=lambda p:(p["fpr"],p["tpr"]))]
     plot += [dict(x=0,y=0,group="Chance"),dict(x=1,y=1,group="Chance"),dict(x=point["fpr"],y=point["tpr"],group="Applied rule")]

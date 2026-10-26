@@ -1,3 +1,11 @@
+# Native SVG experiment — 0.3.7
+
+- [x] Add a separate stable `pysvgcutoff` utility entry without changing previous identifiers.
+- [x] Reuse the Python cutoff engine and add native Svg transport with local scripts.
+- [ ] Complete regression, compiler and packaged-runtime checks.
+- [ ] Verify GUI interaction, current-view export and fresh-engine saved-file reopening.
+- [ ] Qualify missing-module snapshot viewing and additional platforms.
+
 # Single-variable quality core — 0.3.6
 
 - [x] Implement pycheckdata core from the frozen baseline with explicit omissions.

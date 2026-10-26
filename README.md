@@ -5,7 +5,7 @@ analysis: a literal `SPEC` (options, results and organized UI) plus a `run()` fu
 into the jamovi files, and the statistics run in **the Python bundled with jamovi** (numpy, scipy),
 so users install nothing.
 
-Status: experimental, 0.3.6 (descriptive ports; full migration remains incomplete). Verified only on jamovi 28.13 for macOS (Apple Silicon), with
+Status: experimental, 0.3.7 (descriptive ports; full migration remains incomplete). Verified only on jamovi 28.13 for macOS (Apple Silicon), with
 jmvtools 28.4.
 
 | Analysis | What it does | Checked against |
@@ -356,3 +356,10 @@ Descriptive-port verification and limitations are recorded in [the 0.3.1 validat
 For numeric roles that also permit factors, `coerceNumeric: True` in SPEC requests numeric-metadata conversion in the R bridge; the Python engine must explicitly validate any remaining factor labels. Number/Integer options may omit either bound while keeping a finite default and finite supplied bounds.
 
 `pydataquality` adds native missingness and duplicate accounting, quality maps and a local keyboard-accessible missingness preview. See [methods, examples and limits](docs/python-dataquality.md).
+
+## Native SVG cutoff experiment
+
+Version 0.3.7 adds `pysvgcutoff` alongside the D3 and Observable experiments.
+The shared Python engine supplies all statistics; local SVG interaction supports
+cutoff preview, keyboard control and native current-view SVG/PNG export.
+See [behaviour and comparison](docs/python-svg-cutoff.md).
