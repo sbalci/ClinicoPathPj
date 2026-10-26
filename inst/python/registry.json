@@ -2410,7 +2410,12 @@
       "source": "analyses/meddecide/pysvgcutoff.py",
       "status": "utility",
       "coverage": {
-        "full_parity": false
+        "full_parity": false,
+        "numerical": "Shared cutoff engine; 217-test Python and 619-expectation R suites passed; final focused 6 Python/20 R checks passed",
+        "gui": "macOS arm64 jamovi 28.13: numeric, drag, keyboard, ROC, local snapshot and current SVG/PNG export verified; native OMV save/reopen unresolved",
+        "platforms": [
+          "macOS arm64: partial GUI qualification only"
+        ]
       }
     }
   ]
