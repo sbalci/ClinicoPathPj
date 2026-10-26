@@ -2,8 +2,9 @@
 {
   "name": "pydataquality",
   "title": "Multi-Variable Visual Quality",
-  "menuGroup": "ClinicoPathPj",
-  "menuSubgroup": "Descriptives",
+  "menuGroup": "Descriptives Py",
+  "menuSubgroup": "Data quality",
+  "menuTitle": "Multi-Variable Visual Quality",
   "version": "0.3.3",
   "jas": "1.2",
   "options": [

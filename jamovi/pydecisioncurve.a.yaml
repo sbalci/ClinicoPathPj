@@ -2,8 +2,9 @@
 {
   "name": "pydecisioncurve",
   "title": "Decision Curve Analysis",
-  "menuGroup": "ClinicoPathPj",
-  "menuSubgroup": "Medical Decisions",
+  "menuGroup": "MedDecide Py",
+  "menuSubgroup": "Decision analysis",
+  "menuTitle": "Decision Curve Analysis",
   "version": "0.2.0",
   "jas": "1.2",
   "options": [

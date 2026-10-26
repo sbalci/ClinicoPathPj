@@ -2,8 +2,9 @@
 {
   "name": "pyruntime",
   "title": "Python Runtime Check",
-  "menuGroup": "ClinicoPathPj",
-  "menuSubgroup": "Utilities",
+  "menuGroup": "Python Lab",
+  "menuSubgroup": "Runtime",
+  "menuTitle": "Python Runtime Check",
   "version": "0.1.0",
   "jas": "1.2",
   "options": [

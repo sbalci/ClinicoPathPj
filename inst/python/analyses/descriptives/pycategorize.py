@@ -6,8 +6,8 @@ from cpj_descriptive import numeric
 from cpj_binning import make_breaks, labels_for, interval_labels, assign
 
 SPEC = {
- 'name':'pycategorize','title':'Categorize Continuous Variables','menuGroup':'ClinicoPathPj',
- 'menuSubgroup':'Descriptives','version':'0.3.1',
+ 'name':'pycategorize','title':'Categorize Continuous Variables','menuGroup':'Descriptives Py',
+ 'menuSubgroup':'Transformations','version':'0.3.1',
  'options':[
   {'name':'var','title':'Variable to categorize','type':'Variable','permitted':['numeric'],'suggested':['continuous'],'required':True},
   {'name':'method','title':'Binning method','type':'List','default':'quantile','options':[

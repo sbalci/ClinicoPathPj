@@ -2,8 +2,9 @@
 {
   "name": "pyd3cutoff",
   "title": "Experimental D3 Cutoff and ROC Explorer (Python)",
-  "menuGroup": "ClinicoPathPj",
-  "menuSubgroup": "Medical Decisions",
+  "menuGroup": "Python Lab",
+  "menuSubgroup": "Cutoff explorers",
+  "menuTitle": "D3 cutoff explorer",
   "version": "0.3.4",
   "jas": "1.2",
   "options": [

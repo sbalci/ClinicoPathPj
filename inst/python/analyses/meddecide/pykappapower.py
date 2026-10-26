@@ -4,8 +4,8 @@ from cpj_runtime import InputError
 
 SPEC = {'name': 'pykappapower',
  'title': 'Kappa Sample Size by Power',
- 'menuGroup': 'ClinicoPathPj',
- 'menuSubgroup': 'Medical Decisions',
+ 'menuGroup': 'MedDecide Py',
+ 'menuSubgroup': 'Agreement sample size',
  'version': '0.1.0',
  'options': [{'name': 'outcome',
               'type': 'List',

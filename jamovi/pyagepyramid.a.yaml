@@ -2,8 +2,9 @@
 {
   "name": "pyagepyramid",
   "title": "Age Pyramid",
-  "menuGroup": "ClinicoPathPj",
-  "menuSubgroup": "Descriptives",
+  "menuGroup": "Descriptives Py",
+  "menuSubgroup": "Distributions",
+  "menuTitle": "Age Pyramid",
   "version": "0.3.2",
   "jas": "1.2",
   "options": [

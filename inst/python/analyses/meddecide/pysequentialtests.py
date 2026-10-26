@@ -3,8 +3,8 @@
 
 SPEC = {'name': 'pysequentialtests',
  'title': 'Sequential Testing',
- 'menuGroup': 'ClinicoPathPj',
- 'menuSubgroup': 'Medical Decisions',
+ 'menuGroup': 'MedDecide Py',
+ 'menuSubgroup': 'Decision analysis',
  'version': '0.2.0',
  'options': [{'name': 'sens1',
               'title': 'First test sensitivity (0-1)',

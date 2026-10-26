@@ -2,8 +2,9 @@
 {
   "name": "pykappapower",
   "title": "Kappa Sample Size by Power",
-  "menuGroup": "ClinicoPathPj",
-  "menuSubgroup": "Medical Decisions",
+  "menuGroup": "MedDecide Py",
+  "menuSubgroup": "Agreement sample size",
+  "menuTitle": "Kappa Sample Size by Power",
   "version": "0.1.0",
   "jas": "1.2",
   "options": [

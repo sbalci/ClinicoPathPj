@@ -2,8 +2,9 @@
 {
   "name": "pydotdecision",
   "title": "Interactive Diagnostic Dotplot (Python)",
-  "menuGroup": "ClinicoPathPj",
-  "menuSubgroup": "Medical Decisions",
+  "menuGroup": "Python Lab",
+  "menuSubgroup": "Cutoff explorers",
+  "menuTitle": "Diagnostic dotplot",
   "version": "0.1.0",
   "jas": "1.2",
   "options": [

@@ -2,8 +2,8 @@
 
 SPEC = {'name': 'pykappafixedn',
  'title': 'Kappa Lower Limit for a Fixed Sample Size',
- 'menuGroup': 'ClinicoPathPj',
- 'menuSubgroup': 'Medical Decisions',
+ 'menuGroup': 'MedDecide Py',
+ 'menuSubgroup': 'Agreement sample size',
  'version': '0.1.0',
  'options': [{'name': 'outcome',
               'type': 'List',

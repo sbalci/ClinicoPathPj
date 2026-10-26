@@ -22,6 +22,17 @@ parity and GUI/platform acceptance remain separate gates.
 for e in sorted(rows,key=lambda e:(e['wave'],e['family'],e['id'])):
  text+='| {} | {} | {} | {} | {} | {} | {} |\n'.format(e['id'],e['source_name'],e['family'],e['wave'],e['status'],'yes' if e['coverage']['full_parity'] else 'pending',e['coverage']['gui'])
 text+='''
+## Menus and optional execution service
+
+Installed analyses use Descriptives Py, Stats Plots Py, MedDecide Py and Python Lab,
+with registry-owned topic subgroups and compact experiment titles. Planned Survival Py
+and OncoPath Py groups do not install placeholder entries. Existing identifiers remain stable.
+
+`pybridgecompare` is a retained utility experiment, not another baseline port. It uses
+the same cutoff engine through processx (default) or optional Pj >=1.3.0 service API 1.
+Twelve bundled-interpreter route configurations passed matched native results and
+independent R count/exact-interval checks. See [service review](pj-service-review.md).
+
 ## Foundation and next gates
 
 Implemented: registry-based family routing, frozen baselines with file hashes,

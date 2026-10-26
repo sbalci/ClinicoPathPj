@@ -7,8 +7,8 @@ from cpj_runtime import md_escape
 from cpj_quality import profile, duplicate_rows, preview
 
 SPEC = {
- 'name':'pydataquality','title':'Multi-Variable Visual Quality','menuGroup':'ClinicoPathPj',
- 'menuSubgroup':'Descriptives','version':'0.3.3',
+ 'name':'pydataquality','title':'Multi-Variable Visual Quality','menuGroup':'Descriptives Py',
+ 'menuSubgroup':'Data quality','version':'0.3.3',
  'options':[
   {'name':'vars','title':'Variables','type':'Variables','required':True},
   {'name':'check_duplicates','title':'Duplicate values','type':'Bool','default':False},

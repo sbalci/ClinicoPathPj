@@ -3,8 +3,8 @@ from cpj_runtime import InputError, md_escape
 
 SPEC = {'name': 'pydecisioncurve',
  'title': 'Decision Curve Analysis',
- 'menuGroup': 'ClinicoPathPj',
- 'menuSubgroup': 'Medical Decisions',
+ 'menuGroup': 'MedDecide Py',
+ 'menuSubgroup': 'Decision analysis',
  'version': '0.2.0',
  'options': [{'name': 'outcome',
               'title': 'Binary reference outcome',

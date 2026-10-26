@@ -2,8 +2,9 @@
 {
   "name": "pycheckdata",
   "title": "Single Variable Quality Check",
-  "menuGroup": "ClinicoPathPj",
-  "menuSubgroup": "Descriptives",
+  "menuGroup": "Descriptives Py",
+  "menuSubgroup": "Data quality",
+  "menuTitle": "Single Variable Quality Check",
   "version": "0.3.6",
   "jas": "1.2",
   "options": [

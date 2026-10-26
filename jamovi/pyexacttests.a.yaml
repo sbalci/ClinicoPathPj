@@ -2,8 +2,9 @@
 {
   "name": "pyexacttests",
   "title": "Exact Tests for 2x2 Tables (Python)",
-  "menuGroup": "ClinicoPathPj",
-  "menuSubgroup": "Medical Decisions",
+  "menuGroup": "MedDecide Py",
+  "menuSubgroup": "Exact tests",
+  "menuTitle": "Exact Tests for 2x2 Tables (Python)",
   "version": "0.1.0",
   "jas": "1.2",
   "options": [

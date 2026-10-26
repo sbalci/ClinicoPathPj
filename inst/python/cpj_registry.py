@@ -22,6 +22,8 @@ def read_registry(root=None):
             if not isinstance(name, str) or not IDENTIFIER.fullmatch(name) or name in identities:
                 raise ValueError(f'Duplicate or invalid registry identifier: {name!r}')
             identities.add(name)
+        if not isinstance(entry.get('menu_group'), str) or not entry['menu_group'].strip():
+            raise ValueError('Registry entries need an explicit menu_group')
         source = entry.get('source')
         if source is not None:
             path = Path(source)

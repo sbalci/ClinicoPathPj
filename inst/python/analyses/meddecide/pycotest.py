@@ -19,8 +19,8 @@ from cpj_runtime import InputError, fmt_num, md_escape
 
 SPEC = {'name': 'pycotest',
  'title': 'Co-Testing Analysis',
- 'menuGroup': 'ClinicoPathPj',
- 'menuSubgroup': 'Medical Decisions',
+ 'menuGroup': 'MedDecide Py',
+ 'menuSubgroup': 'Diagnostic accuracy',
  'version': '0.1.0',
  'options': [{'name': 'name1',
               'type': 'String',

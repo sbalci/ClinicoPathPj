@@ -31,8 +31,8 @@ from cpj_runtime import Factor, InputError, fmt_num, md_escape
 
 SPEC = {'name': 'pyexacttests',
  'title': 'Exact Tests for 2x2 Tables (Python)',
- 'menuGroup': 'ClinicoPathPj',
- 'menuSubgroup': 'Medical Decisions',
+ 'menuGroup': 'MedDecide Py',
+ 'menuSubgroup': 'Exact tests',
  'version': '0.1.0',
  'options': [{'name': 'group',
               'type': 'Variable',

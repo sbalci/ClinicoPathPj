@@ -2,8 +2,9 @@
 {
   "name": "pychisqposttest",
   "title": "Chi-Square Post-Tests",
-  "menuGroup": "ClinicoPathPj",
-  "menuSubgroup": "Descriptives",
+  "menuGroup": "Descriptives Py",
+  "menuSubgroup": "Contingency tables",
+  "menuTitle": "Chi-Square Post-Tests",
   "version": "0.2.0",
   "jas": "1.2",
   "options": [

@@ -3,8 +3,8 @@ from cpj_runtime import InputError, md_escape
 
 SPEC = {'name': 'pychisqposttest',
  'title': 'Chi-Square Post-Tests',
- 'menuGroup': 'ClinicoPathPj',
- 'menuSubgroup': 'Descriptives',
+ 'menuGroup': 'Descriptives Py',
+ 'menuSubgroup': 'Contingency tables',
  'version': '0.2.0',
  'options': [{'name': 'rows',
               'title': 'Row factor',

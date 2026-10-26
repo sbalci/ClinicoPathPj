@@ -3,8 +3,8 @@ from cpj_runtime import InputError, md_escape
 
 SPEC = {'name': 'pybenford',
  'title': 'Benford Analysis',
- 'menuGroup': 'ClinicoPathPj',
- 'menuSubgroup': 'Descriptives',
+ 'menuGroup': 'Descriptives Py',
+ 'menuSubgroup': 'Data quality',
  'version': '0.2.0',
  'options': [{'name': 'measurement',
               'title': 'Positive numeric measurement',

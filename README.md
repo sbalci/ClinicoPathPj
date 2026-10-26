@@ -5,8 +5,17 @@ analysis: a literal `SPEC` (options, results and organized UI) plus a `run()` fu
 into the jamovi files, and the statistics run in **the Python bundled with jamovi** (numpy, scipy),
 so users install nothing.
 
-Status: experimental, 0.3.7 (descriptive ports; full migration remains incomplete). Verified only on jamovi 28.13 for macOS (Apple Silicon), with
+Status: experimental, 0.3.8 (descriptive ports; full migration remains incomplete). Verified only on jamovi 28.13 for macOS (Apple Silicon), with
 jmvtools 28.4.
+
+Analyses now use compact family menus: **Descriptives Py**, **Stats Plots Py**,
+**MedDecide Py** and **Python Lab**, with topic subgroups. The single module identity
+and existing analysis identifiers are retained. Survival and Oncology groups are reserved
+in the registry until implementations are available.
+
+The optional `pybridgecompare` experiment runs the same cutoff engine through processx
+or the public Pj 1.3.0 service. See [the comparison guide](docs/python-bridge-comparison.md)
+and [source review](docs/pj-service-review.md).
 
 | Analysis | What it does | Checked against |
 |---|---|---|
@@ -26,7 +35,7 @@ Open **Data Library > ClinicoPathPj > Python Core Examples**, or import
 `data/python_core_examples.csv`, for the synthetic examples.
 
 Build the single standard module without installing it:
-`Rscript --vanilla tools/build.R --build-only` → `ClinicoPathPj_0.3.6.jmo`.
+`Rscript --vanilla tools/build.R --build-only` → `ClinicoPathPj_0.3.8.jmo`.
 After replacing a loaded development build, use a fresh jamovi engine to avoid stale namespaces.
 
 `pywelch` reports the mean difference as *comparison minus reference*. The reference defaults to

@@ -42,6 +42,10 @@ sync_module_metadata <- function(root = ".") {
                 } else {
                     document$analyses[[index]]$hidden <- hidden
                 }
+                index <- which(vapply(document$analyses, function(a) identical(a$name, name), logical(1)))
+                document$analyses[[index]]$menuGroup <- entry$menu_group
+                document$analyses[[index]]$menuSubgroup <- entry$menu
+                document$analyses[[index]]$menuTitle <- if (is.null(entry$menu_title)) entry$title else entry$menu_title
             }
         }
     }

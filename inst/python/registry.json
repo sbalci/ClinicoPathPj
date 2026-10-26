@@ -6,7 +6,7 @@
     {
       "id": "pyagepyramid",
       "family": "descriptives",
-      "menu": "Descriptives",
+      "menu": "Distributions",
       "title": "Age Pyramid",
       "aliases": [],
       "source": "analyses/descriptives/pyagepyramid.py",
@@ -41,7 +41,9 @@
         "bundled": [],
         "candidates": []
       },
-      "source_name": "agepyramid"
+      "source_name": "agepyramid",
+      "menu_group": "Descriptives Py",
+      "menu_title": "Age Pyramid"
     },
     {
       "id": "pyalluvial",
@@ -77,12 +79,14 @@
         "bundled": [],
         "candidates": []
       },
-      "source_name": "alluvial"
+      "source_name": "alluvial",
+      "menu_group": "Descriptives Py",
+      "menu_title": "Alluvial Diagrams"
     },
     {
       "id": "pybenford",
       "family": "descriptives",
-      "menu": "Descriptives",
+      "menu": "Data quality",
       "title": "Benford Analysis",
       "aliases": [],
       "source": "analyses/descriptives/pybenford.py",
@@ -116,12 +120,14 @@
         ],
         "candidates": []
       },
-      "source_name": "benford"
+      "source_name": "benford",
+      "menu_group": "Descriptives Py",
+      "menu_title": "Benford Analysis"
     },
     {
       "id": "pycategorize",
       "family": "descriptives",
-      "menu": "Descriptives",
+      "menu": "Transformations",
       "title": "Categorize Continuous Variables",
       "aliases": [],
       "source": "analyses/descriptives/pycategorize.py",
@@ -160,12 +166,14 @@
         ],
         "candidates": []
       },
-      "source_name": "categorize"
+      "source_name": "categorize",
+      "menu_group": "Descriptives Py",
+      "menu_title": "Categorize Continuous Variables"
     },
     {
       "id": "pycheckdata",
       "family": "descriptives",
-      "menu": "Descriptives",
+      "menu": "Data quality",
       "title": "Single Variable Quality Check",
       "aliases": [],
       "source": "analyses/descriptives/pycheckdata.py",
@@ -204,12 +212,14 @@
         "bundled": [],
         "candidates": []
       },
-      "source_name": "checkdata"
+      "source_name": "checkdata",
+      "menu_group": "Descriptives Py",
+      "menu_title": "Single Variable Quality Check"
     },
     {
       "id": "pychisqposttest",
       "family": "descriptives",
-      "menu": "Descriptives",
+      "menu": "Contingency tables",
       "title": "Chi-Square Post-Tests",
       "aliases": [],
       "source": "analyses/descriptives/pychisqposttest.py",
@@ -244,7 +254,9 @@
         "candidates": []
       },
       "source_name": "chisqposttest",
-      "baseline_title": "Chi-Square Post-Hoc Tests"
+      "baseline_title": "Chi-Square Post-Hoc Tests",
+      "menu_group": "Descriptives Py",
+      "menu_title": "Chi-Square Post-Tests"
     },
     {
       "id": "pycrosstable",
@@ -280,12 +292,14 @@
         "bundled": [],
         "candidates": []
       },
-      "source_name": "crosstable"
+      "source_name": "crosstable",
+      "menu_group": "Descriptives Py",
+      "menu_title": "Cross Tables"
     },
     {
       "id": "pydataquality",
       "family": "descriptives",
-      "menu": "Descriptives",
+      "menu": "Data quality",
       "title": "Multi-Variable Visual Quality",
       "aliases": [],
       "source": "analyses/descriptives/pydataquality.py",
@@ -321,7 +335,9 @@
         "bundled": [],
         "candidates": []
       },
-      "source_name": "dataquality"
+      "source_name": "dataquality",
+      "menu_group": "Descriptives Py",
+      "menu_title": "Multi-Variable Visual Quality"
     },
     {
       "id": "pyoutlierdetection",
@@ -359,12 +375,14 @@
           "scikit-learn (MinCovDet, OPTICS, LocalOutlierFactor), only for the optional multivariate methods"
         ]
       },
-      "source_name": "outlierdetection"
+      "source_name": "outlierdetection",
+      "menu_group": "Descriptives Py",
+      "menu_title": "Outlier Detection"
     },
     {
       "id": "pyreportcat",
       "family": "descriptives",
-      "menu": "Descriptives",
+      "menu": "Summaries",
       "title": "Summary of Categorical Variables",
       "aliases": [],
       "source": "analyses/descriptives/pyreportcat.py",
@@ -397,12 +415,14 @@
         ],
         "candidates": []
       },
-      "source_name": "reportcat"
+      "source_name": "reportcat",
+      "menu_group": "Descriptives Py",
+      "menu_title": "Summary of Categorical Variables"
     },
     {
       "id": "pysummarydata",
       "family": "descriptives",
-      "menu": "Descriptives",
+      "menu": "Summaries",
       "title": "Summary of Continuous Variables",
       "aliases": [],
       "source": "analyses/descriptives/pysummarydata.py",
@@ -439,7 +459,9 @@
         ],
         "candidates": []
       },
-      "source_name": "summarydata"
+      "source_name": "summarydata",
+      "menu_group": "Descriptives Py",
+      "menu_title": "Summary of Continuous Variables"
     },
     {
       "id": "pytableone",
@@ -475,7 +497,9 @@
         "bundled": [],
         "candidates": []
       },
-      "source_name": "tableone"
+      "source_name": "tableone",
+      "menu_group": "Descriptives Py",
+      "menu_title": "Table One"
     },
     {
       "id": "pyvartree",
@@ -511,7 +535,9 @@
         "bundled": [],
         "candidates": []
       },
-      "source_name": "vartree"
+      "source_name": "vartree",
+      "menu_group": "Descriptives Py",
+      "menu_title": "Variable Tree"
     },
     {
       "id": "pyvenn",
@@ -547,7 +573,9 @@
         "bundled": [],
         "candidates": []
       },
-      "source_name": "venn"
+      "source_name": "venn",
+      "menu_group": "Descriptives Py",
+      "menu_title": "Venn Diagram"
     },
     {
       "id": "pyadvancedraincloud",
@@ -585,7 +613,9 @@
           "plot renderer (matplotlib not bundled; R/ggplot2 or HTML/D3 from Python data; excluded from effort)"
         ]
       },
-      "source_name": "advancedraincloud"
+      "source_name": "advancedraincloud",
+      "menu_group": "Stats Plots Py",
+      "menu_title": "Advanced Raincloud Plot"
     },
     {
       "id": "pyhullplot",
@@ -624,7 +654,9 @@
           "plot renderer (excluded from effort)"
         ]
       },
-      "source_name": "hullplot"
+      "source_name": "hullplot",
+      "menu_group": "Stats Plots Py",
+      "menu_title": "Hull Plot"
     },
     {
       "id": "pyjjarcdiagram",
@@ -663,7 +695,9 @@
           "networkx optional (Brandes betweenness is about 40 lines of own code)"
         ]
       },
-      "source_name": "jjarcdiagram"
+      "source_name": "jjarcdiagram",
+      "menu_group": "Stats Plots Py",
+      "menu_title": "Arc Diagram"
     },
     {
       "id": "pyjjbarstats",
@@ -701,7 +735,9 @@
           "plot renderer (excluded from effort)"
         ]
       },
-      "source_name": "jjbarstats"
+      "source_name": "jjbarstats",
+      "menu_group": "Stats Plots Py",
+      "menu_title": "Bar Charts"
     },
     {
       "id": "pyjjbetweenstats",
@@ -739,7 +775,9 @@
           "plot renderer (excluded from effort)"
         ]
       },
-      "source_name": "jjbetweenstats"
+      "source_name": "jjbetweenstats",
+      "menu_group": "Stats Plots Py",
+      "menu_title": "Box-Violin Plots to Compare Between Groups"
     },
     {
       "id": "pyjjcorrmat",
@@ -777,7 +815,9 @@
           "plot renderer (excluded from effort)"
         ]
       },
-      "source_name": "jjcorrmat"
+      "source_name": "jjcorrmat",
+      "menu_group": "Stats Plots Py",
+      "menu_title": "Correlation Matrix"
     },
     {
       "id": "pyjjdotchart",
@@ -815,7 +855,9 @@
           "plot renderer (excluded from effort)"
         ]
       },
-      "source_name": "jjdotchart"
+      "source_name": "jjdotchart",
+      "menu_group": "Stats Plots Py",
+      "menu_title": "Dot Chart (Summary vs Reference Value)"
     },
     {
       "id": "pyjjdotplotstats",
@@ -853,7 +895,9 @@
           "plot renderer (excluded from effort)"
         ]
       },
-      "source_name": "jjdotplotstats"
+      "source_name": "jjdotplotstats",
+      "menu_group": "Stats Plots Py",
+      "menu_title": "Horizontal Box-Violin Comparison"
     },
     {
       "id": "pyjjhistostats",
@@ -891,7 +935,9 @@
           "plot renderer (excluded from effort)"
         ]
       },
-      "source_name": "jjhistostats"
+      "source_name": "jjhistostats",
+      "menu_group": "Stats Plots Py",
+      "menu_title": "Histogram"
     },
     {
       "id": "pyjjpiestats",
@@ -929,7 +975,9 @@
           "plot renderer (excluded from effort)"
         ]
       },
-      "source_name": "jjpiestats"
+      "source_name": "jjpiestats",
+      "menu_group": "Stats Plots Py",
+      "menu_title": "Pie Charts"
     },
     {
       "id": "pyjjridges",
@@ -967,7 +1015,9 @@
           "plot renderer (excluded from effort)"
         ]
       },
-      "source_name": "jjridges"
+      "source_name": "jjridges",
+      "menu_group": "Stats Plots Py",
+      "menu_title": "Advanced Ridge Plot"
     },
     {
       "id": "pyjjscatterstats",
@@ -1005,7 +1055,9 @@
           "plot renderer (excluded from effort)"
         ]
       },
-      "source_name": "jjscatterstats"
+      "source_name": "jjscatterstats",
+      "menu_group": "Stats Plots Py",
+      "menu_title": "Scatter Plot"
     },
     {
       "id": "pyjjsegmentedtotalbar",
@@ -1043,7 +1095,9 @@
           "plot renderer (excluded from effort)"
         ]
       },
-      "source_name": "jjsegmentedtotalbar"
+      "source_name": "jjsegmentedtotalbar",
+      "menu_group": "Stats Plots Py",
+      "menu_title": "Segmented Total Bar Charts"
     },
     {
       "id": "pyjwaffle",
@@ -1081,7 +1135,9 @@
           "plot renderer (excluded from effort)"
         ]
       },
-      "source_name": "jwaffle"
+      "source_name": "jwaffle",
+      "menu_group": "Stats Plots Py",
+      "menu_title": "Waffle Charts"
     },
     {
       "id": "pyjjwithinstats",
@@ -1119,7 +1175,9 @@
           "plot renderer (excluded from effort)"
         ]
       },
-      "source_name": "jjwithinstats"
+      "source_name": "jjwithinstats",
+      "menu_group": "Stats Plots Py",
+      "menu_title": "Box-Violin Plots to Compare Within Groups"
     },
     {
       "id": "pylinechart",
@@ -1157,7 +1215,9 @@
           "plot renderer (excluded from effort)"
         ]
       },
-      "source_name": "linechart"
+      "source_name": "linechart",
+      "menu_group": "Stats Plots Py",
+      "menu_title": "Line Chart"
     },
     {
       "id": "pylollipop",
@@ -1195,7 +1255,9 @@
           "plot renderer (excluded from effort)"
         ]
       },
-      "source_name": "lollipop"
+      "source_name": "lollipop",
+      "menu_group": "Stats Plots Py",
+      "menu_title": "Lollipop Chart"
     },
     {
       "id": "pyraincloud",
@@ -1233,7 +1295,9 @@
           "plot renderer (excluded from effort)"
         ]
       },
-      "source_name": "raincloud"
+      "source_name": "raincloud",
+      "menu_group": "Stats Plots Py",
+      "menu_title": "Raincloud Plot"
     },
     {
       "id": "pystatsplot2",
@@ -1271,7 +1335,9 @@
           "plot renderer (excluded from effort)"
         ]
       },
-      "source_name": "statsplot2"
+      "source_name": "statsplot2",
+      "menu_group": "Stats Plots Py",
+      "menu_title": "Automatic Plot Selection"
     },
     {
       "id": "pyagreement",
@@ -1307,12 +1373,14 @@
         "bundled": [],
         "candidates": []
       },
-      "source_name": "agreement"
+      "source_name": "agreement",
+      "menu_group": "MedDecide Py",
+      "menu_title": "Interrater Reliability"
     },
     {
       "id": "pycotest",
       "family": "meddecide",
-      "menu": "Medical Decisions",
+      "menu": "Diagnostic accuracy",
       "title": "Co-Testing Analysis",
       "aliases": [],
       "source": "analyses/meddecide/pycotest.py",
@@ -1346,12 +1414,14 @@
         ],
         "candidates": []
       },
-      "source_name": "cotest"
+      "source_name": "cotest",
+      "menu_group": "MedDecide Py",
+      "menu_title": "Co-Testing Analysis"
     },
     {
       "id": "pydecision",
       "family": "meddecide",
-      "menu": "Medical Decisions",
+      "menu": "Diagnostic accuracy",
       "title": "Diagnostic Accuracy",
       "aliases": [],
       "source": "analyses/meddecide/pydecision.py",
@@ -1386,12 +1456,14 @@
         "candidates": []
       },
       "source_name": "decision",
-      "baseline_title": "Medical Decision"
+      "baseline_title": "Medical Decision",
+      "menu_group": "MedDecide Py",
+      "menu_title": "Diagnostic Accuracy"
     },
     {
       "id": "pydecisioncalculator",
       "family": "meddecide",
-      "menu": "Medical Decisions",
+      "menu": "Diagnostic accuracy",
       "title": "Diagnostic Accuracy Calculator",
       "aliases": [],
       "source": "analyses/meddecide/pydecisioncalculator.py",
@@ -1426,7 +1498,9 @@
         "candidates": []
       },
       "source_name": "decisioncalculator",
-      "baseline_title": "Medical Decision Calculator"
+      "baseline_title": "Medical Decision Calculator",
+      "menu_group": "MedDecide Py",
+      "menu_title": "Diagnostic Accuracy Calculator"
     },
     {
       "id": "pydecisioncombine",
@@ -1462,7 +1536,9 @@
         "bundled": [],
         "candidates": []
       },
-      "source_name": "decisioncombine"
+      "source_name": "decisioncombine",
+      "menu_group": "MedDecide Py",
+      "menu_title": "Combine Medical Decision Tests"
     },
     {
       "id": "pydecisioncompare",
@@ -1498,12 +1574,14 @@
         "bundled": [],
         "candidates": []
       },
-      "source_name": "decisioncompare"
+      "source_name": "decisioncompare",
+      "menu_group": "MedDecide Py",
+      "menu_title": "Compare Medical Decision Tests"
     },
     {
       "id": "pydecisioncurve",
       "family": "meddecide",
-      "menu": "Medical Decisions",
+      "menu": "Decision analysis",
       "title": "Decision Curve Analysis",
       "aliases": [],
       "source": "analyses/meddecide/pydecisioncurve.py",
@@ -1537,7 +1615,9 @@
         ],
         "candidates": []
       },
-      "source_name": "decisioncurve"
+      "source_name": "decisioncurve",
+      "menu_group": "MedDecide Py",
+      "menu_title": "Decision Curve Analysis"
     },
     {
       "id": "pyenhancedroc",
@@ -1573,12 +1653,14 @@
         "bundled": [],
         "candidates": []
       },
-      "source_name": "enhancedROC"
+      "source_name": "enhancedROC",
+      "menu_group": "MedDecide Py",
+      "menu_title": "Clinical ROC Analysis"
     },
     {
       "id": "pykappaci",
       "family": "meddecide",
-      "menu": "Medical Decisions",
+      "menu": "Agreement sample size",
       "title": "Kappa Sample Size by Confidence Interval",
       "aliases": [],
       "source": "analyses/meddecide/pykappaci.py",
@@ -1613,12 +1695,14 @@
         "candidates": []
       },
       "source_name": "kappaSizeCI",
-      "baseline_title": "Confidence Interval Approach for the Number of Subjects Required"
+      "baseline_title": "Confidence Interval Approach for the Number of Subjects Required",
+      "menu_group": "MedDecide Py",
+      "menu_title": "Kappa Sample Size by Confidence Interval"
     },
     {
       "id": "pykappafixedn",
       "family": "meddecide",
-      "menu": "Medical Decisions",
+      "menu": "Agreement sample size",
       "title": "Kappa Lower Limit for a Fixed Sample Size",
       "aliases": [],
       "source": "analyses/meddecide/pykappafixedn.py",
@@ -1653,12 +1737,14 @@
         "candidates": []
       },
       "source_name": "kappaSizeFixedN",
-      "baseline_title": "Lowest Expected Kappa for a Fixed Sample Size"
+      "baseline_title": "Lowest Expected Kappa for a Fixed Sample Size",
+      "menu_group": "MedDecide Py",
+      "menu_title": "Kappa Lower Limit for a Fixed Sample Size"
     },
     {
       "id": "pykappapower",
       "family": "meddecide",
-      "menu": "Medical Decisions",
+      "menu": "Agreement sample size",
       "title": "Kappa Sample Size by Power",
       "aliases": [],
       "source": "analyses/meddecide/pykappapower.py",
@@ -1693,7 +1779,9 @@
         "candidates": []
       },
       "source_name": "kappaSizePower",
-      "baseline_title": "Power Approach for the Number of Subjects Required"
+      "baseline_title": "Power Approach for the Number of Subjects Required",
+      "menu_group": "MedDecide Py",
+      "menu_title": "Kappa Sample Size by Power"
     },
     {
       "id": "pylassologistic",
@@ -1731,7 +1819,9 @@
           "scikit-learn (L1 logistic; would not reproduce glmnet's lambda path and standardization exactly; not bundled)"
         ]
       },
-      "source_name": "lassologistic"
+      "source_name": "lassologistic",
+      "menu_group": "MedDecide Py",
+      "menu_title": "LASSO Logistic Regression"
     },
     {
       "id": "pynogoldstandard",
@@ -1767,7 +1857,9 @@
         "bundled": [],
         "candidates": []
       },
-      "source_name": "nogoldstandard"
+      "source_name": "nogoldstandard",
+      "menu_group": "MedDecide Py",
+      "menu_title": "Analysis Without Gold Standard"
     },
     {
       "id": "pypsychopdaroc",
@@ -1803,12 +1895,14 @@
         "bundled": [],
         "candidates": []
       },
-      "source_name": "psychopdaROC"
+      "source_name": "psychopdaROC",
+      "menu_group": "MedDecide Py",
+      "menu_title": "Advanced ROC Analysis"
     },
     {
       "id": "pysequentialtests",
       "family": "meddecide",
-      "menu": "Medical Decisions",
+      "menu": "Decision analysis",
       "title": "Sequential Testing",
       "aliases": [],
       "source": "analyses/meddecide/pysequentialtests.py",
@@ -1843,7 +1937,9 @@
         "candidates": []
       },
       "source_name": "sequentialtests",
-      "baseline_title": "Sequential Testing Analysis"
+      "baseline_title": "Sequential Testing Analysis",
+      "menu_group": "MedDecide Py",
+      "menu_title": "Sequential Testing"
     },
     {
       "id": "pydatetimeconverter",
@@ -1881,7 +1977,9 @@
           "zoneinfo + tzdata (absent from the trimmed bundled stdlib; the free-text timezone option needs it)"
         ]
       },
-      "source_name": "datetimeconverter"
+      "source_name": "datetimeconverter",
+      "menu_group": "Survival Py",
+      "menu_title": "DateTime Converter"
     },
     {
       "id": "pylassocox",
@@ -1919,7 +2017,9 @@
           "scikit-survival (CoxnetSurvivalAnalysis), or an own coordinate-descent Cox-lasso path"
         ]
       },
-      "source_name": "lassocox"
+      "source_name": "lassocox",
+      "menu_group": "Survival Py",
+      "menu_title": "Lasso-Cox Regression"
     },
     {
       "id": "pymultisurvival",
@@ -1955,7 +2055,9 @@
         "bundled": [],
         "candidates": []
       },
-      "source_name": "multisurvival"
+      "source_name": "multisurvival",
+      "menu_group": "Survival Py",
+      "menu_title": "Multivariable Survival Analysis"
     },
     {
       "id": "pyoddsratio",
@@ -1991,7 +2093,9 @@
         "bundled": [],
         "candidates": []
       },
-      "source_name": "oddsratio"
+      "source_name": "oddsratio",
+      "menu_group": "Survival Py",
+      "menu_title": "Odds Ratio Table and Plot"
     },
     {
       "id": "pyoutcomeorganizer",
@@ -2027,7 +2131,9 @@
         "bundled": [],
         "candidates": []
       },
-      "source_name": "outcomeorganizer"
+      "source_name": "outcomeorganizer",
+      "menu_group": "Survival Py",
+      "menu_title": "Outcome Organizer for Survival Analysis"
     },
     {
       "id": "pysinglearm",
@@ -2063,7 +2169,9 @@
         "bundled": [],
         "candidates": []
       },
-      "source_name": "singlearm"
+      "source_name": "singlearm",
+      "menu_group": "Survival Py",
+      "menu_title": "Single Arm Survival"
     },
     {
       "id": "pysurvival",
@@ -2099,7 +2207,9 @@
         "bundled": [],
         "candidates": []
       },
-      "source_name": "survival"
+      "source_name": "survival",
+      "menu_group": "Survival Py",
+      "menu_title": "Survival Analysis"
     },
     {
       "id": "pysurvivalcont",
@@ -2135,7 +2245,9 @@
         "bundled": [],
         "candidates": []
       },
-      "source_name": "survivalcont"
+      "source_name": "survivalcont",
+      "menu_group": "Survival Py",
+      "menu_title": "Survival Analysis for Continuous Explanatory Variable"
     },
     {
       "id": "pytimeinterval",
@@ -2171,7 +2283,9 @@
         "bundled": [],
         "candidates": []
       },
-      "source_name": "timeinterval"
+      "source_name": "timeinterval",
+      "menu_group": "Survival Py",
+      "menu_title": "Comprehensive Time Interval Calculator"
     },
     {
       "id": "pydiagnosticmeta",
@@ -2207,7 +2321,9 @@
         "bundled": [],
         "candidates": []
       },
-      "source_name": "diagnosticmeta"
+      "source_name": "diagnosticmeta",
+      "menu_group": "OncoPath Py",
+      "menu_title": "Diagnostic Test Meta-Analysis for Pathology"
     },
     {
       "id": "pyihcheterogeneity",
@@ -2243,7 +2359,9 @@
         "bundled": [],
         "candidates": []
       },
-      "source_name": "ihcheterogeneity"
+      "source_name": "ihcheterogeneity",
+      "menu_group": "OncoPath Py",
+      "menu_title": "IHC Heterogeneity Analysis"
     },
     {
       "id": "pyswimmerplot",
@@ -2279,7 +2397,9 @@
         "bundled": [],
         "candidates": []
       },
-      "source_name": "swimmerplot"
+      "source_name": "swimmerplot",
+      "menu_group": "OncoPath Py",
+      "menu_title": "Swimmer Plot"
     },
     {
       "id": "pywaterfall",
@@ -2315,96 +2435,112 @@
         "bundled": [],
         "candidates": []
       },
-      "source_name": "waterfall"
+      "source_name": "waterfall",
+      "menu_group": "OncoPath Py",
+      "menu_title": "Treatment Response: Patient-Level Burden"
     },
     {
       "id": "pydescriptives",
       "family": "descriptives",
-      "menu": "Descriptives",
+      "menu": "Summaries",
       "title": "Descriptives (Python)",
       "aliases": [],
       "source": "analyses/descriptives/pydescriptives.py",
       "status": "utility",
       "coverage": {
         "full_parity": false
-      }
+      },
+      "menu_group": "Descriptives Py",
+      "menu_title": "Descriptives (Python)"
     },
     {
       "id": "pydotdecision",
       "family": "meddecide",
-      "menu": "Medical Decisions",
+      "menu": "Cutoff explorers",
       "title": "Interactive Diagnostic Dotplot (Python)",
       "aliases": [],
       "source": "analyses/meddecide/pydotdecision.py",
       "status": "utility",
       "coverage": {
         "full_parity": false
-      }
+      },
+      "menu_group": "Python Lab",
+      "menu_title": "Diagnostic dotplot"
     },
     {
       "id": "pyexacttests",
       "family": "meddecide",
-      "menu": "Medical Decisions",
+      "menu": "Exact tests",
       "title": "Exact Tests for 2x2 Tables (Python)",
       "aliases": [],
       "source": "analyses/meddecide/pyexacttests.py",
       "status": "utility",
       "coverage": {
         "full_parity": false
-      }
+      },
+      "menu_group": "MedDecide Py",
+      "menu_title": "Exact Tests for 2x2 Tables (Python)"
     },
     {
       "id": "pyruntime",
       "family": "utilities",
-      "menu": "Utilities",
+      "menu": "Runtime",
       "title": "Python Runtime Check",
       "aliases": [],
       "source": "analyses/utilities/pyruntime.py",
       "status": "utility",
       "coverage": {
         "full_parity": false
-      }
+      },
+      "menu_group": "Python Lab",
+      "menu_title": "Python Runtime Check"
     },
     {
       "id": "pywelch",
       "family": "jjstatsplot",
-      "menu": "Statistical Plots",
+      "menu": "Group comparisons",
       "title": "Welch Two-Sample t-Test (Python)",
       "aliases": [],
       "source": "analyses/jjstatsplot/pywelch.py",
       "status": "utility",
       "coverage": {
         "full_parity": false
-      }
+      },
+      "menu_group": "Stats Plots Py",
+      "menu_title": "Welch Two-Sample t-Test (Python)"
     },
     {
       "id": "pyd3cutoff",
       "family": "meddecide",
-      "menu": "Medical Decisions",
+      "menu": "Cutoff explorers",
       "title": "Experimental D3 Cutoff and ROC Explorer (Python)",
       "aliases": [],
       "source": "analyses/meddecide/pyd3cutoff.py",
       "status": "utility",
       "coverage": {
         "full_parity": false
-      }
+      },
+      "menu_group": "Python Lab",
+      "menu_title": "D3 cutoff explorer"
     },
     {
       "id": "pyobservablecutoff",
       "family": "meddecide",
-      "menu": "Medical Decisions",
+      "menu": "Cutoff explorers",
       "title": "Experimental Observable Cutoff and ROC Explorer (Python)",
       "aliases": [],
       "source": "analyses/meddecide/pyobservablecutoff.py",
       "status": "utility",
       "coverage": {
         "full_parity": false
-      }
+      },
+      "menu_group": "Python Lab",
+      "menu_title": "Observable cutoff explorer"
     },
     {
       "id": "pysvgcutoff",
       "family": "meddecide",
-      "menu": "Medical Decisions",
+      "menu": "Cutoff explorers",
       "title": "Experimental Native SVG Cutoff and ROC Explorer (Python)",
       "aliases": [],
       "source": "analyses/meddecide/pysvgcutoff.py",
@@ -2416,7 +2552,33 @@
         "platforms": [
           "macOS arm64: partial GUI qualification only"
         ]
+      },
+      "menu_group": "Python Lab",
+      "menu_title": "Native SVG cutoff explorer"
+    },
+    {
+      "id": "pybridgecompare",
+      "family": "meddecide",
+      "menu_group": "Python Lab",
+      "menu": "Execution services",
+      "menu_title": "Python bridge comparison",
+      "title": "Python Execution Bridge Comparison",
+      "aliases": [],
+      "source": "analyses/meddecide/pybridgecompare.py",
+      "status": "utility",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "pending matched-route validation",
+        "gui": "pending"
       }
     }
-  ]
+  ],
+  "menu_groups": {
+    "descriptives": "Descriptives Py",
+    "jjstatsplot": "Stats Plots Py",
+    "meddecide": "MedDecide Py",
+    "jsurvival": "Survival Py",
+    "oncopath": "OncoPath Py",
+    "utilities": "Python Lab"
+  }
 }

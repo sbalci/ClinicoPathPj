@@ -1,3 +1,11 @@
+# 0.3.8 — 2026-10-26
+
+- Organize registry-owned menus by analysis family and topic; retain identifiers and namespace.
+- Add optional Pj 1.3.0 public-service execution to a separate `pybridgecompare` experiment.
+- Keep processx as default; compare identical statistical engines and report elapsed backend time.
+- Add explicit native cutoff Apply in the comparison only; existing D3/Observable behavior is unchanged.
+- Add transport, lifecycle, menu binding and matched-route validation.
+
 # 0.3.7 — 2026-10-26
 
 - Add separate `pysvgcutoff` native Svg experiment using the shared cutoff engine.

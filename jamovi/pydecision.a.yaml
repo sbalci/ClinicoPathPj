@@ -2,8 +2,9 @@
 {
   "name": "pydecision",
   "title": "Diagnostic Accuracy",
-  "menuGroup": "ClinicoPathPj",
-  "menuSubgroup": "Medical Decisions",
+  "menuGroup": "MedDecide Py",
+  "menuSubgroup": "Diagnostic accuracy",
+  "menuTitle": "Diagnostic Accuracy",
   "version": "0.2.0",
   "jas": "1.2",
   "options": [

@@ -4,8 +4,8 @@ from cpj_runtime import Factor, InputError, fmt_num, md_escape
 
 SPEC = {'name': 'pywelch',
  'title': 'Welch Two-Sample t-Test (Python)',
- 'menuGroup': 'ClinicoPathPj',
- 'menuSubgroup': 'Statistical Plots',
+ 'menuGroup': 'Stats Plots Py',
+ 'menuSubgroup': 'Group comparisons',
  'version': '0.2.0',
  'options': [{'name': 'dep',
               'type': 'Variable',

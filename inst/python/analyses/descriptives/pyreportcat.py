@@ -3,8 +3,8 @@ from cpj_runtime import Factor, InputError, md_escape
 
 SPEC = {'name': 'pyreportcat',
  'title': 'Summary of Categorical Variables',
- 'menuGroup': 'ClinicoPathPj',
- 'menuSubgroup': 'Descriptives',
+ 'menuGroup': 'Descriptives Py',
+ 'menuSubgroup': 'Summaries',
  'version': '0.3.0',
  'options': [{'name': 'vars',
               'title': 'Categorical variables',

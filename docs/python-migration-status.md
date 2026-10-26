@@ -73,6 +73,17 @@ parity and GUI/platform acceptance remain separate gates.
 | pyswimmerplot | swimmerplot | oncopath | 5 | planned | pending | pending |
 | pywaterfall | waterfall | oncopath | 5 | planned | pending | pending |
 
+## Menus and optional execution service
+
+Installed analyses use Descriptives Py, Stats Plots Py, MedDecide Py and Python Lab,
+with registry-owned topic subgroups and compact experiment titles. Planned Survival Py
+and OncoPath Py groups do not install placeholder entries. Existing identifiers remain stable.
+
+`pybridgecompare` is a retained utility experiment, not another baseline port. It uses
+the same cutoff engine through processx (default) or optional Pj >=1.3.0 service API 1.
+Twelve bundled-interpreter route configurations passed matched native results and
+independent R count/exact-interval checks. See [service review](pj-service-review.md).
+
 ## Foundation and next gates
 
 Implemented: registry-based family routing, frozen baselines with file hashes,

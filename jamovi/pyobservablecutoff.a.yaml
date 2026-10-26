@@ -2,8 +2,9 @@
 {
   "name": "pyobservablecutoff",
   "title": "Experimental Observable Cutoff and ROC Explorer (Python)",
-  "menuGroup": "ClinicoPathPj",
-  "menuSubgroup": "Medical Decisions",
+  "menuGroup": "Python Lab",
+  "menuSubgroup": "Cutoff explorers",
+  "menuTitle": "Observable cutoff explorer",
   "version": "0.3.5",
   "jas": "1.2",
   "options": [
