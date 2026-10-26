@@ -1,0 +1,10 @@
+const assert=require('node:assert/strict'),fs=require('node:fs');
+const {JSDOM}=require('jsdom');const errors=[];
+const dom=new JSDOM(fs.readFileSync(process.argv[2],'utf8'),{runScripts:'dangerously',beforeParse(w){w.addEventListener('error',e=>errors.push(e.message));w.setOption=()=>{throw Error('Inspection must not change native options');};}});
+const d=dom.window.document;
+assert.deepEqual(errors,[]);assert.equal(d.querySelectorAll('button').length,4);
+d.querySelector('button').click();assert.match(d.querySelector('.detail').textContent,/Source row: 7/);assert.match(d.querySelector('.detail').textContent,/<unsafe>/);assert.equal(d.querySelector('unsafe'),null);
+d.querySelectorAll('button')[3].focus();assert.match(d.querySelector('.detail').textContent,/Raw value: \[missing\]/);
+const search=d.querySelector('input');search.value='9';search.dispatchEvent(new dom.window.Event('input'));
+assert.equal(d.querySelectorAll('button').length,4);assert.equal(errors.length,0);
+console.log('IHC keyboard/cell inspection, literal labels, search-only highlighting and no refit PASSED');dom.window.close();

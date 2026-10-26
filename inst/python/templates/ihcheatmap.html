@@ -1,0 +1,19 @@
+<div id="__ROOT__"><style>
+#__ROOT__{font:14px system-ui,sans-serif;color:#24364b;background:white;padding:12px;max-width:1100px}#__ROOT__ .view{max-height:650px;overflow:auto}#__ROOT__ .grid{display:grid;gap:1px}#__ROOT__ button{border:1px solid #ddd;min-height:25px;font:12px system-ui;cursor:pointer}#__ROOT__ button:focus-visible{outline:3px solid #111;z-index:1}#__ROOT__ .detail{white-space:pre-wrap;padding:10px;background:#edf2f7;color:#24364b}#__ROOT__ .head{font-weight:600;padding:4px}#__ROOT__ input{font:inherit;margin:6px;max-width:100%}
+</style><h3>Annotated IHC cell inspector</h3>
+<p>Local inspection only. Search highlights row labels; it does not change cohorts or recalculate results. Gray cells are missing. Native tables and the static heatmap retain all displayed rows.</p>
+<label>Find source row, patient, group or region <input class="search" type="search"></label>
+<p class="legend"></p><div class="view"><div class="grid" role="group" aria-label="IHC marker cells"></div></div>
+<p class="detail" role="status" aria-live="polite">Click or keyboard-focus a cell to inspect its original row, annotations and raw/displayed value.</p>
+<script>(function(){'use strict';const root=document.getElementById('__ROOT__'),p=__PAYLOAD__,grid=root.querySelector('.grid'),detail=root.querySelector('.detail');
+const finite=p.values.flat().filter(v=>v!==null),limit=Math.max(...finite.map(Math.abs))||1;
+root.querySelector('.legend').textContent=p.scaleLabel+': blue −'+limit.toPrecision(4)+'; white 0; orange +'+limit.toPrecision(4)+'. Rows: '+p.rows.length+'; excluded: '+p.excluded+'.';
+grid.style.gridTemplateColumns='minmax(180px,2fr) repeat('+p.markers.length+',minmax(55px,1fr))';
+function text(value){return value===null?'[missing]':String(value)}
+function heading(label){const el=document.createElement('span');el.className='head';el.textContent=label;grid.appendChild(el);return el;}
+heading('Source row | ID | group | region');p.markers.forEach(heading);const rowHeads=[];
+p.rows.forEach((r,i)=>{const label=[r.row,r.subject,r.group,r.region].map(text).join(' | ');rowHeads.push(heading(label));
+p.markers.forEach((marker,j)=>{const value=p.values[i][j],raw=p.raw[i][j],b=document.createElement('button');b.type='button';b.textContent=value===null?'·':value.toPrecision(3);const t=value===null?0:Math.min(1,Math.abs(value)/limit),rgb=value<0?[40,100,160]:[190,90,20];b.style.backgroundColor=value===null?'#b0b0b0':'rgb('+rgb.map(c=>Math.round(255+(c-255)*t)).join(',')+')';b.style.color=value!==null&&t>.7?'white':'#111';b.setAttribute('aria-label','Row '+r.row+', '+marker+', raw '+text(raw)+', display '+text(value));function inspect(){detail.textContent='Source row: '+r.row+'\nPatient/specimen: '+text(r.subject)+'\nGroup: '+text(r.group)+'\nRegion: '+text(r.region)+'\nMarker: '+marker+'\nRaw value: '+text(raw)+'\nDisplayed value: '+text(value);}
+b.addEventListener('click',inspect);b.addEventListener('focus',inspect);grid.appendChild(b);});});
+root.querySelector('.search').addEventListener('input',e=>{const q=e.target.value.toLocaleLowerCase();rowHeads.forEach(h=>{const hit=q&&h.textContent.toLocaleLowerCase().includes(q);h.style.backgroundColor=hit?'#ffe5a3':'white';h.style.color='#24364b';});});
+})();</script></div>

@@ -1,6 +1,6 @@
 # Python execution comparison
 
-Install the single `ClinicoPathPj_0.3.8.jmo` module. Open **Python Lab → Execution services →
+Install the single `ClinicoPathPj_0.3.9.jmo` module. Open **Python Lab → Execution services →
 Python bridge comparison**. Pj >=1.3.0 is optional and needed only for its service routes.
 Use a fresh jamovi engine after replacing loaded modules.
 
@@ -38,6 +38,14 @@ Numerical route comparison and compiler checks are separate from GUI installatio
 interaction, saved-file reopening and export evidence. This experiment does not resolve
 the previously documented native SVG saved-analysis issue or complete the 61-analysis migration.
 
-Native GUI: both modules were sideloaded successfully and jamovi restarted. The four
-family groups, topic subgroups, short explorer titles and comparison route selector
-were visible in the fresh session. Further save/reopen/export acceptance remains separate.
+Native GUI evidence on installed 0.3.8: both modules installed successfully; a fresh
+session showed the family menus, comparison controls and Pj route. Explicit Apply saved
+cutoff 3 (TP=2, FP=1, FN=1, TN=2). Fresh-engine OMV reopen restored the Pj choice and
+cutoff; native-option recalculation and ROC PNG export passed.
+
+The 0.3.9 native summary reports the actual applied rule and cohort. If a native field
+retains its old value after HTML Apply, close the options panel and click the analysis
+heading again. A screenshot-based check confirmed that this refreshes it; the accessibility
+tree itself can also be stale. Live field synchronization remains a host limitation.
+The 0.3.9 summary change has focused/package checks; its native GUI verification is separate
+from the 0.3.8 evidence above. See [dated evidence](python-bridge-comparison-validation.md).

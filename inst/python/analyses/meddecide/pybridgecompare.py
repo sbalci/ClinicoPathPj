@@ -7,7 +7,7 @@ SPEC = {'name': 'pybridgecompare',
  'title': 'Python Execution Bridge Comparison',
  'menuGroup': 'Python Lab',
  'menuSubgroup': 'Execution services',
- 'version': '0.3.8',
+ 'version': '0.3.9',
  'options': [{'name': 'marker',
               'title': 'Numeric test measurement',
               'type': 'Variable',
@@ -168,7 +168,26 @@ SPEC = {'name': 'pybridgecompare',
  'timingResult': 'backendTiming'}
 
 def run(data, options, out):
+    applied = {}
+
     def document(payload):
-        return html_document(dict(payload, hostApply=True, hostManual=bool(str(options.get("cutoff", "")).strip())), template="bridgecutoff.html")
+        applied.update(payload)
+        return html_document(
+            dict(payload, hostApply=True,
+                 hostManual=bool(str(options.get("cutoff", "")).strip())),
+            template="bridgecutoff.html")
+
     run_cutoff(data, options, out, document)
-    out.markdown("summary", md_escape("Native tables and static images use the saved jamovi direction and cutoff. The live plot previews threshold states. Apply cutoff to jamovi persists the cutoff option and reruns the selected execution route. Change direction, optimization and uncertainty in native options. Both routes use the identical ClinicoPathPj Python engine. Pj is optional and has no checkpoint callback."))
+    rule = ">=" if applied["direction"] == "ge" else "<="
+    out.markdown("summary", md_escape(
+        f"Native applied rule: {applied['measurement']} {rule} {applied['initial']!r}; "
+        f"reference positive: {applied['positive']}. "
+        f"Complete rows: {len(applied['rows'])}; excluded: {applied['excluded']}. "
+        "Native tables and static images use this saved rule. "
+        "The live plot previews threshold states. Apply cutoff to jamovi persists "
+        "the cutoff option and reruns the selected execution route. "
+        "If the native cutoff field still shows its previous value after Apply, "
+        "close the options panel and reselect the analysis heading to refresh it. "
+        "Change direction, optimization and uncertainty in native options. "
+        "Both routes use the identical ClinicoPathPj Python engine. "
+        "Pj is optional and has no checkpoint callback."))

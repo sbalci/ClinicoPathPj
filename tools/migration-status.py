@@ -8,6 +8,7 @@ rows=[e for e in registry['analyses'] if e.get('baseline')]
 text='''# Python migration status
 
 Generated from `inst/python/registry.json`; never infer full parity from a menu entry.
+See the [revised migration plan](python-migration-plan.md) for current priorities and architecture.
 The frozen baseline contains 61 analyses across five families. Existing utility and
 example analyses are retained separately. Every public identifier starts with `py`;
 the original R identifier is provenance, not a second menu entry.
@@ -21,6 +22,11 @@ parity and GUI/platform acceptance remain separate gates.
 '''
 for e in sorted(rows,key=lambda e:(e['wave'],e['family'],e['id'])):
  text+='| {} | {} | {} | {} | {} | {} | {} |\n'.format(e['id'],e['source_name'],e['family'],e['wave'],e['status'],'yes' if e['coverage']['full_parity'] else 'pending',e['coverage']['gui'])
+text+='\n## Additional utilities and experiments\n\nThese entries do not increase the 61-analysis baseline denominator.\n\n| Identifier | Menu | Numerical evidence | GUI evidence |\n|---|---|---|---|\n'
+for e in registry['analyses']:
+ if e.get('baseline') or not e.get('source'): continue
+ coverage=e.get('coverage',{})
+ text+='| {} | {} / {} | {} | {} |\n'.format(e['id'],e['menu_group'],e['menu'],coverage.get('numerical','See analysis documentation'),coverage.get('gui','See analysis documentation'))
 text+='''
 ## Menus and optional execution service
 

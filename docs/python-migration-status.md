@@ -1,6 +1,7 @@
 # Python migration status
 
 Generated from `inst/python/registry.json`; never infer full parity from a menu entry.
+See the [revised migration plan](python-migration-plan.md) for current priorities and architecture.
 The frozen baseline contains 61 analyses across five families. Existing utility and
 example analyses are retained separately. Every public identifier starts with `py`;
 the original R identifier is provenance, not a second menu entry.
@@ -72,6 +73,23 @@ parity and GUI/platform acceptance remain separate gates.
 | pyihcheterogeneity | ihcheterogeneity | oncopath | 5 | planned | pending | pending |
 | pyswimmerplot | swimmerplot | oncopath | 5 | planned | pending | pending |
 | pywaterfall | waterfall | oncopath | 5 | planned | pending | pending |
+
+## Additional utilities and experiments
+
+These entries do not increase the 61-analysis baseline denominator.
+
+| Identifier | Menu | Numerical evidence | GUI evidence |
+|---|---|---|---|
+| pydescriptives | Descriptives Py / Summaries | See analysis documentation | See analysis documentation |
+| pydotdecision | Python Lab / Cutoff explorers | See analysis documentation | See analysis documentation |
+| pyexacttests | MedDecide Py / Exact tests | See analysis documentation | See analysis documentation |
+| pyruntime | Python Lab / Runtime | See analysis documentation | See analysis documentation |
+| pywelch | Stats Plots Py / Group comparisons | See analysis documentation | See analysis documentation |
+| pyd3cutoff | Python Lab / Cutoff explorers | See analysis documentation | See analysis documentation |
+| pyobservablecutoff | Python Lab / Cutoff explorers | See analysis documentation | See analysis documentation |
+| pysvgcutoff | Python Lab / Cutoff explorers | Shared cutoff engine; 217-test Python and 619-expectation R suites passed; final focused 6 Python/20 R checks passed | macOS arm64 jamovi 28.13: numeric, drag, keyboard, ROC, local snapshot and current SVG/PNG export verified; native OMV save/reopen unresolved |
+| pybridgecompare | Python Lab / Execution services | 12 processx/Pj bundled-route configurations matched; independent R counts/exact intervals, ties/missingness/row-ID transport and recovery passed on 0.3.8 | macOS arm64 jamovi 28.13 / 0.3.8: installed, fresh-engine OMV reopen, Pj recalculation and native ROC PNG export verified; live native-field refresh unresolved; 0.3.9 summary pending GUI verification |
+| pyihcheatmap | Descriptives Py / Biomarker panels | 24 independent base-R raw/z-score and missingness fixtures; 104 native assertions; seven Python fixtures including identity, missing cells, clustering grouping and geometry passed | macOS arm64 jamovi 28.13 / 0.3.10: installed fresh engine; raw/z-score tables/heatmap and annotations; missing-cell inspection; OMV save/fresh-engine reopen; complete-row clustering recalculation; native PNG export verified. Other platforms and large-payload GUI pending. |
 
 ## Menus and optional execution service
 

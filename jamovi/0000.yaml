@@ -1,7 +1,7 @@
 ---
 title: ClinicoPathPj - Python-Backed Analyses
 name: ClinicoPathPj
-version: 0.3.8
+version: 0.3.10
 jms: '1.0'
 authors: Serdar Balci
 maintainer: Serdar Balci <serdarbalci@serdarbalci.com>
@@ -211,6 +211,14 @@ analyses:
     menuSubgroup: Execution services
     menuTitle: Python bridge comparison
     title: Python Execution Bridge Comparison
+    category: analyses
+  - name: pyihcheatmap
+    ns: ClinicoPathPj
+    hidden: false
+    menuGroup: Descriptives Py
+    menuSubgroup: Biomarker panels
+    menuTitle: Annotated IHC heatmap
+    title: Annotated IHC Heatmap
     category: analyses
 usesNative: 'yes'
 datasets:

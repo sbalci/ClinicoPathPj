@@ -1,5 +1,9 @@
 # Interactive diagnostic dotplot and next analyses
 
+> Historical planning snapshot. For current architecture, implemented scope and next steps,
+> see [the revised migration plan](python-migration-plan.md), updated 2026-10-26.
+
+
 Prepared 2026-10-25. Experimental implementation, separate from the umbrella's production analyses.
 
 ## Diagnostic dotplot
