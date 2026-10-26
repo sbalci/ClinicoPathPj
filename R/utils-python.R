@@ -55,11 +55,19 @@
 
 # Replace computed native state only on successful or pending runs. On failure,
 # jamovi keeps the previous results greyed behind its error, as usual.
-.cpjClearNative <- function(self) {
+.cpjClearNative <- function(self, clearOutputs = FALSE) {
     for (item in self$results$items) {
         if (inherits(item, "Table")) {
             item$deleteRows()
             for (key in names(item$notes)) item$setNote(key, NULL)
+        } else if (inherits(item, "Output") && clearOutputs && isTRUE(item$enabled) && item$isFilled()) {
+            # Pending selections cannot safely materialize self$data. The successful
+            # run stores only its row identities in the output element state.
+            previous <- item$state
+            if (!is.null(previous$cpjRowIds)) {
+                item$setRowNums(unlist(previous$cpjRowIds, use.names = FALSE))
+                item$setValues(rep(NA_integer_, length(previous$cpjRowIds)))
+            }
         } else if (inherits(item, "Image")) {
             item$setState(NULL)
         } else if (inherits(item, "Notice") && startsWith(item$name, "cpjNotice")) {
@@ -154,7 +162,7 @@
     # Unconfigured is not an error: nothing chosen -> stay quiet; partly chosen -> say what is missing.
     unset <- vapply(names(required), function(option) length(values[[option]]) == 0, logical(1))
     if (any(unset)) {
-        .cpjClearNative(self)
+        .cpjClearNative(self, clearOutputs = TRUE)
         if (!all(unset))
             .cpjNotice(self, "INFO", paste0("To run this analysis, also choose: ",
                                             paste(required[unset], collapse = ", "), "."), 1)
@@ -164,7 +172,7 @@
     for (level in names(events)) {
         variable <- values[[events[[level]]]]
         if (length(variable) == 1 && is.null(values[[level]])) {
-            .cpjClearNative(self)
+            .cpjClearNative(self, clearOutputs = TRUE)
             counts <- table(self$data[[variable]])  # data rows, not weighted counts
             .cpjNotice(self, "INFO", paste0("Choose which level of ", variable, " is the event: ",
                 paste0(names(counts), " (", as.integer(counts), " rows)", collapse = ", "), "."), 1)
@@ -272,6 +280,7 @@
             ordered = identical(column$measure_type, "ordinal"))
         element$setRowNums(ids)
         element$setValues(values)
+        element$setState(list(cpjRowIds = as.list(ids)))
     }
     invisible(NULL)
 }

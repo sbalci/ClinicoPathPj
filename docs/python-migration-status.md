@@ -15,7 +15,7 @@ parity and GUI/platform acceptance remain separate gates.
 | pyalluvial | alluvial | descriptives | 1 | planned | pending | pending |
 | pybenford | benford | descriptives | 1 | partial | pending | pending |
 | pycategorize | categorize | descriptives | 1 | partial | pending | fresh-engine run, ordinal saved column and .omv reopen verified; category plot export pending |
-| pycheckdata | checkdata | descriptives | 1 | planned | pending | pending |
+| pycheckdata | checkdata | descriptives | 1 | partial | pending | macOS arm64: installed 0.3.6; valid-incomplete-valid saved flags; local filter; fresh-engine OMV reopen; native PNG export |
 | pychisqposttest | chisqposttest | descriptives | 1 | partial | pending | pending |
 | pycrosstable | crosstable | descriptives | 1 | planned | pending | pending |
 | pydataquality | dataquality | descriptives | 1 | partial | pending | fresh-engine native tables/maps, local paging/filter/focus events, .omv reopen and native PNG export verified |

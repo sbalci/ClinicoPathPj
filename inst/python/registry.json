@@ -168,7 +168,7 @@
       "menu": "Descriptives",
       "title": "Single Variable Quality Check",
       "aliases": [],
-      "source": null,
+      "source": "analyses/descriptives/pycheckdata.py",
       "baseline": {
         "module": "ClinicoPathDescriptives",
         "version": "1.0.82.03",
@@ -182,13 +182,21 @@
         }
       },
       "wave": 1,
-      "status": "planned",
+      "status": "partial",
       "coverage": {
         "full_parity": false,
-        "numerical": "pending",
-        "gui": "pending",
+        "numerical": "66 independent base-R fixtures; 211 Python tests and 600 R expectations pass",
+        "gui": "macOS arm64: installed 0.3.6; valid-incomplete-valid saved flags; local filter; fresh-engine OMV reopen; native PNG export",
         "compatibility": "existing Python identifier preserved",
-        "platforms": []
+        "platforms": [
+          "macOS arm64 (jamovi 28.13; implemented core only)"
+        ],
+        "omitted": [
+          "Clinical-name plausibility rules",
+          "Heuristic grades and severity",
+          "Missingness-run inference",
+          "Category naming diagnostics"
+        ]
       },
       "methods": "Single-variable QC report: missingness, z/IQR/MAD outlier flags, distribution summary, duplicates and a missingness-run heuristic. No inferential test; the MCAR test is explicitly declared not applicable.",
       "oracle": "base R",
