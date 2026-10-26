@@ -38,3 +38,32 @@ test_that('IHC original identities and native lifecycle remain aligned', {
  raster<-ClinicoPathPj:::.cpjRenderPlot(a$results$heatmap$state,900L,650L,list(palette='jmv'))
  expect_equal(dim(raster)[1:2],c(650L,900L))
 })
+
+test_that('linked scatter preserves source rows, display values and native lifecycle', {
+ d<-data.frame(a=c(1,2,3,NA),b=c(2,NA,6,4),id=c('same','same','other','other'),row.names=c('2','7','11','20'))
+ options<-pyihcheatmapOptions$new(markers=c('a','b'),subject='id',scaling='zscore',
+                                  showScatter=TRUE,scatterX='b',scatterY='a')
+ a<-pyihcheatmapClass$new(options=options,data=d);a$init();a$run()
+ expect_equal(a$results$scatterRows$asDF$sourceRow,c('2','11'))
+ expect_equal(a$results$scatterRows$asDF$x,as.numeric(scale(d$b))[c(1,3)])
+ expect_equal(a$results$scatterRows$asDF$y,as.numeric(scale(d$a))[c(1,3)])
+ expect_equal(a$results$scatterCohort$asDF$omitted,2)
+ expect_equal(a$results$scatter$state$data$x,a$results$scatterRows$asDF$x)
+ restored<-unserialize(serialize(a$results$scatter$state,NULL))
+ raster<-ClinicoPathPj:::.cpjRenderPlot(restored,650L,450L,list(palette='jmv'))
+ expect_equal(dim(raster)[1:2],c(450L,650L))
+ enabled<-options$option('showScatter');enabled$value<-FALSE
+ a$.__enclos_env__$private$.run()
+ expect_null(a$results$scatter$state)
+ expect_equal(a$results$scatterRows$rowCount,0)
+ enabled$value<-TRUE
+ selected<-options$option('markers');selected$value<-character()
+ a$.__enclos_env__$private$.run()
+ expect_null(a$results$scatter$state)
+ expect_equal(a$results$scatterCohort$rowCount,0)
+ selected$value<-c('a','b');a$.__enclos_env__$private$.run()
+ fresh<-pyihcheatmap(data=d,markers=c('a','b'),subject='id',scaling='zscore',showScatter=TRUE,
+                     scatterX='b',scatterY='a')
+ expect_equal(a$results$scatter$state,fresh$scatter$state)
+ expect_equal(a$results$scatterRows$asDF,fresh$scatterRows$asDF)
+})

@@ -3,11 +3,40 @@ import sys,unittest,json
 import numpy as np
 from cpjtest import ROOT,run_analysis,number,factor,text
 sys.path.insert(0,str(ROOT/'inst/python'))
-from cpj_ihc import prepare
+from cpj_ihc import prepare, marker_pair
 from cpj_runtime import Factor,InputError
 from cpj_plots import figure
 
 class IHC(unittest.TestCase):
+    def test_linked_pairs_keep_clustered_identity_and_display_scale(self):
+        d={'a':np.array([0.,10,1,11]),'b':np.array([0.,20,2,22]),
+           'id':['same','same','other','other']}
+        p=prepare(d,dict(markers=['a','b'],subject='id',scaling='zscore',clusterRows=True),['2','4','7','9'])
+        pair=marker_pair(p,['a','b'],'b','a')
+        self.assertEqual(pair['omitted'],0)
+        for point in pair['points']:
+            i=point['index']
+            self.assertEqual(point['sourceRow'],p['rows'][i]['row'])
+            self.assertEqual([point['y'],point['x']],p['values'][i])
+        for x,y in [('a','a'),('absent','b')]:
+            with self.assertRaises(InputError):marker_pair(p,['a','b'],x,y)
+
+    def test_scatter_runtime_pairwise_missing_and_disabled_default(self):
+        columns={'a':number([1,2,None,None]),'b':number([2,None,4,None])}
+        r=run_analysis('pyihcheatmap',columns,dict(markers=['a','b'],showScatter=True))
+        self.assertEqual(r['status'],'ok',r.get('error'))
+        row=r['tables']['scatterCohort']['rows'][0]
+        self.assertEqual([row[k] for k in ('retained','plotted','omitted')],[3,1,2])
+        self.assertEqual(r['plots']['scatter']['columns']['x'],[1.])
+        self.assertEqual(r['plots']['scatter']['columns']['y'],[2.])
+        default=run_analysis('pyihcheatmap',columns,dict(markers=['a','b']))
+        self.assertNotIn('scatter',default['plots'])
+        self.assertEqual(default['plots']['heatmap'],r['plots']['heatmap'])
+        empty=run_analysis('pyihcheatmap',{'a':number([1,None]),'b':number([None,2])},dict(markers=['a','b'],showScatter=True))
+        self.assertEqual(empty['status'],'ok',empty.get('error'))
+        self.assertEqual(empty['plots']['scatter']['columns']['x'],[])
+        self.assertTrue(any('No complete pairs' in n['text'] for n in empty['notices']))
+
     def test_sample_sd_scaling_and_missingness_are_explicit(self):
         p=prepare({'a':np.array([1.,2,3,np.nan]),'b':np.array([10.,20,np.nan,np.nan])},dict(markers=['a','b'],scaling='zscore'))
         np.testing.assert_allclose([r[0] for r in p['values']],[-1,0,1])

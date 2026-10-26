@@ -1,3 +1,11 @@
+# Orange-inspired linked IHC views — 0.3.12
+
+- [x] Add local heatmap/scatter row highlighting and marker-pair switching.
+- [x] Add native X/Y roles, complete-pair/source-row tables and static scatterplot.
+- [ ] Qualify new native controls, linked keyboard interaction, save/reopen and native export in jamovi.
+- [ ] Later: dendrogram inspection and explicitly saved row selections.
+- [x] Record Julia backend idea as deferred feasibility work in the migration plan.
+
 # Categorization histogram — 0.3.11
 
 - [x] Add optional native continuous histogram with exact break-point lines.
@@ -15,7 +23,8 @@
 - [x] Pass 24 independent base-R fixtures / 104 assertions and packaged runtime/native lifecycle checks.
 - [x] macOS arm64 GUI installation, annotations, z scaling, missing-cell inspection, save/fresh-engine reopen, clustering rerun and native PNG export.
 - [ ] Qualify large matrices, theme variants and additional platforms.
-- [ ] Later: linked scatter, dendrogram inspection and explicit saved selections.
+- [x] Linked scatter core added in 0.3.12; desktop acceptance remains pending.
+- [ ] Later: dendrogram inspection and explicit saved selections.
 
 # Web-informed candidate backlog
 

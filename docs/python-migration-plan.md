@@ -168,6 +168,12 @@ remains local; inferential cohort changes commit explicitly. Prevent preprocessi
 leakage across validation folds. Database licensing, offline gene-set versions and method-specific
 validation are prerequisites for molecular extensions.
 
+Version 0.3.12 extends the existing IHC utility with optional linked heatmap/scatter row
+inspection, saved native X/Y marker roles, complete-pair counts/source rows and a native
+static scatterplot. Browser marker switching and highlighting remain local and transient;
+no cohort changes or inferential refitting are introduced. See
+[linked-view checks and open acceptance gates](python-ihc-linked-validation.md).
+
 The first IHC heatmap is a separate utility extension, not completion of `pyihcheterogeneity`.
 It displays every retained row (maximum 200 × 20 markers), excludes/counts all-marker-missing
 rows, exposes partial-versus-complete-row handling and performs no imputation. Z scaling uses
@@ -175,6 +181,17 @@ sample SD; constant/one-observation columns display observed z values as zero wi
 Optional average-linkage Euclidean clustering requires complete marker data. Repeated IDs
 remain annotations; no tests, molecular subtype claims or clinical response thresholds are added.
 See [IHC methods, examples and omissions](python-ihc-heatmap.md).
+
+## Deferred backend experiment: Julia
+
+Retain Julia as a future optional analysis backend, following the 2026-10-26 discussion.
+It is not part of the current implementation batch. Prototype a direct isolated Julia
+process behind the existing versioned result contract before considering Python-to-Julia
+embedding. Keep native jamovi outputs and stable analysis identities; qualify runtime
+availability, offline dependencies, platform packaging, startup/compilation latency,
+cancellation/cleanup, row/factor/missingness transport and independent numerical agreement.
+A small numerical comparison is the first feasibility gate. Do not install Julia, replace
+the current Python backend or promise a speed advantage under this planning entry.
 
 ## Next delivery sequence — planned, not currently implemented
 

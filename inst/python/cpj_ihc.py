@@ -18,6 +18,20 @@ def labels(column, n):
     return result
 
 
+def marker_pair(prepared, selected_markers, x_marker=None, y_marker=None):
+    """Extract displayed complete pairs without changing the heatmap cohort or order."""
+    x_marker = x_marker or selected_markers[0]
+    y_marker = y_marker or selected_markers[1]
+    if x_marker == y_marker or any(m not in prepared['markers'] for m in (x_marker, y_marker)):
+        raise InputError('Choose two distinct scatter markers from the selected heatmap markers.')
+    xi, yi = (prepared['markers'].index(m) for m in (x_marker, y_marker))
+    points = [dict(index=i, sourceRow=row['row'], x=values[xi], y=values[yi])
+              for i, (row, values) in enumerate(zip(prepared['rows'], prepared['values']))
+              if values[xi] is not None and values[yi] is not None]
+    return dict(xMarker=x_marker, yMarker=y_marker, points=points,
+                omitted=len(prepared['rows'])-len(points))
+
+
 def prepare(data, options, row_ids=None):
     markers=options.get('markers') or []
     if not 2<=len(markers)<=20 or len(set(markers))!=len(markers):

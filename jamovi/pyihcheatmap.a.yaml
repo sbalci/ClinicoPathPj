@@ -5,7 +5,7 @@
   "menuGroup": "Descriptives Py",
   "menuSubgroup": "Biomarker panels",
   "menuTitle": "Annotated IHC heatmap",
-  "version": "0.3.10",
+  "version": "0.3.12",
   "jas": "1.2",
   "options": [
     {
@@ -37,6 +37,24 @@
       "name": "region",
       "title": "Region annotation",
       "type": "Variable",
+      "default": null
+    },
+    {
+      "name": "scatterX",
+      "title": "Scatter X marker (blank = first marker)",
+      "type": "Variable",
+      "permitted": [
+        "numeric"
+      ],
+      "default": null
+    },
+    {
+      "name": "scatterY",
+      "title": "Scatter Y marker (blank = second marker)",
+      "type": "Variable",
+      "permitted": [
+        "numeric"
+      ],
       "default": null
     },
     {
@@ -80,6 +98,12 @@
     {
       "name": "clusterColumns",
       "title": "Cluster markers (average linkage, Euclidean)",
+      "type": "Bool",
+      "default": false
+    },
+    {
+      "name": "showScatter",
+      "title": "Linked marker scatterplot",
       "type": "Bool",
       "default": false
     },

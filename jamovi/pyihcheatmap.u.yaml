@@ -57,6 +57,32 @@
               "maxItemCount": 1
             }
           ]
+        },
+        {
+          "type": "TargetLayoutBox",
+          "label": "Scatter X marker",
+          "children": [
+            {
+              "type": "VariablesListBox",
+              "name": "scatterX",
+              "isTarget": true,
+              "maxItemCount": 1,
+              "enable": "(showScatter)"
+            }
+          ]
+        },
+        {
+          "type": "TargetLayoutBox",
+          "label": "Scatter Y marker",
+          "children": [
+            {
+              "type": "VariablesListBox",
+              "name": "scatterY",
+              "isTarget": true,
+              "maxItemCount": 1,
+              "enable": "(showScatter)"
+            }
+          ]
         }
       ]
     },
@@ -88,6 +114,10 @@
       "label": "Plots and Interaction",
       "collapsed": true,
       "children": [
+        {
+          "type": "CheckBox",
+          "name": "showScatter"
+        },
         {
           "type": "CheckBox",
           "name": "interactive"
