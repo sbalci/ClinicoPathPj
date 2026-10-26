@@ -81,6 +81,74 @@
       ]
     },
     {
+      "name": "scatterCohort",
+      "title": "Scatterplot Complete Pairs",
+      "type": "Table",
+      "visible": "(showScatter)",
+      "rows": 0,
+      "columns": [
+        {
+          "name": "xMarker",
+          "title": "X Marker",
+          "type": "text"
+        },
+        {
+          "name": "yMarker",
+          "title": "Y Marker",
+          "type": "text"
+        },
+        {
+          "name": "retained",
+          "title": "Heatmap Rows",
+          "type": "integer"
+        },
+        {
+          "name": "plotted",
+          "title": "Complete Pairs",
+          "type": "integer"
+        },
+        {
+          "name": "omitted",
+          "title": "Missing Pair",
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "name": "scatterRows",
+      "title": "Scatterplot Source Rows",
+      "type": "Table",
+      "visible": "(showScatter)",
+      "rows": 0,
+      "columns": [
+        {
+          "name": "sourceRow",
+          "title": "Source Row",
+          "type": "text"
+        },
+        {
+          "name": "x",
+          "title": "Displayed X",
+          "type": "number"
+        },
+        {
+          "name": "y",
+          "title": "Displayed Y",
+          "type": "number"
+        }
+      ]
+    },
+    {
+      "name": "scatter",
+      "title": "Marker Scatterplot",
+      "type": "Image",
+      "visible": "(showScatter)",
+      "width": 650,
+      "height": 450,
+      "renderFun": ".plot",
+      "requiresData": false
+    },
+    {
       "name": "heatmap",
       "title": "Annotated IHC Heatmap",
       "type": "Image",

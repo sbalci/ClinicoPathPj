@@ -10,10 +10,13 @@ pyihcheatmapOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Clas
             subject = NULL,
             group = NULL,
             region = NULL,
+            scatterX = NULL,
+            scatterY = NULL,
             scaling = "raw",
             missing = "available",
             clusterRows = FALSE,
             clusterColumns = FALSE,
+            showScatter = FALSE,
             interactive = TRUE,
             showConsole = FALSE, ...) {
 
@@ -41,6 +44,18 @@ pyihcheatmapOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Clas
                 "region",
                 region,
                 default=NULL)
+            private$..scatterX <- jmvcore::OptionVariable$new(
+                "scatterX",
+                scatterX,
+                permitted=list(
+                    "numeric"),
+                default=NULL)
+            private$..scatterY <- jmvcore::OptionVariable$new(
+                "scatterY",
+                scatterY,
+                permitted=list(
+                    "numeric"),
+                default=NULL)
             private$..scaling <- jmvcore::OptionList$new(
                 "scaling",
                 scaling,
@@ -63,6 +78,10 @@ pyihcheatmapOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Clas
                 "clusterColumns",
                 clusterColumns,
                 default=FALSE)
+            private$..showScatter <- jmvcore::OptionBool$new(
+                "showScatter",
+                showScatter,
+                default=FALSE)
             private$..interactive <- jmvcore::OptionBool$new(
                 "interactive",
                 interactive,
@@ -76,10 +95,13 @@ pyihcheatmapOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Clas
             self$.addOption(private$..subject)
             self$.addOption(private$..group)
             self$.addOption(private$..region)
+            self$.addOption(private$..scatterX)
+            self$.addOption(private$..scatterY)
             self$.addOption(private$..scaling)
             self$.addOption(private$..missing)
             self$.addOption(private$..clusterRows)
             self$.addOption(private$..clusterColumns)
+            self$.addOption(private$..showScatter)
             self$.addOption(private$..interactive)
             self$.addOption(private$..showConsole)
         }),
@@ -88,10 +110,13 @@ pyihcheatmapOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Clas
         subject = function() private$..subject$value,
         group = function() private$..group$value,
         region = function() private$..region$value,
+        scatterX = function() private$..scatterX$value,
+        scatterY = function() private$..scatterY$value,
         scaling = function() private$..scaling$value,
         missing = function() private$..missing$value,
         clusterRows = function() private$..clusterRows$value,
         clusterColumns = function() private$..clusterColumns$value,
+        showScatter = function() private$..showScatter$value,
         interactive = function() private$..interactive$value,
         showConsole = function() private$..showConsole$value),
     private = list(
@@ -99,10 +124,13 @@ pyihcheatmapOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Clas
         ..subject = NA,
         ..group = NA,
         ..region = NA,
+        ..scatterX = NA,
+        ..scatterY = NA,
         ..scaling = NA,
         ..missing = NA,
         ..clusterRows = NA,
         ..clusterColumns = NA,
+        ..showScatter = NA,
         ..interactive = NA,
         ..showConsole = NA)
 )
@@ -114,6 +142,9 @@ pyihcheatmapResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Clas
         summary = function() private$.items[["summary"]],
         markerSummary = function() private$.items[["markerSummary"]],
         rowOrder = function() private$.items[["rowOrder"]],
+        scatterCohort = function() private$.items[["scatterCohort"]],
+        scatterRows = function() private$.items[["scatterRows"]],
+        scatter = function() private$.items[["scatter"]],
         heatmap = function() private$.items[["heatmap"]],
         explorer = function() private$.items[["explorer"]],
         console = function() private$.items[["console"]]),
@@ -184,6 +215,61 @@ pyihcheatmapResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Clas
                         `name`="observed", 
                         `title`="Observed Markers", 
                         `type`="integer"))))
+            self$add(jmvcore::Table$new(
+                options=options,
+                name="scatterCohort",
+                title="Scatterplot Complete Pairs",
+                visible="(showScatter)",
+                rows=0,
+                columns=list(
+                    list(
+                        `name`="xMarker", 
+                        `title`="X Marker", 
+                        `type`="text"),
+                    list(
+                        `name`="yMarker", 
+                        `title`="Y Marker", 
+                        `type`="text"),
+                    list(
+                        `name`="retained", 
+                        `title`="Heatmap Rows", 
+                        `type`="integer"),
+                    list(
+                        `name`="plotted", 
+                        `title`="Complete Pairs", 
+                        `type`="integer"),
+                    list(
+                        `name`="omitted", 
+                        `title`="Missing Pair", 
+                        `type`="integer"))))
+            self$add(jmvcore::Table$new(
+                options=options,
+                name="scatterRows",
+                title="Scatterplot Source Rows",
+                visible="(showScatter)",
+                rows=0,
+                columns=list(
+                    list(
+                        `name`="sourceRow", 
+                        `title`="Source Row", 
+                        `type`="text"),
+                    list(
+                        `name`="x", 
+                        `title`="Displayed X", 
+                        `type`="number"),
+                    list(
+                        `name`="y", 
+                        `title`="Displayed Y", 
+                        `type`="number"))))
+            self$add(jmvcore::Image$new(
+                options=options,
+                name="scatter",
+                title="Marker Scatterplot",
+                visible="(showScatter)",
+                width=650,
+                height=450,
+                renderFun=".plot",
+                requiresData=FALSE))
             self$add(jmvcore::Image$new(
                 options=options,
                 name="heatmap",
@@ -211,7 +297,7 @@ pyihcheatmapBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             super$initialize(
                 package = "ClinicoPathPj",
                 name = "pyihcheatmap",
-                version = c(0,3,10),
+                version = c(0,3,12),
                 options = options,
                 results = pyihcheatmapResults$new(options=options),
                 data = data,
@@ -232,10 +318,13 @@ pyihcheatmapBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param subject .
 #' @param group .
 #' @param region .
+#' @param scatterX .
+#' @param scatterY .
 #' @param scaling .
 #' @param missing .
 #' @param clusterRows .
 #' @param clusterColumns .
+#' @param showScatter .
 #' @param interactive .
 #' @param showConsole .
 #' @return A results object containing:
@@ -243,6 +332,9 @@ pyihcheatmapBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'   \code{results$summary} \tab \tab \tab \tab \tab a text \cr
 #'   \code{results$markerSummary} \tab \tab \tab \tab \tab a table \cr
 #'   \code{results$rowOrder} \tab \tab \tab \tab \tab a table \cr
+#'   \code{results$scatterCohort} \tab \tab \tab \tab \tab a table \cr
+#'   \code{results$scatterRows} \tab \tab \tab \tab \tab a table \cr
+#'   \code{results$scatter} \tab \tab \tab \tab \tab an image \cr
 #'   \code{results$heatmap} \tab \tab \tab \tab \tab an image \cr
 #'   \code{results$explorer} \tab \tab \tab \tab \tab a html \cr
 #'   \code{results$console} \tab \tab \tab \tab \tab a preformatted \cr
@@ -261,10 +353,13 @@ pyihcheatmap <- function(
     subject = NULL,
     group = NULL,
     region = NULL,
+    scatterX = NULL,
+    scatterY = NULL,
     scaling = "raw",
     missing = "available",
     clusterRows = FALSE,
     clusterColumns = FALSE,
+    showScatter = FALSE,
     interactive = TRUE,
     showConsole = FALSE) {
 
@@ -275,13 +370,17 @@ pyihcheatmap <- function(
     if ( ! missing(subject)) subject <- jmvcore::resolveQuo(jmvcore::enquo(subject))
     if ( ! missing(group)) group <- jmvcore::resolveQuo(jmvcore::enquo(group))
     if ( ! missing(region)) region <- jmvcore::resolveQuo(jmvcore::enquo(region))
+    if ( ! missing(scatterX)) scatterX <- jmvcore::resolveQuo(jmvcore::enquo(scatterX))
+    if ( ! missing(scatterY)) scatterY <- jmvcore::resolveQuo(jmvcore::enquo(scatterY))
     if (missing(data))
         data <- jmvcore::marshalData(
             parent.frame(),
             `if`( ! missing(markers), markers, NULL),
             `if`( ! missing(subject), subject, NULL),
             `if`( ! missing(group), group, NULL),
-            `if`( ! missing(region), region, NULL))
+            `if`( ! missing(region), region, NULL),
+            `if`( ! missing(scatterX), scatterX, NULL),
+            `if`( ! missing(scatterY), scatterY, NULL))
 
 
     options <- pyihcheatmapOptions$new(
@@ -289,10 +388,13 @@ pyihcheatmap <- function(
         subject = subject,
         group = group,
         region = region,
+        scatterX = scatterX,
+        scatterY = scatterY,
         scaling = scaling,
         missing = missing,
         clusterRows = clusterRows,
         clusterColumns = clusterColumns,
+        showScatter = showScatter,
         interactive = interactive,
         showConsole = showConsole)
 

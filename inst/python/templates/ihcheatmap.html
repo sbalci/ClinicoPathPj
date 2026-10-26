@@ -1,19 +1,62 @@
 <div id="__ROOT__"><style>
-#__ROOT__{font:14px system-ui,sans-serif;color:#24364b;background:white;padding:12px;max-width:1100px}#__ROOT__ .view{max-height:650px;overflow:auto}#__ROOT__ .grid{display:grid;gap:1px}#__ROOT__ button{border:1px solid #ddd;min-height:25px;font:12px system-ui;cursor:pointer}#__ROOT__ button:focus-visible{outline:3px solid #111;z-index:1}#__ROOT__ .detail{white-space:pre-wrap;padding:10px;background:#edf2f7;color:#24364b}#__ROOT__ .head{font-weight:600;padding:4px}#__ROOT__ input{font:inherit;margin:6px;max-width:100%}
-</style><h3>Annotated IHC cell inspector</h3>
-<p>Local inspection only. Search highlights row labels; it does not change cohorts or recalculate results. Gray cells are missing. Native tables and the static heatmap retain all displayed rows.</p>
+#__ROOT__{font:14px system-ui,sans-serif;color:#24364b;background:white;padding:12px;max-width:1100px}#__ROOT__ .view{max-height:650px;overflow:auto}#__ROOT__ .grid{display:grid;gap:1px}#__ROOT__ button{border:1px solid #ddd;min-height:25px;font:12px system-ui;cursor:pointer}#__ROOT__ button:focus-visible{outline:3px solid #111;z-index:1}#__ROOT__ .detail{white-space:pre-wrap;padding:10px;background:#edf2f7;color:#24364b}#__ROOT__ .head{font-weight:600;padding:4px}#__ROOT__ input,#__ROOT__ select{font:inherit;margin:6px;max-width:100%}#__ROOT__ .selected{outline:2px solid #111;outline-offset:-2px}#__ROOT__ circle:focus-visible{stroke:#111;stroke-width:4}#__ROOT__ svg{width:100%;max-width:650px;height:auto;background:white;color:#24364b}#__ROOT__ .pair-controls{display:flex;flex-wrap:wrap;align-items:center}
+</style><h3>Annotated IHC linked inspector</h3>
+<p>Local inspection only. Search and row highlighting do not change cohorts or recalculate results. Gray cells are missing. Native tables and static plots use saved options. Local marker choices and highlighted rows are transient.</p>
 <label>Find source row, patient, group or region <input class="search" type="search"></label>
+<button class="clear" type="button">Clear row highlight</button>
 <p class="legend"></p><div class="view"><div class="grid" role="group" aria-label="IHC marker cells"></div></div>
+<div class="scatter-panel" hidden><h4>Linked marker scatterplot</h4>
+<div class="pair-controls"><label>X marker <select class="x-marker"></select></label><label>Y marker <select class="y-marker"></select></label></div>
+<p class="pair-scope" role="status" aria-live="polite"></p>
+<svg class="scatter-view" viewBox="0 0 650 400" role="group" aria-label="Marker scatterplot: focus or activate a point to highlight its source row"></svg>
+<p>Points use displayed values and complete pairs only. Overlapping points are not jittered; use the heatmap for individual rows. Native scatterplot and tables retain the X/Y choices in the analysis options.</p></div>
 <p class="detail" role="status" aria-live="polite">Click or keyboard-focus a cell to inspect its original row, annotations and raw/displayed value.</p>
-<script>(function(){'use strict';const root=document.getElementById('__ROOT__'),p=__PAYLOAD__,grid=root.querySelector('.grid'),detail=root.querySelector('.detail');
+<script>(function(){'use strict';
+const root=document.getElementById('__ROOT__'),p=__PAYLOAD__,grid=root.querySelector('.grid'),detail=root.querySelector('.detail');
 const finite=p.values.flat().filter(v=>v!==null),limit=Math.max(...finite.map(Math.abs))||1;
 root.querySelector('.legend').textContent=p.scaleLabel+': blue −'+limit.toPrecision(4)+'; white 0; orange +'+limit.toPrecision(4)+'. Rows: '+p.rows.length+'; excluded: '+p.excluded+'.';
 grid.style.gridTemplateColumns='minmax(180px,2fr) repeat('+p.markers.length+',minmax(55px,1fr))';
 function text(value){return value===null?'[missing]':String(value)}
 function heading(label){const el=document.createElement('span');el.className='head';el.textContent=label;grid.appendChild(el);return el;}
-heading('Source row | ID | group | region');p.markers.forEach(heading);const rowHeads=[];
-p.rows.forEach((r,i)=>{const label=[r.row,r.subject,r.group,r.region].map(text).join(' | ');rowHeads.push(heading(label));
-p.markers.forEach((marker,j)=>{const value=p.values[i][j],raw=p.raw[i][j],b=document.createElement('button');b.type='button';b.textContent=value===null?'·':value.toPrecision(3);const t=value===null?0:Math.min(1,Math.abs(value)/limit),rgb=value<0?[40,100,160]:[190,90,20];b.style.backgroundColor=value===null?'#b0b0b0':'rgb('+rgb.map(c=>Math.round(255+(c-255)*t)).join(',')+')';b.style.color=value!==null&&t>.7?'white':'#111';b.setAttribute('aria-label','Row '+r.row+', '+marker+', raw '+text(raw)+', display '+text(value));function inspect(){detail.textContent='Source row: '+r.row+'\nPatient/specimen: '+text(r.subject)+'\nGroup: '+text(r.group)+'\nRegion: '+text(r.region)+'\nMarker: '+marker+'\nRaw value: '+text(raw)+'\nDisplayed value: '+text(value);}
-b.addEventListener('click',inspect);b.addEventListener('focus',inspect);grid.appendChild(b);});});
-root.querySelector('.search').addEventListener('input',e=>{const q=e.target.value.toLocaleLowerCase();rowHeads.forEach(h=>{const hit=q&&h.textContent.toLocaleLowerCase().includes(q);h.style.backgroundColor=hit?'#ffe5a3':'white';h.style.color='#24364b';});});
+heading('Source row | ID | group | region');p.markers.forEach(heading);
+const rowHeads=[],cells=[],dots=[];let selected=null,query='';
+function refreshHighlights(){
+ rowHeads.forEach((h,i)=>{const hit=Boolean(query&&h.textContent.toLocaleLowerCase().includes(query));h.style.backgroundColor=hit?'#ffe5a3':'white';h.classList.toggle('selected',i===selected);});
+ cells.forEach((row,i)=>row.forEach(cell=>{cell.classList.toggle('selected',i===selected);cell.setAttribute('aria-pressed',String(i===selected));}));
+ dots.forEach(({el,index})=>{const hit=Boolean(query&&rowHeads[index].textContent.toLocaleLowerCase().includes(query));el.setAttribute('fill',index===selected?'#111':hit?'#b35400':'#2864a0');el.setAttribute('r',index===selected?'7':'5');el.setAttribute('aria-pressed',String(index===selected));});
+}
+function inspect(i,j){
+ selected=i;const r=p.rows[i];
+ detail.textContent='Source row: '+r.row+'\nPatient/specimen: '+text(r.subject)+'\nGroup: '+text(r.group)+'\nRegion: '+text(r.region)+'\n'+
+ (j===undefined?p.markers.map((m,k)=>m+': raw '+text(p.raw[i][k])+', displayed '+text(p.values[i][k])).join('\n'):'Marker: '+p.markers[j]+'\nRaw value: '+text(p.raw[i][j])+'\nDisplayed value: '+text(p.values[i][j]));
+ refreshHighlights();
+}
+p.rows.forEach((r,i)=>{const label=[r.row,r.subject,r.group,r.region].map(text).join(' | ');rowHeads.push(heading(label));cells[i]=[];
+ p.markers.forEach((marker,j)=>{const value=p.values[i][j],raw=p.raw[i][j],b=document.createElement('button');b.type='button';b.textContent=value===null?'·':value.toPrecision(3);const t=value===null?0:Math.min(1,Math.abs(value)/limit),rgb=value<0?[40,100,160]:[190,90,20];b.style.backgroundColor=value===null?'#b0b0b0':'rgb('+rgb.map(c=>Math.round(255+(c-255)*t)).join(',')+')';b.style.color=value!==null&&t>.7?'white':'#111';b.setAttribute('aria-label','Row '+r.row+', '+marker+', raw '+text(raw)+', display '+text(value));b.setAttribute('aria-pressed','false');
+ b.addEventListener('click',()=>inspect(i,j));b.addEventListener('focus',()=>inspect(i,j));grid.appendChild(b);cells[i].push(b);});});
+root.querySelector('.search').addEventListener('input',e=>{query=e.target.value.toLocaleLowerCase();refreshHighlights();});
+root.querySelector('.clear').addEventListener('click',()=>{selected=null;detail.textContent='Row highlight cleared. Full-data results unchanged.';refreshHighlights();});
+if(p.scatter){
+ const panel=root.querySelector('.scatter-panel'),xs=root.querySelector('.x-marker'),ys=root.querySelector('.y-marker'),svg=root.querySelector('.scatter-view'),scope=root.querySelector('.pair-scope');panel.hidden=false;
+ for(const control of [xs,ys])p.markers.forEach((m,j)=>{const o=document.createElement('option');o.value=String(j);o.textContent=m;control.appendChild(o);});
+ xs.value=String(p.markers.indexOf(p.scatter.xMarker));ys.value=String(p.markers.indexOf(p.scatter.yMarker));
+ function element(tag,attrs,label){const el=document.createElementNS('http://www.w3.org/2000/svg',tag);Object.entries(attrs).forEach(([k,v])=>el.setAttribute(k,String(v)));if(label!==undefined)el.textContent=label;svg.appendChild(el);return el;}
+ function draw(){
+  svg.replaceChildren();dots.length=0;const xi=Number(xs.value),yi=Number(ys.value);
+  if(xi===yi){scope.textContent='Choose two distinct markers. Heatmap and native results unchanged.';return;}
+  const points=p.rows.map((r,i)=>({index:i,x:p.values[i][xi],y:p.values[i][yi]})).filter(v=>v.x!==null&&v.y!==null);
+  scope.textContent=points.length+' complete pairs; '+(p.rows.length-points.length)+' heatmap rows omitted for missing pair values. '+p.scaleLabel+'. Local view only; native results unchanged.';
+  if(!points.length)return;
+  function extent(values){let lo=Math.min(...values),hi=Math.max(...values);const pad=hi===lo?Math.max(Math.abs(lo)*.05,1):(hi-lo)*.05;return [lo-pad,hi+pad];}
+  const [xmin,xmax]=extent(points.map(v=>v.x)),[ymin,ymax]=extent(points.map(v=>v.y));
+  const sx=x=>70+(x-xmin)/(xmax-xmin)*550,sy=y=>330-(y-ymin)/(ymax-ymin)*300;
+  element('path',{d:'M70 30V330H620',fill:'none',stroke:'#24364b'});
+  for(let t=0;t<=4;t++){const x=xmin+(xmax-xmin)*t/4,y=ymin+(ymax-ymin)*t/4;element('text',{x:sx(x),y:350,'text-anchor':'middle','font-size':11},x.toPrecision(3));element('text',{x:62,y:sy(y)+4,'text-anchor':'end','font-size':11},y.toPrecision(3));}
+  element('text',{x:345,y:385,'text-anchor':'middle'},p.markers[xi]);element('text',{x:18,y:180,transform:'rotate(-90 18 180)','text-anchor':'middle'},p.markers[yi]);
+  points.forEach(v=>{const el=element('circle',{cx:sx(v.x),cy:sy(v.y),r:5,fill:'#2864a0',stroke:'white',tabindex:0,role:'button','data-row':p.rows[v.index].row,'aria-label':'Source row '+p.rows[v.index].row+', '+p.markers[xi]+' '+text(v.x)+', '+p.markers[yi]+' '+text(v.y)});
+   el.addEventListener('click',()=>inspect(v.index));el.addEventListener('focus',()=>inspect(v.index));el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();inspect(v.index);}});dots.push({el,index:v.index});});
+  refreshHighlights();
+ }
+ xs.addEventListener('change',draw);ys.addEventListener('change',draw);draw();
+}
 })();</script></div>

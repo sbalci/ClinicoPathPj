@@ -42,7 +42,26 @@ fixed blue/white/orange scale with the same symmetric numeric limits. Colors nee
   It makes no backend calls and changes neither the analysis cohort nor saved options.
 - Native summary identifies input/retained/excluded rows, missing cells, scaling and clustering.
 
-No saved selected-row column or linked scatterplot is supplied in this core. Other omissions:
+Version 0.3.12 adds **Linked marker scatterplot**, disabled by default. Enable it under
+Plots and Interaction. Optional native X/Y roles must name distinct selected heatmap markers;
+blank roles use the first and second markers in the original selection, regardless of
+clustering order. The scatterplot uses the heatmap's displayed raw/z values, retaining only
+complete pairs. Its native cohort table counts omitted pairs; the source-row table records
+all plotted original row identities and displayed coordinates. No correlation or regression
+is fitted. If no pairs remain, the heatmap remains available and a warning explains the
+empty scatterplot.
+
+With local inspection enabled, focus/click a heatmap cell or scatter point to highlight its
+source row in both views. Enter/Space activates focused points; Clear row highlight resets
+selection. Repeated patient IDs do not merge source rows. Local X/Y dropdowns can inspect
+other selected markers, counting their complete/missing pairs without backend calls.
+Search highlights labels/points without removing them. Local pair choices and highlights
+are transient; change native X/Y roles to persist the pair and update native outputs.
+Overlapping points are not jittered; individual rows remain accessible in the heatmap.
+Native plots use the saved X/Y pair, not a transient local pair.
+
+See [0.3.12 validation and remaining desktop gates](python-ihc-linked-validation.md).
+No saved selected-row column is supplied. Other omissions:
 dendrogram interaction, cluster significance/stability, differential-expression tests, clinical
 cutoffs, pathway analysis, automatic imputation, spatial inference and patient-cluster inference.
 All rows/labels are embedded in local results; do not share a saved file containing identifiers

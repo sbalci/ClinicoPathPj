@@ -1,3 +1,12 @@
+# 0.3.12 — 2026-10-26
+
+- Add optional linked heatmap/scatter inspection to the existing annotated IHC utility.
+- Add saved native X/Y marker roles, complete-pair/source-row tables and native static scatter.
+- Preserve original row identities through clustering, repeated IDs and pairwise missingness.
+- Keep local marker switching/highlighting transient, with no cohort changes or inference.
+- Record Julia as a deferred optional backend feasibility workstream.
+- Keep desktop acceptance of the new linked/scatter features pending.
+
 # 0.3.11 — 2026-10-26
 
 - Add an optional native continuous histogram with exact categorization break-point lines.
