@@ -122,6 +122,8 @@ class Output:
         self._markdown = {r["name"] for r in spec["results"] if r["type"] == "Text"}
         self._html = {r["name"] for r in spec["results"] if r["type"] == "Html"}
         self.htmls = {}
+        self._svg = {r["name"] for r in spec["results"] if r["type"] == "Svg"}
+        self.svgs = {}
         self._plots = {r["name"]: r for r in spec["results"] if r["type"] == "Image"}
         self.tables = {}
         self.texts = {}
@@ -195,6 +197,14 @@ class Output:
         if not isinstance(content, str) or len(content.encode("utf-8")) > 1_500_000:
             raise ValueError("HTML must be a string of at most 1.5 MB")
         self.htmls[name] = content
+
+    def svg(self, name, content):
+        """Trusted module-authored SVG; scripts are declared in the literal SPEC."""
+        if name not in self._svg:
+            raise KeyError(f"SPEC declares no Svg result named {name!r}")
+        if not isinstance(content, str) or len(content.encode("utf-8")) > 1_500_000:
+            raise ValueError("SVG must be a string of at most 1.5 MB")
+        self.svgs[name] = content
 
     def plot(self, name, rows, *, xlab=None, ylab=None, reference=None, step=False):
         """Data for an Image result; R draws it. rows: list of dicts with the plot kind's columns."""
@@ -355,7 +365,7 @@ def execute(request):
             started = time.perf_counter()
             # a copy: the report shows the options as received, whatever run() does with its own
             module.run(data, copy.deepcopy(request.get("options") or {}), out)
-            response.update(status="ok", tables=out.tables, texts=out.texts, plots=out.plots, htmls=out.htmls,
+            response.update(status="ok", tables=out.tables, texts=out.texts, plots=out.plots, htmls=out.htmls, svgs=out.svgs,
                             outputs=out.outputs)
         except InputError as error:
             response.update(status="input_error", error={"message": str(error)})

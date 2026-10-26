@@ -1,3 +1,10 @@
+# 0.3.7 — 2026-10-26
+
+- Add separate `pysvgcutoff` native Svg experiment using the shared cutoff engine.
+- Extend literal SPEC, generated bridge and versioned result payload with Svg support and local script validation.
+- Keep native tables/static images tied to saved options; clearly label local previews and snapshots.
+- Add numerical-equivalence, native lifecycle, markup escaping and browser-interaction regressions.
+
 # 0.3.6
 
 - Add `pycheckdata` under Descriptives with full-data completeness and observed-value accounting.

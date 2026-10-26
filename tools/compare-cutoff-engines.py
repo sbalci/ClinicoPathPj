@@ -18,7 +18,7 @@ x = np.array([float(r['Measurement']) for r in records])
 g = Factor(np.array([int(r['Reference'] == 'Positive') for r in records]),
            ['Negative', 'Positive'], False)
 results = []
-for name, direction in [('pydotdecision', 'high'), ('pyd3cutoff', 'ge'), ('pyobservablecutoff', 'ge')]:
+for name, direction in [('pydotdecision', 'high'), ('pyd3cutoff', 'ge'), ('pyobservablecutoff', 'ge'), ('pysvgcutoff', 'ge')]:
     spec = importlib.util.spec_from_file_location(name, ROOT / 'inst/python/analyses/meddecide' / (name + '.py'))
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
@@ -34,5 +34,5 @@ for name, direction in [('pydotdecision', 'high'), ('pyd3cutoff', 'ge'), ('pyobs
             times.append(elapsed)
     results.append(dict(analysis=name, rows=len(x),
                         median_python_run_seconds=statistics.median(times),
-                        html_bytes=len(out.htmls['explorer'].encode())))
+                        html_bytes=len((out.svgs if name == 'pysvgcutoff' else out.htmls)['explorer'].encode())))
 print(json.dumps(results, indent=2))

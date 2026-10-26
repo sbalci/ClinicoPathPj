@@ -149,7 +149,7 @@
     for (item in self$results$items)
         if (inherits(item, "Preformatted") || inherits(item, "Text")) item$setContent("")
     for (item in self$results$items)
-        if (inherits(item, "Html")) item$setContent("<div></div>")
+        if (inherits(item, "Html") || inherits(item, "Svg")) item$setContent("<div></div>")
     # Every path that reaches Python's answer, or decides not to start it, replaces this.
     self$results$console$setContent("No report from Python: the run stopped with the error shown above.")
     notStarted <- function(why) {  # the console says why, instead of showing nothing
@@ -256,6 +256,12 @@
         if (!inherits(element, "Html"))
             stop("Python returned HTML for a non-HTML result.", call. = FALSE)
         element$setContent(result$htmls[[name]])
+    }
+    for (name in names(result$svgs)) {
+        element <- self$results$get(name)
+        if (!inherits(element, "Svg"))
+            stop("Python returned SVG for a non-SVG result.", call. = FALSE)
+        element$setContent(result$svgs[[name]])
     }
     for (plot in names(result$plots)) {
         element <- self$results$get(plot)

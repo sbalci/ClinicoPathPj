@@ -2400,6 +2400,18 @@
       "coverage": {
         "full_parity": false
       }
+    },
+    {
+      "id": "pysvgcutoff",
+      "family": "meddecide",
+      "menu": "Medical Decisions",
+      "title": "Experimental Native SVG Cutoff and ROC Explorer (Python)",
+      "aliases": [],
+      "source": "analyses/meddecide/pysvgcutoff.py",
+      "status": "utility",
+      "coverage": {
+        "full_parity": false
+      }
     }
   ]
 }

@@ -231,8 +231,18 @@ def validate(spec, stem):
             match = re.fullmatch(r"\(([a-z][A-Za-z0-9_]*)\)", str(result["visible"]))
             if not match or match.group(1) not in bools:
                 fail(f"result {rname!r}: visible must be '(x)' naming a Bool option")
-        if result.get("type") in ("Preformatted", "Text", "Html"):
-            if set(result) - {"name", "type", "title", "visible"}:
+        if result.get("type") in ("Preformatted", "Text", "Html", "Svg"):
+            allowed = {"name", "type", "title", "visible"}
+            if result["type"] == "Svg":
+                allowed.add("scripts")
+                scripts = result.get("scripts", [])
+                if not isinstance(scripts, list) or not all(isinstance(s, str) for s in scripts) or len(scripts) != len(set(scripts)):
+                    fail("Svg scripts must be a list of unique local JavaScript paths")
+                for script in scripts:
+                    if not isinstance(script, str) or not re.fullmatch(r"js/[A-Za-z0-9_/-]+\.js", script) or \
+                            ".." in Path(script).parts or not (ROOT / "inst" / script).is_file():
+                        fail("Svg scripts must exist under inst/js with safe local paths")
+            if set(result) - allowed:
                 fail(f"{result['type']} {rname!r} takes only name, type, title and visible")
             continue
         if result.get("type") == "Image":
@@ -395,6 +405,9 @@ def b_r(spec, header):
 
     plot_method = (",\n        .plot = function(image, ggtheme, theme, ...) .cpjPlot(image, ggtheme, theme)"
                    if plots else "")
+    scripts = "".join(
+        f"            self$results${result['name']}$setScripts({vector(r_string(s) for s in result.get('scripts', []))})\n"
+        for result in spec["results"] if result["type"] == "Svg")
     return (
         f"# {header}\n\n"
         f"{name}Class <- R6::R6Class(\n"
@@ -402,6 +415,7 @@ def b_r(spec, header):
         f"    inherit = {name}Base,\n"
         f"    private = list(\n"
         f"        .run = function() {{\n"
+        f"{scripts}"
         f"            .cpjRun(self, \"{name}\",\n"
         f"                options = {vector(r_string(o) for o in options)},\n"
         f"                arrays = {vector(r_string(o) for o in arrays)},\n"
