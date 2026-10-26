@@ -1,0 +1,70 @@
+"""IHC display transformations with explicit cohort, missingness and row identities."""
+import numpy as np
+from cpj_runtime import Factor, InputError
+
+
+def labels(column, n):
+    if column is None:
+        return [None]*n
+    values=[None if c<0 else column.levels[c] for c in column.codes] if isinstance(column,Factor) else column
+    if len(values)!=n:
+        raise InputError('Annotation lengths must match marker rows.')
+    result=[]
+    for v in values:
+        text=None if v is None or isinstance(v,(float,np.floating)) and np.isnan(v) else str(v)
+        if text is not None and len(text)>120:
+            raise InputError('Annotation labels must be at most 120 characters.')
+        result.append(text)
+    return result
+
+
+def prepare(data, options, row_ids=None):
+    markers=options.get('markers') or []
+    if not 2<=len(markers)<=20 or len(set(markers))!=len(markers):
+        raise InputError('Choose two to twenty distinct numeric IHC markers.')
+    columns=[]
+    for name in markers:
+        c=data[name]
+        if isinstance(c,Factor) or np.asarray(c).dtype.kind not in 'fiu':
+            raise InputError('IHC markers must be numeric, not categorical scores.')
+        columns.append(np.asarray(c,dtype=float))
+    if len({len(c) for c in columns})!=1:
+        raise InputError('Marker columns must have equal lengths.')
+    x=np.column_stack(columns);n=len(x)
+    if np.isinf(x).any():
+        raise InputError('Infinite marker values are not supported.')
+    if options.get('scaling','raw') not in ('raw','zscore') or options.get('missing','available') not in ('available','complete'):
+        raise InputError('Unknown scaling or missingness method.')
+    keep=np.isfinite(x).all(axis=1) if options.get('missing')=='complete' else np.isfinite(x).any(axis=1)
+    if not keep.any():
+        raise InputError('No rows with usable marker measurements remain.')
+    x=x[keep]
+    if len(x)>200:
+        raise InputError('This explorer accepts at most 200 retained rows and 20 markers; no display sampling is applied.')
+    if not np.isfinite(x).any(axis=0).all():
+        raise InputError('Every selected marker needs at least one observed value in retained rows.')
+    annotations={k:labels(data.get(options.get(k)),n) for k in ('subject','group','region')}
+    ids=[str(i+1) for i in range(n)] if row_ids is None else [str(v) for v in row_ids]
+    if len(ids)!=n or len(set(ids))!=n:
+        raise InputError('Source row identities must be unique and row aligned.')
+    rows=[dict(row=ids[i],**{k:v[i] for k,v in annotations.items()},observed=int(np.isfinite(x[j]).sum())) for j,i in enumerate(np.flatnonzero(keep))]
+    summaries=[];constant=[];z=x.copy()
+    for j,name in enumerate(markers):
+        v=x[np.isfinite(x[:,j]),j];sd=float(np.std(v,ddof=1)) if len(v)>1 else None
+        mean=float(np.mean(v))
+        if not np.isfinite(mean) or sd is not None and not np.isfinite(sd):
+            raise InputError('Marker magnitudes exceed stable numeric display calculations.')
+        summaries.append(dict(marker=name,observed=len(v),missing=int(len(x)-len(v)),mean=mean,sd=sd))
+        if sd is None or sd==0:
+            constant.append(name)
+            if options.get('scaling')=='zscore':z[np.isfinite(z[:,j]),j]=0
+        elif options.get('scaling')=='zscore':z[:,j]=(z[:,j]-mean)/sd
+    row_order=np.arange(len(x));col_order=np.arange(len(markers))
+    if options.get('clusterRows') or options.get('clusterColumns'):
+        if not np.isfinite(z).all():
+            raise InputError('Clustering requires complete marker rows. Choose complete rows or disable clustering; no imputation is performed.')
+        from scipy.cluster.hierarchy import linkage,leaves_list
+        if options.get('clusterRows') and len(z)>1:row_order=leaves_list(linkage(z,method='average',metric='euclidean'))
+        if options.get('clusterColumns'):col_order=leaves_list(linkage(z.T,method='average',metric='euclidean'))
+    def serial(a):return [[float(v) if np.isfinite(v) else None for v in row] for row in a]
+    return dict(markers=[markers[j] for j in col_order],rows=[rows[i] for i in row_order],values=serial(z[np.ix_(row_order,col_order)]),raw=serial(x[np.ix_(row_order,col_order)]),summaries=summaries,constant=constant,inputRows=n,excluded=int(n-len(x)),missingCells=int(np.isnan(x).sum()),scaleLabel='Within-marker z score (sample SD)' if options.get('scaling')=='zscore' else 'Raw marker units')

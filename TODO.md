@@ -1,10 +1,38 @@
+# Annotated IHC heatmap — 0.3.10
+
+- [x] Add Orange-inspired heatmap, model-evaluation, survival and molecular ideas to the plan.
+- [x] Register `pyihcheatmap` separately from baseline IHC heterogeneity.
+- [x] Implement annotated rows, explicit scaling/missingness, optional complete-data clustering.
+- [x] Add native summaries, row-order table, static heatmap and local cell inspector.
+- [x] Pass hand-calculated transformations/geometry and browser inspection tests.
+- [x] Pass 24 independent base-R fixtures / 104 assertions and packaged runtime/native lifecycle checks.
+- [x] macOS arm64 GUI installation, annotations, z scaling, missing-cell inspection, save/fresh-engine reopen, clustering rerun and native PNG export.
+- [ ] Qualify large matrices, theme variants and additional platforms.
+- [ ] Later: linked scatter, dendrogram inspection and explicit saved selections.
+
+# Web-informed candidate backlog
+
+- [x] Review requested galleries/book repository and primary engine documentation.
+- [x] Map candidates, dependency tiers, interaction and independent validation gates in [research notes](docs/python-analysis-opportunities.md).
+- [ ] After current acceptance gates: narrow distribution/estimation, correlation, exact set/flow and diagnostic-extension specifications.
+- [ ] Prototype dependency-heavy agreement/model/survival/meta-analysis engines before scheduling full ports.
+- [ ] Review notebook cells, pinned licenses and dataset redistribution rights before reuse.
+
+# Current plan
+
+See [revised migration plan](docs/python-migration-plan.md) for implemented, active and planned work.
+Historical version checklists below retain their original evidence scope.
+
 ## 0.3.8 execution-service and menu work
 
 - [x] Registry-owned compact family menuGroups and topic subgroups.
 - [x] Separate optional public Pj-service comparison using the same calculation engine.
 - [x] Twelve matched bundled-interpreter configurations and independent R counts/exact intervals.
 - [ ] Qualify System Python, Windows and Linux service routes.
-- [ ] Complete native saved-file/export acceptance for the new comparison.
+- [x] Save new comparison OMV with native cutoff 3, Pj route and plot resources.
+- [x] Fresh-engine comparison OMV reopen, recalculation and native ROC PNG export on installed 0.3.8.
+- [x] 0.3.9 native summary reports actual rule, cohort counts and verified close-panel/reselect-heading workaround.
+- [ ] Host live cutoff-field refresh after HTML Apply remains unresolved; close options and reselect the analysis heading to refresh it.
 
 # Native SVG experiment — 0.3.7
 
@@ -48,7 +76,7 @@
 - [x] Pass 199 Python tests, 526 full-suite R expectations and 27 focused R expectations.
 - [x] Add a reproducible teaching CSV and a comparison guide.
 - [ ] Gather user comparison feedback; qualify large-data UI performance and additional platforms.
-- [ ] A public Pj background-service integration remains exploratory and is not used here.
+- [x] Superseded in 0.3.8: public Pj 1.3.0 service is used in the separate comparison; this older D3 entry retains its own bridge.
 
 # Visual data-quality port — 0.3.3
 

@@ -1,0 +1,13 @@
+Specimen,Diagnosis,Region,Ki67,ER,PR
+S01,Group A,Center,12,90,70
+S01,Group A,Edge,18,85,65
+S02,Group A,Center,8,95,80
+S03,Group A,Center,25,70,50
+S04,Group B,Center,55,5,0
+S04,Group B,Edge,65,0,0
+S05,Group B,Center,45,10,5
+S06,Group B,Center,75,0,0
+S07,Group C,Center,30,50,30
+S08,Group C,Center,,60,40
+S09,Group C,Edge,35,,20
+S10,Group C,Center,,,

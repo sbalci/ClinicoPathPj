@@ -2568,8 +2568,24 @@
       "status": "utility",
       "coverage": {
         "full_parity": false,
-        "numerical": "pending matched-route validation",
-        "gui": "pending"
+        "numerical": "12 processx/Pj bundled-route configurations matched; independent R counts/exact intervals, ties/missingness/row-ID transport and recovery passed on 0.3.8",
+        "gui": "macOS arm64 jamovi 28.13 / 0.3.8: installed, fresh-engine OMV reopen, Pj recalculation and native ROC PNG export verified; live native-field refresh unresolved; 0.3.9 summary pending GUI verification"
+      }
+    },
+    {
+      "id": "pyihcheatmap",
+      "family": "descriptives",
+      "menu_group": "Descriptives Py",
+      "menu": "Biomarker panels",
+      "menu_title": "Annotated IHC heatmap",
+      "title": "Annotated IHC Heatmap",
+      "aliases": [],
+      "source": "analyses/descriptives/pyihcheatmap.py",
+      "status": "utility",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "24 independent base-R raw/z-score and missingness fixtures; 104 native assertions; seven Python fixtures including identity, missing cells, clustering grouping and geometry passed",
+        "gui": "macOS arm64 jamovi 28.13 / 0.3.10: installed fresh engine; raw/z-score tables/heatmap and annotations; missing-cell inspection; OMV save/fresh-engine reopen; complete-row clustering recalculation; native PNG export verified. Other platforms and large-payload GUI pending."
       }
     }
   ],

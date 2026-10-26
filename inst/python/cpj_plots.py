@@ -47,7 +47,7 @@ def figure(state, width=600, height=400, palette=None, background='white', foreg
     palette = palette or DEFAULT_PALETTE
     columns = state['columns']; kind = state['kind']
     n = len(next(iter(columns.values()), []))
-    if n > {'interval':200, 'line':20000, 'box':20000, 'bar':2000, 'scatter':5000, 'points':5000, 'histogram':2000, 'pyramid':200, 'qualitymap':4000}.get(kind, 0):
+    if n > {'interval':200, 'line':20000, 'box':20000, 'bar':2000, 'scatter':5000, 'points':5000, 'histogram':2000, 'pyramid':200, 'qualitymap':4000, 'ihcheatmap':4000}.get(kind, 0):
         raise ValueError('Unsupported plot kind or excessive plot rows')
     if any(len(c) != n for c in columns.values()): raise ValueError('Plot columns have unequal lengths')
     if kind == 'histogram':
@@ -121,6 +121,28 @@ def figure(state, width=600, height=400, palette=None, background='white', foreg
         for i, values in enumerate(data):
             ax.scatter(i+rng.uniform(-.15,.15,len(values)), values, s=12, alpha=.6, color=palette[0])
         ax.set_xticks(np.arange(len(groups)), groups)
+    elif kind == 'ihcheatmap':
+        variables=list(dict.fromkeys(columns['variable'])); rows=list(dict.fromkeys(columns['row']))
+        if not n or len(variables)>20 or len(rows)>200 or n!=len(rows)*len(variables):
+            raise ValueError('IHC heatmap must be rectangular, at most 200 rows by 20 markers')
+        ri={key:i for i,key in enumerate(rows)};ci={key:i for i,key in enumerate(variables)}
+        matrix=np.full((len(rows),len(variables)),np.nan);labels={};seen=set()
+        for row,var,label,value in zip(columns['row'],columns['variable'],columns['label'],columns['value']):
+            if (row,var) in seen:raise ValueError('Duplicate IHC heatmap cell')
+            seen.add((row,var));labels[row]=label
+            matrix[ri[row],ci[var]]=np.nan if value is None else value
+        from matplotlib.colors import LinearSegmentedColormap
+        cmap=LinearSegmentedColormap.from_list('cpjihc',[palette[0],'#FFFFFF',palette[1%len(palette)]])
+        cmap.set_bad('#B0B0B0')
+        finite=matrix[np.isfinite(matrix)]
+        limit=float(np.max(np.abs(finite))) if len(finite) else 1.
+        if limit==0:limit=1.
+        image=ax.imshow(np.ma.masked_invalid(matrix),aspect='auto',interpolation='nearest',cmap=cmap,vmin=-limit,vmax=limit)
+        ax.set_xticks(range(len(variables)),variables,rotation=45,ha='right')
+        step=max(1,int(np.ceil(len(rows)/25)));ticks=list(range(0,len(rows),step))
+        ax.set_yticks(ticks,[labels[rows[i]][:77]+'...' if len(labels[rows[i]])>80 else labels[rows[i]] for i in ticks],fontsize=7)
+        fig.colorbar(image,ax=ax,label=state.get('xlab','Value'))
+        ax.set_title('Gray cells: missing; row labels shortened/thinned when needed',color=foreground,fontsize=9)
     elif kind == 'qualitymap':
         variables=list(dict.fromkeys(columns['variable'])); rows=list(dict.fromkeys(columns['row']))
         states=list(dict.fromkeys(columns['state']))

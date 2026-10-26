@@ -259,7 +259,7 @@ pybridgecompareBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Clas
             super$initialize(
                 package = "ClinicoPathPj",
                 name = "pybridgecompare",
-                version = c(0,3,8),
+                version = c(0,3,9),
                 options = options,
                 results = pybridgecompareResults$new(options=options),
                 data = data,

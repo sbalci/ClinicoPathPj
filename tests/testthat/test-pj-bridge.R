@@ -19,6 +19,8 @@ test_that("comparison has native processx results and clears incomplete selectio
     a<-pybridgecompareClass$new(options=pybridgecompareOptions$new(marker="x",reference="g",positive="P",cutoff="2"),data=d)
     a$init();a$run()
     expect_identical(a$results$counts$asDF$n,c(3L,2L,0L,1L))
+    expect_match(a$results$summary$content,"Native applied rule",fixed=TRUE)
+    expect_match(a$results$summary$content,"close the options panel and reselect the analysis heading",fixed=TRUE)
     expect_match(a$results$backendTiming$content,"Route: processx",fixed=TRUE)
     expect_match(a$results$explorer$content,'"hostApply": true',fixed=TRUE)
     ref<-a$options$option("reference");ref$value<-NULL

@@ -5,7 +5,10 @@ analysis: a literal `SPEC` (options, results and organized UI) plus a `run()` fu
 into the jamovi files, and the statistics run in **the Python bundled with jamovi** (numpy, scipy),
 so users install nothing.
 
-Status: experimental, 0.3.8 (descriptive ports; full migration remains incomplete). Verified only on jamovi 28.13 for macOS (Apple Silicon), with
+Current direction and implemented/pending work: [revised migration plan](docs/python-migration-plan.md).
+See also the [web-researched Python analysis candidates](docs/python-analysis-opportunities.md).
+
+Status: experimental, 0.3.10 (descriptive ports; full migration remains incomplete). Verified only on jamovi 28.13 for macOS (Apple Silicon), with
 jmvtools 28.4.
 
 Analyses now use compact family menus: **Descriptives Py**, **Stats Plots Py**,
@@ -26,6 +29,10 @@ and [source review](docs/pj-service-review.md).
 | `pyexacttests` | 2×2 tables: Fisher's exact test with the conditional-MLE odds ratio and its exact CI, Barnard's and Boschloo's unconditional exact tests, exact McNemar for paired data, and a Newcombe risk difference. Larger tables are refused, because scipy's r×c Fisher test is Monte Carlo | `fisher.test`, `Exact::exact.test`, `exact2x2::mcnemar.exact`, brute force |
 | `pykappaci` / `pykappafixedn` / `pykappapower` | Kappa sample size for 2–5 categories and 2–6 raters (CI approach, lowest kappa for a fixed N, power approach). **New:** a seeded Monte Carlo check of coverage or power, offered for a binary rating with two raters only, where it is validated (Donner & Eliasziw 1992) | `kappaSize` 1.2 to 1e-8 |
 
+An experimental [annotated IHC heatmap](docs/python-ihc-heatmap.md) is available under
+**Descriptives Py → Biomarker panels**, with native static output and local cell inspection.
+It is an extra utility; it does not complete the IHC heterogeneity baseline port.
+
 Six additional validated cores are available: `pydecision`, `pydecisioncalculator`,
 `pysequentialtests`, `pychisqposttest`, `pybenford` and `pydecisioncurve`. They add diagnostic
 accuracy, sequential-testing projections, contingency post-tests, Benford screening and
@@ -35,7 +42,7 @@ Open **Data Library > ClinicoPathPj > Python Core Examples**, or import
 `data/python_core_examples.csv`, for the synthetic examples.
 
 Build the single standard module without installing it:
-`Rscript --vanilla tools/build.R --build-only` → `ClinicoPathPj_0.3.8.jmo`.
+`Rscript --vanilla tools/build.R --build-only` → `ClinicoPathPj_0.3.10.jmo`.
 After replacing a loaded development build, use a fresh jamovi engine to avoid stale namespaces.
 
 `pywelch` reports the mean difference as *comparison minus reference*. The reference defaults to

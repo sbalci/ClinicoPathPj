@@ -1,3 +1,18 @@
+# 0.3.10 — 2026-10-26
+
+- Add exploratory `pyihcheatmap` under Descriptives Py / Biomarker panels.
+- Preserve patient/region annotations and source rows with explicit missingness and scaling.
+- Add native marker/row tables, static heatmap and offline keyboard-accessible cell inspection.
+- Offer complete-data average-linkage Euclidean clustering without imputation or inference.
+- Add Orange-inspired workflow candidates to the migration plan.
+
+# 0.3.9 — 2026-10-26
+
+- Report actual applied cutoff, event level and retained/excluded rows in the bridge-comparison native summary.
+- Explain the close-panel/reselect-heading workaround for jamovi 28.13 stale native option fields after HTML Apply.
+- Record fresh-engine Pj comparison reopen/recalculation and native ROC PNG export on 0.3.8.
+- Keep live panel synchronization and additional-platform/service acceptance pending.
+
 # 0.3.8 — 2026-10-26
 
 - Organize registry-owned menus by analysis family and topic; retain identifiers and namespace.

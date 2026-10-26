@@ -36,6 +36,18 @@ class ServiceMenus(unittest.TestCase):
             self.assertIn('"hostApply": true',got['htmls']['explorer'])
             self.assertIn('"hostManual": true',got['htmls']['explorer'])
 
+    def test_native_summary_reports_the_actual_applied_rule(self):
+        d={'x':number([1,2,2,4,5,6,None,8]),'g':factor(['N','N','P','N','P','P','P',None])}
+        got=run_analysis('pybridgecompare',d,dict(marker='x',reference='g',positive='P',cutoff='3'))
+        self.assertEqual(got['status'],'ok',got.get('error'))
+        summary=got['texts']['summary'].replace(chr(92), '')
+        self.assertIn('Native applied rule: x >= 3',summary)
+        self.assertIn('Complete rows: 6; excluded: 2',summary)
+        self.assertIn('close the options panel and reselect the analysis heading',summary)
+        self.assertNotIn('Apply to HTML tables',summary)
+        precise=run_analysis('pybridgecompare',d,dict(marker='x',reference='g',positive='P',cutoff='3.123456789123'))
+        self.assertIn('3.123456789123',precise['texts']['summary'].replace(chr(92), ''))
+
     def test_generator_checks_execution_and_timing_bindings(self):
         spec=generate.read_spec(ROOT/'inst/python/analyses/meddecide/pybridgecompare.py')
         for key,bad in [('executionOption','missing'),('timingResult','counts')]:
