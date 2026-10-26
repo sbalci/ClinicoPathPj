@@ -14,7 +14,8 @@
 .cpjRenderPlot <- function(state, width, height, theme, ggtheme = NULL) {
     columns <- if (!is.null(state$columns)) state$columns else lapply(state$data, as.list)
     plot <- list(kind = state$kind, columns = columns, xlab = state$xlab, ylab = state$ylab,
-                 reference = state$reference, step = isTRUE(state$step))
+                 reference = state$reference, step = isTRUE(state$step),
+                 boundaries = if (is.null(state$boundaries)) NULL else as.list(state$boundaries))
     directory <- tempfile("cpj-plot-")
     dir.create(directory)
     on.exit(unlink(directory, recursive = TRUE), add = TRUE)

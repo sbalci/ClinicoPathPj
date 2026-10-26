@@ -160,6 +160,16 @@
       "requiresData": false
     },
     {
+      "name": "histogram",
+      "title": "Continuous Distribution and Break Points",
+      "type": "Image",
+      "visible": "(showhistogram)",
+      "width": 650,
+      "height": 400,
+      "renderFun": ".plot",
+      "requiresData": false
+    },
+    {
       "name": "addtodata",
       "title": "Categorized Variable",
       "type": "Output",
@@ -183,7 +193,8 @@
         "ordered",
         "excl",
         "showcode",
-        "showplot"
+        "showplot",
+        "showhistogram"
       ]
     },
     {

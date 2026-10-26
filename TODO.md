@@ -1,3 +1,10 @@
+# Categorization histogram — 0.3.11
+
+- [x] Add optional native continuous histogram with exact break-point lines.
+- [x] Preserve observed tails and separate display bins from category assignment.
+- [ ] Qualify new histogram in a fresh desktop engine, save/reopen and native export.
+- [ ] Finish per-method desktop rerun/cancellation checks for categorization.
+
 # Annotated IHC heatmap — 0.3.10
 
 - [x] Add Orange-inspired heatmap, model-evaluation, survival and molecular ideas to the plan.

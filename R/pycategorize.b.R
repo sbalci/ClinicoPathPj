@@ -6,7 +6,7 @@ pycategorizeClass <- R6::R6Class(
     private = list(
         .run = function() {
             .cpjRun(self, "pycategorize",
-                options = c("var", "method", "nbins", "breaks", "sdmult", "seed", "labels", "customlabels", "newvarname", "addtodata", "excludeoutofrange", "includelowest", "rightclosed", "ordered", "excl", "showcode", "showplot"),
+                options = c("var", "method", "nbins", "breaks", "sdmult", "seed", "labels", "customlabels", "newvarname", "addtodata", "excludeoutofrange", "includelowest", "rightclosed", "ordered", "excl", "showcode", "showplot", "showhistogram"),
                 arrays = character(0),
                 terms = character(0),
                 numeric = c("var"),

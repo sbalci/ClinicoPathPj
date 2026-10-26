@@ -55,7 +55,7 @@ def check(path):
           ('pydataquality',{'x':numeric([1,1,None]),'g':factor(['A','A','B'])},dict(vars=['x','g'],check_missing=True,check_duplicates=True,row_level_duplicates=True,showInteractive=True)),
           ('pyagepyramid',{'a':numeric([0,5,65,85]),'g':factor(['F','M','F','M'])},dict(age='a',gender='g',female='F',male='M',age_groups='who')),
           ('pysummarydata',{'x':numeric([1,2,3,4,100])},dict(vars=['x'],distr=True,outliers=True)),
-          ('pycategorize',{'x':numeric([1,2,3,4,100])},dict(var='x',method='quantile',nbins=4)),
+          ('pycategorize',{'x':numeric([1,2,3,4,100])},dict(var='x',method='quantile',nbins=4,showhistogram=True)),
           ('pydecisioncalculator',{},{}),('pysequentialtests',{},{}),
           ('pydecision',{'r':factor(['N','P']),'t':factor(['N','P'])},dict(reference='r',test='t',referencePositive='P',testPositive='P')),
           ('pychisqposttest',{'r':factor(['a','a','b','b']),'c':factor(['x','y','x','y'])},dict(rows='r',cols='c')),
@@ -69,6 +69,10 @@ def check(path):
             result=json.loads(response.read_text())
             assert result['status']=='ok',(name,result.get('error'))
             assert result['tables'],name
+            if name=='pycategorize':
+                plot=result['plots']['histogram']
+                assert sum(plot['columns']['count'])==5
+                assert plot['boundaries']==[r['value'] for r in result['tables']['breakpointsTable']['rows']]
             if name=='pybridgecompare':
                 summary=result['texts']['summary'].replace(chr(92),'')
                 assert 'Native applied rule: x >= 2' in summary

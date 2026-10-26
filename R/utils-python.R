@@ -139,6 +139,7 @@
     })
     list(kind = plot$kind, data = as.data.frame(data, stringsAsFactors = FALSE),
          xlab = plot$xlab, ylab = plot$ylab, step = isTRUE(plot$step),
+         boundaries = if (is.null(plot$boundaries)) NULL else unlist(plot$boundaries),
          reference = if (is.null(plot$reference)) NULL else as.numeric(plot$reference))
 }
 

@@ -59,7 +59,9 @@ coverage text until the rebuilt package is installed again.
 
 Category-count plot export and exhaustive per-method desktop rerun/cancellation tests
 remain pending. The sampled Fisher-Jenks branch (n > 20000 and distinct values > 3000) is
-rejected explicitly; the baseline histogram with bin boundaries is not implemented.
+rejected explicitly; the original ggplot histogram bin alignment/style is not replicated. Version 0.3.11 adds an
+optional native 30-bin histogram with exact break-point lines; see
+[its separate validation record](python-categorize-histogram-validation.md).
 Original gt HTML styling is replaced with native tables. Code export applies the displayed
 frozen boundaries rather than recomputing them. Other architectures/operating systems,
 full baseline parity and clinical review remain unqualified.

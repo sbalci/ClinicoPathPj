@@ -99,3 +99,40 @@ test_that("computed notices are reused and retired after a successful method cha
     notices <- Filter(function(x)inherits(x,"Notice"),a$results$items)
     expect_false(any(vapply(notices,function(n)n$visible,logical(1))))
 })
+
+test_that("category histograms preserve exact boundaries and observed tails through native state", {
+    d <- data.frame(x = c(-10, 0, 1, 2, 3, 4, 30, NA))
+    options <- pycategorizeOptions$new(var = "x", method = "manual", breaks = "0,2,4",
+        excludeoutofrange = TRUE, showhistogram = TRUE, showplot = FALSE)
+    a <- pycategorizeClass$new(options = options, data = d)
+    a$init(); a$run()
+    state <- a$results$histogram$state
+    expect_equal(state$boundaries, a$results$breakpointsTable$asDF$value)
+    edges <- seq(-10, 30, length.out = 31)
+    expected <- table(cut(d$x, edges, right = FALSE, include.lowest = TRUE))
+    expect_equal(state$data$count, as.numeric(expected))
+    expect_equal(state$data$lower, head(edges, -1))
+    expect_equal(state$data$upper, tail(edges, -1))
+    expect_equal(sum(state$data$count), sum(!is.na(d$x)))
+    # Restore the saved state with no analysis dataset, then render through Python/R.
+    restored <- unserialize(serialize(state, NULL))
+    raster <- ClinicoPathPj:::.cpjRenderPlot(restored, 500L, 300L, list(palette = "jmv"))
+    expect_equal(dim(raster)[1:2], c(300L, 500L))
+    enabled <- options$option("showhistogram")
+    enabled$value <- FALSE
+    a$.__enclos_env__$private$.run()
+    expect_null(a$results$histogram$state)
+    enabled$value <- TRUE
+    selected <- options$option("var")
+    selected$value <- NULL
+    a$.__enclos_env__$private$.run()
+    expect_null(a$results$histogram$state)
+    selected$value <- "x"
+    bounds <- options$option("breaks")
+    bounds$value <- "0,1,4"
+    a$.__enclos_env__$private$.run()
+    expect_equal(a$results$histogram$state$boundaries, c(0, 1, 4))
+    fresh <- pycategorize(data = d, var = "x", method = "manual", breaks = "0,1,4",
+        excludeoutofrange = TRUE, showhistogram = TRUE, showplot = FALSE)
+    expect_equal(a$results$histogram$state, fresh$histogram$state)
+})

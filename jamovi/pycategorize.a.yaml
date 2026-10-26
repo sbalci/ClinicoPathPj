@@ -5,7 +5,7 @@
   "menuGroup": "Descriptives Py",
   "menuSubgroup": "Transformations",
   "menuTitle": "Categorize Continuous Variables",
-  "version": "0.3.1",
+  "version": "0.3.11",
   "jas": "1.2",
   "options": [
     {
@@ -172,6 +172,12 @@
       "title": "Category distribution",
       "type": "Bool",
       "default": true
+    },
+    {
+      "name": "showhistogram",
+      "title": "Continuous histogram with break points",
+      "type": "Bool",
+      "default": false
     },
     {
       "name": "showConsole",

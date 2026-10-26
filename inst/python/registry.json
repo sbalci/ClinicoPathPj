@@ -153,8 +153,8 @@
         "platforms": [],
         "omissions": [
           "Seeded Jenks subsampling when n > 20000 and distinct values > 3000",
-          "Original histogram with boundary lines (current plot shows category counts)",
-          "Original HTML styling; exported R code applies frozen displayed boundaries"
+          "Original HTML styling; exported R code applies frozen displayed boundaries",
+          "Original ggplot histogram bin alignment/style; native 30-bin NumPy histogram is optional and desktop acceptance is pending"
         ]
       },
       "methods": "Data transformation: bins a continuous variable (equal width, quantiles, manual, mean +/- SD, median, Fisher-Jenks via classInt) into a new column, with a frequency table.",
