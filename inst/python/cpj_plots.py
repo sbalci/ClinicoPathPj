@@ -47,7 +47,7 @@ def figure(state, width=600, height=400, palette=None, background='white', foreg
     palette = palette or DEFAULT_PALETTE
     columns = state['columns']; kind = state['kind']
     n = len(next(iter(columns.values()), []))
-    if n > {'interval':200, 'line':20000, 'box':20000, 'bar':2000, 'scatter':5000, 'histogram':2000, 'pyramid':200, 'qualitymap':4000}.get(kind, 0):
+    if n > {'interval':200, 'line':20000, 'box':20000, 'bar':2000, 'scatter':5000, 'points':5000, 'histogram':2000, 'pyramid':200, 'qualitymap':4000}.get(kind, 0):
         raise ValueError('Unsupported plot kind or excessive plot rows')
     if any(len(c) != n for c in columns.values()): raise ValueError('Plot columns have unequal lengths')
     if kind == 'histogram':
@@ -94,6 +94,13 @@ def figure(state, width=600, height=400, palette=None, background='white', foreg
                     drawstyle='steps-post' if state.get('step') else 'default',
                     label=key if key is not None else '(missing group)')
         if any(g is not None for g in group): ax.legend()
+    elif kind == 'points':
+        groups = list(dict.fromkeys(columns['group']))
+        for i,key in enumerate(groups):
+            indices = [j for j in range(n) if columns['group'][j] == key]
+            ax.scatter([columns['x'][j] for j in indices], [columns['y'][j] for j in indices],
+                       s=22, color=palette[i % len(palette)], alpha=.8, label=key)
+        if groups: ax.legend()
     elif kind == 'scatter':
         groups = list(dict.fromkeys(columns['group']))
         rng = np.random.default_rng(1)

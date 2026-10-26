@@ -1,3 +1,12 @@
+# Single-variable quality core — 0.3.6
+
+- [x] Implement pycheckdata core from the frozen baseline with explicit omissions.
+- [x] Match 66 independent base-R fixtures for screening, transforms and quartiles.
+- [x] Add native results, saved flags and bounded local Observable row inspection.
+- [x] Verify local status filtering, missing rows and original-row search in the DOM harness.
+- [x] Complete full Python/R regression suites, macOS arm64 GUI lifecycle and native PNG export.
+- [ ] Port the remaining baseline features; qualify additional platforms and large previews.
+
 # Observable cutoff comparison — 0.3.5
 
 - [x] Add pyobservablecutoff under the same module and Medical Decisions menu.

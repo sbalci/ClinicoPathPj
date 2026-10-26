@@ -1,3 +1,12 @@
+# 0.3.6
+
+- Add `pycheckdata` under Descriptives with full-data completeness and observed-value accounting.
+- Add frozen-baseline z/IQR/MAD screening, small-sample rules and log/sqrt fallback.
+- Add native distribution, frequency, method/flag and missingness-sequence tables.
+- Add row-aligned saved flags, a native static plot and optional local Observable inspection.
+- Add 66 independent base-R fixtures, saved-output/lifecycle tests and a synthetic CSV.
+- Explicitly omit heuristic grades, clinical-name ranges, severity and missingness inference.
+
 # 0.3.5
 
 - Add separate `pyobservablecutoff` utility beside SVG and D3 experiments.
