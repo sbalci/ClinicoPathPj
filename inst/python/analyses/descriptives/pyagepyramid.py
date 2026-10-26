@@ -4,8 +4,8 @@ from cpj_runtime import md_escape
 from cpj_demographics import population
 
 SPEC = {
- 'name':'pyagepyramid','title':'Age Pyramid','menuGroup':'ClinicoPathPj',
- 'menuSubgroup':'Descriptives','version':'0.3.2',
+ 'name':'pyagepyramid','title':'Age Pyramid','menuGroup':'Descriptives Py',
+ 'menuSubgroup':'Distributions','version':'0.3.2',
  'options':[
   {'name':'age','title':'Age (years)','type':'Variable','permitted':['numeric','factor'],'coerceNumeric':True,'suggested':['continuous'],'required':True},
   {'name':'gender','title':'Gender','type':'Variable','permitted':['factor'],'suggested':['nominal','ordinal'],'required':True},

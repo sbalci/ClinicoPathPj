@@ -8,8 +8,8 @@ from cpj_runtime import Factor, InputError, md_escape
 
 SPEC = {'name': 'pydotdecision',
  'title': 'Interactive Diagnostic Dotplot (Python)',
- 'menuGroup': 'ClinicoPathPj',
- 'menuSubgroup': 'Medical Decisions',
+ 'menuGroup': 'Python Lab',
+ 'menuSubgroup': 'Cutoff explorers',
  'version': '0.1.0',
  'options': [{'name': 'marker',
               'title': 'Numeric test measurement',

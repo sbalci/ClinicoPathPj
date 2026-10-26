@@ -2,8 +2,8 @@
 
 SPEC = {'name': 'pyruntime',
  'title': 'Python Runtime Check',
- 'menuGroup': 'ClinicoPathPj',
- 'menuSubgroup': 'Utilities',
+ 'menuGroup': 'Python Lab',
+ 'menuSubgroup': 'Runtime',
  'version': '0.1.0',
  'options': [],
  'results': [{'name': 'runtime',

@@ -2,8 +2,9 @@
 {
   "name": "pysummarydata",
   "title": "Summary of Continuous Variables",
-  "menuGroup": "ClinicoPathPj",
-  "menuSubgroup": "Descriptives",
+  "menuGroup": "Descriptives Py",
+  "menuSubgroup": "Summaries",
+  "menuTitle": "Summary of Continuous Variables",
   "version": "0.3.1",
   "jas": "1.2",
   "options": [

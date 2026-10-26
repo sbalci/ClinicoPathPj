@@ -2,8 +2,9 @@
 {
   "name": "pysvgcutoff",
   "title": "Experimental Native SVG Cutoff and ROC Explorer (Python)",
-  "menuGroup": "ClinicoPathPj",
-  "menuSubgroup": "Medical Decisions",
+  "menuGroup": "Python Lab",
+  "menuSubgroup": "Cutoff explorers",
+  "menuTitle": "Native SVG cutoff explorer",
   "version": "0.3.7",
   "jas": "1.2",
   "options": [

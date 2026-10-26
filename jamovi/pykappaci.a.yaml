@@ -2,8 +2,9 @@
 {
   "name": "pykappaci",
   "title": "Kappa Sample Size by Confidence Interval",
-  "menuGroup": "ClinicoPathPj",
-  "menuSubgroup": "Medical Decisions",
+  "menuGroup": "MedDecide Py",
+  "menuSubgroup": "Agreement sample size",
+  "menuTitle": "Kappa Sample Size by Confidence Interval",
   "version": "0.1.0",
   "jas": "1.2",
   "options": [

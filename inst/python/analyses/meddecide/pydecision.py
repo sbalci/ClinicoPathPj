@@ -3,8 +3,8 @@ from cpj_runtime import InputError, md_escape
 
 SPEC = {'name': 'pydecision',
  'title': 'Diagnostic Accuracy',
- 'menuGroup': 'ClinicoPathPj',
- 'menuSubgroup': 'Medical Decisions',
+ 'menuGroup': 'MedDecide Py',
+ 'menuSubgroup': 'Diagnostic accuracy',
  'version': '0.2.0',
  'options': [{'name': 'reference',
               'title': 'Binary reference classification',

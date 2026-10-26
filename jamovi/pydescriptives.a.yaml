@@ -2,8 +2,9 @@
 {
   "name": "pydescriptives",
   "title": "Descriptives (Python)",
-  "menuGroup": "ClinicoPathPj",
-  "menuSubgroup": "Descriptives",
+  "menuGroup": "Descriptives Py",
+  "menuSubgroup": "Summaries",
+  "menuTitle": "Descriptives (Python)",
   "version": "0.1.0",
   "jas": "1.2",
   "options": [

@@ -2,8 +2,9 @@
 {
   "name": "pywelch",
   "title": "Welch Two-Sample t-Test (Python)",
-  "menuGroup": "ClinicoPathPj",
-  "menuSubgroup": "Statistical Plots",
+  "menuGroup": "Stats Plots Py",
+  "menuSubgroup": "Group comparisons",
+  "menuTitle": "Welch Two-Sample t-Test (Python)",
   "version": "0.2.0",
   "jas": "1.2",
   "options": [

@@ -4,8 +4,8 @@ from cpj_runtime import Factor, InputError
 
 SPEC = {'name': 'pydescriptives',
  'title': 'Descriptives (Python)',
- 'menuGroup': 'ClinicoPathPj',
- 'menuSubgroup': 'Descriptives',
+ 'menuGroup': 'Descriptives Py',
+ 'menuSubgroup': 'Summaries',
  'version': '0.1.0',
  'options': [{'name': 'vars',
               'type': 'Variables',

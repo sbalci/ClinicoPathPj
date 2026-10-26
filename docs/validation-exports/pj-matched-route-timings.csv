@@ -1,0 +1,13 @@
+"direction","method","criterion","cutoff","processx_seconds","pj_seconds"
+"ge","exact","errors",4,2.55,4.277
+"ge","exact","youden",1.79017455846036,5.284,4.218
+"ge","exact","cost",2,3.42,3.365
+"ge","wilson","errors",4,5.542,5.364
+"ge","wilson","youden",1.79017455846036,4.356,4.668
+"ge","wilson","cost",2,3.772,3.94
+"le","exact","errors",4,4.058,5.232
+"le","exact","youden",-1.57283186261871,4.77100000000001,3.97399999999999
+"le","exact","cost",2,6.39099999999999,7.18600000000001
+"le","wilson","errors",4,4.506,4.901
+"le","wilson","youden",-1.57283186261871,2.715,4.536
+"le","wilson","cost",2,4.78800000000001,6.107

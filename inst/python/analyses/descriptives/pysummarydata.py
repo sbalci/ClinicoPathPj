@@ -3,8 +3,8 @@ from cpj_runtime import InputError, md_escape
 from cpj_descriptive import numeric, summarize, histogram, display_p
 
 SPEC = {
- 'name':'pysummarydata','title':'Summary of Continuous Variables','menuGroup':'ClinicoPathPj',
- 'menuSubgroup':'Descriptives','version':'0.3.1',
+ 'name':'pysummarydata','title':'Summary of Continuous Variables','menuGroup':'Descriptives Py',
+ 'menuSubgroup':'Summaries','version':'0.3.1',
  'options':[
   {'name':'vars','title':'Continuous variables','type':'Variables','permitted':['numeric'],'suggested':['continuous'],'required':True},
   {'name':'distr','title':'Distribution diagnostics','type':'Bool','default':False},

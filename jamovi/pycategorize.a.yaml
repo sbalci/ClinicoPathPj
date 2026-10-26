@@ -2,8 +2,9 @@
 {
   "name": "pycategorize",
   "title": "Categorize Continuous Variables",
-  "menuGroup": "ClinicoPathPj",
-  "menuSubgroup": "Descriptives",
+  "menuGroup": "Descriptives Py",
+  "menuSubgroup": "Transformations",
+  "menuTitle": "Categorize Continuous Variables",
   "version": "0.3.1",
   "jas": "1.2",
   "options": [

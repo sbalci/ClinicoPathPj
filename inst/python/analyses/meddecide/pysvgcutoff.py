@@ -4,8 +4,8 @@ from cpj_svg_cutoff import svg_document
 
 SPEC = {'name': 'pysvgcutoff',
  'title': 'Experimental Native SVG Cutoff and ROC Explorer (Python)',
- 'menuGroup': 'ClinicoPathPj',
- 'menuSubgroup': 'Medical Decisions',
+ 'menuGroup': 'Python Lab',
+ 'menuSubgroup': 'Cutoff explorers',
  'version': '0.3.7',
  'options': [{'name': 'marker',
               'title': 'Numeric test measurement',

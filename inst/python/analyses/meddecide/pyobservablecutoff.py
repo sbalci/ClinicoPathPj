@@ -7,8 +7,8 @@ from cpj_cutoff_analysis import run_cutoff
 
 SPEC = {'name': 'pyobservablecutoff',
  'title': 'Experimental Observable Cutoff and ROC Explorer (Python)',
- 'menuGroup': 'ClinicoPathPj',
- 'menuSubgroup': 'Medical Decisions',
+ 'menuGroup': 'Python Lab',
+ 'menuSubgroup': 'Cutoff explorers',
  'version': '0.3.5',
  'options': [{'name': 'marker',
               'title': 'Numeric test measurement',

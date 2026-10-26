@@ -2,8 +2,9 @@
 {
   "name": "pycotest",
   "title": "Co-Testing Analysis",
-  "menuGroup": "ClinicoPathPj",
-  "menuSubgroup": "Medical Decisions",
+  "menuGroup": "MedDecide Py",
+  "menuSubgroup": "Diagnostic accuracy",
+  "menuTitle": "Co-Testing Analysis",
   "version": "0.1.0",
   "jas": "1.2",
   "options": [

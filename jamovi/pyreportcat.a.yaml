@@ -2,8 +2,9 @@
 {
   "name": "pyreportcat",
   "title": "Summary of Categorical Variables",
-  "menuGroup": "ClinicoPathPj",
-  "menuSubgroup": "Descriptives",
+  "menuGroup": "Descriptives Py",
+  "menuSubgroup": "Summaries",
+  "menuTitle": "Summary of Categorical Variables",
   "version": "0.3.0",
   "jas": "1.2",
   "options": [

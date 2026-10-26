@@ -8,8 +8,8 @@ from cpj_single_quality import screen
 
 SPEC = {'name': 'pycheckdata',
  'title': 'Single Variable Quality Check',
- 'menuGroup': 'ClinicoPathPj',
- 'menuSubgroup': 'Descriptives',
+ 'menuGroup': 'Descriptives Py',
+ 'menuSubgroup': 'Data quality',
  'version': '0.3.6',
  'options': [{'name': 'var', 'title': 'Variable to check', 'type': 'Variable', 'required': True},
              {'name':'screeningFlag','title':'Screening flag','type':'Output'},

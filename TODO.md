@@ -1,3 +1,11 @@
+## 0.3.8 execution-service and menu work
+
+- [x] Registry-owned compact family menuGroups and topic subgroups.
+- [x] Separate optional public Pj-service comparison using the same calculation engine.
+- [x] Twelve matched bundled-interpreter configurations and independent R counts/exact intervals.
+- [ ] Qualify System Python, Windows and Linux service routes.
+- [ ] Complete native saved-file/export acceptance for the new comparison.
+
 # Native SVG experiment — 0.3.7
 
 - [x] Add a separate stable `pysvgcutoff` utility entry without changing previous identifiers.

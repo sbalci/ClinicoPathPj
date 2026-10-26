@@ -2,8 +2,9 @@
 {
   "name": "pybenford",
   "title": "Benford Analysis",
-  "menuGroup": "ClinicoPathPj",
-  "menuSubgroup": "Descriptives",
+  "menuGroup": "Descriptives Py",
+  "menuSubgroup": "Data quality",
+  "menuTitle": "Benford Analysis",
   "version": "0.2.0",
   "jas": "1.2",
   "options": [

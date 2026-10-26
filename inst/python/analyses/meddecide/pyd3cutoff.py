@@ -9,8 +9,8 @@ from cpj_cutoff import states, select, METRICS
 
 SPEC = {'name': 'pyd3cutoff',
  'title': 'Experimental D3 Cutoff and ROC Explorer (Python)',
- 'menuGroup': 'ClinicoPathPj',
- 'menuSubgroup': 'Medical Decisions',
+ 'menuGroup': 'Python Lab',
+ 'menuSubgroup': 'Cutoff explorers',
  'version': '0.3.4',
  'options': [{'name': 'marker',
               'title': 'Numeric test measurement',
@@ -155,12 +155,14 @@ SPEC = {'name': 'pyd3cutoff',
                       'collapsed': True,
                       'children': [{'type': 'CheckBox', 'name': 'showConsole'}]}]}}
 
-def html_document(payload):
+def html_document(payload, *, template="d3cutoff.html"):
+    if template not in ("d3cutoff.html", "bridgecutoff.html"):
+        raise ValueError("Unknown trusted cutoff template")
     encoded = json.dumps(payload, allow_nan=False, ensure_ascii=True)
     for char, safe in (("<", "\\u003c"), (">", "\\u003e"), ("&", "\\u0026")):
         encoded = encoded.replace(char, safe)
     base = Path(__file__).resolve().parents[2]
-    template = (base / "templates/d3cutoff.html").read_text()
+    template = (base / "templates" / template).read_text()
     document = "<script>" + (base / "vendor/d3-7.9.0.min.js").read_text() + "</script>" + template.replace("__ROOT__", "cpjd3" + uuid.uuid4().hex).replace("__PAYLOAD__", encoded)
     if len(document.encode()) > 1500000:
         raise InputError("The interactive payload exceeds 1.5 MB. Filter to fewer observations.")

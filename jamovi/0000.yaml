@@ -1,7 +1,7 @@
 ---
 title: ClinicoPathPj - Python-Backed Analyses
 name: ClinicoPathPj
-version: 0.3.7
+version: 0.3.8
 jms: '1.0'
 authors: Serdar Balci
 maintainer: Serdar Balci <serdarbalci@serdarbalci.com>
@@ -16,120 +16,120 @@ analyses:
     name: pydescriptives
     ns: ClinicoPathPj
     category: analyses
-    menuGroup: ClinicoPathPj
-    menuSubgroup: Descriptives
+    menuGroup: Descriptives Py
+    menuSubgroup: Summaries
     menuTitle: Descriptives (Python)
     hidden: false
   - title: Python Runtime Check
     name: pyruntime
     ns: ClinicoPathPj
     category: analyses
-    menuGroup: ClinicoPathPj
-    menuSubgroup: Utilities
+    menuGroup: Python Lab
+    menuSubgroup: Runtime
     menuTitle: Python Runtime Check
     hidden: false
   - title: Welch Two-Sample t-Test (Python)
     name: pywelch
     ns: ClinicoPathPj
     category: analyses
-    menuGroup: ClinicoPathPj
-    menuSubgroup: Statistical Plots
+    menuGroup: Stats Plots Py
+    menuSubgroup: Group comparisons
     menuTitle: Welch Two-Sample t-Test (Python)
     hidden: false
   - title: Co-Testing Analysis
     name: pycotest
     ns: ClinicoPathPj
     category: analyses
-    menuGroup: ClinicoPathPj
-    menuSubgroup: Medical Decisions
+    menuGroup: MedDecide Py
+    menuSubgroup: Diagnostic accuracy
     menuTitle: Co-Testing Analysis
     hidden: false
   - title: Exact Tests for 2x2 Tables (Python)
     name: pyexacttests
     ns: ClinicoPathPj
     category: analyses
-    menuGroup: ClinicoPathPj
-    menuSubgroup: Medical Decisions
+    menuGroup: MedDecide Py
+    menuSubgroup: Exact tests
     menuTitle: Exact Tests for 2x2 Tables (Python)
     hidden: false
   - title: Kappa Sample Size by Confidence Interval
     name: pykappaci
     ns: ClinicoPathPj
     category: analyses
-    menuGroup: ClinicoPathPj
-    menuSubgroup: Medical Decisions
+    menuGroup: MedDecide Py
+    menuSubgroup: Agreement sample size
     menuTitle: Kappa Sample Size by Confidence Interval
     hidden: false
   - title: Kappa Lower Limit for a Fixed Sample Size
     name: pykappafixedn
     ns: ClinicoPathPj
     category: analyses
-    menuGroup: ClinicoPathPj
-    menuSubgroup: Medical Decisions
+    menuGroup: MedDecide Py
+    menuSubgroup: Agreement sample size
     menuTitle: Kappa Lower Limit for a Fixed Sample Size
     hidden: false
   - title: Kappa Sample Size by Power
     name: pykappapower
     ns: ClinicoPathPj
     category: analyses
-    menuGroup: ClinicoPathPj
-    menuSubgroup: Medical Decisions
+    menuGroup: MedDecide Py
+    menuSubgroup: Agreement sample size
     menuTitle: Kappa Sample Size by Power
     hidden: false
   - title: Interactive Diagnostic Dotplot (Python)
     name: pydotdecision
     ns: ClinicoPathPj
     category: analyses
-    menuGroup: ClinicoPathPj
-    menuSubgroup: Medical Decisions
-    menuTitle: Interactive Diagnostic Dotplot (Python)
+    menuGroup: Python Lab
+    menuSubgroup: Cutoff explorers
+    menuTitle: Diagnostic dotplot
     hidden: false
   - title: Benford Analysis
     name: pybenford
     ns: ClinicoPathPj
     category: analyses
-    menuGroup: ClinicoPathPj
-    menuSubgroup: Descriptives
+    menuGroup: Descriptives Py
+    menuSubgroup: Data quality
     menuTitle: Benford Analysis
     hidden: false
   - title: Chi-Square Post-Tests
     name: pychisqposttest
     ns: ClinicoPathPj
     category: analyses
-    menuGroup: ClinicoPathPj
-    menuSubgroup: Descriptives
+    menuGroup: Descriptives Py
+    menuSubgroup: Contingency tables
     menuTitle: Chi-Square Post-Tests
     hidden: false
   - title: Diagnostic Accuracy
     name: pydecision
     ns: ClinicoPathPj
     category: analyses
-    menuGroup: ClinicoPathPj
-    menuSubgroup: Medical Decisions
+    menuGroup: MedDecide Py
+    menuSubgroup: Diagnostic accuracy
     menuTitle: Diagnostic Accuracy
     hidden: false
   - title: Diagnostic Accuracy Calculator
     name: pydecisioncalculator
     ns: ClinicoPathPj
     category: analyses
-    menuGroup: ClinicoPathPj
-    menuSubgroup: Medical Decisions
+    menuGroup: MedDecide Py
+    menuSubgroup: Diagnostic accuracy
     menuTitle: Diagnostic Accuracy Calculator
     hidden: false
   - title: Decision Curve Analysis
     name: pydecisioncurve
     ns: ClinicoPathPj
     category: analyses
-    menuGroup: ClinicoPathPj
-    menuSubgroup: Medical Decisions
+    menuGroup: MedDecide Py
+    menuSubgroup: Decision analysis
     menuTitle: Decision Curve Analysis
     hidden: false
   - title: Sequential Testing
     name: pysequentialtests
     ns: ClinicoPathPj
     category: analyses
-    menuGroup: ClinicoPathPj
-    menuSubgroup: Medical Decisions
+    menuGroup: MedDecide Py
+    menuSubgroup: Decision analysis
     menuTitle: Sequential Testing
     hidden: false
   - name: pyreportcat
@@ -137,73 +137,81 @@ analyses:
     hidden: false
     title: Summary of Categorical Variables
     category: analyses
-    menuGroup: ClinicoPathPj
-    menuSubgroup: Descriptives
+    menuGroup: Descriptives Py
+    menuSubgroup: Summaries
     menuTitle: Summary of Categorical Variables
   - name: pycategorize
     ns: ClinicoPathPj
     hidden: false
     title: Categorize Continuous Variables
     category: analyses
-    menuGroup: ClinicoPathPj
-    menuSubgroup: Descriptives
+    menuGroup: Descriptives Py
+    menuSubgroup: Transformations
     menuTitle: Categorize Continuous Variables
   - name: pysummarydata
     ns: ClinicoPathPj
     hidden: false
     title: Summary of Continuous Variables
     category: analyses
-    menuGroup: ClinicoPathPj
-    menuSubgroup: Descriptives
+    menuGroup: Descriptives Py
+    menuSubgroup: Summaries
     menuTitle: Summary of Continuous Variables
   - name: pyagepyramid
     ns: ClinicoPathPj
     hidden: false
     title: Age Pyramid
     category: analyses
-    menuGroup: ClinicoPathPj
-    menuSubgroup: Descriptives
+    menuGroup: Descriptives Py
+    menuSubgroup: Distributions
     menuTitle: Age Pyramid
   - name: pydataquality
     ns: ClinicoPathPj
     hidden: false
     title: Multi-Variable Visual Quality
     category: analyses
-    menuGroup: ClinicoPathPj
-    menuSubgroup: Descriptives
+    menuGroup: Descriptives Py
+    menuSubgroup: Data quality
     menuTitle: Multi-Variable Visual Quality
   - name: pyd3cutoff
     ns: ClinicoPathPj
     hidden: false
     title: Experimental D3 Cutoff and ROC Explorer (Python)
     category: analyses
-    menuGroup: ClinicoPathPj
-    menuSubgroup: Medical Decisions
-    menuTitle: Experimental D3 Cutoff and ROC Explorer (Python)
+    menuGroup: Python Lab
+    menuSubgroup: Cutoff explorers
+    menuTitle: D3 cutoff explorer
   - name: pyobservablecutoff
     ns: ClinicoPathPj
     hidden: false
     title: Experimental Observable Cutoff and ROC Explorer (Python)
     category: analyses
-    menuGroup: ClinicoPathPj
-    menuSubgroup: Medical Decisions
-    menuTitle: Experimental Observable Cutoff and ROC Explorer (Python)
+    menuGroup: Python Lab
+    menuSubgroup: Cutoff explorers
+    menuTitle: Observable cutoff explorer
   - name: pycheckdata
     ns: ClinicoPathPj
     hidden: false
     title: Single Variable Quality Check
     category: analyses
-    menuGroup: ClinicoPathPj
-    menuSubgroup: Descriptives
+    menuGroup: Descriptives Py
+    menuSubgroup: Data quality
     menuTitle: Single Variable Quality Check
   - name: pysvgcutoff
     ns: ClinicoPathPj
     hidden: false
     title: Experimental Native SVG Cutoff and ROC Explorer (Python)
     category: analyses
-    menuGroup: ClinicoPathPj
-    menuSubgroup: Medical Decisions
-    menuTitle: Experimental Native SVG Cutoff and ROC Explorer (Python)
+    menuGroup: Python Lab
+    menuSubgroup: Cutoff explorers
+    menuTitle: Native SVG cutoff explorer
+  - name: pybridgecompare
+    ns: ClinicoPathPj
+    hidden: false
+    menuGroup: Python Lab
+    menuSubgroup: Execution services
+    menuTitle: Python bridge comparison
+    title: Python Execution Bridge Comparison
+    category: analyses
 usesNative: 'yes'
 datasets:
   - name: Python Core Examples

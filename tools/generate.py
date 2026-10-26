@@ -38,7 +38,7 @@ RESULT_MEMBERS = {"add", "analysis", "asDF", "asProtoBuf", "asString", "clear", 
                   "itemNames", "items", "key", "name", "options", "parent", "path", "print", "remove",
                   "requiresData", "resetVisible", "root", "saveAs", "setError", "setRefs", "setState",
                   "setStatus", "setTitle", "setVisible", "state", "status", "title", "visible"}
-SPEC_KEYS = {"name", "title", "menuGroup", "menuSubgroup", "version", "options", "results", "ui"}
+SPEC_KEYS = {"name", "title", "menuGroup", "menuSubgroup", "version", "options", "results", "ui", "executionOption", "timingResult"}
 OPTION_KEYS = {  # keys an option may carry besides name/type/title
     "Variable": {"permitted", "suggested", "required", "coerceNumeric"},
     "Variables": {"permitted", "suggested", "required", "coerceNumeric"},
@@ -115,7 +115,7 @@ def validate(spec, stem):
     if not isinstance(spec, dict):
         fail("SPEC must be a dict")
     unknown = set(spec) - SPEC_KEYS
-    missing = SPEC_KEYS - {"menuSubgroup", "ui"} - set(spec)
+    missing = SPEC_KEYS - {"menuSubgroup", "ui", "executionOption", "timingResult"} - set(spec)
     if unknown or missing:
         fail(f"SPEC keys: unknown {sorted(unknown)}, missing {sorted(missing)}")
     check_name(spec["name"], "analysis name", ANALYSIS_NAME)
@@ -288,6 +288,16 @@ def validate(spec, stem):
                     fail(f"column {rname}.{cname}: visible must be True, False or '(x)' naming a Bool option")
 
 
+    if "executionOption" in spec:
+        route = next((o for o in spec["options"] if o["name"] == spec["executionOption"]), {})
+        if route.get("type") != "List" or {o["name"] for o in route.get("options", [])} != {"processx", "pj", "pjSystem"}:
+            fail("executionOption must name a List selecting processx, pj and pjSystem")
+    if "timingResult" in spec:
+        result = next((r for r in spec["results"] if r["name"] == spec["timingResult"]), {})
+        if result.get("type") != "Preformatted":
+            fail("timingResult must name a Preformatted result")
+
+
 def validate_ui(spec):
     """Check bindings and completeness before asking the real compiler to validate controls."""
     if "ui" not in spec:
@@ -357,7 +367,7 @@ def a_yaml(spec):
             out["allowNone"] = True  # the dropdown starts at '- None -': an event level is never guessed
         options.append(out)
     options.append({"name": "showConsole", "title": "Python console output", "type": "Bool", "default": False})
-    head = {key: spec[key] for key in ("name", "title", "menuGroup", "menuSubgroup", "version") if key in spec}
+    head = {key: spec[key] for key in ("name", "title", "menuGroup", "menuSubgroup", "menuTitle", "version") if key in spec}
     return dict(head, jas="1.2", options=options)
 
 
@@ -403,6 +413,8 @@ def b_r(spec, header):
         items = list(items)
         return "c(" + ", ".join(items) + ")" if items else "character(0)"
 
+    execution = (f"                backend = self$options${spec['executionOption']},\n" if "executionOption" in spec else "")
+    timing = (f"                timing = {r_string(spec['timingResult'])},\n" if "timingResult" in spec else "")
     plot_method = (",\n        .plot = function(image, ggtheme, theme, ...) .cpjPlot(image, ggtheme, theme)"
                    if plots else "")
     scripts = "".join(
@@ -418,6 +430,7 @@ def b_r(spec, header):
         + f"        .run = function() {{\n"
         f"{scripts}"
         f"            .cpjRun(self, \"{name}\",\n"
+        f"{execution}{timing}"
         f"                options = {vector(r_string(o) for o in options)},\n"
         f"                arrays = {vector(r_string(o) for o in arrays)},\n"
         f"                terms = {vector(r_string(o) for o in terms)},\n"
@@ -448,6 +461,9 @@ def render(path):
     for name in [entry["id"]] + entry.get("aliases", []):
         variant = copy.deepcopy(spec)
         variant["name"] = name
+        if spec["menuGroup"] != entry["menu_group"] or spec.get("menuSubgroup") != entry["menu"]:
+            raise SpecError(f"{spec['name']}: menu routing must agree with the registry")
+        variant["menuTitle"] = entry.get("menu_title", entry["title"])
         if name != entry["id"]:
             variant["title"] = entry["legacy_title"]
         files.update({

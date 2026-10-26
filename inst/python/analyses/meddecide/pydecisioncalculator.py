@@ -3,8 +3,8 @@
 
 SPEC = {'name': 'pydecisioncalculator',
  'title': 'Diagnostic Accuracy Calculator',
- 'menuGroup': 'ClinicoPathPj',
- 'menuSubgroup': 'Medical Decisions',
+ 'menuGroup': 'MedDecide Py',
+ 'menuSubgroup': 'Diagnostic accuracy',
  'version': '0.2.0',
  'options': [{'name': 'tp',
               'title': 'True positive (TP)',

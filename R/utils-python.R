@@ -143,7 +143,8 @@
 }
 
 .cpjRun <- function(self, name, options, arrays = character(0), numeric = character(0),
-                    required = character(0), events = character(0), terms = character(0), checkpoint = NULL) {
+                    required = character(0), events = character(0), terms = character(0), checkpoint = NULL,
+                    backend = "processx", timing = NULL) {
     # jmvcore restores Preformatted and Text content from the saved state, so clear it first:
     # otherwise an earlier run's traceback or interpretation would still show under this run's results.
     for (item in self$results$items)
@@ -184,6 +185,16 @@
     for (option in terms)
         values[[option]] <- lapply(values[[option]], function(term) as.list(as.character(term)))
 
+    if (!backend %in% c("processx", "pj", "pjSystem"))
+        jmvcore::reject("Unknown Python execution route.")
+    started <- proc.time()[["elapsed"]]
+    if (!is.null(timing)) on.exit(self$results$get(timing)$setContent(paste0(
+        "Route: ", backend, "; backend elapsed: ",
+        sprintf("%.3f", proc.time()[["elapsed"]] - started), " s.\n",
+        "Includes selected-data encoding, startup/imports, calculations, HTML and native mapping.\n",
+        "Excludes native image rendering and browser drawing. Pj resource preparation is included.\n",
+        "Pj API v1 is synchronous, has no checkpoint callback, and its timeout is per subprocess.")), add = TRUE)
+
     # Integer Nominal/Ordinal columns reach numeric-only boxes as factors carrying their values.
     numericColumns <- unlist(values[numeric], use.names = FALSE)
     columns <- lapply(stats::setNames(names(self$data), names(self$data)), function(column) {
@@ -191,7 +202,6 @@
         if (column %in% numericColumns) x <- jmvcore::toNumeric(x)
         .cpjColumn(x, column)
     })
-    python <- .cpjPython()
     runtime <- system.file("python", "cpj_runtime.py", package = "ClinicoPathPj", mustWork = TRUE)
     dir <- tempfile("cpj")
     dir.create(dir)
@@ -203,18 +213,31 @@
                              auto_unbox = TRUE, na = "null", null = "null", digits = I(17))
     writeBin(charToRaw(enc2utf8(as.character(json))), request)
 
-    run <- .cpjExecute(python, c("-B", "-s", runtime, request, response), checkpoint)
-    if (!file.exists(response)) {
-        self$results$console$setContent(paste(c(
-            "Python stopped before it answered. What run() printed is passed on only with an answer, so it was lost.",
-            if (nzchar(run$output)) c("Python's own error output:", run$output)), collapse = "\n"))
-        why <- if (run$status < 0) paste0("Python was killed by signal ", -run$status, ".")
-               else paste0("Python exited with status ", run$status, ".")
-        stop(paste(c(paste("Python returned no result.", why), utils::tail(strsplit(run$output, "\n")[[1]], 15)),
-                   collapse = "\n"), call. = FALSE)
+    if (identical(backend, "processx")) {
+        python <- .cpjPython()
+        run <- .cpjExecute(python, c("-B", "-s", runtime, request, response), checkpoint)
+        if (!file.exists(response)) {
+            self$results$console$setContent(paste(c(
+                "Python stopped before it answered. What run() printed is passed on only with an answer, so it was lost.",
+                if (nzchar(run$output)) c("Python's own error output:", run$output)), collapse = "\n"))
+            why <- if (run$status < 0) paste0("Python was killed by signal ", -run$status, ".")
+                   else paste0("Python exited with status ", run$status, ".")
+            stop(paste(c(paste("Python returned no result.", why), utils::tail(strsplit(run$output, "\n")[[1]], 15)),
+                       collapse = "\n"), call. = FALSE)
+        }
+        result <- tryCatch(jsonlite::fromJSON(response, simplifyVector = FALSE),
+            error = function(e) stop("Python returned an unreadable result: ", conditionMessage(e), call. = FALSE))
+    } else {
+        if (!is.null(checkpoint)) checkpoint()
+        # Narrow catch: only the optional service call, never jamovi rejection paths.
+        run <- tryCatch(.cpjPjExecute(json, if (backend == "pjSystem") "system" else "jamovi"),
+            error = function(e) {
+                detail <- if (!is.null(e$details)) e$details else conditionMessage(e)
+                self$results$console$setContent(.cpjTail(detail))
+                stop(conditionMessage(e), call. = FALSE)
+            })
+        result <- run$result
     }
-    result <- tryCatch(jsonlite::fromJSON(response, simplifyVector = FALSE),
-        error = function(e) stop("Python returned an unreadable result: ", conditionMessage(e), call. = FALSE))
     if (!is.null(checkpoint)) checkpoint()  # an option change while reading still wins
 
     # Show the runtime's report and what Python printed and warned, before raising anything.

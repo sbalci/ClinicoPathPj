@@ -2,8 +2,9 @@
 {
   "name": "pydecisioncalculator",
   "title": "Diagnostic Accuracy Calculator",
-  "menuGroup": "ClinicoPathPj",
-  "menuSubgroup": "Medical Decisions",
+  "menuGroup": "MedDecide Py",
+  "menuSubgroup": "Diagnostic accuracy",
+  "menuTitle": "Diagnostic Accuracy Calculator",
   "version": "0.2.0",
   "jas": "1.2",
   "options": [
