@@ -1,3 +1,11 @@
+# 0.3.11 — 2026-10-26
+
+- Add an optional native continuous histogram with exact categorization break-point lines.
+- Retain all observed values, including uncategorized tails, in 30 equal-width display bins.
+- Preserve boundary metadata through native image state and Python raster rendering.
+- Add geometry, independent R counts, state restoration and rerun lifecycle checks.
+- Keep desktop save/reopen/export qualification for this new plot pending.
+
 # 0.3.10 — 2026-10-26
 
 - Add exploratory `pyihcheatmap` under Descriptives Py / Biomarker panels.

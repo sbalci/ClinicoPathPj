@@ -51,6 +51,9 @@ def figure(state, width=600, height=400, palette=None, background='white', foreg
         raise ValueError('Unsupported plot kind or excessive plot rows')
     if any(len(c) != n for c in columns.values()): raise ValueError('Plot columns have unequal lengths')
     if kind == 'histogram':
+        boundaries = state.get('boundaries') or []
+        if len(boundaries)>2001 or any(v is None or not np.isfinite(v) for v in boundaries):
+            raise ValueError('Histogram boundaries must be at most 2,001 finite numbers')
         groups = list(dict.fromkeys(columns['group']))
         if not groups or len(groups)>12: raise ValueError('Histograms support one to twelve panels')
         fig.delaxes(ax)
@@ -65,6 +68,8 @@ def figure(state, width=600, height=400, palette=None, background='white', foreg
             panel.set_facecolor(background);panel.tick_params(colors=foreground)
             for spine in panel.spines.values():spine.set_color(foreground)
             panel.bar(lower,count,width=upper-lower,align='edge',color=palette[i%len(palette)],edgecolor=background)
+            for boundary in boundaries:
+                panel.axvline(boundary,color=foreground,linestyle='--',linewidth=1)
             panel.set_title(groups[i],color=foreground)
             panel.set_xlabel(state.get('xlab',''),color=foreground)
             panel.set_ylabel(state.get('ylab',''),color=foreground)

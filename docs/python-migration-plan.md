@@ -203,6 +203,12 @@ For stochastic work, share folds/resampling indices where possible; equal seeds 
 Clinical review remains distinct from software/numerical checks. Never mark the 61-analysis
 migration complete until retained feature and applicable acceptance gates are satisfied.
 
+Version 0.3.11 retains the host cutoff-panel refresh limitation and adds the missing optional
+`pycategorize` histogram with exact break-point lines. Numerical/native-state checks and
+desktop acceptance for this addition are tracked in
+[the histogram validation record](python-categorize-histogram-validation.md). Inventory counts
+remain unchanged.
+
 Next implementation action: resolve or explicitly retain the comparison's host panel-synchronization
 limitation, then finish the remaining acceptance gaps for the existing descriptive cores before
 adding another broad batch of statistical ports.

@@ -7,7 +7,7 @@ from cpj_binning import make_breaks, labels_for, interval_labels, assign
 
 SPEC = {
  'name':'pycategorize','title':'Categorize Continuous Variables','menuGroup':'Descriptives Py',
- 'menuSubgroup':'Transformations','version':'0.3.1',
+ 'menuSubgroup':'Transformations','version':'0.3.11',
  'options':[
   {'name':'var','title':'Variable to categorize','type':'Variable','permitted':['numeric'],'suggested':['continuous'],'required':True},
   {'name':'method','title':'Binning method','type':'List','default':'quantile','options':[
@@ -30,7 +30,8 @@ SPEC = {
   {'name':'ordered','title':'Ordered factor','type':'Bool','default':True},
   {'name':'excl','title':'Percentages exclude missing and uncategorized rows','type':'Bool','default':True},
   {'name':'showcode','title':'R code using displayed break points','type':'Bool','default':True},
-  {'name':'showplot','title':'Category distribution','type':'Bool','default':True}],
+  {'name':'showplot','title':'Category distribution','type':'Bool','default':True},
+  {'name':'showhistogram','title':'Continuous histogram with break points','type':'Bool','default':False}],
  'results':[
   {'name':'summary','title':'Variable Summary','type':'Table','columns':[
    {'name':'variable','title':'Variable','type':'text'},{'name':'total','title':'Total Rows','type':'integer'},
@@ -50,6 +51,7 @@ SPEC = {
   {'name':'interpretation','title':'Categorization Notes','type':'Text'},
   {'name':'rcode','title':'R Code Using Displayed Break Points','type':'Preformatted','visible':'(showcode)'},
   {'name':'plot','title':'Category Distribution','type':'Image','plot':'bar','width':650,'height':400,'visible':'(showplot)'},
+  {'name':'histogram','title':'Continuous Distribution and Break Points','type':'Image','plot':'histogram','width':650,'height':400,'visible':'(showhistogram)'},
   {'name':'addtodata','title':'Categorized Variable','type':'Output','varTitle':'Categorized variable',
    'varDescription':'Categories in displayed interval order','measureType':'nominal'}],
  'ui':{'children':[
@@ -65,7 +67,8 @@ SPEC = {
   {'type':'CollapseBox','label':'Labels and Reporting','collapsed':True,'children':[
    {'type':'ComboBox','name':'labels'},
    {'type':'TextBox','name':'customlabels','format':'string','enable':'(labels:custom)'},
-   {'type':'CheckBox','name':'excl'},{'type':'CheckBox','name':'showcode'},{'type':'CheckBox','name':'showplot'}]},
+   {'type':'CheckBox','name':'excl'},{'type':'CheckBox','name':'showcode'},{'type':'CheckBox','name':'showplot'},
+   {'type':'CheckBox','name':'showhistogram'}]},
   {'type':'CollapseBox','label':'Save to Data','collapsed':True,'children':[
    {'type':'TextBox','name':'newvarname','format':'string'},
    {'type':'CheckBox','name':'ordered'},{'type':'Output','name':'addtodata'}]},
@@ -120,6 +123,12 @@ def run(data,options,out):
     out.markdown('interpretation',md_escape(f'{method}: {len(labels)} categories; {nvalid} categorized of {len(raw)} input rows. Percentages use '+('categorized rows only.' if options.get('excl',True) else 'all input rows.')+' Categorizing a continuous variable loses information; choose clinical cutoffs independently of outcome effects. The native Save to Data control enables delivery of the new column; once enabled, later option changes update that analysis-owned column.'))
     if options.get('showcode',True):out.text('rcode',r_code(variable,newname,b,labels,include,right,bool(options.get('ordered',True))))
     if options.get('showplot',True):out.plot('plot',[dict(label=label,value=int(count),group=variable) for label,count in zip(labels,counts)],xlab='Category',ylab='Count')
+    if options.get('showhistogram',False):
+        hist_counts,edges=np.histogram(x,bins=30)
+        bins=[dict(group=variable,lower=float(a),upper=float(b),count=int(c))
+              for a,b,c in zip(edges[:-1],edges[1:],hist_counts)]
+        out.plot('histogram',bins,xlab=variable,ylab='Count',boundaries=b)
+        out.info('The continuous histogram uses 30 equal-width bins spanning all observed values, including uncategorized rows. Dashed lines are the displayed categorization break points; histogram bins are for display only. Interval closure is reported in the category table.')
     if out.row_ids is not None:
         out.column('addtodata',[int(code) if code>=0 else None for code in codes],levels=labels,title=newname,
                    description=f'Categorized {variable}; {method}; {len(labels)} categories',measure_type='ordinal' if options.get('ordered',True) else 'nominal')

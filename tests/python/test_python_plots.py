@@ -12,6 +12,16 @@ from cpj_plots import figure, render
 def state(kind,**columns): return dict(kind=kind,columns=columns,xlab='x',ylab='y')
 
 class Plots(unittest.TestCase):
+    def test_histogram_boundary_geometry_and_theme(self):
+        s = state('histogram', group=['Marker']*2, lower=[-1, 2], upper=[2, 5], count=[3, 4])
+        s['boundaries'] = [0., 2., 4.]
+        f = figure(s, background='#222222', foreground='white')
+        ax = f.axes[0]
+        self.assertEqual([list(line.get_xdata()) for line in ax.lines], [[0, 0], [2, 2], [4, 4]])
+        self.assertEqual([p.get_height() for p in ax.patches], [3, 4])
+        self.assertTrue(all(line.get_color() == 'white' for line in ax.lines))
+        f.clear()
+
     def test_interval_duplicate_labels_and_missing_limits(self):
         s=state('interval',label=['A','A','B'],estimate=[1,2,3],lower=[0,None,2],upper=[2,None,4])
         s['reference']=0

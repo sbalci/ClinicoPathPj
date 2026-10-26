@@ -58,6 +58,42 @@ class Oracles(unittest.TestCase):
                 self.assertAlmostEqual(got,min(costs),places=10)
 
 class Integration(unittest.TestCase):
+    def test_category_histogram_keeps_excluded_observations_and_exact_boundaries(self):
+        values = [-10, 0, 1, 2, 3, 4, 30, None]
+        for right, include in itertools.product((False, True), repeat=2):
+            r = run('pycategorize', values, method='manual', breaks='0,2,4',
+                    excludeoutofrange=True, rightclosed=right, includelowest=include,
+                    showhistogram=True)
+            self.assertEqual(r['status'], 'ok', r.get('error'))
+            plot = r['plots']['histogram']
+            self.assertEqual(plot['boundaries'], [0., 2., 4.])
+            self.assertEqual(sum(plot['columns']['count']), 7)
+            self.assertEqual(min(plot['columns']['lower']), -10)
+            self.assertEqual(max(plot['columns']['upper']), 30)
+            self.assertEqual(plot['boundaries'],
+                             [row['value'] for row in r['tables']['breakpointsTable']['rows']])
+        self.assertNotIn('histogram', run('pycategorize', values)['plots'])
+
+    def test_histogram_boundaries_follow_every_binning_method(self):
+        values = [0, 1, 2, 3, 8, 9, 20, 21, None]
+        for method in ('equal', 'quantile', 'manual', 'meansd', 'median', 'jenks'):
+            r = run('pycategorize', values, method=method, nbins=3,
+                    breaks='0,5,21', showhistogram=True)
+            self.assertEqual(r['status'], 'ok', r.get('error'))
+            self.assertEqual(r['plots']['histogram']['boundaries'],
+                             [v['value'] for v in r['tables']['breakpointsTable']['rows']])
+            self.assertEqual(sum(r['plots']['histogram']['columns']['count']), 8)
+
+    def test_boundary_payload_rejects_nonfinite_excessive_or_unrelated_lines(self):
+        spec = {'results': [{'name': 'h', 'type': 'Image', 'plot': 'histogram'},
+                            {'name': 'bar', 'type': 'Image', 'plot': 'bar'}]}
+        out = cpj_runtime.Output(spec)
+        for boundaries in ([None], [float('inf')], [float('nan')], list(range(2002))):
+            with self.assertRaises(ValueError):
+                out.plot('h', [], boundaries=boundaries)
+        with self.assertRaises(ValueError):
+            out.plot('bar', [], boundaries=[0])
+
     def test_summary_runtime_and_original_outlier_row(self):
         r=run('pysummarydata',[1,2,3,4,5,6,100,None],distr=True,outliers=True,report_sentences=True,show_guidance=True)
         self.assertEqual(r['status'],'ok',r.get('error'))

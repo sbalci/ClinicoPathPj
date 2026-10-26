@@ -207,7 +207,8 @@ class Output:
             raise ValueError("SVG must be a string of at most 1.5 MB")
         self.svgs[name] = content
 
-    def plot(self, name, rows, *, xlab=None, ylab=None, reference=None, step=False):
+    def plot(self, name, rows, *, xlab=None, ylab=None, reference=None, step=False,
+             boundaries=None):
         """Data for an Image result; R draws it. rows: list of dicts with the plot kind's columns."""
         if name not in self._plots:
             raise KeyError(f"SPEC declares no Image result named {name!r}")
@@ -227,11 +228,20 @@ class Output:
                 columns[column].append(_cell(row.get(column), kind_of, f"plot {name!r}, column {column!r}"))
         if reference is not None:
             reference = _cell(reference, "number", f"plot {name!r}, reference")
+        if boundaries is not None:
+            boundaries = list(boundaries)
+            if kind != 'histogram' or len(boundaries) > 2001:
+                raise ValueError('Break-point lines require a histogram and at most 2,001 boundaries')
+            boundaries = [_cell(v, 'number', f'plot {name!r}, boundary') for v in boundaries]
+            if any(v is None for v in boundaries):
+                raise ValueError('Histogram boundaries must be finite numbers')
         self.plots[name] = {
             "kind": kind, "columns": columns, "step": bool(step), "reference": reference,
             "xlab": str(xlab) if xlab is not None else self._plots[name].get("xlab", ""),
             "ylab": str(ylab) if ylab is not None else self._plots[name].get("ylab", ""),
         }
+        if boundaries is not None:
+            self.plots[name]['boundaries'] = boundaries
 
     def warn(self, text):
         self.notices.append({"type": "WARNING", "text": str(text)})

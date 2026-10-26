@@ -22,6 +22,7 @@ pycategorizeOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Clas
             excl = TRUE,
             showcode = TRUE,
             showplot = TRUE,
+            showhistogram = FALSE,
             showConsole = FALSE, ...) {
 
             super$initialize(
@@ -119,6 +120,10 @@ pycategorizeOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Clas
                 "showplot",
                 showplot,
                 default=TRUE)
+            private$..showhistogram <- jmvcore::OptionBool$new(
+                "showhistogram",
+                showhistogram,
+                default=FALSE)
             private$..showConsole <- jmvcore::OptionBool$new(
                 "showConsole",
                 showConsole,
@@ -141,6 +146,7 @@ pycategorizeOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Clas
             self$.addOption(private$..excl)
             self$.addOption(private$..showcode)
             self$.addOption(private$..showplot)
+            self$.addOption(private$..showhistogram)
             self$.addOption(private$..showConsole)
         }),
     active = list(
@@ -161,6 +167,7 @@ pycategorizeOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Clas
         excl = function() private$..excl$value,
         showcode = function() private$..showcode$value,
         showplot = function() private$..showplot$value,
+        showhistogram = function() private$..showhistogram$value,
         showConsole = function() private$..showConsole$value),
     private = list(
         ..var = NA,
@@ -180,6 +187,7 @@ pycategorizeOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Clas
         ..excl = NA,
         ..showcode = NA,
         ..showplot = NA,
+        ..showhistogram = NA,
         ..showConsole = NA)
 )
 
@@ -194,6 +202,7 @@ pycategorizeResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Clas
         interpretation = function() private$.items[["interpretation"]],
         rcode = function() private$.items[["rcode"]],
         plot = function() private$.items[["plot"]],
+        histogram = function() private$.items[["histogram"]],
         addtodata = function() private$.items[["addtodata"]],
         console = function() private$.items[["console"]]),
     private = list(),
@@ -327,6 +336,15 @@ pycategorizeResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Clas
                 height=400,
                 renderFun=".plot",
                 requiresData=FALSE))
+            self$add(jmvcore::Image$new(
+                options=options,
+                name="histogram",
+                title="Continuous Distribution and Break Points",
+                visible="(showhistogram)",
+                width=650,
+                height=400,
+                renderFun=".plot",
+                requiresData=FALSE))
             self$add(jmvcore::Output$new(
                 options=options,
                 name="addtodata",
@@ -351,7 +369,8 @@ pycategorizeResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Clas
                     "ordered",
                     "excl",
                     "showcode",
-                    "showplot")))
+                    "showplot",
+                    "showhistogram")))
             self$add(jmvcore::Preformatted$new(
                 options=options,
                 name="console",
@@ -366,7 +385,7 @@ pycategorizeBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             super$initialize(
                 package = "ClinicoPathPj",
                 name = "pycategorize",
-                version = c(0,3,1),
+                version = c(0,3,11),
                 options = options,
                 results = pycategorizeResults$new(options=options),
                 data = data,
@@ -399,6 +418,7 @@ pycategorizeBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param excl .
 #' @param showcode .
 #' @param showplot .
+#' @param showhistogram .
 #' @param showConsole .
 #' @return A results object containing:
 #' \tabular{llllll}{
@@ -409,6 +429,7 @@ pycategorizeBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'   \code{results$interpretation} \tab \tab \tab \tab \tab a text \cr
 #'   \code{results$rcode} \tab \tab \tab \tab \tab a preformatted \cr
 #'   \code{results$plot} \tab \tab \tab \tab \tab an image \cr
+#'   \code{results$histogram} \tab \tab \tab \tab \tab an image \cr
 #'   \code{results$addtodata} \tab \tab \tab \tab \tab an output \cr
 #'   \code{results$console} \tab \tab \tab \tab \tab a preformatted \cr
 #' }
@@ -438,6 +459,7 @@ pycategorize <- function(
     excl = TRUE,
     showcode = TRUE,
     showplot = TRUE,
+    showhistogram = FALSE,
     showConsole = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
@@ -467,6 +489,7 @@ pycategorize <- function(
         excl = excl,
         showcode = showcode,
         showplot = showplot,
+        showhistogram = showhistogram,
         showConsole = showConsole)
 
     analysis <- pycategorizeClass$new(
