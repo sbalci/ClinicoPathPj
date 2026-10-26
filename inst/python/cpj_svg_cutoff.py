@@ -24,20 +24,24 @@ def svg_document(p):
         return f'<text x="{x}" y="{yy}" class="{cls}" {extra}>{esc(value)}</text>'
     counts = lambda c: f"TP {c['tp']} · FP {c['fp']} · FN {c['fn']} · TN {c['tn']}"
     rule = '≥' if p['direction'] == 'ge' else '≤'
-    parts = ['<div class="cpj-svg-cutoff">',
-             '<style>.cpj-svg-cutoff{display:block;max-width:980px}.cpj-svg-cutoff svg{display:block;width:100%;height:auto;margin-top:12px}.cpj-svg-cutoff input{width:160px}.cpj-svg-cutoff button{margin:4px;padding:5px}.cpj-svg-cutoff .feedback{display:block}</style>',
-             '<p>Display-only preview. Drag the line, use its arrow keys, edit the numeric field, or select a ROC point. Native tables use saved jamovi options.</p>',
-             f'<label>Preview cutoff <input class="cutoff-input" type="number" step="any" value="{p["initial"]!r}" /></label> ',
-             '<button type="button" class="automatic">Automatic cutoff</button> ',
-             '<button type="button" class="apply">Apply to SVG snapshot</button> ',
-             '<button type="button" class="reset">Reset to native rule</button>',
-             '<span class="feedback" role="status" aria-live="polite"></span>',
-             f'<svg xmlns="http://www.w3.org/2000/svg" width="980" height="650" viewBox="0 0 980 650" class="jmv-results-svg-content" role="img" aria-label="Linked measurements and empirical ROC" data-payload="{esc(json.dumps(p, allow_nan=False, ensure_ascii=True))}">',
-             '<style>.cpj-svg-cutoff svg text{font:14px system-ui,sans-serif;fill:#202b38}.cpj-svg-cutoff .title{font-size:20px;font-weight:600}.cpj-svg-cutoff .small{font-size:12px}.cpj-svg-cutoff .axis{stroke:#667;fill:none}.cpj-svg-cutoff .curve{stroke:#3975b8;stroke-width:2;fill:none}.cpj-svg-cutoff .roc-point{fill:#3975b8;cursor:pointer}.cpj-svg-cutoff .roc-point:focus{stroke:#111;stroke-width:3}.cpj-svg-cutoff .handle{cursor:ns-resize;stroke:transparent;stroke-width:22}.cpj-svg-cutoff .handle:focus{stroke:#3975b844}.cpj-svg-cutoff .cut-line{stroke:#bf4d29;stroke-width:2;stroke-dasharray:6 4}.cpj-svg-cutoff .paper{fill:white}.cpj-svg-cutoff .cut-label{font-weight:600}</style>',
-             '<rect class="paper" width="980" height="650" />',
+    def button(x, width, cls, label):
+        return (f'<g class="{cls} svg-button" role="button" tabindex="0" aria-label="{esc(label)}">'
+                f'<rect x="{x}" y="95" width="{width}" height="34" rx="4" fill="#edf2f7" stroke="#667" />'
+                + text(x + width / 2, 117, label, 'small', 'text-anchor="middle"') + '</g>')
+    parts = [f'<svg xmlns="http://www.w3.org/2000/svg" width="980" height="720" viewBox="0 0 980 720" style="display:block;max-width:100%;height:auto" class="cpj-svg-cutoff jmv-results-svg-content" role="img" aria-label="Linked measurements and empirical ROC" data-payload="{esc(json.dumps(p, allow_nan=False, ensure_ascii=True))}">',
+             '<style>.cpj-svg-cutoff text{font:14px system-ui,sans-serif;fill:#202b38}.cpj-svg-cutoff .title{font-size:20px;font-weight:600}.cpj-svg-cutoff .small{font-size:12px}.cpj-svg-cutoff .axis{stroke:#667;fill:none}.cpj-svg-cutoff .curve{stroke:#3975b8;stroke-width:2;fill:none}.cpj-svg-cutoff .roc-point{fill:#3975b8;cursor:pointer}.cpj-svg-cutoff .roc-point:focus{stroke:#111;stroke-width:3}.cpj-svg-cutoff .handle{cursor:ns-resize;stroke:transparent;stroke-width:22}.cpj-svg-cutoff .handle:focus{stroke:#3975b844}.cpj-svg-cutoff .cut-line{stroke:#bf4d29;stroke-width:2;stroke-dasharray:6 4}.cpj-svg-cutoff .cut-label{font-weight:600}.cpj-svg-cutoff .svg-button{cursor:pointer}.cpj-svg-cutoff .svg-button:focus rect{stroke:#222;stroke-width:3}</style>',
+             '<rect width="980" height="720" fill="white" />',
              text(30,32,'Native SVG cutoff lab','title'),
              text(30,57,f"N = {len(values)}; excluded = {p['excluded']}; Python threshold-state lookup",'small'),
              text(30,82,f"Native applied rule: {p['measurement']} {rule} {p['initial']!r}",'native-rule'),
+             text(30,117,'Preview cutoff','small'),
+             '<foreignObject x="135" y="95" width="195" height="36">'
+             f'<div xmlns="http://www.w3.org/1999/xhtml" class="cutoff-input" role="textbox" aria-label="Preview cutoff" tabindex="0" contenteditable="plaintext-only" inputmode="decimal" style="font:14px system-ui,sans-serif;color:#202b38;background:white;border:1px solid #667;padding:6px;white-space:nowrap;overflow:hidden">{p["initial"]!r}</div></foreignObject>',
+             button(345,130,'automatic','Automatic cutoff'),
+             button(490,195,'apply','Apply to SVG snapshot'),
+             button(700,175,'reset','Reset to native rule'),
+             text(30,150,'Display-only preview; native rule unchanged.','feedback small','role="status" aria-live="polite"'),
+             '<g transform="translate(0,70)">',
              text(30,108,'Measurements by reference group'), text(535,108,'Empirical ROC'),
              '<path class="axis" d="M65 135V475H455 M535 135V475H935" />',
              '<path stroke="#aaa" stroke-dasharray="4 4" d="M535 475L935 135" fill="none" />']
@@ -63,7 +67,7 @@ def svg_document(p):
               text(30,578,f"Local snapshot cutoff {p['initial']!r}: {counts(point)}",'snapshot'),
               text(30,605,f"AUC {p['curves'][p['direction']]['auc']:.4g}; blue = correct, orange = classification error",'small'),
               text(30,629,'Export captures this displayed preview. Apply changes only the local snapshot; native options remain unchanged.','small'),
-              '</svg></div>']
+              '</g></svg>']
     content=''.join(parts)
     if len(content.encode())>1_500_000:
         raise InputError('The native SVG payload exceeds 1.5 MB. Filter to fewer observations.')

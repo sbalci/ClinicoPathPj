@@ -3,7 +3,8 @@
 - [x] Add a separate stable `pysvgcutoff` utility entry without changing previous identifiers.
 - [x] Reuse the Python cutoff engine and add native Svg transport with local scripts.
 - [x] Complete regression, compiler and packaged-runtime checks.
-- [ ] Verify final GUI interaction, current-view export and saved-file reopening after script initialization fix; preserve the unsaved synthetic window pending approval to discard.
+- [x] Verify final native numeric/drag/keyboard/ROC interaction and complete current-view SVG/PNG exports.
+- [ ] Resolve native OMV save with Svg present, then qualify saved-file reopening. Data-only save control succeeds; analysis save has not updated the file.
 - [ ] Qualify missing-module snapshot viewing and additional platforms.
 
 # Single-variable quality core — 0.3.6

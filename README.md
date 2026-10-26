@@ -363,5 +363,6 @@ Version 0.3.7 adds `pysvgcutoff` alongside the D3 and Observable experiments.
 The shared Python engine supplies all statistics; local SVG interaction supports
 cutoff preview, keyboard control and native current-view SVG/PNG export.
 See [behaviour and comparison](docs/python-svg-cutoff.md) and
-[validation limits](docs/python-svg-cutoff-validation.md). Native GUI export and
-saved-file acceptance remain pending for this experiment.
+[validation limits](docs/python-svg-cutoff-validation.md). Native GUI interaction and current-view SVG/PNG export are verified on macOS arm64.
+Native `.omv` saving with the Svg analysis remains unresolved on jamovi 28.13;
+saved-file acceptance is pending.

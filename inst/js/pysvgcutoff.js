@@ -7,7 +7,9 @@
         for (const root of document.querySelectorAll('.cpj-svg-cutoff')) {
             if (root.dataset.ready) continue;
             root.dataset.ready = 'true';
-            const svg = root.querySelector('svg'), p = JSON.parse(svg.getAttribute('data-payload'));
+            const svg = root, p = JSON.parse(svg.getAttribute('data-payload'));
+            // The original result retains the payload; exported graphics need drawing data only.
+            svg.removeAttribute('data-payload');
             const input = root.querySelector('.cutoff-input'), handle = svg.querySelector('.handle');
             let current = p.initial, dragging = false;
             const points = p.curves[p.direction].points;
@@ -26,14 +28,14 @@
             for (const k of Object.keys(p.expected)) {
                 if (state(current)[k] !== p.expected[k]) throw Error('SVG lookup differs from Python.');
             }
-            function preview(value, clamp = false) {
+            function preview(value, clamp = false, editing = false) {
                 if (!Number.isFinite(value)) {
                     root.querySelector('.feedback').textContent = ' Enter a finite numeric cutoff.';
                     return;
                 }
                 current = clamp ? Math.max(p.domain[0], Math.min(p.domain[1], value)) : value;
                 root.querySelector('.feedback').textContent = ' Preview only; native rule unchanged.';
-                input.value = String(current);
+                if (!editing) input.textContent = String(current);
                 const c = state(current), yy = y(Math.max(p.domain[0], Math.min(p.domain[1], current)));
                 for (const el of [handle, svg.querySelector('.cut-line')]) {
                     el.setAttribute('y1', yy); el.setAttribute('y2', yy);
@@ -51,7 +53,13 @@
                     dot.setAttribute('fill', positive === row.positive ? '#3975b8' : '#c25a2d');
                 }
             }
-            input.addEventListener('input', () => preview(input.value.trim() === '' ? NaN : Number(input.value)));
+            input.addEventListener('input', () => preview(input.textContent.trim() === '' ? NaN : Number(input.textContent), false, true));
+            input.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); input.blur(); } });
+            for (const control of root.querySelectorAll('.svg-button')) {
+                control.addEventListener('keydown', e => {
+                    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); control.dispatchEvent(new MouseEvent('click', {bubbles: true})); }
+                });
+            }
             root.querySelector('.automatic').addEventListener('click', () => preview(points[p.curves[p.direction].optima[p.criterion].point].cutoff));
             root.querySelector('.apply').addEventListener('click', () => {
                 svg.querySelector('.snapshot').textContent = `Local snapshot cutoff ${current}: ${counts(state(current))}`;
@@ -75,21 +83,29 @@
                 else if (e.key === 'Home') value = p.domain[0];
                 else if (e.key === 'End') value = p.domain[1];
                 else return;
-                e.preventDefault(); preview(value, true);
+                e.preventDefault(); e.stopPropagation(); preview(value, true);
             });
             function move(e) {
                 const point = svg.createSVGPoint(); point.x = e.clientX; point.y = e.clientY;
                 const local = point.matrixTransform(svg.getScreenCTM().inverse());
-                preview(p.domain[0] + (475 - local.y) / 340 * (p.domain[1] - p.domain[0]), true);
+                preview(p.domain[0] + (545 - local.y) / 340 * (p.domain[1] - p.domain[0]), true);
             }
+            // Capture at the window: jamovi's result-selection layer also handles dragging.
+            const dragMove = e => { if (!root.isConnected) { end(); return; } if (dragging) { e.preventDefault(); move(e); } };
+            const end = () => {
+                dragging = false;
+                window.removeEventListener('pointermove', dragMove, true);
+                window.removeEventListener('pointerup', end, true);
+                window.removeEventListener('pointercancel', end, true);
+            };
+            handle.style.touchAction = 'none';
             handle.addEventListener('pointerdown', e => {
-                e.preventDefault(); dragging = true; handle.setPointerCapture(e.pointerId); move(e);
+                e.preventDefault(); e.stopPropagation(); dragging = true; handle.focus();
+                window.addEventListener('pointermove', dragMove, true);
+                window.addEventListener('pointerup', end, true);
+                window.addEventListener('pointercancel', end, true);
+                move(e);
             });
-            handle.addEventListener('pointermove', e => { if (dragging) move(e); });
-            const end = () => { dragging = false; };
-            handle.addEventListener('pointerup', end);
-            handle.addEventListener('pointercancel', end);
-            handle.addEventListener('lostpointercapture', end);
         }
     }
     // Native Svg loads assets before inserting content; initialize each new root once.

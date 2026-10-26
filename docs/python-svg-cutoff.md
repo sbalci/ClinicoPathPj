@@ -1,7 +1,9 @@
 # Native SVG cutoff experiment — 0.3.7
 
 `pysvgcutoff` appears under ClinicoPathPj → Medical Decisions alongside the existing
-D3 and Observable experiments. Use `data/python_d3_cutoff_examples.csv`, Measurement,
+D3 and Observable experiments. For a six-row tied-threshold fixture use
+`data/python_svg_cutoff_examples.csv`; the larger shared comparison uses
+`data/python_d3_cutoff_examples.csv`. Select Measurement,
 Reference and the explicit Positive reference level. Set the native cutoff to 2 for
 a tied-threshold comparison. The module identity and previous entry points are retained.
 
@@ -11,7 +13,8 @@ same engine. Exact-threshold ties are positive according to the chosen ≥ or �
 The existing 1,000-complete-row cap and a 1.5 MB SVG payload cap apply. No additional
 packages or network resources are required.
 
-A complete initial SVG is constructed in Python; a bundled local JavaScript file adds
+A complete, self-contained initial SVG is constructed in Python, including its controls
+and styles; a bundled local JavaScript file adds
 interaction using browser SVG APIs. It has no D3 or Observable runtime dependency.
 This experiment tests jamovi's native result container, not a different statistical
 method. See the [official Svg API](https://dev.jamovi.org/api/svg).
@@ -30,7 +33,8 @@ method. See the [official Svg API](https://dev.jamovi.org/api/svg).
 The graphic distinguishes the native applied rule, live preview and local snapshot.
 An exported SVG/PNG captures the displayed preview, including the current local
 snapshot label; static Image counterparts and native tables use saved options.
-Interactive reopening starts from saved options. Jamovi also stores a graphic snapshot
+The reconstruction contract starts from saved options, but native save/reopen has
+not yet passed on jamovi 28.13. Jamovi also stores a graphic snapshot
 for viewing without the module; its preservation must be checked separately from
 interactive reconstruction. Local preview is not a persisted analysis rule.
 
@@ -54,3 +58,8 @@ selection uncertainty. AUC has no inferential interval. Error weights are simple
 weights, not an economic model. Select cutoffs in one cohort and validate separately.
 
 See [validation evidence and remaining GUI gates](python-svg-cutoff-validation.md).
+
+**Current limitation:** native file saving with this Svg analysis has not updated the
+`.omv` in the tested jamovi 28.13 session. Data-only saving works. The exported SVG
+and PNG are verified; the earlier HTML/Observable saved examples remain available
+for comparisons requiring established persistence. This experiment is not release-ready.
