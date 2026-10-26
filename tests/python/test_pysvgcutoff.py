@@ -66,7 +66,10 @@ class SvgCutoff(unittest.TestCase):
         for bad in [['../escape.js'],['https://example.org/x.js'],['js/missing.js']]:
             changed=copy.deepcopy(spec);changed['results'][1]['scripts']=bad
             with self.assertRaises(gen.SpecError):gen.validate(changed,'pysvgcutoff')
-        self.assertIn('setScripts(c("js/pysvgcutoff.js"))',gen.b_r(spec,'test'))
+        generated=gen.b_r(spec,'test')
+        self.assertIn('setScripts(c("js/pysvgcutoff.js"))',generated)
+        self.assertLess(generated.index('.init = function()'),generated.index('setScripts('))
+        self.assertLess(generated.index('setScripts('),generated.index('.run = function()'))
 
     def test_svg_transport_rejects_wrong_names_and_large_content(self):
         import sys

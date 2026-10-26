@@ -11,6 +11,7 @@ test_that("Native Svg preserves cutoff calculations and script serialization", {
     }
     expect_match(got$explorer$content, "Native SVG cutoff lab", fixed = TRUE)
     expect_match(got$explorer$content, "Local snapshot cutoff", fixed = TRUE)
+    jmvcore:::initProtoBuf()
     expect_true(length(serialize(got$explorer$asProtoBuf(), NULL)) > 100)
 })
 
@@ -18,21 +19,23 @@ test_that("Native Svg clears incomplete input and restores changed rules", {
     d <- data.frame(x = c(1, 2, 2, 4, 5, 6), g = factor(c("N", "N", "P", "N", "P", "P")))
     a <- pysvgcutoffClass$new(options = pysvgcutoffOptions$new(marker = "x", reference = "g",
                          positive = "P", cutoff = "2"), data = d)
-    a$init(); a$run()
+    a$init()
+    expect_equal(a$results$explorer$scripts, "js/pysvgcutoff.js")
+    a$run()
     expect_equal(a$results$counts$asDF$n, c(3, 2, 0, 1))
     event <- a$options$option("positive"); event$value <- NULL
     a$.__enclos_env__$private$.run()
     expect_equal(a$results$counts$rowCount, 0L)
     expect_equal(a$results$explorer$content, "<div></div>")
     expect_null(a$results$staticROC$state)
-    event$value <- "P"; a$options$option("cutoff")$value <- "3"
+    event$value <- "P"; cutoff <- a$options$option("cutoff"); cutoff$value <- "3"
     a$.__enclos_env__$private$.run()
     expect_equal(a$results$counts$asDF$n, c(2, 1, 1, 2))
     expect_match(a$results$explorer$content, "Local snapshot cutoff 3.0", fixed = TRUE)
-    a$options$option("cutoff")$value <- "bad"
+    cutoff$value <- "bad"
     expect_error(a$.__enclos_env__$private$.run(), "finite number")
     expect_equal(a$results$explorer$content, "<div></div>")
-    a$options$option("cutoff")$value <- "2"
+    cutoff$value <- "2"
     a$.__enclos_env__$private$.run()
     expect_equal(a$results$counts$asDF$n, c(3, 2, 0, 1))
 })

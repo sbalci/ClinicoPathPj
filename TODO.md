@@ -2,8 +2,8 @@
 
 - [x] Add a separate stable `pysvgcutoff` utility entry without changing previous identifiers.
 - [x] Reuse the Python cutoff engine and add native Svg transport with local scripts.
-- [ ] Complete regression, compiler and packaged-runtime checks.
-- [ ] Verify GUI interaction, current-view export and fresh-engine saved-file reopening.
+- [x] Complete regression, compiler and packaged-runtime checks.
+- [ ] Verify final GUI interaction, current-view export and saved-file reopening after script initialization fix; preserve the unsaved synthetic window pending approval to discard.
 - [ ] Qualify missing-module snapshot viewing and additional platforms.
 
 # Single-variable quality core — 0.3.6

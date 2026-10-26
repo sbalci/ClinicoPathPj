@@ -414,7 +414,8 @@ def b_r(spec, header):
         f"    \"{name}Class\",\n"
         f"    inherit = {name}Base,\n"
         f"    private = list(\n"
-        f"        .run = function() {{\n"
+        + (f"        .init = function() {{\n{scripts}        }},\n" if scripts else "")
+        + f"        .run = function() {{\n"
         f"{scripts}"
         f"            .cpjRun(self, \"{name}\",\n"
         f"                options = {vector(r_string(o) for o in options)},\n"

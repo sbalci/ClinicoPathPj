@@ -52,3 +52,5 @@ better than Observable's richer form and table controls.
 Confidence intervals assume independent observations and a fixed cutoff; they exclude
 selection uncertainty. AUC has no inferential interval. Error weights are simple FP/FN
 weights, not an economic model. Select cutoffs in one cohort and validate separately.
+
+See [validation evidence and remaining GUI gates](python-svg-cutoff-validation.md).

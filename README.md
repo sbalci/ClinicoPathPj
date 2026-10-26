@@ -362,4 +362,6 @@ For numeric roles that also permit factors, `coerceNumeric: True` in SPEC reques
 Version 0.3.7 adds `pysvgcutoff` alongside the D3 and Observable experiments.
 The shared Python engine supplies all statistics; local SVG interaction supports
 cutoff preview, keyboard control and native current-view SVG/PNG export.
-See [behaviour and comparison](docs/python-svg-cutoff.md).
+See [behaviour and comparison](docs/python-svg-cutoff.md) and
+[validation limits](docs/python-svg-cutoff-validation.md). Native GUI export and
+saved-file acceptance remain pending for this experiment.

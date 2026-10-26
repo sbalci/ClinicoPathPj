@@ -25,6 +25,7 @@ def svg_document(p):
     counts = lambda c: f"TP {c['tp']} · FP {c['fp']} · FN {c['fn']} · TN {c['tn']}"
     rule = '≥' if p['direction'] == 'ge' else '≤'
     parts = ['<div class="cpj-svg-cutoff">',
+             '<style>.cpj-svg-cutoff{display:block;max-width:980px}.cpj-svg-cutoff svg{display:block;width:100%;height:auto;margin-top:12px}.cpj-svg-cutoff input{width:160px}.cpj-svg-cutoff button{margin:4px;padding:5px}.cpj-svg-cutoff .feedback{display:block}</style>',
              '<p>Display-only preview. Drag the line, use its arrow keys, edit the numeric field, or select a ROC point. Native tables use saved jamovi options.</p>',
              f'<label>Preview cutoff <input class="cutoff-input" type="number" step="any" value="{p["initial"]!r}" /></label> ',
              '<button type="button" class="automatic">Automatic cutoff</button> ',
@@ -32,7 +33,7 @@ def svg_document(p):
              '<button type="button" class="reset">Reset to native rule</button>',
              '<span class="feedback" role="status" aria-live="polite"></span>',
              f'<svg xmlns="http://www.w3.org/2000/svg" width="980" height="650" viewBox="0 0 980 650" class="jmv-results-svg-content" role="img" aria-label="Linked measurements and empirical ROC" data-payload="{esc(json.dumps(p, allow_nan=False, ensure_ascii=True))}">',
-             '<style>text{font:14px system-ui,sans-serif;fill:#202b38}.title{font-size:20px;font-weight:600}.small{font-size:12px}.axis{stroke:#667;fill:none}.curve{stroke:#3975b8;stroke-width:2;fill:none}.roc-point{fill:#3975b8;cursor:pointer}.roc-point:focus{stroke:#111;stroke-width:3}.handle{cursor:ns-resize;stroke:transparent;stroke-width:22}.handle:focus{stroke:#3975b844}.cut-line{stroke:#bf4d29;stroke-width:2;stroke-dasharray:6 4}.paper{fill:white}.cut-label{font-weight:600}</style>',
+             '<style>.cpj-svg-cutoff svg text{font:14px system-ui,sans-serif;fill:#202b38}.cpj-svg-cutoff .title{font-size:20px;font-weight:600}.cpj-svg-cutoff .small{font-size:12px}.cpj-svg-cutoff .axis{stroke:#667;fill:none}.cpj-svg-cutoff .curve{stroke:#3975b8;stroke-width:2;fill:none}.cpj-svg-cutoff .roc-point{fill:#3975b8;cursor:pointer}.cpj-svg-cutoff .roc-point:focus{stroke:#111;stroke-width:3}.cpj-svg-cutoff .handle{cursor:ns-resize;stroke:transparent;stroke-width:22}.cpj-svg-cutoff .handle:focus{stroke:#3975b844}.cpj-svg-cutoff .cut-line{stroke:#bf4d29;stroke-width:2;stroke-dasharray:6 4}.cpj-svg-cutoff .paper{fill:white}.cpj-svg-cutoff .cut-label{font-weight:600}</style>',
              '<rect class="paper" width="980" height="650" />',
              text(30,32,'Native SVG cutoff lab','title'),
              text(30,57,f"N = {len(values)}; excluded = {p['excluded']}; Python threshold-state lookup",'small'),
