@@ -1,7 +1,7 @@
 ---
 title: ClinicoPathPj - Python-Backed Analyses
 name: ClinicoPathPj
-version: 0.3.18
+version: 0.3.20
 jms: '1.0'
 authors: Serdar Balci
 maintainer: Serdar Balci <serdarbalci@serdarbalci.com>
@@ -219,6 +219,14 @@ analyses:
     menuSubgroup: Biomarker panels
     menuTitle: Annotated IHC heatmap
     title: Annotated IHC Heatmap
+    category: analyses
+  - name: pyjjcorrmat
+    ns: ClinicoPathPj
+    hidden: false
+    menuGroup: Stats Plots Py
+    menuSubgroup: Associations
+    menuTitle: Correlation matrix (core)
+    title: Correlation Matrix (Python Core)
     category: analyses
 usesNative: 'yes'
 datasets:

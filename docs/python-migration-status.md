@@ -46,7 +46,7 @@ parity and GUI/platform acceptance remain separate gates.
 | pyjjarcdiagram | jjarcdiagram | jjstatsplot | 3 | planned | pending | pending |
 | pyjjbarstats | jjbarstats | jjstatsplot | 3 | planned | pending | pending |
 | pyjjbetweenstats | jjbetweenstats | jjstatsplot | 3 | planned | pending | pending |
-| pyjjcorrmat | jjcorrmat | jjstatsplot | 3 | planned | pending | pending |
+| pyjjcorrmat | jjcorrmat | jjstatsplot | 3 | partial | pending | pending packaged native desktop installation, save/reopen and export |
 | pyjjdotchart | jjdotchart | jjstatsplot | 3 | planned | pending | pending |
 | pyjjdotplotstats | jjdotplotstats | jjstatsplot | 3 | planned | pending | pending |
 | pyjjhistostats | jjhistostats | jjstatsplot | 3 | planned | pending | pending |

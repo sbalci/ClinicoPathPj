@@ -782,10 +782,10 @@
     {
       "id": "pyjjcorrmat",
       "family": "jjstatsplot",
-      "menu": "Statistical Plots",
+      "menu": "Associations",
       "title": "Correlation Matrix",
       "aliases": [],
-      "source": null,
+      "source": "analyses/jjstatsplot/pyjjcorrmat.py",
       "baseline": {
         "module": "jjstatsplot",
         "version": "1.0.82.03",
@@ -799,11 +799,11 @@
         }
       },
       "wave": 3,
-      "status": "planned",
+      "status": "partial",
       "coverage": {
         "full_parity": false,
-        "numerical": "pending",
-        "gui": "pending",
+        "numerical": "406 native R assertions: 16 method/missingness/adjustment configurations versus cor.test and p.adjust; six hand/edge Python tests; native clearing/raster checks passed",
+        "gui": "pending packaged native desktop installation, save/reopen and export",
         "compatibility": "existing Python identifier preserved",
         "platforms": []
       },
@@ -817,7 +817,9 @@
       },
       "source_name": "jjcorrmat",
       "menu_group": "Stats Plots Py",
-      "menu_title": "Correlation Matrix"
+      "menu_title": "Correlation matrix (core)",
+      "supported_core": "Pearson, Spearman asymptotic p; listwise/pairwise n; Holm/Bonferroni/BH/none; Pearson Fisher-z CI n>=4; native table/static matrix and local cell inspection",
+      "omissions": "Grouped/partial/robust/Bayesian correlations, Spearman CI, additional p adjustments and full umbrella plot styling remain outside this first core."
     },
     {
       "id": "pyjjdotchart",
@@ -2591,7 +2593,8 @@
         "saved_selection": "0.3.15: optional explicit Apply, native applied-row tables and original-row nominal flag. Whole-input snapshot guard requires review after supplied data/role changes; no analysis subsetting. Numerical/lifecycle/native acceptance scopes are recorded in docs/python-ihc-selection-validation.md",
         "selected_marker_values": "0.3.16: optional native long table of applied retained rows and marker measurements, original source identities/annotations, raw and full-cohort displayed values, and explicit missingness. Does not refit selection statistics. Evidence and open gates: docs/python-ihc-selected-values-validation.md",
         "scatter_rectangle": "0.3.17: transient inclusive displayed-value rectangle row previews via numeric bounds or pointer drag. Complete pairs only; original source IDs; existing explicit Apply commits selection without refitting. Evidence: docs/python-ihc-brush-validation.md",
-        "heatmap_keyboard": "0.3.18: one remembered Tab stop for matrix cells, arrow and row/matrix Home/End focus navigation. Existing focus preview, individual-row toggle and explicit Apply semantics retained. Evidence: docs/python-ihc-keyboard-validation.md"
+        "heatmap_keyboard": "0.3.18: one remembered Tab stop for matrix cells, arrow and row/matrix Home/End focus navigation. Existing focus preview, individual-row toggle and explicit Apply semantics retained. Evidence: docs/python-ihc-keyboard-validation.md",
+        "scatter_keyboard": "0.3.19: one remembered complete-pair Tab stop, displayed-row-order arrows and Home/End; ties remain separately reachable. Local inspection/activation only; explicit Apply commits. DOM checks and desktop qualification recorded in docs/python-ihc-scatter-keyboard-validation.md."
       }
     }
   ],

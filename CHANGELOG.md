@@ -1,3 +1,19 @@
+# 0.3.20 — 2026-10-27
+
+- Add registered `pyjjcorrmat` partial core: Pearson/Spearman, explicit missingness and pair n.
+- Preserve supported baseline defaults: Pearson, listwise, Holm, 0.95 confidence.
+- Report unadjusted Pearson Fisher-z intervals and four p-adjustment choices with stated family size.
+- Add native pair table, static matrix and local cell inspector; keep undefined results missing.
+- Record independent R fixtures and explicit feature/GUI/platform omissions.
+
+# 0.3.19 — 2026-10-27
+
+- Reconcile the migration plan with committed work through 0.3.18 from the other session.
+- Add one remembered linked-scatter point Tab stop, displayed-row-order arrows and Home/End.
+- Preserve individual source IDs at coincident points, complete-pair omissions and explicit Apply.
+- Add keyboard regressions for redraw, selectors, empty/single/200-point views and toggle semantics.
+- Keep native GUI, broader accessibility and platform qualification separate.
+
 # 0.3.18 — 2026-10-27
 
 - Add one remembered Tab stop for IHC heatmap cells and arrow-key movement.
