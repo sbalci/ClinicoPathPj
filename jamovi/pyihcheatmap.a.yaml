@@ -5,7 +5,7 @@
   "menuGroup": "Descriptives Py",
   "menuSubgroup": "Biomarker panels",
   "menuTitle": "Annotated IHC heatmap",
-  "version": "0.3.16",
+  "version": "0.3.17",
   "jas": "1.2",
   "options": [
     {

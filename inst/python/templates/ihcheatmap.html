@@ -15,6 +15,12 @@
 <div class="trees"></div>
 <div class="scatter-panel" hidden><h4>Linked marker scatterplot</h4>
 <div class="pair-controls"><label>X marker <select class="x-marker"></select></label><label>Y marker <select class="y-marker"></select></label></div>
+<details class="brush-controls"><summary>Rectangle row preview</summary>
+<p>Preview complete pairs inside inclusive displayed-value bounds. This replaces the row preview. Enable saved source-row selection and use Apply to save it. Missing pairs cannot be selected here.</p>
+<label><input class="brush-mode" type="checkbox"> Drag a rectangle to preview rows</label>
+<div class="pair-controls"><label>X minimum <input class="brush-xmin" type="number" step="any"></label><label>X maximum <input class="brush-xmax" type="number" step="any"></label><label>Y minimum <input class="brush-ymin" type="number" step="any"></label><label>Y maximum <input class="brush-ymax" type="number" step="any"></label></div>
+<button class="brush-preview" type="button">Preview rectangle rows</button>
+<p class="brush-status" role="status" aria-live="polite"></p></details>
 <p class="pair-scope" role="status" aria-live="polite"></p>
 <svg class="scatter-view" viewBox="0 0 650 400" role="group" aria-label="Marker scatterplot: focus or activate a point to highlight its source row"></svg>
 <p>Points use displayed values and complete pairs only. Overlapping points are not jittered; use the heatmap for individual rows. Native scatterplot and tables retain the X/Y choices in the analysis options.</p></div>
@@ -28,6 +34,7 @@ function text(value){return value===null?'[missing]':String(value)}
 function heading(label){const el=document.createElement('span');el.className='head';el.textContent=label;grid.appendChild(el);return el;}
 heading('Source row | ID | group | region');const colHeads=p.markers.map(heading);
 const rowHeads=[],cells=[],dots=[];let selected=new Set(),markerSelection=new Set(),query='';
+let cancelBrush=()=>{};
 const extend=root.querySelector('.extend-rows');
 if(p.selection){root.querySelector('.selection-panel').hidden=false;const applied=new Set(p.selection.selectedRows);p.rows.forEach((r,i)=>{if(applied.has(r.row))selected.add(i);});}
 function selectedIds(){return p.rows.filter((r,i)=>selected.has(i)).map(r=>r.row);}
@@ -39,6 +46,7 @@ function refreshHighlights(){
  if(p.selection){const ids=selectedIds();root.querySelector('.selection-preview').textContent='Preview source rows ('+ids.length+'): '+(ids.join(', ')||'none')+'. Applied rows: '+p.selection.selectedRows.length+'. '+(p.selection.valid?'':'Saved selection needs review after input changes. Requested source rows: '+p.selection.requested.join(', '));const apply=root.querySelector('.apply-selection');apply.textContent='Apply '+ids.length+' source rows';apply.disabled=markerSelection.size>0;}
 }
 function inspect(i,j,activate=true){
+ cancelBrush();
  if(!p.selection||!extend.checked){selected=new Set([i]);markerSelection.clear();}
  else if(activate){if(selected.has(i))selected.delete(i);else selected.add(i);markerSelection.clear();}
  const r=p.rows[i];
@@ -50,7 +58,7 @@ p.rows.forEach((r,i)=>{const label=[r.row,r.subject,r.group,r.region].map(text).
  p.markers.forEach((marker,j)=>{const value=p.values[i][j],raw=p.raw[i][j],b=document.createElement('button');b.type='button';b.textContent=value===null?'·':value.toPrecision(3);const t=value===null?0:Math.min(1,Math.abs(value)/limit),rgb=value<0?[40,100,160]:[190,90,20];b.style.backgroundColor=value===null?'#b0b0b0':'rgb('+rgb.map(c=>Math.round(255+(c-255)*t)).join(',')+')';b.style.color=value!==null&&t>.7?'white':'#111';b.setAttribute('aria-label','Row '+r.row+', '+marker+', raw '+text(raw)+', display '+text(value));b.setAttribute('aria-pressed','false');
  b.addEventListener('click',()=>inspect(i,j));b.addEventListener('focus',()=>inspect(i,j,false));grid.appendChild(b);cells[i].push(b);});});
 root.querySelector('.search').addEventListener('input',e=>{query=e.target.value.toLocaleLowerCase();refreshHighlights();});
-root.querySelector('.clear').addEventListener('click',()=>{selected.clear();markerSelection.clear();detail.textContent='Highlights cleared. Full-data results unchanged.';refreshHighlights();});
+root.querySelector('.clear').addEventListener('click',()=>{cancelBrush();selected.clear();markerSelection.clear();detail.textContent='Highlights cleared. Full-data results unchanged.';refreshHighlights();});
 if(p.selection){
  root.querySelector('.apply-selection').addEventListener('click',()=>{
   const status=root.querySelector('.selection-status'),ids=selectedIds();
@@ -62,6 +70,7 @@ if(p.selection){
   status.textContent='Source rows sent to jamovi. Check the native Applied Source-Row Selection summary after recalculation.';
  });
  root.querySelector('.restore-selection').addEventListener('click',()=>{
+  cancelBrush();
   const applied=new Set(p.selection.selectedRows);selected.clear();markerSelection.clear();
   p.rows.forEach((r,i)=>{if(applied.has(r.row))selected.add(i);});
   root.querySelector('.selection-status').textContent=p.selection.valid?'Applied rows restored to preview; native results unchanged.':'No valid applied rows; inspect source rows and Apply again.';refreshHighlights();
@@ -85,7 +94,7 @@ for(const [key,axis,isRows] of [['rowTree','Source rows',true],['markerTree','Ma
   const label=axis+' merge '+branch.merge+', distance '+branch.height+', '+branch.count+' members: '+branch.members.join(', ');
   const path=add('path',{d,stroke:'#2864a0','stroke-width':2,fill:'none',tabindex:0,role:'button',class:'tree-branch','data-axis':isRows?'rows':'markers','data-merge':branch.merge,'aria-label':label});
   const title=document.createElementNS('http://www.w3.org/2000/svg','title');title.textContent=label;path.appendChild(title);
-  function choose(){selected.clear();markerSelection.clear();if(isRows){const members=new Set(branch.members);p.rows.forEach((r,i)=>{if(members.has(r.row))selected.add(i);});}else markerSelection=new Set(branch.members);
+  function choose(){cancelBrush();selected.clear();markerSelection.clear();if(isRows){const members=new Set(branch.members);p.rows.forEach((r,i)=>{if(members.has(r.row))selected.add(i);});}else markerSelection=new Set(branch.members);
    detail.textContent=axis+' merge '+branch.merge+'\nAverage-linkage distance: '+branch.height+'\nMembers ('+branch.count+'): '+branch.members.join(', ')+'\nLocal highlight only; full-data results unchanged.';refreshHighlights();}
   path.addEventListener('click',choose);path.addEventListener('focus',choose);path.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();choose();}});
   const hit=add('path',{d,stroke:'transparent','stroke-width':12,fill:'none','aria-hidden':'true'});hit.addEventListener('click',choose);
@@ -96,7 +105,51 @@ if(p.scatter){
  for(const control of [xs,ys])p.markers.forEach((m,j)=>{const o=document.createElement('option');o.value=String(j);o.textContent=m;control.appendChild(o);});
  xs.value=String(p.markers.indexOf(p.scatter.xMarker));ys.value=String(p.markers.indexOf(p.scatter.yMarker));
  function element(tag,attrs,label){const el=document.createElementNS('http://www.w3.org/2000/svg',tag);Object.entries(attrs).forEach(([k,v])=>el.setAttribute(k,String(v)));if(label!==undefined)el.textContent=label;svg.appendChild(el);return el;}
+ const mode=root.querySelector('.brush-mode'),preview=root.querySelector('.brush-preview'),status=root.querySelector('.brush-status');
+ const fields=['xmin','xmax','ymin','ymax'].map(k=>root.querySelector('.brush-'+k));
+ let geometry=null,drag=null,rectangle=null;
+ function release(previous){if(previous&&previous.captured&&svg.releasePointerCapture){try{svg.releasePointerCapture(previous.id);}catch(_){}}}
+ cancelBrush=()=>{const previous=drag;drag=null;release(previous);if(rectangle)rectangle.remove();rectangle=null;status.textContent='';};
+ function box(x0,y0,x1,y1){if(!rectangle)rectangle=element('rect',{class:'brush-box',fill:'rgba(40,100,160,0.15)',stroke:'#111','stroke-width':2,'pointer-events':'none','aria-hidden':'true'});rectangle.setAttribute('x',Math.min(x0,x1));rectangle.setAttribute('y',Math.min(y0,y1));rectangle.setAttribute('width',Math.abs(x1-x0));rectangle.setAttribute('height',Math.abs(y1-y0));}
+ function chooseRows(points){selected=new Set(points.map(v=>v.index));markerSelection.clear();detail.textContent='Rectangle preview: '+selected.size+' source rows. Inclusive displayed-value bounds; complete pairs only. Full-data results unchanged.';status.textContent=detail.textContent;refreshHighlights();}
+ function numericPreview(){
+  const bounds=fields.map(f=>f.value.trim()===''?NaN:Number(f.value));
+  if(!geometry||!bounds.every(Number.isFinite)||bounds[0]>bounds[1]||bounds[2]>bounds[3]){status.textContent='Enter finite bounds with each minimum no greater than its maximum. Row preview unchanged.';return;}
+  cancelBrush();const [x0,x1,y0,y1]=bounds,g=geometry;
+  box(g.sx(Math.max(g.xmin,Math.min(g.xmax,x0))),g.sy(Math.max(g.ymin,Math.min(g.ymax,y0))),g.sx(Math.max(g.xmin,Math.min(g.xmax,x1))),g.sy(Math.max(g.ymin,Math.min(g.ymax,y1))));
+  chooseRows(g.points.filter(v=>v.x>=x0&&v.x<=x1&&v.y>=y0&&v.y<=y1));
+ }
+ preview.addEventListener('click',numericPreview);
+ fields.forEach(f=>f.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();numericPreview();}}));
+ mode.addEventListener('change',()=>{cancelBrush();svg.style.touchAction=mode.checked?'none':'';svg.style.cursor=mode.checked?'crosshair':'';});
+ function location(e){
+  let at;
+  if(svg.createSVGPoint&&svg.getScreenCTM){const matrix=svg.getScreenCTM();if(!matrix)return null;const point=svg.createSVGPoint();point.x=e.clientX;point.y=e.clientY;at=point.matrixTransform(matrix.inverse());}
+  else{const rect=svg.getBoundingClientRect();if(!rect.width||!rect.height)return null;at={x:(e.clientX-rect.left)/rect.width*650,y:(e.clientY-rect.top)/rect.height*400};}
+  return Number.isFinite(at.x)&&Number.isFinite(at.y)?{x:Math.max(70,Math.min(620,at.x)),y:Math.max(30,Math.min(330,at.y)),inside:at.x>=70&&at.x<=620&&at.y>=30&&at.y<=330}:null;
+ }
+ svg.addEventListener('pointerdown',e=>{
+  if(!mode.checked||!geometry||e.button!==0||e.isPrimary===false)return;
+  const at=location(e);if(!at||!at.inside)return;
+  e.preventDefault();cancelBrush();drag={id:e.pointerId,start:at,captured:false};
+  if(svg.setPointerCapture){try{svg.setPointerCapture(e.pointerId);drag.captured=true;}catch(_){}}
+  box(at.x,at.y,at.x,at.y);
+ });
+ svg.addEventListener('pointermove',e=>{if(!drag||e.pointerId!==drag.id)return;const at=location(e);if(at){e.preventDefault();box(drag.start.x,drag.start.y,at.x,at.y);}});
+ svg.addEventListener('pointerup',e=>{
+  if(!drag||e.pointerId!==drag.id)return;e.preventDefault();
+  const previous=drag,at=location(e);drag=null;release(previous);
+  if(!at||Math.abs(at.x-previous.start.x)<3&&Math.abs(at.y-previous.start.y)<3){cancelBrush();status.textContent='Drag a rectangle across the plot, or enter numeric bounds. Row preview unchanged.';return;}
+  const x0=Math.min(at.x,previous.start.x),x1=Math.max(at.x,previous.start.x),y0=Math.min(at.y,previous.start.y),y1=Math.max(at.y,previous.start.y),g=geometry;
+  box(x0,y0,x1,y1);[g.ix(x0),g.ix(x1),g.iy(y1),g.iy(y0)].forEach((v,i)=>{fields[i].value=String(v);});
+  chooseRows(g.points.filter(v=>g.sx(v.x)>=x0&&g.sx(v.x)<=x1&&g.sy(v.y)>=y0&&g.sy(v.y)<=y1));
+ });
+ svg.addEventListener('pointercancel',e=>{if(drag&&e.pointerId===drag.id)cancelBrush();});
+ svg.addEventListener('lostpointercapture',()=>{if(drag)cancelBrush();});
+ svg.addEventListener('pointerleave',()=>{if(drag&&!drag.captured)cancelBrush();});
+ root.addEventListener('keydown',e=>{if(e.key==='Escape'&&drag){e.preventDefault();cancelBrush();}});
  function draw(){
+  cancelBrush();geometry=null;preview.disabled=true;fields.forEach(f=>{f.value='';f.disabled=true;});
   svg.replaceChildren();dots.length=0;const xi=Number(xs.value),yi=Number(ys.value);
   if(xi===yi){scope.textContent='Choose two distinct markers. Heatmap and native results unchanged.';return;}
   const points=p.rows.map((r,i)=>({index:i,x:p.values[i][xi],y:p.values[i][yi]})).filter(v=>v.x!==null&&v.y!==null);
@@ -105,11 +158,13 @@ if(p.scatter){
   function extent(values){let lo=Math.min(...values),hi=Math.max(...values);const pad=hi===lo?Math.max(Math.abs(lo)*.05,1):(hi-lo)*.05;return [lo-pad,hi+pad];}
   const [xmin,xmax]=extent(points.map(v=>v.x)),[ymin,ymax]=extent(points.map(v=>v.y));
   const sx=x=>70+(x-xmin)/(xmax-xmin)*550,sy=y=>330-(y-ymin)/(ymax-ymin)*300;
+  geometry={points,xmin,xmax,ymin,ymax,sx,sy,ix:x=>xmin+(x-70)/550*(xmax-xmin),iy:y=>ymin+(330-y)/300*(ymax-ymin)};
+  [Math.min(...points.map(v=>v.x)),Math.max(...points.map(v=>v.x)),Math.min(...points.map(v=>v.y)),Math.max(...points.map(v=>v.y))].forEach((v,i)=>{fields[i].value=String(v);fields[i].disabled=false;});preview.disabled=false;
   element('path',{d:'M70 30V330H620',fill:'none',stroke:'#24364b'});
   for(let t=0;t<=4;t++){const x=xmin+(xmax-xmin)*t/4,y=ymin+(ymax-ymin)*t/4;element('text',{x:sx(x),y:350,'text-anchor':'middle','font-size':11},x.toPrecision(3));element('text',{x:62,y:sy(y)+4,'text-anchor':'end','font-size':11},y.toPrecision(3));}
   element('text',{x:345,y:385,'text-anchor':'middle'},p.markers[xi]);element('text',{x:18,y:180,transform:'rotate(-90 18 180)','text-anchor':'middle'},p.markers[yi]);
   points.forEach(v=>{const el=element('circle',{cx:sx(v.x),cy:sy(v.y),r:5,fill:'#2864a0',stroke:'white',tabindex:0,role:'button','data-row':p.rows[v.index].row,'aria-label':'Source row '+p.rows[v.index].row+', '+p.markers[xi]+' '+text(v.x)+', '+p.markers[yi]+' '+text(v.y)});
-   el.addEventListener('click',()=>inspect(v.index));el.addEventListener('focus',()=>inspect(v.index,undefined,false));el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();inspect(v.index);}});dots.push({el,index:v.index});});
+   el.addEventListener('click',()=>{if(!mode.checked)inspect(v.index);});el.addEventListener('focus',()=>inspect(v.index,undefined,false));el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();inspect(v.index);}});dots.push({el,index:v.index});});
   refreshHighlights();
  }
  xs.addEventListener('change',draw);ys.addEventListener('change',draw);draw();

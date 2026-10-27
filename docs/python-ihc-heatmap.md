@@ -146,3 +146,23 @@ The option defaults off; the existing 200-row × 20-marker bounds limit it to 4,
 Use native table copying/export for the applied measurement data. Reopening/rerunning
 reconstructs it from saved options and inputs. See the
 [validation record and limits](python-ihc-selected-values-validation.md).
+
+## Scatter rectangle row preview (0.3.17)
+
+Expand **Rectangle row preview** below the local scatter marker controls. Enter finite
+X/Y minimum and maximum bounds, then activate **Preview rectangle rows** (or press Enter
+in a bounds field). Comparisons include both boundaries and use the displayed raw or z
+values. Alternatively enable **Drag a rectangle to preview rows** and drag inside the plot.
+The rectangle replaces the current preview, including when individual-row toggle mode is
+on. Only complete pairs for the local X/Y markers are eligible; ties retain separate rows.
+An empty valid rectangle clears the preview. Invalid bounds leave the preview unchanged.
+
+Dragging starts only in the plot area, clamps to its edges, and commits the preview on
+release. Escape or pointer cancellation abandons the in-progress drag. The point-click
+shortcut is suppressed while drag mode is enabled; keyboard point inspection remains
+available. Clear, restore, branch/cell inspection or changing the local marker pair removes
+the rectangle. Marker-pair changes reset bounds but retain selected source identities.
+These controls are transient. Enable saved selections and use **Apply** to update native
+selection summaries, the optional nominal flag and selected-marker table. Full-cohort
+analysis values and native X/Y roles are unaffected. See
+[validation and limitations](python-ihc-brush-validation.md).

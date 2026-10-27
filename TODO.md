@@ -1,3 +1,11 @@
+# Orange-inspired scatter rectangle preview — 0.3.17
+
+- [x] Add inclusive numeric bounds and optional pointer rectangle previews using displayed values.
+- [x] Keep ties/source identities and complete-pair omissions explicit; no automatic backend writes.
+- [x] Test pointer capture, cancellation, reversed/outside drags, empty ranges and keyboard numeric entry.
+- [x] Qualify native numeric/drag previews, explicit Apply, fresh-engine save/reopen/rerun and packaged/source checks on macOS.
+- [ ] Broader native keyboard/theme/touch/maximum-size/platform acceptance remains separate.
+
 # Orange-inspired selected IHC marker data — 0.3.16
 
 - [x] Add optional native selected-data table with raw/displayed values and missingness.
