@@ -42,6 +42,10 @@ SELF_LIMIT = 75  # seconds; R stops runs after 60 s, this only matters if R itse
 
 MAX_PLOT_ROWS = {"interval": 200, "line": 20_000, "box": 20_000, "bar": 2_000, "scatter": 5000, "points": 5000, "histogram": 2000, "pyramid": 200, "qualitymap": 4000, "ihcheatmap": 4000}
 PLOT_COLUMNS = {  # column -> (type, required); drawn by R/utils-plots.R
+    'dendrogram': {'xLeft': ('number', True), 'xRight': ('number', True),
+                   'leftHeight': ('number', True), 'rightHeight': ('number', True),
+                   'height': ('number', True), 'leftLabel': ('text', False),
+                   'rightLabel': ('text', False)},
     "interval": {"label": ("text", True), "estimate": ("number", True),
                  "lower": ("number", False), "upper": ("number", False)},
     "line": {"x": ("number", True), "y": ("number", True), "group": ("text", False)},
@@ -54,6 +58,7 @@ PLOT_COLUMNS = {  # column -> (type, required); drawn by R/utils-plots.R
     "pyramid": {"label": ("text", True), "left": ("number", True), "right": ("number", True), "leftLabel": ("text", True), "rightLabel": ("text", True), "title": ("text", True)},
     "histogram": {"group": ("text", True), "lower": ("number", True), "upper": ("number", True), "count": ("integer", True)},
 }
+MAX_PLOT_ROWS['dendrogram'] = 199
 
 
 class InputError(Exception):

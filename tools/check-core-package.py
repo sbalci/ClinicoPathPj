@@ -46,7 +46,7 @@ def check(path):
             assert archive.read('ClinicoPathPj/data/python_core_examples.omv')==(ROOT/'data/python_core_examples.omv').read_bytes()
             archive.extractall(temp)
         runtime=temp/'ClinicoPathPj/R/ClinicoPathPj/python/cpj_runtime.py'
-        cases=[('pyihcheatmap',{'a':numeric([1,2,3]),'b':numeric([2,4,6])},dict(markers=['a','b'],scaling='zscore',showScatter=True)),
+        cases=[('pyihcheatmap',{'a':numeric([1,2,3]),'b':numeric([2,4,6])},dict(markers=['a','b'],scaling='zscore',showScatter=True,clusterRows=True,clusterColumns=True,showDendrograms=True,enableSelection=True)),
           ('pybridgecompare',{'x':numeric([1,2,2,4,5,6]),'g':factor(['N','N','P','N','P','P'])},dict(marker='x',reference='g',positive='P',cutoff='2')),
           ('pysvgcutoff',{'x':numeric([1,2,2,4,5,6]),'g':factor(['N','N','P','N','P','P'])},dict(marker='x',reference='g',positive='P',cutoff='2')),
           ('pycheckdata',{'x':numeric([0]*10+[100])},dict(var='x',showOutliers=True,showDistribution=True,showInteractive=True)),
@@ -70,6 +70,20 @@ def check(path):
             assert result['status']=='ok',(name,result.get('error'))
             assert result['tables'],name
             if name=='pyihcheatmap':
+                assert len(result['tables']['merges']['rows'])==3
+                assert result['plots']['rowDendrogram']['kind']=='dendrogram'
+                assert result['plots']['markerDendrogram']['kind']=='dendrogram'
+                assert '"rowTree": {' in result['htmls']['explorer']
+                assert 'tree-branch' in result['htmls']['explorer']
+                snapshot=re.search(r'"snapshot": "([0-9a-f]{64})"',result['htmls']['explorer'])[1]
+                applied_options=dict(options,selectionDefinition=json.dumps(dict(version=1,rows=['2'],snapshot=snapshot)))
+                request.write_text(json.dumps(dict(analysis=name,columns=columns,options=applied_options,row_ids=['1','2','3'])))
+                subprocess.run([sys.executable,'-B',str(runtime),str(request),str(response)],check=True,timeout=70)
+                applied=json.loads(response.read_text())
+                assert applied['status']=='ok',applied.get('error')
+                assert applied['outputs']['selectionFlag']['values']==[0.,1.,0.]
+                assert applied['tables']['selectionSummary']['rows'][0]['selected']==1
+                assert applied['plots']==result['plots']
                 assert result['tables']['scatterCohort']['rows'][0]['plotted']==3
                 assert len(result['plots']['scatter']['columns']['x'])==3
                 assert 'Linked marker scatterplot' in result['htmls']['explorer']

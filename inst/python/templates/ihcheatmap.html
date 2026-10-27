@@ -1,10 +1,18 @@
 <div id="__ROOT__"><style>
-#__ROOT__{font:14px system-ui,sans-serif;color:#24364b;background:white;padding:12px;max-width:1100px}#__ROOT__ .view{max-height:650px;overflow:auto}#__ROOT__ .grid{display:grid;gap:1px}#__ROOT__ button{border:1px solid #ddd;min-height:25px;font:12px system-ui;cursor:pointer}#__ROOT__ button:focus-visible{outline:3px solid #111;z-index:1}#__ROOT__ .detail{white-space:pre-wrap;padding:10px;background:#edf2f7;color:#24364b}#__ROOT__ .head{font-weight:600;padding:4px}#__ROOT__ input,#__ROOT__ select{font:inherit;margin:6px;max-width:100%}#__ROOT__ .selected{outline:2px solid #111;outline-offset:-2px}#__ROOT__ circle:focus-visible{stroke:#111;stroke-width:4}#__ROOT__ svg{width:100%;max-width:650px;height:auto;background:white;color:#24364b}#__ROOT__ .pair-controls{display:flex;flex-wrap:wrap;align-items:center}
+#__ROOT__{font:14px system-ui,sans-serif;color:#24364b;background:white;padding:12px;max-width:1100px}#__ROOT__ .view{max-height:650px;overflow:auto}#__ROOT__ .grid{display:grid;gap:1px}#__ROOT__ button{border:1px solid #ddd;min-height:25px;font:12px system-ui;cursor:pointer}#__ROOT__ button:focus-visible{outline:3px solid #111;z-index:1}#__ROOT__ .detail{white-space:pre-wrap;padding:10px;background:#edf2f7;color:#24364b}#__ROOT__ .head{font-weight:600;padding:4px}#__ROOT__ input,#__ROOT__ select{font:inherit;margin:6px;max-width:100%}#__ROOT__ .selected{outline:2px solid #111;outline-offset:-2px}#__ROOT__ circle:focus-visible{stroke:#111;stroke-width:4}#__ROOT__ svg{width:100%;max-width:650px;height:auto;background:white;color:#24364b}#__ROOT__ .tree-branch:focus-visible{stroke:#111;stroke-width:4}#__ROOT__ .pair-controls{display:flex;flex-wrap:wrap;align-items:center}
 </style><h3>Annotated IHC linked inspector</h3>
-<p>Local inspection only. Search and row highlighting do not change cohorts or recalculate results. Gray cells are missing. Native tables and static plots use saved options. Local marker choices and highlighted rows are transient.</p>
+<p>Local inspection only. Search and row highlighting do not change cohorts or recalculate results. Gray cells are missing. Native tables and static plots use saved options. Local marker choices and unapplied row previews are transient.</p>
 <label>Find source row, patient, group or region <input class="search" type="search"></label>
-<button class="clear" type="button">Clear row highlight</button>
+<button class="clear" type="button">Clear highlights</button>
+<div class="selection-panel" hidden><h4>Save source-row selection</h4>
+<p>Inspection changes the preview only. Apply commits source rows; native tables and the optional saved flag update after recalculation. All analysis results continue to use the full retained cohort.</p>
+<label><input class="extend-rows" type="checkbox"> Toggle individual rows on activation (branches replace the preview)</label>
+<p class="selection-preview" role="status" aria-live="polite"></p>
+<button class="apply-selection" type="button">Apply source rows</button>
+<button class="restore-selection" type="button">Restore applied rows to preview</button>
+<p class="selection-status" role="status" aria-live="polite"></p></div>
 <p class="legend"></p><div class="view"><div class="grid" role="group" aria-label="IHC marker cells"></div></div>
+<div class="trees"></div>
 <div class="scatter-panel" hidden><h4>Linked marker scatterplot</h4>
 <div class="pair-controls"><label>X marker <select class="x-marker"></select></label><label>Y marker <select class="y-marker"></select></label></div>
 <p class="pair-scope" role="status" aria-live="polite"></p>
@@ -18,24 +26,71 @@ root.querySelector('.legend').textContent=p.scaleLabel+': blue −'+limit.toPrec
 grid.style.gridTemplateColumns='minmax(180px,2fr) repeat('+p.markers.length+',minmax(55px,1fr))';
 function text(value){return value===null?'[missing]':String(value)}
 function heading(label){const el=document.createElement('span');el.className='head';el.textContent=label;grid.appendChild(el);return el;}
-heading('Source row | ID | group | region');p.markers.forEach(heading);
-const rowHeads=[],cells=[],dots=[];let selected=null,query='';
+heading('Source row | ID | group | region');const colHeads=p.markers.map(heading);
+const rowHeads=[],cells=[],dots=[];let selected=new Set(),markerSelection=new Set(),query='';
+const extend=root.querySelector('.extend-rows');
+if(p.selection){root.querySelector('.selection-panel').hidden=false;const applied=new Set(p.selection.selectedRows);p.rows.forEach((r,i)=>{if(applied.has(r.row))selected.add(i);});}
+function selectedIds(){return p.rows.filter((r,i)=>selected.has(i)).map(r=>r.row);}
 function refreshHighlights(){
- rowHeads.forEach((h,i)=>{const hit=Boolean(query&&h.textContent.toLocaleLowerCase().includes(query));h.style.backgroundColor=hit?'#ffe5a3':'white';h.classList.toggle('selected',i===selected);});
- cells.forEach((row,i)=>row.forEach(cell=>{cell.classList.toggle('selected',i===selected);cell.setAttribute('aria-pressed',String(i===selected));}));
- dots.forEach(({el,index})=>{const hit=Boolean(query&&rowHeads[index].textContent.toLocaleLowerCase().includes(query));el.setAttribute('fill',index===selected?'#111':hit?'#b35400':'#2864a0');el.setAttribute('r',index===selected?'7':'5');el.setAttribute('aria-pressed',String(index===selected));});
+ rowHeads.forEach((h,i)=>{const hit=Boolean(query&&h.textContent.toLocaleLowerCase().includes(query));h.style.backgroundColor=hit?'#ffe5a3':'white';h.classList.toggle('selected',selected.has(i));});
+ cells.forEach((row,i)=>row.forEach((cell,j)=>{const hit=selected.has(i)||markerSelection.has(p.markers[j]);cell.classList.toggle('selected',hit);cell.setAttribute('aria-pressed',String(hit));}));
+ colHeads.forEach((h,j)=>h.classList.toggle('selected',markerSelection.has(p.markers[j])));
+ dots.forEach(({el,index})=>{const hit=Boolean(query&&rowHeads[index].textContent.toLocaleLowerCase().includes(query));el.setAttribute('fill',selected.has(index)?'#111':hit?'#b35400':'#2864a0');el.setAttribute('r',selected.has(index)?'7':'5');el.setAttribute('aria-pressed',String(selected.has(index)));});
+ if(p.selection){const ids=selectedIds();root.querySelector('.selection-preview').textContent='Preview source rows ('+ids.length+'): '+(ids.join(', ')||'none')+'. Applied rows: '+p.selection.selectedRows.length+'. '+(p.selection.valid?'':'Saved selection needs review after input changes. Requested source rows: '+p.selection.requested.join(', '));const apply=root.querySelector('.apply-selection');apply.textContent='Apply '+ids.length+' source rows';apply.disabled=markerSelection.size>0;}
 }
-function inspect(i,j){
- selected=i;const r=p.rows[i];
+function inspect(i,j,activate=true){
+ if(!p.selection||!extend.checked){selected=new Set([i]);markerSelection.clear();}
+ else if(activate){if(selected.has(i))selected.delete(i);else selected.add(i);markerSelection.clear();}
+ const r=p.rows[i];
  detail.textContent='Source row: '+r.row+'\nPatient/specimen: '+text(r.subject)+'\nGroup: '+text(r.group)+'\nRegion: '+text(r.region)+'\n'+
  (j===undefined?p.markers.map((m,k)=>m+': raw '+text(p.raw[i][k])+', displayed '+text(p.values[i][k])).join('\n'):'Marker: '+p.markers[j]+'\nRaw value: '+text(p.raw[i][j])+'\nDisplayed value: '+text(p.values[i][j]));
  refreshHighlights();
 }
 p.rows.forEach((r,i)=>{const label=[r.row,r.subject,r.group,r.region].map(text).join(' | ');rowHeads.push(heading(label));cells[i]=[];
  p.markers.forEach((marker,j)=>{const value=p.values[i][j],raw=p.raw[i][j],b=document.createElement('button');b.type='button';b.textContent=value===null?'·':value.toPrecision(3);const t=value===null?0:Math.min(1,Math.abs(value)/limit),rgb=value<0?[40,100,160]:[190,90,20];b.style.backgroundColor=value===null?'#b0b0b0':'rgb('+rgb.map(c=>Math.round(255+(c-255)*t)).join(',')+')';b.style.color=value!==null&&t>.7?'white':'#111';b.setAttribute('aria-label','Row '+r.row+', '+marker+', raw '+text(raw)+', display '+text(value));b.setAttribute('aria-pressed','false');
- b.addEventListener('click',()=>inspect(i,j));b.addEventListener('focus',()=>inspect(i,j));grid.appendChild(b);cells[i].push(b);});});
+ b.addEventListener('click',()=>inspect(i,j));b.addEventListener('focus',()=>inspect(i,j,false));grid.appendChild(b);cells[i].push(b);});});
 root.querySelector('.search').addEventListener('input',e=>{query=e.target.value.toLocaleLowerCase();refreshHighlights();});
-root.querySelector('.clear').addEventListener('click',()=>{selected=null;detail.textContent='Row highlight cleared. Full-data results unchanged.';refreshHighlights();});
+root.querySelector('.clear').addEventListener('click',()=>{selected.clear();markerSelection.clear();detail.textContent='Highlights cleared. Full-data results unchanged.';refreshHighlights();});
+if(p.selection){
+ root.querySelector('.apply-selection').addEventListener('click',()=>{
+  const status=root.querySelector('.selection-status'),ids=selectedIds();
+  if(markerSelection.size){status.textContent='Inspect source rows before applying a row selection.';return;}
+  const previous=new Set(p.selection.requested);
+  if(p.selection.valid&&ids.length===previous.size&&ids.every(id=>previous.has(id))){status.textContent='These source rows are already applied.';return;}
+  if(typeof window.setOption!=='function'){status.textContent='Applying a selection requires the native jamovi HTML option bridge.';return;}
+  window.setOption('selectionDefinition',JSON.stringify({version:1,rows:ids,snapshot:p.snapshot}));
+  status.textContent='Source rows sent to jamovi. Check the native Applied Source-Row Selection summary after recalculation.';
+ });
+ root.querySelector('.restore-selection').addEventListener('click',()=>{
+  const applied=new Set(p.selection.selectedRows);selected.clear();markerSelection.clear();
+  p.rows.forEach((r,i)=>{if(applied.has(r.row))selected.add(i);});
+  root.querySelector('.selection-status').textContent=p.selection.valid?'Applied rows restored to preview; native results unchanged.':'No valid applied rows; inspect source rows and Apply again.';refreshHighlights();
+ });
+}
+const trees=root.querySelector('.trees');
+for(const [key,axis,isRows] of [['rowTree','Source rows',true],['markerTree','Markers',false]]){
+ const tree=p[key];if(!tree)continue;
+ const heading=document.createElement('h4');heading.textContent=axis+' dendrogram';trees.appendChild(heading);
+ const note=document.createElement('p');note.textContent='Average-linkage Euclidean distance on displayed values. Focus or activate a branch to highlight its members locally; no cohort changes or significance test. Leaf labels may be shortened or thinned.';trees.appendChild(note);
+ if(!tree.branches.length){note.textContent='One retained row: no dendrogram merges.';continue;}
+ const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.setAttribute('viewBox','0 0 650 360');svg.setAttribute('role','group');svg.setAttribute('aria-label',axis+' dendrogram');trees.appendChild(svg);
+ const top=Math.max(...tree.branches.map(b=>b.height))||1,sx=x=>55+x/Math.max(1,tree.leaves.length-1)*560,sy=y=>245-y/top*210;
+ function add(tag,attrs,label){const el=document.createElementNS('http://www.w3.org/2000/svg',tag);Object.entries(attrs).forEach(([k,v])=>el.setAttribute(k,String(v)));if(label!==undefined)el.textContent=label;svg.appendChild(el);return el;}
+ add('path',{d:'M55 25V245H625',stroke:'#24364b',fill:'none'});
+ for(let i=0;i<=4;i++)add('text',{x:48,y:sy(top*i/4)+4,'text-anchor':'end','font-size':10},(top*i/4).toPrecision(3));
+ add('text',{x:12,y:140,transform:'rotate(-90 12 140)','text-anchor':'middle','font-size':11},'Average-linkage distance');
+ const step=Math.max(1,Math.ceil(tree.leaves.length/25));tree.leaves.forEach((leaf,i)=>{if(i%step===0)add('text',{x:sx(i),y:260,transform:'rotate(60 '+sx(i)+' 260)','font-size':9},leaf.length>30?leaf.slice(0,27)+'...':leaf);});
+ tree.branches.forEach(branch=>{
+  const d='M'+sx(branch.xLeft)+' '+sy(branch.leftHeight)+'V'+sy(branch.height)+'H'+sx(branch.xRight)+'V'+sy(branch.rightHeight);
+  const label=axis+' merge '+branch.merge+', distance '+branch.height+', '+branch.count+' members: '+branch.members.join(', ');
+  const path=add('path',{d,stroke:'#2864a0','stroke-width':2,fill:'none',tabindex:0,role:'button',class:'tree-branch','data-axis':isRows?'rows':'markers','data-merge':branch.merge,'aria-label':label});
+  const title=document.createElementNS('http://www.w3.org/2000/svg','title');title.textContent=label;path.appendChild(title);
+  function choose(){selected.clear();markerSelection.clear();if(isRows){const members=new Set(branch.members);p.rows.forEach((r,i)=>{if(members.has(r.row))selected.add(i);});}else markerSelection=new Set(branch.members);
+   detail.textContent=axis+' merge '+branch.merge+'\nAverage-linkage distance: '+branch.height+'\nMembers ('+branch.count+'): '+branch.members.join(', ')+'\nLocal highlight only; full-data results unchanged.';refreshHighlights();}
+  path.addEventListener('click',choose);path.addEventListener('focus',choose);path.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();choose();}});
+  const hit=add('path',{d,stroke:'transparent','stroke-width':12,fill:'none','aria-hidden':'true'});hit.addEventListener('click',choose);
+ });
+}
 if(p.scatter){
  const panel=root.querySelector('.scatter-panel'),xs=root.querySelector('.x-marker'),ys=root.querySelector('.y-marker'),svg=root.querySelector('.scatter-view'),scope=root.querySelector('.pair-scope');panel.hidden=false;
  for(const control of [xs,ys])p.markers.forEach((m,j)=>{const o=document.createElement('option');o.value=String(j);o.textContent=m;control.appendChild(o);});
@@ -54,9 +109,10 @@ if(p.scatter){
   for(let t=0;t<=4;t++){const x=xmin+(xmax-xmin)*t/4,y=ymin+(ymax-ymin)*t/4;element('text',{x:sx(x),y:350,'text-anchor':'middle','font-size':11},x.toPrecision(3));element('text',{x:62,y:sy(y)+4,'text-anchor':'end','font-size':11},y.toPrecision(3));}
   element('text',{x:345,y:385,'text-anchor':'middle'},p.markers[xi]);element('text',{x:18,y:180,transform:'rotate(-90 18 180)','text-anchor':'middle'},p.markers[yi]);
   points.forEach(v=>{const el=element('circle',{cx:sx(v.x),cy:sy(v.y),r:5,fill:'#2864a0',stroke:'white',tabindex:0,role:'button','data-row':p.rows[v.index].row,'aria-label':'Source row '+p.rows[v.index].row+', '+p.markers[xi]+' '+text(v.x)+', '+p.markers[yi]+' '+text(v.y)});
-   el.addEventListener('click',()=>inspect(v.index));el.addEventListener('focus',()=>inspect(v.index));el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();inspect(v.index);}});dots.push({el,index:v.index});});
+   el.addEventListener('click',()=>inspect(v.index));el.addEventListener('focus',()=>inspect(v.index,undefined,false));el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();inspect(v.index);}});dots.push({el,index:v.index});});
   refreshHighlights();
  }
  xs.addEventListener('change',draw);ys.addEventListener('change',draw);draw();
 }
+refreshHighlights();
 })();</script></div>

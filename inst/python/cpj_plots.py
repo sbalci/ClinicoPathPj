@@ -47,7 +47,7 @@ def figure(state, width=600, height=400, palette=None, background='white', foreg
     palette = palette or DEFAULT_PALETTE
     columns = state['columns']; kind = state['kind']
     n = len(next(iter(columns.values()), []))
-    if n > {'interval':200, 'line':20000, 'box':20000, 'bar':2000, 'scatter':5000, 'points':5000, 'histogram':2000, 'pyramid':200, 'qualitymap':4000, 'ihcheatmap':4000}.get(kind, 0):
+    if n > {'interval':200, 'line':20000, 'box':20000, 'bar':2000, 'scatter':5000, 'points':5000, 'histogram':2000, 'pyramid':200, 'qualitymap':4000, 'ihcheatmap':4000, 'dendrogram':199}.get(kind, 0):
         raise ValueError('Unsupported plot kind or excessive plot rows')
     if any(len(c) != n for c in columns.values()): raise ValueError('Plot columns have unequal lengths')
     if kind == 'histogram':
@@ -77,7 +77,24 @@ def figure(state, width=600, height=400, palette=None, background='white', foreg
     reference = state.get('reference')
     if reference is not None:
         (ax.axvline if kind in ('interval','scatter') else ax.axhline)(reference, color=foreground, alpha=.5, linestyle='--')
-    if kind == 'interval':
+    if kind == 'dendrogram':
+        labels={}
+        for i in range(n):
+            left,right,lh,rh,top=[columns[k][i] for k in
+                                 ('xLeft','xRight','leftHeight','rightHeight','height')]
+            if any(v is None or not np.isfinite(v) for v in (left,right,lh,rh,top)) or left>=right or min(lh,rh)<0 or top<max(lh,rh):
+                raise ValueError('Invalid dendrogram branch geometry')
+            ax.plot([left,left,right,right],[lh,top,top,rh],color=palette[0],linewidth=1)
+            for position,key in [(left,'leftLabel'),(right,'rightLabel')]:
+                label=columns[key][i]
+                if label is not None:
+                    labels[position]=label
+        positions=sorted(labels)
+        step=max(1,int(np.ceil(len(positions)/25)))
+        ticks=positions[::step]
+        ax.set_xticks(ticks,[labels[v][:77]+'...' if len(labels[v])>80 else labels[v] for v in ticks],rotation=90,fontsize=8)
+        ax.set_ylim(bottom=0,top=max(columns['height'],default=0)*1.05 or 1)
+    elif kind == 'interval':
         y = np.arange(n)
         for i in range(n):
             estimate = columns['estimate'][i]

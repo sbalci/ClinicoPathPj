@@ -5,7 +5,7 @@
   "menuGroup": "Descriptives Py",
   "menuSubgroup": "Biomarker panels",
   "menuTitle": "Annotated IHC heatmap",
-  "version": "0.3.13",
+  "version": "0.3.15",
   "jas": "1.2",
   "options": [
     {
@@ -98,6 +98,29 @@
     {
       "name": "clusterColumns",
       "title": "Cluster markers (average linkage, Euclidean)",
+      "type": "Bool",
+      "default": false
+    },
+    {
+      "name": "enableSelection",
+      "title": "Saved source-row selection",
+      "type": "Bool",
+      "default": false
+    },
+    {
+      "name": "selectionDefinition",
+      "title": "Saved selection definition",
+      "type": "String",
+      "default": ""
+    },
+    {
+      "name": "selectionFlag",
+      "title": "Applied IHC row selection",
+      "type": "Output"
+    },
+    {
+      "name": "showDendrograms",
+      "title": "Dendrograms and merge inspection",
       "type": "Bool",
       "default": false
     },

@@ -25,7 +25,20 @@ Every selected marker must have at least one retained observed value. Infinite v
 Row and/or marker clustering is optional, with average linkage and Euclidean distance on the
 displayed values. It requires complete marker rows; select complete-row mode or disable clustering.
 No imputation, hidden resampling or jitter is performed. Branch orientation can differ from R
-while describing the same hierarchy. This core displays the leaf ordering, not dendrograms.
+while describing the same hierarchy. Optional **Dendrograms and merge inspection** (0.3.14) exposes these same trees; it does not
+recluster or alter leaf ordering. It defaults off. Enable it under Plots and Interaction
+after row and/or marker clustering. Native merge tables name leaf children by original
+source row / marker and internal children by merge number, scoped to each clustered axis.
+Native static tree plots put leaves in heatmap order. Heights are average-linkage distances
+on displayed values, not p values, stability measures or clinical boundaries. A single
+retained row has no row-tree merges; zero-distance merges are retained without jitter.
+
+In the local inspector, focus or activate a branch to highlight its member rows or marker
+columns. Row branches also highlight matching complete-pair scatter points; rows missing
+scatter values remain highlighted in the heatmap. Marker branches highlight columns without
+selecting specimen rows. Clear highlights resets both. Nothing is refitted, filtered or saved
+by inspection. Labels may be shortened/thinned in tree plots; branch descriptions and native
+merge tables retain identities. See [dendrogram validation](python-ihc-dendrogram-validation.md).
 
 The maximum retained matrix is 200 rows × 20 markers. Larger matrices are rejected explicitly;
 no hidden display sampling. The native static image contains all cells. Its row labels are shortened above 80 characters and thinned
@@ -52,7 +65,7 @@ is fitted. If no pairs remain, the heatmap remains available and a warning expla
 empty scatterplot.
 
 With local inspection enabled, focus/click a heatmap cell or scatter point to highlight its
-source row in both views. Enter/Space activates focused points; Clear row highlight resets
+source row in both views. Enter/Space activates focused points; Clear highlights resets
 selection. Repeated patient IDs do not merge source rows. Local X/Y dropdowns can inspect
 other selected markers, counting their complete/missing pairs without backend calls.
 Search highlights labels/points without removing them. Local pair choices and highlights
@@ -64,8 +77,30 @@ Version 0.3.13 keeps supplier variables available for reuse in native scatter ro
 Native mouse linking, custom pair controls, fresh-engine save/reopen and PNG export have
 been checked on macOS arm64 / jamovi 28.13; complete keyboard/theme/platform gates remain open.
 See [linked-view validation and remaining gates](python-ihc-linked-validation.md).
-No saved selected-row column is supplied. Other omissions:
-dendrogram interaction, cluster significance/stability, differential-expression tests, clinical
+Version 0.3.15 adds optional **Saved source-row selection** under Save Row Selection.
+Enable it to preview source rows locally and commit them with **Apply source rows**. A row
+or row-branch replaces the preview; Toggle individual rows adds/removes activated rows.
+Marker branches inspect columns and cannot be applied as specimen selections. Restore applied
+rows resets the preview without dispatch; clearing then applying commits an empty selection.
+Native summary/selected-row tables report the applied selection, independent of later previews.
+
+The native output control optionally creates `IHC_selection` (Not selected / Selected).
+It retains original input row positions. Excluded rows are unassessed (missing), rather than
+negative selections. Disabling the feature clears an enabled flag to missing. Applied
+selections never subset or refit heatmap summaries, clustering or scatter calculations.
+
+Selections are bound to all supplied marker/annotation rows and role choices, including
+rows excluded from display. Edits, insertions, deletions, filtering or input-role changes
+require review/reapplication; until then all flags are unassessed. Scaling, clustering,
+scatter-pair and missing-row display choices do not change that input binding. This protects
+against silently reusing positional source IDs after input changes; it is not a patient-ID
+registry or proof of identity beyond the supplied view data. The saved definition is available
+under Advanced Settings. Native tables are authoritative if the host panel field has not
+refreshed; close options and reselect the analysis heading to refresh it.
+See [selection validation and acceptance](python-ihc-selection-validation.md).
+
+Other omissions:
+cluster significance/stability, differential-expression tests, clinical
 cutoffs, pathway analysis, automatic imputation, spatial inference and patient-cluster inference.
 All rows/labels are embedded in local results; do not share a saved file containing identifiers
 that should not be disclosed. No external service is called.
