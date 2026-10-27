@@ -27,11 +27,12 @@ correlation core below now advances one planned baseline target to partial imple
 
 The original “start heatmap” milestone is complete as an exploratory utility. Repeating
 linked scatter, dendrogram or saved-selection implementation would duplicate work already
-present. Continue by closing the remaining usability gates, then specify the next numerical
-Orange-inspired analysis: a marker correlation matrix using explicit pairwise/common-cohort
-rules, pair-specific n, multiplicity controls and independent R references. Integrate it with
-existing row-linked inspection where useful; a new or existing registry target must state
-which baseline features it implements. Do not count this proposed work as implemented yet.
+present. The next numerical Orange-inspired analysis is now implemented as the partial
+`pyjjcorrmat` core in 0.3.20: explicit pairwise/common-cohort rules, pair-specific n,
+multiplicity controls and independent R references, with macOS desktop lifecycle evidence.
+Raw-row linking remains a proposed extension, not an implemented correlation feature.
+Continue with the remaining IHC/scatter accessibility gates and correlation baseline gaps
+listed below; broader platform and clinical qualification remain separate.
 
 Keep the Pj comparison available as an optional experiment; retain processx as default.
 The known host cutoff-field refresh limitation and planned future jamovi/Julia backends
@@ -271,7 +272,9 @@ not multiplicity-adjusted. Undefined estimates remain missing with explicit reas
 Independent base-R cor.test/p.adjust comparisons and native lifecycle/render checks passed
 (406 assertions over 16 configurations); the stable full Python suite passes 253 tests,
 and all 17 extracted packaged-runtime cases pass. Six hand/edge Python tests and a DOM inspector
-harness passed. Packaged runtime and current-build desktop acceptance are separate gates.
+harness passed. macOS arm64 jamovi 28.13 also passed native installation, fresh-engine
+reruns, keyboard inspection, OMV save/fresh-engine reopen/recalculation and native PNG
+export; additional platforms remain pending. See the [desktop record](python-correlation-desktop-validation.md).
 Robust, Bayesian, partial/grouped correlations, Spearman CIs, additional p-adjust methods
 and full plot styling remain omitted. This is not full baseline parity or clinical validation.
 See [correlation methods and qualification](python-correlation-matrix.md).
@@ -314,6 +317,44 @@ desktop acceptance for this addition are tracked in
 remain unchanged.
 
 Next implementation actions: qualify the 0.3.19 scatter keyboard extension, complete remaining
-IHC keyboard/theme/platform gates, then qualify the 0.3.20 correlation core in the native GUI and decide its next baseline
+IHC keyboard/theme/platform gates, then extend correlation accessibility/platform qualification and decide its next baseline
 features from the explicit omission list. Keep the already documented host cutoff-panel limitation visible without treating it
 as a blocker for independent work. Preserve the existing migration waves and statistical defaults.
+
+## Correlation keyboard extension — 0.3.21
+
+The existing `pyjjcorrmat` inspector now uses one remembered Tab stop with bounded
+row/column arrow navigation, row Home/End and Ctrl/Command matrix endpoints. Native
+Enter/Space activation and local-only detail inspection are preserved. DOM checks cover
+2, 3 and 20 variables, boundaries, unavailable estimates, focus re-entry and unhandled
+modifier/activation keys. Six focused Python tests, compiler/freshness checks and 17
+extracted packaged-runtime cases pass. Statistical methods, saved options and the 61-target inventory
+are unchanged. Native keyboard qualification of 0.3.21 remains open; 0.3.20 installation,
+save/reopen, rerun and export evidence is retained at its tested scope.
+
+## Native keyboard follow-up — 0.3.22
+
+Native 0.3.21 installation and fresh-engine rerun succeeded, and Tab exit/re-entry
+worked. First-cell Left Arrow incorrectly moved to the last column: handled navigation
+events still bubbled to the host. The template now stops propagation only for handled
+navigation keys, with a failing-before/passing-after DOM host-listener regression.
+Tab, native Enter/Space and unhandled modifiers retain normal propagation. Requalify
+the packaged repair in the native application before closing the keyboard gate.
+
+That retest passed on macOS arm64 / jamovi 28.13: boundaries, directional/endpoints,
+Tab re-entry and native activation, followed by separate OMV save and second fresh-engine
+reopen with the boundary repair retained. Six focused Python tests, 2/3/20-variable DOM
+fixtures, compiler/freshness and 17 packaged runtime cases pass. See the
+[keyboard finding and retest](python-correlation-keyboard-validation.md). Broader
+accessibility/theme/platform gates and omitted numerical methods remain open.
+
+## Correlation adjustment expansion — 0.3.23
+
+Hochberg, Hommel and BY extend the existing registered core to all seven adjustment
+choices in its frozen baseline; Holm remains the default. Unavailable pairs remain in
+the planned family and produce no invented p-values. All seven methods match 1,533
+independent base-R fixtures, including sparse/empty families, ties, extremes and up to
+190 comparisons. Native integration passes 706 assertions over 28 configurations; compiler/freshness
+and 17 packaged runtime cases pass, including the added adjustment paths. New native
+GUI control qualification remains open. Remaining numerical gaps are robust/Bayesian, partial/grouped methods
+and Spearman uncertainty; the 61-target inventory remains 17 partial and 44 planned.

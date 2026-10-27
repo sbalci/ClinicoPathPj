@@ -1,3 +1,21 @@
+# Correlation adjustment expansion — 0.3.23
+
+- [x] Add Hochberg/Hommel/BY without changing Holm default or saved option identifiers.
+- [x] Match base R across 1,533 independent fixtures and pass seven focused Python tests.
+- [x] Pass 706 native R assertions, compiler/freshness and 17 packaged runtimes (including all three added methods).
+- [ ] Qualify new adjustment controls in the native GUI; prior keyboard/export evidence retains its scope.
+
+# Correlation keyboard navigation — 0.3.21
+
+- [x] Add one remembered matrix Tab stop, row/column arrows and row/matrix endpoints.
+- [x] Preserve native activation and local-only inspection with no option or statistical changes.
+- [x] Pass DOM checks at 2, 3 and 20 variables, including unavailable cells and modified keys.
+- [x] Pass six focused Python tests, compiler/freshness checks and all 17 extracted packaged runtimes.
+- [x] Native 0.3.21 qualification found a boundary failure from host navigation; repaired in 0.3.22.
+- [x] Requalify native keyboard boundaries, Tab re-entry, activation and fresh-engine save/reopen with the 0.3.22 fix.
+- [x] Pass six focused Python checks, 2/3/20-variable DOM checks, compiler/freshness and 17 packaged runtimes.
+- [ ] Broader screen-reader, theme and cross-platform qualification remains open.
+
 # Correlation matrix core — 0.3.20
 
 - [x] Implement the registered `pyjjcorrmat` target as a partial Pearson/Spearman core.
@@ -5,8 +23,9 @@
 - [x] Add native pair table/static matrix and offline keyboard/cell inspection.
 - [x] Pass six hand/edge Python tests and 406 independent/native R assertions.
 - [x] Pass all 253 Python tests, compiler/generator checks and 17 extracted packaged-runtime cases.
-- [ ] Qualify native desktop installation, rerun/save/reopen/export and additional platforms.
-- [ ] Remaining baseline methods: robust/Bayesian/partial/grouped, Spearman CI, other adjustments/style.
+- [x] Qualify macOS arm64 desktop installation, rerun, keyboard inspection, save/fresh-engine reopen/recalculation and native PNG export.
+- [ ] Qualify additional platforms and broader accessibility/theme configurations.
+- [ ] Remaining baseline methods: robust/Bayesian/partial/grouped, Spearman CI and full plot styling.
 
 # Current reassessment and scatter keyboard extension — 0.3.19
 
@@ -15,7 +34,7 @@
 - [x] Preserve complete-pair IDs/ties, existing local preview/toggle semantics and explicit Apply.
 - [x] Pass six DOM harnesses, 50 focused Python checks, 159 native R assertions, compiler and 16 packaged cases.
 - [ ] Qualify this build's native scatter keyboard, rerun/save/reopen/export and broader accessibility/platforms.
-- [ ] Next numerical specification: marker correlation matrix, explicit missingness/n and multiplicity.
+- [x] Implement the next numerical core: marker correlation matrix, explicit missingness/n and multiplicity (0.3.20).
 
 # Orange-inspired heatmap keyboard navigation — 0.3.18
 

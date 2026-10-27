@@ -46,7 +46,7 @@ parity and GUI/platform acceptance remain separate gates.
 | pyjjarcdiagram | jjarcdiagram | jjstatsplot | 3 | planned | pending | pending |
 | pyjjbarstats | jjbarstats | jjstatsplot | 3 | planned | pending | pending |
 | pyjjbetweenstats | jjbetweenstats | jjstatsplot | 3 | planned | pending | pending |
-| pyjjcorrmat | jjcorrmat | jjstatsplot | 3 | partial | pending | pending packaged native desktop installation, save/reopen and export |
+| pyjjcorrmat | jjcorrmat | jjstatsplot | 3 | partial | pending | macOS arm64 jamovi 28.13: GUI install 0.3.20, fresh-engine Pearson/listwise and pairwise/Spearman reruns, keyboard cell inspection, OMV save/fresh-engine reopen/recalculation and native PNG export verified |
 | pyjjdotchart | jjdotchart | jjstatsplot | 3 | planned | pending | pending |
 | pyjjdotplotstats | jjdotplotstats | jjstatsplot | 3 | planned | pending | pending |
 | pyjjhistostats | jjhistostats | jjstatsplot | 3 | planned | pending | pending |

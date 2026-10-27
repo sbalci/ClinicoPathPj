@@ -8,7 +8,7 @@ SPEC = {'name': 'pyjjcorrmat',
  'title': 'Correlation Matrix (Python Core)',
  'menuGroup': 'Stats Plots Py',
  'menuSubgroup': 'Associations',
- 'version': '0.3.20',
+ 'version': '0.3.23',
  'options': [{'name': 'dep',
               'title': 'Numeric variables',
               'type': 'Variables',
@@ -33,6 +33,9 @@ SPEC = {'name': 'pyjjcorrmat',
               'options': [{'name': 'holm', 'title': 'Holm'},
                           {'name': 'bonferroni', 'title': 'Bonferroni'},
                           {'name': 'BH', 'title': 'Benjamini-Hochberg'},
+                          {'name': 'BY', 'title': 'Benjamini-Yekutieli'},
+                          {'name': 'hochberg', 'title': 'Hochberg'},
+                          {'name': 'hommel', 'title': 'Hommel'},
                           {'name': 'none', 'title': 'None'}],
               'default': 'holm'},
              {'name': 'conflevel',
@@ -117,6 +120,7 @@ def run(data, options, out):
         f"Pearson {100*p['confidence']:g}% Fisher-z intervals require at least four pairs; no Spearman intervals in this core. "
         "Intervals are pointwise and unadjusted; p-value adjustment does not adjust intervals. "
         "Spearman p values use the asymptotic t approximation, including ties. "
+        "Holm/Bonferroni control family-wise error under arbitrary dependence; Hochberg/Hommel require independent or suitably positively dependent tests. BH controls false discovery rate under independence or suitable positive dependence; BY allows arbitrary dependence. "
         "Rows must represent independent observations; repeated specimens need a separate clustered method. "
         "Pairwise deletion can produce a non-positive-semidefinite matrix. "
         "Gray cells are unavailable estimates, not zero associations. Robust, Bayesian, partial and grouped methods are omitted."))

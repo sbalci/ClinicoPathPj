@@ -19,7 +19,14 @@ Pairwise mode uses each pair's observed rows and reports its own n and excluded 
 The summary also reports the common complete-case n. Pairwise matrices may not be positive
 semidefinite; do not silently pass them to covariance-dependent modelling as valid covariance matrices.
 
-Holm adjustment is the default. Bonferroni, Benjamini–Hochberg and no adjustment are supported.
+Holm adjustment remains the default. From 0.3.23, Bonferroni, Hochberg, Hommel,
+Benjamini–Hochberg (BH), Benjamini–Yekutieli (BY) and no adjustment are supported.
+Holm and Bonferroni control family-wise error under arbitrary dependence. Hochberg and
+Hommel require independent or suitably positively dependent tests. BH controls false
+discovery rate under independence or suitable positive dependence; BY allows arbitrary
+dependence. Correlations sharing markers can have dependent tests: adjustment choice
+does not remove the need to consider these assumptions. These adjustments apply only
+to p-values, never to the displayed confidence intervals.
 The family contains every unique unordered selected-variable pair; unavailable tests remain
 NA but still count in the family size. Validation uses `p.adjust(..., n=number_of_pairs)`.
 Diagonal self-correlations are not tested or included in the adjustment family; diagonals
@@ -40,6 +47,16 @@ when defined. Gray cells indicate unavailable estimates, not zero relationships.
 The existing heatmap renderer follows the jamovi palette endpoints. A fully unavailable
 matrix remains gray; no estimates are fabricated to make a plot.
 
+From 0.3.21 the local matrix has one remembered Tab stop. Arrow keys move across
+cells without wrapping; Home/End select the first/last cell of a row, and Ctrl/Command
+with Home/End select the first/last matrix cell. Enter/Space retain native button
+activation; Tab and Shift+Tab leave the matrix. Modified arrow shortcuts remain available
+to the host. Focus updates only local inspection. Three DOM fixtures cover 2, 3 and
+20 variables, including unavailable cells. Native keyboard qualification of this extension
+was completed on macOS in 0.3.22 after repairing host-event propagation;
+see [keyboard finding and retest](python-correlation-keyboard-validation.md). The
+0.3.20 numerical/export evidence retains its original scope.
+
 The optional local matrix uses a fixed blue/white/orange scale and cell focus/click
 inspection of the same results. Labels are literal escaped data. It makes no network or
 native-option calls. Selection does not change cohorts or recalculate statistics. Native
@@ -49,7 +66,7 @@ cluster inference and correlation clustering are not included in this first core
 ## Baseline features deliberately omitted
 
 Robust/winsorized and Bayesian correlations, BF/posterior outputs, partial correlations,
-grouped matrices, Spearman uncertainty, Hochberg/Hommel/BY adjustment and full umbrella
+grouped matrices, Spearman uncertainty and full umbrella
 plot styling remain outside this core. The frozen R baseline/provenance remains unchanged
 in the registry. This port advances a planned target to partial; it is not full parity.
 The established production R implementation is unchanged.
@@ -71,6 +88,25 @@ Pillow imports. The complete suite was rerun after the build finished and passed
 concurrent dependency refresh and test execution. The preview PNG is a Python-rendered
 artifact, not evidence of native desktop export.
 
-Native desktop installation, valid reruns, save/fresh-engine reopen and native export for
-this new entry remain pending. Additional platforms, repeated-patient inference and clinical
-review are not qualified by these numerical/software checks.
+macOS arm64 jamovi 28.13 passed GUI installation, a fresh-engine run, Pearson/listwise
+and pairwise/Spearman reruns, keyboard cell inspection, OMV save/reopen in a second fresh
+engine, subsequent Pearson recalculation and native PNG export. The saved fixture retains
+Spearman/pairwise options; the exported image depicts that configuration.
+See [desktop evidence](python-correlation-desktop-validation.md). Additional platforms,
+repeated-patient inference and clinical review remain unqualified.
+
+## Expanded adjustment evidence — 0.3.23
+
+The independent `tools/correlation-adjustment-reference.R` script constructs 1,533
+base-R `p.adjust()` fixtures without loading ClinicoPathPj. The Python comparator
+`tools/check-correlation-adjustments.py` agrees for all seven methods: empty/all-missing
+families, zero/one and extreme p-values, ties, reordered tests and sizes through 190.
+Unavailable planned tests remain unavailable while counting in the family size. Hommel
+uses p=1 for unavailable family members, matching R. Seven focused Python tests pass;
+706 native R assertions pass over 28 method/missingness/adjustment configurations,
+including base-R correlation estimates, p-values/intervals, adjusted native table values,
+stale-result clearing and native raster rendering. All 17 packaged runtime cases pass,
+with additional checks for each new adjustment. R emitted three "Operation not permitted"
+messages after completion; the runner exited zero with no failed assertions or test warnings.
+The new adjustment controls still need native GUI qualification.
+See [adjustment oracle report](validation-exports/python-correlation-adjustments-0.3.23-oracle.json).

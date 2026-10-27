@@ -49,6 +49,9 @@ pyjjcorrmatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                     "holm",
                     "bonferroni",
                     "BH",
+                    "BY",
+                    "hochberg",
+                    "hommel",
                     "none"),
                 default="holm")
             private$..conflevel <- jmvcore::OptionNumber$new(
@@ -187,7 +190,7 @@ pyjjcorrmatBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             super$initialize(
                 package = "ClinicoPathPj",
                 name = "pyjjcorrmat",
-                version = c(0,3,20),
+                version = c(0,3,23),
                 options = options,
                 results = pyjjcorrmatResults$new(options=options),
                 data = data,

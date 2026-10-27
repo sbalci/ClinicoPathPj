@@ -27,6 +27,22 @@ class Correlation(unittest.TestCase):
         self.assertEqual(adjust([.01,.04,None],'bonferroni'),[.03,.12,None])
         self.assertEqual(adjust([None,None],'holm'),[None,None])
 
+    def test_extended_adjustments_and_invariants(self):
+        for method in ['hochberg','hommel','BY']:
+            self.assertEqual(adjust([None,None],method),[None,None])
+            self.assertEqual(adjust([.02],method),[.02])
+            self.assertEqual(adjust([0.,1.,None],method),[0.,1.,None])
+            p=[.01,.04,None,.04,.2]
+            q=adjust(p,method)
+            self.assertIsNone(q[2]);self.assertEqual(q[1],q[3])
+            self.assertTrue(all(a<=b<=1 for a,b in zip([v for v in p if v is not None],[v for v in q if v is not None])))
+            reverse=adjust(p[::-1],method)[::-1]
+            self.assertEqual(q,reverse)
+        np.testing.assert_allclose(adjust([.01,.04,None],'BY')[:2],[.055,.11])
+        np.testing.assert_allclose(adjust([.01,.04,None],'hochberg')[:2],[.03,.08])
+        np.testing.assert_allclose(adjust([.01,.04,None],'hommel')[:2],[.03,.08])
+        with self.assertRaises(InputError):adjust([.1],'unsupported')
+
     def test_spearman_ties_and_insufficient_pairs(self):
         p=calculate({'a':np.array([1.,1,2,3]),'b':np.array([1.,2,3,4])},dict(dep=['a','b'],typestatistics='nonparametric'))
         self.assertAlmostEqual(p['pairs'][0]['estimate'],3/np.sqrt(10));self.assertIsNone(p['pairs'][0]['lower'])

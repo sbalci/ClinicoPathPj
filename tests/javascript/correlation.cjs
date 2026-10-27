@@ -1,6 +1,20 @@
 const assert=require('node:assert/strict'),fs=require('node:fs'),{JSDOM}=require('jsdom');
 const errors=[],calls=[];const dom=new JSDOM(fs.readFileSync(process.argv[2],'utf8'),{runScripts:'dangerously',beforeParse(w){w.setOption=(...a)=>calls.push(a);w.fetch=()=>{throw Error('Inspection must stay local');};w.addEventListener('error',e=>errors.push(e.message));}});
 const d=dom.window.document,b=[...d.querySelectorAll('button')];assert.equal(b.length,9);assert.equal(d.querySelector('unsafe'),null);
+assert.equal(b.filter(x=>x.tabIndex===0).length,1);assert.equal(b[0].tabIndex,0);
+const bubbled=[];d.addEventListener('keydown',e=>bubbled.push(e.key));
+function key(name,mods={}){const e=new dom.window.KeyboardEvent('keydown',{key:name,bubbles:true,cancelable:true,...mods});d.activeElement.dispatchEvent(e);return e;}
+b[0].focus();assert.equal(key('ArrowLeft').defaultPrevented,true);assert.equal(d.activeElement,b[0]);
+key('ArrowRight');assert.equal(d.activeElement,b[1]);key('ArrowDown');assert.equal(d.activeElement,b[4]);
+key('End');assert.equal(d.activeElement,b[5]);key('Home');assert.equal(d.activeElement,b[3]);
+key('End',{ctrlKey:true});assert.equal(d.activeElement,b[8]);key('ArrowDown');assert.equal(d.activeElement,b[8]);
+key('Home',{metaKey:true});assert.equal(d.activeElement,b[0]);
+assert.deepEqual(bubbled,[]);
+assert.equal(key('Tab').defaultPrevented,false);assert.equal(key('Enter').defaultPrevented,false);
+assert.equal(key(' ',{}).defaultPrevented,false);assert.equal(key('ArrowDown',{shiftKey:true}).defaultPrevented,false);
+assert.equal(key('ArrowRight',{ctrlKey:true}).defaultPrevented,false);
+assert.ok(bubbled.includes('Tab'));assert.ok(bubbled.includes('Enter'));
+b[7].focus();b[7].blur();assert.equal(b[7].tabIndex,0);assert.equal(b.filter(x=>x.tabIndex===0).length,1);
 b[1].focus();assert.match(d.querySelector('.detail').textContent,/n = 4; excluded = 0/);assert.match(d.querySelector('.detail').textContent,/<unsafe>/);
 b[2].click();assert.match(d.querySelector('.detail').textContent,/Constant variable/);assert.match(d.querySelector('.detail').textContent,/unavailable/);
-b[0].click();assert.match(d.querySelector('.detail').textContent,/not tested/);assert.equal(calls.length,0);assert.deepEqual(errors,[]);dom.window.close();console.log('Correlation literal labels, keyboard inspection, pair n, unavailable cells and no backend dispatch PASSED');
+b[0].click();assert.match(d.querySelector('.detail').textContent,/not tested/);assert.equal(b.filter(x=>x.tabIndex===0).length,1);assert.equal(calls.length,0);assert.deepEqual(errors,[]);dom.window.close();console.log('Correlation literal labels, keyboard inspection, pair n, unavailable cells and no backend dispatch PASSED');
