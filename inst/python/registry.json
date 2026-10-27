@@ -2589,7 +2589,8 @@
         "linked_views": "0.3.12 linked heatmap/scatter and native pair outputs; 0.3.13 persistent supplier fix. macOS arm64 / jamovi 28.13: mouse linking, custom pair controls, fresh-engine OMV reopen and native PNG export verified; full keyboard/theme/large-matrix/other-platform acceptance pending",
         "dendrograms": "0.3.14: optional native trees/merge tables and local branch membership inspection implemented using existing linkage. Six independent base-R row/marker cophenetic and height fixtures; desktop/tree-export/theme/platform acceptance tracked separately in docs/python-ihc-dendrogram-validation.md",
         "saved_selection": "0.3.15: optional explicit Apply, native applied-row tables and original-row nominal flag. Whole-input snapshot guard requires review after supplied data/role changes; no analysis subsetting. Numerical/lifecycle/native acceptance scopes are recorded in docs/python-ihc-selection-validation.md",
-        "selected_marker_values": "0.3.16: optional native long table of applied retained rows and marker measurements, original source identities/annotations, raw and full-cohort displayed values, and explicit missingness. Does not refit selection statistics. Evidence and open gates: docs/python-ihc-selected-values-validation.md"
+        "selected_marker_values": "0.3.16: optional native long table of applied retained rows and marker measurements, original source identities/annotations, raw and full-cohort displayed values, and explicit missingness. Does not refit selection statistics. Evidence and open gates: docs/python-ihc-selected-values-validation.md",
+        "scatter_rectangle": "0.3.17: transient inclusive displayed-value rectangle row previews via numeric bounds or pointer drag. Complete pairs only; original source IDs; existing explicit Apply commits selection without refitting. Evidence: docs/python-ihc-brush-validation.md"
       }
     }
   ],

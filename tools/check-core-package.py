@@ -75,6 +75,8 @@ def check(path):
                 assert result['plots']['markerDendrogram']['kind']=='dendrogram'
                 assert '"rowTree": {' in result['htmls']['explorer']
                 assert 'tree-branch' in result['htmls']['explorer']
+                assert 'Preview rectangle rows' in result['htmls']['explorer']
+                assert 'pointercancel' in result['htmls']['explorer']
                 snapshot=re.search(r'"snapshot": "([0-9a-f]{64})"',result['htmls']['explorer'])[1]
                 applied_options=dict(options,showSelectionValues=True,selectionDefinition=json.dumps(dict(version=1,rows=['2'],snapshot=snapshot)))
                 request.write_text(json.dumps(dict(analysis=name,columns=columns,options=applied_options,row_ids=['1','2','3'])))

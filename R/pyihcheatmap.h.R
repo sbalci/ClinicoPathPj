@@ -508,7 +508,7 @@ pyihcheatmapBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             super$initialize(
                 package = "ClinicoPathPj",
                 name = "pyihcheatmap",
-                version = c(0,3,16),
+                version = c(0,3,17),
                 options = options,
                 results = pyihcheatmapResults$new(options=options),
                 data = data,

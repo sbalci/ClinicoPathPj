@@ -1,3 +1,10 @@
+# 0.3.17 — 2026-10-27
+
+- Add local scatter rectangle row previews with inclusive displayed-value bounds.
+- Support numeric bounds/Enter and optional pointer dragging with capture, cancellation and Escape.
+- Preserve complete-pair source identities, tied points and explicit Apply; no automatic backend writes.
+- Retain all native analysis calculations, full-cohort scaling and saved-selection snapshot guards.
+
 # 0.3.16 — 2026-10-27
 
 - Add an optional native table of applied selected IHC marker measurements.

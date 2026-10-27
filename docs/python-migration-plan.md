@@ -201,6 +201,12 @@ Applied retained rows expose raw and full-cohort displayed marker measurements, 
 identities, annotations and missingness in heatmap order. It introduces no new inference,
 selection refit or baseline port. See [selected-data checks](python-ihc-selected-values-validation.md).
 
+Version 0.3.17 adds local rectangle row previews to the linked IHC scatterplot, using
+inclusive numeric displayed-value bounds or optional pointer dragging. Complete pairs
+retain original source identities and ties remain separate rows. Only the existing Apply
+action persists a row selection; it changes no statistical calculation. See
+[rectangle interaction checks](python-ihc-brush-validation.md).
+
 ## Deferred backend experiment: Julia
 
 Retain Julia as a future optional analysis backend, following the 2026-10-26 discussion.
