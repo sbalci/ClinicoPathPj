@@ -8,7 +8,7 @@
   "children": [
     {
       "type": "VariableSupplier",
-      "persistentItems": false,
+      "persistentItems": true,
       "stretchFactor": 1,
       "children": [
         {
