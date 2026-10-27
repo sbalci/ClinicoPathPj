@@ -196,6 +196,11 @@ prevent silent reuse after supplied marker/annotation data or role changes. See
 [selection qualification](python-ihc-selection-validation.md). This is a utility extension,
 not another baseline port or a model-validation pipeline.
 
+Version 0.3.16 adds an optional native selected-data table to the same IHC utility.
+Applied retained rows expose raw and full-cohort displayed marker measurements, source
+identities, annotations and missingness in heatmap order. It introduces no new inference,
+selection refit or baseline port. See [selected-data checks](python-ihc-selected-values-validation.md).
+
 ## Deferred backend experiment: Julia
 
 Retain Julia as a future optional analysis backend, following the 2026-10-26 discussion.

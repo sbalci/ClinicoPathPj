@@ -144,6 +144,60 @@
       ]
     },
     {
+      "name": "selectionValues",
+      "title": "Applied Selected Marker Values",
+      "type": "Table",
+      "visible": "(enableSelection && showSelectionValues)",
+      "rows": 0,
+      "columns": [
+        {
+          "name": "position",
+          "title": "Heatmap Row Order",
+          "type": "integer"
+        },
+        {
+          "name": "sourceRow",
+          "title": "Source Row",
+          "type": "text"
+        },
+        {
+          "name": "subject",
+          "title": "Patient / Specimen",
+          "type": "text"
+        },
+        {
+          "name": "group",
+          "title": "Group",
+          "type": "text"
+        },
+        {
+          "name": "region",
+          "title": "Region",
+          "type": "text"
+        },
+        {
+          "name": "marker",
+          "title": "Marker",
+          "type": "text"
+        },
+        {
+          "name": "raw",
+          "title": "Raw Value",
+          "type": "number"
+        },
+        {
+          "name": "displayed",
+          "title": "Displayed Value",
+          "type": "number"
+        },
+        {
+          "name": "status",
+          "title": "Measurement",
+          "type": "text"
+        }
+      ]
+    },
+    {
       "name": "selectionFlag",
       "title": "Applied IHC Row Selection",
       "type": "Output",
@@ -164,6 +218,7 @@
         "enableSelection",
         "selectionDefinition",
         "selectionFlag",
+        "showSelectionValues",
         "showDendrograms",
         "showScatter",
         "interactive"

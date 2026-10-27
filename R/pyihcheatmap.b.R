@@ -6,7 +6,7 @@ pyihcheatmapClass <- R6::R6Class(
     private = list(
         .run = function() {
             .cpjRun(self, "pyihcheatmap",
-                options = c("markers", "subject", "group", "region", "scatterX", "scatterY", "scaling", "missing", "clusterRows", "clusterColumns", "enableSelection", "selectionDefinition", "selectionFlag", "showDendrograms", "showScatter", "interactive"),
+                options = c("markers", "subject", "group", "region", "scatterX", "scatterY", "scaling", "missing", "clusterRows", "clusterColumns", "enableSelection", "selectionDefinition", "selectionFlag", "showSelectionValues", "showDendrograms", "showScatter", "interactive"),
                 arrays = c("markers"),
                 terms = character(0),
                 numeric = c("markers", "scatterX", "scatterY"),

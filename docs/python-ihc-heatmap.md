@@ -130,3 +130,19 @@ that should not be disclosed. No external service is called.
 
 This is an exploratory utility, not full baseline IHC heterogeneity parity, a validated
 classifier, or clinical/release clearance. Cluster stability and inference require additional work.
+
+## Applied selected marker data (0.3.16)
+
+Under **Save Row Selection**, enable **Applied selected marker values** after enabling
+saved selections. The native table lists one row per applied retained specimen/marker,
+including source row, annotations, heatmap row order, raw value, displayed value and an
+Observed/Missing label. The displayed value uses the full retained cohort's chosen scaling;
+it is not standardized again within the selection. Both clustering axes' display orders
+are preserved. Missing cells stay missing, and unavailable/excluded source rows contribute
+no measurement rows. Local previews do not update this table until Apply. Empty or invalid
+selections, disabled options and incomplete required inputs clear its rows.
+
+The option defaults off; the existing 200-row × 20-marker bounds limit it to 4,000 records.
+Use native table copying/export for the applied measurement data. Reopening/rerunning
+reconstructs it from saved options and inputs. See the
+[validation record and limits](python-ihc-selected-values-validation.md).

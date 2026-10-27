@@ -5,7 +5,7 @@
   "menuGroup": "Descriptives Py",
   "menuSubgroup": "Biomarker panels",
   "menuTitle": "Annotated IHC heatmap",
-  "version": "0.3.15",
+  "version": "0.3.16",
   "jas": "1.2",
   "options": [
     {
@@ -117,6 +117,12 @@
       "name": "selectionFlag",
       "title": "Applied IHC row selection",
       "type": "Output"
+    },
+    {
+      "name": "showSelectionValues",
+      "title": "Applied selected marker values",
+      "type": "Bool",
+      "default": false
     },
     {
       "name": "showDendrograms",

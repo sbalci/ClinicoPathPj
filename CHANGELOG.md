@@ -1,3 +1,10 @@
+# 0.3.16 — 2026-10-27
+
+- Add an optional native table of applied selected IHC marker measurements.
+- Preserve source identities, annotations, heatmap order, raw values and full-cohort displayed values.
+- Explicitly retain missing measurements and clear stale, empty, disabled or pending selections.
+- Keep local previews separate from the applied table; selection does not refit statistics.
+
 # 0.3.15 — 2026-10-27
 
 - Add explicit native Apply for IHC source-row selections and individual-row preview toggles.

@@ -76,13 +76,17 @@ def check(path):
                 assert '"rowTree": {' in result['htmls']['explorer']
                 assert 'tree-branch' in result['htmls']['explorer']
                 snapshot=re.search(r'"snapshot": "([0-9a-f]{64})"',result['htmls']['explorer'])[1]
-                applied_options=dict(options,selectionDefinition=json.dumps(dict(version=1,rows=['2'],snapshot=snapshot)))
+                applied_options=dict(options,showSelectionValues=True,selectionDefinition=json.dumps(dict(version=1,rows=['2'],snapshot=snapshot)))
                 request.write_text(json.dumps(dict(analysis=name,columns=columns,options=applied_options,row_ids=['1','2','3'])))
                 subprocess.run([sys.executable,'-B',str(runtime),str(request),str(response)],check=True,timeout=70)
                 applied=json.loads(response.read_text())
                 assert applied['status']=='ok',applied.get('error')
                 assert applied['outputs']['selectionFlag']['values']==[0.,1.,0.]
                 assert applied['tables']['selectionSummary']['rows'][0]['selected']==1
+                values=applied['tables']['selectionValues']['rows']
+                assert {v['marker']:v['raw'] for v in values}=={'a':2.,'b':4.}
+                assert all(v['sourceRow']=='2' and v['displayed']==0. for v in values)
+                assert 'full retained heatmap cohort' in applied['tables']['selectionValues']['notes'][0]
                 assert applied['plots']==result['plots']
                 assert result['tables']['scatterCohort']['rows'][0]['plotted']==3
                 assert len(result['plots']['scatter']['columns']['x'])==3
