@@ -1,3 +1,20 @@
+# 0.3.15 — 2026-10-27
+
+- Add explicit native Apply for IHC source-row selections and individual-row preview toggles.
+- Add applied-row tables and an optional nominal dataset flag with original row alignment.
+- Bind selections to supplied marker/annotation inputs; data changes require review and yield unassessed flags.
+- Keep excluded rows unassessed and all heatmap/clustering/scatter calculations on the full retained cohort.
+- Preserve existing inspection defaults; the selection feature is disabled by default.
+
+# 0.3.14 — 2026-10-27
+
+- Add optional native IHC row/marker dendrograms and hierarchical merge tables.
+- Reuse existing average-linkage Euclidean trees, preserving original source identities.
+- Link local branch inspection to member rows/marker columns without cohort changes or refits.
+- Add independent base-R cophenetic/merge-height fixtures, native lifecycle and geometry checks.
+- Add bounded two-Bool conjunctions for result visibility in the generator.
+- Keep new dendrogram desktop/theme/platform acceptance separate from prior scatter checks.
+
 # 0.3.13 — 2026-10-26
 
 - Keep IHC supplier variables available for reuse in heatmap and native scatter roles.

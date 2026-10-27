@@ -184,6 +184,18 @@ Optional average-linkage Euclidean clustering requires complete marker data. Rep
 remain annotations; no tests, molecular subtype claims or clinical response thresholds are added.
 See [IHC methods, examples and omissions](python-ihc-heatmap.md).
 
+Version 0.3.14 adds optional native dendrogram/merge outputs and local member highlighting
+to the same IHC utility. It reuses the existing row/marker linkage and does not count as a
+new baseline port. Numerical and desktop scopes are recorded in
+[the dendrogram validation record](python-ihc-dendrogram-validation.md).
+
+Version 0.3.15 adds explicitly applied source-row selections to the IHC utility, with
+native selected-row summaries and an optional dataset flag. Preview inspection remains
+local; Apply changes saved options without changing the analysis cohort. Input snapshots
+prevent silent reuse after supplied marker/annotation data or role changes. See
+[selection qualification](python-ihc-selection-validation.md). This is a utility extension,
+not another baseline port or a model-validation pipeline.
+
 ## Deferred backend experiment: Julia
 
 Retain Julia as a future optional analysis backend, following the 2026-10-26 discussion.

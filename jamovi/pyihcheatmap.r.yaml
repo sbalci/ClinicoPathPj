@@ -81,6 +81,154 @@
       ]
     },
     {
+      "name": "selectionSummary",
+      "title": "Applied Source-Row Selection",
+      "type": "Table",
+      "visible": "(enableSelection)",
+      "rows": 0,
+      "columns": [
+        {
+          "name": "status",
+          "title": "Status",
+          "type": "text"
+        },
+        {
+          "name": "requested",
+          "title": "Requested Rows",
+          "type": "integer"
+        },
+        {
+          "name": "selected",
+          "title": "Selected Rows",
+          "type": "integer"
+        },
+        {
+          "name": "unavailable",
+          "title": "Unavailable Rows",
+          "type": "integer"
+        },
+        {
+          "name": "retained",
+          "title": "Heatmap Rows",
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "name": "selectionRows",
+      "title": "Applied Selected Source Rows",
+      "type": "Table",
+      "visible": "(enableSelection)",
+      "rows": 0,
+      "columns": [
+        {
+          "name": "sourceRow",
+          "title": "Source Row",
+          "type": "text"
+        },
+        {
+          "name": "subject",
+          "title": "Patient / Specimen",
+          "type": "text"
+        },
+        {
+          "name": "group",
+          "title": "Group",
+          "type": "text"
+        },
+        {
+          "name": "region",
+          "title": "Region",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "name": "selectionFlag",
+      "title": "Applied IHC Row Selection",
+      "type": "Output",
+      "varTitle": "IHC_selection",
+      "varDescription": "Applied row selection; missing means unassessed",
+      "measureType": "nominal",
+      "clearWith": [
+        "markers",
+        "subject",
+        "group",
+        "region",
+        "scatterX",
+        "scatterY",
+        "scaling",
+        "missing",
+        "clusterRows",
+        "clusterColumns",
+        "enableSelection",
+        "selectionDefinition",
+        "selectionFlag",
+        "showDendrograms",
+        "showScatter",
+        "interactive"
+      ]
+    },
+    {
+      "name": "merges",
+      "title": "Hierarchical Clustering Merges",
+      "type": "Table",
+      "visible": "(showDendrograms)",
+      "rows": 0,
+      "columns": [
+        {
+          "name": "axis",
+          "title": "Clustered Axis",
+          "type": "text"
+        },
+        {
+          "name": "merge",
+          "title": "Merge",
+          "type": "integer"
+        },
+        {
+          "name": "left",
+          "title": "Left Child",
+          "type": "text"
+        },
+        {
+          "name": "right",
+          "title": "Right Child",
+          "type": "text"
+        },
+        {
+          "name": "height",
+          "title": "Average-Linkage Distance",
+          "type": "number"
+        },
+        {
+          "name": "count",
+          "title": "Members",
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "name": "rowDendrogram",
+      "title": "Source Row Dendrogram",
+      "type": "Image",
+      "visible": "(showDendrograms && clusterRows)",
+      "width": 900,
+      "height": 450,
+      "renderFun": ".plot",
+      "requiresData": false
+    },
+    {
+      "name": "markerDendrogram",
+      "title": "Marker Dendrogram",
+      "type": "Image",
+      "visible": "(showDendrograms && clusterColumns)",
+      "width": 650,
+      "height": 450,
+      "renderFun": ".plot",
+      "requiresData": false
+    },
+    {
       "name": "scatterCohort",
       "title": "Scatterplot Complete Pairs",
       "type": "Table",

@@ -3,13 +3,13 @@ import json
 import uuid
 from pathlib import Path
 from cpj_runtime import md_escape
-from cpj_ihc import prepare, marker_pair
+from cpj_ihc import prepare, marker_pair, applied_selection
 
 SPEC = {'name': 'pyihcheatmap',
  'title': 'Annotated IHC Heatmap',
  'menuGroup': 'Descriptives Py',
  'menuSubgroup': 'Biomarker panels',
- 'version': '0.3.13',
+ 'version': '0.3.15',
  'options': [{'name': 'markers',
               'title': 'Numeric IHC markers',
               'type': 'Variables',
@@ -44,6 +44,13 @@ SPEC = {'name': 'pyihcheatmap',
               'title': 'Cluster markers (average linkage, Euclidean)',
               'type': 'Bool',
               'default': False},
+             {'name': 'enableSelection', 'title': 'Saved source-row selection',
+              'type': 'Bool', 'default': False},
+             {'name': 'selectionDefinition', 'title': 'Saved selection definition',
+              'type': 'String', 'default': ''},
+             {'name': 'selectionFlag', 'title': 'Applied IHC row selection', 'type': 'Output'},
+             {'name': 'showDendrograms', 'title': 'Dendrograms and merge inspection',
+              'type': 'Bool', 'default': False},
              {'name': 'showScatter', 'title': 'Linked marker scatterplot',
               'type': 'Bool', 'default': False},
              {'name': 'interactive',
@@ -68,6 +75,36 @@ SPEC = {'name': 'pyihcheatmap',
                           {'name': 'group', 'title': 'Group', 'type': 'text'},
                           {'name': 'region', 'title': 'Region', 'type': 'text'},
                           {'name': 'observed', 'title': 'Observed Markers', 'type': 'integer'}]},
+             {'name': 'selectionSummary', 'title': 'Applied Source-Row Selection', 'type': 'Table',
+              'visible': '(enableSelection)', 'columns': [
+                  {'name': 'status', 'title': 'Status', 'type': 'text'},
+                  {'name': 'requested', 'title': 'Requested Rows', 'type': 'integer'},
+                  {'name': 'selected', 'title': 'Selected Rows', 'type': 'integer'},
+                  {'name': 'unavailable', 'title': 'Unavailable Rows', 'type': 'integer'},
+                  {'name': 'retained', 'title': 'Heatmap Rows', 'type': 'integer'}]},
+             {'name': 'selectionRows', 'title': 'Applied Selected Source Rows', 'type': 'Table',
+              'visible': '(enableSelection)', 'columns': [
+                  {'name': 'sourceRow', 'title': 'Source Row', 'type': 'text'},
+                  {'name': 'subject', 'title': 'Patient / Specimen', 'type': 'text'},
+                  {'name': 'group', 'title': 'Group', 'type': 'text'},
+                  {'name': 'region', 'title': 'Region', 'type': 'text'}]},
+             {'name': 'selectionFlag', 'title': 'Applied IHC Row Selection', 'type': 'Output',
+              'varTitle': 'IHC_selection', 'varDescription': 'Applied row selection; missing means unassessed',
+              'measureType': 'nominal'},
+             {'name': 'merges', 'title': 'Hierarchical Clustering Merges', 'type': 'Table',
+              'visible': '(showDendrograms)', 'columns': [
+                  {'name': 'axis', 'title': 'Clustered Axis', 'type': 'text'},
+                  {'name': 'merge', 'title': 'Merge', 'type': 'integer'},
+                  {'name': 'left', 'title': 'Left Child', 'type': 'text'},
+                  {'name': 'right', 'title': 'Right Child', 'type': 'text'},
+                  {'name': 'height', 'title': 'Average-Linkage Distance', 'type': 'number'},
+                  {'name': 'count', 'title': 'Members', 'type': 'integer'}]},
+             {'name': 'rowDendrogram', 'title': 'Source Row Dendrogram', 'type': 'Image',
+              'plot': 'dendrogram', 'width': 900, 'height': 450,
+              'visible': '(showDendrograms && clusterRows)'},
+             {'name': 'markerDendrogram', 'title': 'Marker Dendrogram', 'type': 'Image',
+              'plot': 'dendrogram', 'width': 650, 'height': 450,
+              'visible': '(showDendrograms && clusterColumns)'},
              {'name': 'scatterCohort', 'title': 'Scatterplot Complete Pairs', 'type': 'Table',
               'visible': '(showScatter)', 'columns': [
                   {'name': 'xMarker', 'title': 'X Marker', 'type': 'text'},
@@ -132,16 +169,59 @@ SPEC = {'name': 'pyihcheatmap',
                      {'type': 'CollapseBox',
                       'label': 'Plots and Interaction',
                       'collapsed': True,
-                      'children': [{'type': 'CheckBox', 'name': 'showScatter'},
+                      'children': [{'type': 'CheckBox', 'name': 'showDendrograms',
+                                    'enable': '(clusterRows || clusterColumns)'},
+                                   {'type': 'CheckBox', 'name': 'showScatter'},
                                    {'type': 'CheckBox', 'name': 'interactive'}]},
+                     {'type': 'CollapseBox', 'label': 'Save Row Selection', 'collapsed': True,
+                      'children': [{'type': 'CheckBox', 'name': 'enableSelection'},
+                                   {'type': 'Output', 'name': 'selectionFlag', 'enable': '(enableSelection)'}]},
                      {'type': 'CollapseBox',
                       'label': 'Advanced Settings',
                       'collapsed': True,
-                      'children': [{'type': 'CheckBox', 'name': 'showConsole'}]}]}}
+                      'children': [{'type': 'TextBox', 'name': 'selectionDefinition', 'format': 'string',
+                                    'enable': '(enableSelection)'},
+                                   {'type': 'CheckBox', 'name': 'showConsole'}]}]}}
 
 
 def run(data, options, out):
     p = prepare(data, options, out.row_ids)
+    input_ids=[str(i+1) for i in range(p['inputRows'])] if out.row_ids is None else list(out.row_ids)
+    selection=applied_selection(options.get('selectionDefinition','') if options.get('enableSelection') else '',p,input_ids)
+    if options.get('enableSelection'):
+        p['selection']={k:selection[k] for k in ('valid','requested','selectedRows','unavailable')}
+        status=('Needs review' if not selection['valid'] else 'Empty' if not selection['requested']
+                else 'Partially available' if selection['unavailable'] else 'Applied')
+        out.row('selectionSummary',status=status,requested=len(selection['requested']),
+                selected=len(selection['selectedRows']),unavailable=len(selection['unavailable']),retained=len(p['rows']))
+        for row in selection['selected']:
+            out.row('selectionRows',sourceRow=row['row'],**{k:row[k] for k in ('subject','group','region')})
+        if not selection['valid']:
+            out.warn('The saved selection no longer matches the supplied marker/annotation rows. All selection flags are unassessed. Review source rows and Apply again.')
+        elif selection['unavailable']:
+            out.warn(f"{len(selection['unavailable'])} requested source rows are unavailable in the retained heatmap cohort. They are not selected; excluded rows remain unassessed.")
+        out.info('Applied row selections do not subset or refit heatmap, clustering or scatter results. Enable the native saved-column control to write the selection flag. The applied summary is authoritative; close options and reselect the analysis heading if its saved-definition field has not refreshed.')
+    if out.row_ids is not None:
+        out.column('selectionFlag',selection['values'] if options.get('enableSelection') else [None]*len(input_ids),
+                   levels=['Not selected','Selected'],title='IHC_selection',
+                   description='Applied IHC source-row selection; excluded, disabled or invalid rows are unassessed',
+                   measure_type='nominal')
+    if options.get('showDendrograms'):
+        for key, axis, result in [('rowTree','Source rows','rowDendrogram'),
+                                  ('markerTree','Markers','markerDendrogram')]:
+            tree=p[key]
+            if tree is None:
+                continue
+            for branch in tree['branches']:
+                out.row('merges',axis=axis,**{k:branch[k] for k in
+                        ('merge','left','right','height','count')})
+            out.plot(result,[{k:b[k] for k in ('xLeft','xRight','leftHeight','rightHeight',
+                                              'height','leftLabel','rightLabel')}
+                             for b in tree['branches']],
+                     xlab=axis+' in heatmap order',ylab='Average-linkage Euclidean distance')
+            if not tree['branches']:
+                out.info('A single retained row has no dendrogram merges.')
+        out.info('Dendrogram heights are average-linkage Euclidean distances on displayed values, not significance levels. Branch inspection highlights members locally; it does not select an inferential cohort or save a selection.')
     if options.get('showScatter', False):
         pair = marker_pair(p, options['markers'], options.get('scatterX'), options.get('scatterY'))
         p['scatter'] = pair

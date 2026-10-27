@@ -57,7 +57,7 @@ SUGGESTED = {"continuous", "nominal", "ordinal", "id"}
 COLUMN_KEYS = {"name", "title", "type", "format", "superTitle", "visible"}
 COLUMN_TYPES = {"text", "integer", "number"}
 FORMAT_TOKENS = {"zto", "pvalue", "pc", "log10"}
-PLOT_KINDS = {"interval", "line", "box", "bar", "scatter", "points", "histogram", "pyramid", "qualitymap", "ihcheatmap"}
+PLOT_KINDS = {"interval", "line", "box", "bar", "scatter", "points", "histogram", "pyramid", "qualitymap", "ihcheatmap", "dendrogram"}
 IMAGE_KEYS = {"name", "type", "title", "plot", "width", "height", "xlab", "ylab", "visible"}
 
 
@@ -227,10 +227,10 @@ def validate(spec, stem):
             for key in ("varTitle", "varDescription"):
                 if key in result: check_text(result[key], key)
             continue
-        if "visible" in result:  # option-driven visibility only: '(boolOption)'
-            match = re.fullmatch(r"\(([a-z][A-Za-z0-9_]*)\)", str(result["visible"]))
-            if not match or match.group(1) not in bools:
-                fail(f"result {rname!r}: visible must be '(x)' naming a Bool option")
+        if "visible" in result:  # one Bool or the conjunction of two Bool options
+            match = re.fullmatch(r"\(([a-z][A-Za-z0-9_]*)(?: && ([a-z][A-Za-z0-9_]*))?\)", str(result["visible"]))
+            if not match or any(name not in bools for name in match.groups() if name is not None):
+                fail(f"result {rname!r}: visible must be '(x)' naming a Bool option or '(x && y)' naming Bool options")
         if result.get("type") in ("Preformatted", "Text", "Html", "Svg"):
             allowed = {"name", "type", "title", "visible"}
             if result["type"] == "Svg":

@@ -16,6 +16,9 @@ pyihcheatmapOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Clas
             missing = "available",
             clusterRows = FALSE,
             clusterColumns = FALSE,
+            enableSelection = FALSE,
+            selectionDefinition = "",
+            showDendrograms = FALSE,
             showScatter = FALSE,
             interactive = TRUE,
             showConsole = FALSE, ...) {
@@ -78,6 +81,20 @@ pyihcheatmapOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Clas
                 "clusterColumns",
                 clusterColumns,
                 default=FALSE)
+            private$..enableSelection <- jmvcore::OptionBool$new(
+                "enableSelection",
+                enableSelection,
+                default=FALSE)
+            private$..selectionDefinition <- jmvcore::OptionString$new(
+                "selectionDefinition",
+                selectionDefinition,
+                default="")
+            private$..selectionFlag <- jmvcore::OptionOutput$new(
+                "selectionFlag")
+            private$..showDendrograms <- jmvcore::OptionBool$new(
+                "showDendrograms",
+                showDendrograms,
+                default=FALSE)
             private$..showScatter <- jmvcore::OptionBool$new(
                 "showScatter",
                 showScatter,
@@ -101,6 +118,10 @@ pyihcheatmapOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Clas
             self$.addOption(private$..missing)
             self$.addOption(private$..clusterRows)
             self$.addOption(private$..clusterColumns)
+            self$.addOption(private$..enableSelection)
+            self$.addOption(private$..selectionDefinition)
+            self$.addOption(private$..selectionFlag)
+            self$.addOption(private$..showDendrograms)
             self$.addOption(private$..showScatter)
             self$.addOption(private$..interactive)
             self$.addOption(private$..showConsole)
@@ -116,6 +137,10 @@ pyihcheatmapOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Clas
         missing = function() private$..missing$value,
         clusterRows = function() private$..clusterRows$value,
         clusterColumns = function() private$..clusterColumns$value,
+        enableSelection = function() private$..enableSelection$value,
+        selectionDefinition = function() private$..selectionDefinition$value,
+        selectionFlag = function() private$..selectionFlag$value,
+        showDendrograms = function() private$..showDendrograms$value,
         showScatter = function() private$..showScatter$value,
         interactive = function() private$..interactive$value,
         showConsole = function() private$..showConsole$value),
@@ -130,6 +155,10 @@ pyihcheatmapOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Clas
         ..missing = NA,
         ..clusterRows = NA,
         ..clusterColumns = NA,
+        ..enableSelection = NA,
+        ..selectionDefinition = NA,
+        ..selectionFlag = NA,
+        ..showDendrograms = NA,
         ..showScatter = NA,
         ..interactive = NA,
         ..showConsole = NA)
@@ -142,6 +171,12 @@ pyihcheatmapResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Clas
         summary = function() private$.items[["summary"]],
         markerSummary = function() private$.items[["markerSummary"]],
         rowOrder = function() private$.items[["rowOrder"]],
+        selectionSummary = function() private$.items[["selectionSummary"]],
+        selectionRows = function() private$.items[["selectionRows"]],
+        selectionFlag = function() private$.items[["selectionFlag"]],
+        merges = function() private$.items[["merges"]],
+        rowDendrogram = function() private$.items[["rowDendrogram"]],
+        markerDendrogram = function() private$.items[["markerDendrogram"]],
         scatterCohort = function() private$.items[["scatterCohort"]],
         scatterRows = function() private$.items[["scatterRows"]],
         scatter = function() private$.items[["scatter"]],
@@ -215,6 +250,129 @@ pyihcheatmapResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Clas
                         `name`="observed", 
                         `title`="Observed Markers", 
                         `type`="integer"))))
+            self$add(jmvcore::Table$new(
+                options=options,
+                name="selectionSummary",
+                title="Applied Source-Row Selection",
+                visible="(enableSelection)",
+                rows=0,
+                columns=list(
+                    list(
+                        `name`="status", 
+                        `title`="Status", 
+                        `type`="text"),
+                    list(
+                        `name`="requested", 
+                        `title`="Requested Rows", 
+                        `type`="integer"),
+                    list(
+                        `name`="selected", 
+                        `title`="Selected Rows", 
+                        `type`="integer"),
+                    list(
+                        `name`="unavailable", 
+                        `title`="Unavailable Rows", 
+                        `type`="integer"),
+                    list(
+                        `name`="retained", 
+                        `title`="Heatmap Rows", 
+                        `type`="integer"))))
+            self$add(jmvcore::Table$new(
+                options=options,
+                name="selectionRows",
+                title="Applied Selected Source Rows",
+                visible="(enableSelection)",
+                rows=0,
+                columns=list(
+                    list(
+                        `name`="sourceRow", 
+                        `title`="Source Row", 
+                        `type`="text"),
+                    list(
+                        `name`="subject", 
+                        `title`="Patient / Specimen", 
+                        `type`="text"),
+                    list(
+                        `name`="group", 
+                        `title`="Group", 
+                        `type`="text"),
+                    list(
+                        `name`="region", 
+                        `title`="Region", 
+                        `type`="text"))))
+            self$add(jmvcore::Output$new(
+                options=options,
+                name="selectionFlag",
+                title="Applied IHC Row Selection",
+                varTitle="IHC_selection",
+                varDescription="Applied row selection; missing means unassessed",
+                measureType="nominal",
+                clearWith=list(
+                    "markers",
+                    "subject",
+                    "group",
+                    "region",
+                    "scatterX",
+                    "scatterY",
+                    "scaling",
+                    "missing",
+                    "clusterRows",
+                    "clusterColumns",
+                    "enableSelection",
+                    "selectionDefinition",
+                    "selectionFlag",
+                    "showDendrograms",
+                    "showScatter",
+                    "interactive")))
+            self$add(jmvcore::Table$new(
+                options=options,
+                name="merges",
+                title="Hierarchical Clustering Merges",
+                visible="(showDendrograms)",
+                rows=0,
+                columns=list(
+                    list(
+                        `name`="axis", 
+                        `title`="Clustered Axis", 
+                        `type`="text"),
+                    list(
+                        `name`="merge", 
+                        `title`="Merge", 
+                        `type`="integer"),
+                    list(
+                        `name`="left", 
+                        `title`="Left Child", 
+                        `type`="text"),
+                    list(
+                        `name`="right", 
+                        `title`="Right Child", 
+                        `type`="text"),
+                    list(
+                        `name`="height", 
+                        `title`="Average-Linkage Distance", 
+                        `type`="number"),
+                    list(
+                        `name`="count", 
+                        `title`="Members", 
+                        `type`="integer"))))
+            self$add(jmvcore::Image$new(
+                options=options,
+                name="rowDendrogram",
+                title="Source Row Dendrogram",
+                visible="(showDendrograms && clusterRows)",
+                width=900,
+                height=450,
+                renderFun=".plot",
+                requiresData=FALSE))
+            self$add(jmvcore::Image$new(
+                options=options,
+                name="markerDendrogram",
+                title="Marker Dendrogram",
+                visible="(showDendrograms && clusterColumns)",
+                width=650,
+                height=450,
+                renderFun=".plot",
+                requiresData=FALSE))
             self$add(jmvcore::Table$new(
                 options=options,
                 name="scatterCohort",
@@ -297,7 +455,7 @@ pyihcheatmapBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             super$initialize(
                 package = "ClinicoPathPj",
                 name = "pyihcheatmap",
-                version = c(0,3,13),
+                version = c(0,3,15),
                 options = options,
                 results = pyihcheatmapResults$new(options=options),
                 data = data,
@@ -307,7 +465,7 @@ pyihcheatmapBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 pause = NULL,
                 completeWhenFilled = FALSE,
                 requiresMissings = FALSE,
-                weightsSupport = 'auto')
+                weightsSupport = 'none')
         }))
 
 #' Annotated IHC Heatmap
@@ -324,6 +482,9 @@ pyihcheatmapBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param missing .
 #' @param clusterRows .
 #' @param clusterColumns .
+#' @param enableSelection .
+#' @param selectionDefinition .
+#' @param showDendrograms .
 #' @param showScatter .
 #' @param interactive .
 #' @param showConsole .
@@ -332,6 +493,12 @@ pyihcheatmapBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'   \code{results$summary} \tab \tab \tab \tab \tab a text \cr
 #'   \code{results$markerSummary} \tab \tab \tab \tab \tab a table \cr
 #'   \code{results$rowOrder} \tab \tab \tab \tab \tab a table \cr
+#'   \code{results$selectionSummary} \tab \tab \tab \tab \tab a table \cr
+#'   \code{results$selectionRows} \tab \tab \tab \tab \tab a table \cr
+#'   \code{results$selectionFlag} \tab \tab \tab \tab \tab an output \cr
+#'   \code{results$merges} \tab \tab \tab \tab \tab a table \cr
+#'   \code{results$rowDendrogram} \tab \tab \tab \tab \tab an image \cr
+#'   \code{results$markerDendrogram} \tab \tab \tab \tab \tab an image \cr
 #'   \code{results$scatterCohort} \tab \tab \tab \tab \tab a table \cr
 #'   \code{results$scatterRows} \tab \tab \tab \tab \tab a table \cr
 #'   \code{results$scatter} \tab \tab \tab \tab \tab an image \cr
@@ -359,6 +526,9 @@ pyihcheatmap <- function(
     missing = "available",
     clusterRows = FALSE,
     clusterColumns = FALSE,
+    enableSelection = FALSE,
+    selectionDefinition = "",
+    showDendrograms = FALSE,
     showScatter = FALSE,
     interactive = TRUE,
     showConsole = FALSE) {
@@ -394,6 +564,9 @@ pyihcheatmap <- function(
         missing = missing,
         clusterRows = clusterRows,
         clusterColumns = clusterColumns,
+        enableSelection = enableSelection,
+        selectionDefinition = selectionDefinition,
+        showDendrograms = showDendrograms,
         showScatter = showScatter,
         interactive = interactive,
         showConsole = showConsole)

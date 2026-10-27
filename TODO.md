@@ -1,3 +1,21 @@
+# Orange-inspired applied IHC selection — 0.3.15
+
+- [x] Add explicit Apply, row toggles, restore/clear preview and no-refit behavior.
+- [x] Add native selection summaries and original-row nominal output flags.
+- [x] Guard saved selections against changes to supplied marker/annotation rows or roles.
+- [x] Verify repeated IDs, exclusions, stale snapshots, disabled/pending clearing and source alignment.
+- [x] macOS arm64 / jamovi 28.13: explicit Apply, nominal dataset flag, fresh-engine save/reopen and display-scale rerun.
+- [ ] Broader keyboard/theme/large-matrix/platform acceptance remains separate.
+
+# Orange-inspired IHC dendrograms — 0.3.14
+
+- [x] Reuse existing clustering for native merge tables and static dendrograms.
+- [x] Link local branch members to original source rows and marker columns.
+- [x] Add independent R heights/cophenetic fixtures, geometry, singleton/zero-distance and maximum-size checks.
+- [x] macOS arm64 / jamovi 28.13: row/marker branch inspection, fresh-engine save/reopen and native row-tree PNG export.
+- [ ] Complete keyboard/theme/maximum-size GUI, marker-tree export and other-platform gates.
+- [x] Explicit saved source-row selection core added in 0.3.15; inspection remains local until Apply.
+
 # Orange-inspired linked IHC views — 0.3.12
 
 - [x] Add local heatmap/scatter row highlighting and marker-pair switching.
@@ -5,7 +23,8 @@
 - [x] macOS arm64 / jamovi 28.13: mouse linking, custom native pair controls, save/fresh-engine reopen and native PNG export.
 - [x] Fix marker reuse across heatmap/scatter roles with persistent supplier items in 0.3.13.
 - [ ] Complete live keyboard, theme, maximum-matrix and additional-platform acceptance.
-- [ ] Later: dendrogram inspection and explicitly saved row selections.
+- [x] Dendrogram inspection added in 0.3.14.
+- [x] Saved source-row selection core added in 0.3.15.
 - [x] Record Julia backend idea as deferred feasibility work in the migration plan.
 
 # Categorization histogram — 0.3.11
@@ -26,7 +45,8 @@
 - [x] macOS arm64 GUI installation, annotations, z scaling, missing-cell inspection, save/fresh-engine reopen, clustering rerun and native PNG export.
 - [ ] Qualify large matrices, theme variants and additional platforms.
 - [x] Linked scatter core added in 0.3.12; macOS mouse/custom-role/save/reopen/export checks recorded in 0.3.13.
-- [ ] Later: dendrogram inspection and explicit saved selections.
+- [x] Dendrogram inspection added in 0.3.14.
+- [x] Saved source-row selection core added in 0.3.15.
 
 # Web-informed candidate backlog
 

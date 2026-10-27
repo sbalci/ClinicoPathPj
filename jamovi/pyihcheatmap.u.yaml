@@ -116,6 +116,11 @@
       "children": [
         {
           "type": "CheckBox",
+          "name": "showDendrograms",
+          "enable": "(clusterRows || clusterColumns)"
+        },
+        {
+          "type": "CheckBox",
           "name": "showScatter"
         },
         {
@@ -126,9 +131,31 @@
     },
     {
       "type": "CollapseBox",
+      "label": "Save Row Selection",
+      "collapsed": true,
+      "children": [
+        {
+          "type": "CheckBox",
+          "name": "enableSelection"
+        },
+        {
+          "type": "Output",
+          "name": "selectionFlag",
+          "enable": "(enableSelection)"
+        }
+      ]
+    },
+    {
+      "type": "CollapseBox",
       "label": "Advanced Settings",
       "collapsed": true,
       "children": [
+        {
+          "type": "TextBox",
+          "name": "selectionDefinition",
+          "format": "string",
+          "enable": "(enableSelection)"
+        },
         {
           "type": "CheckBox",
           "name": "showConsole"

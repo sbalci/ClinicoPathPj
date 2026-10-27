@@ -30,6 +30,17 @@ def parse_generated(text):
 
 
 class GeneratedFiles(unittest.TestCase):
+    def test_two_bool_result_visibility_is_bounded_and_preserved(self):
+        spec=generate.read_spec(generate.ANALYSES/'descriptives/pyihcheatmap.py')
+        generate.validate(spec,'pyihcheatmap')
+        tree=next(r for r in spec['results'] if r['name']=='rowDendrogram')
+        self.assertEqual(tree['visible'],'(showDendrograms && clusterRows)')
+        for invalid in ['(showDendrograms && scaling)','(showDendrograms || clusterRows)',
+                        '(showDendrograms && clusterRows); print(1)']:
+            tree['visible']=invalid
+            with self.assertRaisesRegex(generate.SpecError,'naming Bool options'):
+                generate.validate(spec,'pyihcheatmap')
+
     def test_committed_files_are_current(self):
         self.assertEqual(generate.main(["--check"]), 0, "run tools/build.R (or tools/generate.py)")
 

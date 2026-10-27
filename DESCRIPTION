@@ -1,8 +1,8 @@
 Package: ClinicoPathPj
 Type: Package
 Title: Python-Backed Analyses for Clinicopathological Research
-Version: 0.3.13
-Date: 2026-10-26
+Version: 0.3.15
+Date: 2026-10-27
 Authors@R: person(given = "Serdar", family = "Balci", role = c("aut", "cre", "cph"), email = "serdarbalci@serdarbalci.com", comment = c(ORCID = "0000-0002-7852-3851"))
 Maintainer: Serdar Balci <serdarbalci@serdarbalci.com>
 Description: Experimental jamovi module whose analyses are generated from Python
