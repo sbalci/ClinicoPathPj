@@ -139,6 +139,11 @@
           "name": "enableSelection"
         },
         {
+          "type": "CheckBox",
+          "name": "showSelectionValues",
+          "enable": "(enableSelection)"
+        },
+        {
           "type": "Output",
           "name": "selectionFlag",
           "enable": "(enableSelection)"

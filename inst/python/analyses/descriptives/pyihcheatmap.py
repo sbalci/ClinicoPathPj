@@ -9,7 +9,7 @@ SPEC = {'name': 'pyihcheatmap',
  'title': 'Annotated IHC Heatmap',
  'menuGroup': 'Descriptives Py',
  'menuSubgroup': 'Biomarker panels',
- 'version': '0.3.15',
+ 'version': '0.3.16',
  'options': [{'name': 'markers',
               'title': 'Numeric IHC markers',
               'type': 'Variables',
@@ -49,6 +49,8 @@ SPEC = {'name': 'pyihcheatmap',
              {'name': 'selectionDefinition', 'title': 'Saved selection definition',
               'type': 'String', 'default': ''},
              {'name': 'selectionFlag', 'title': 'Applied IHC row selection', 'type': 'Output'},
+             {'name': 'showSelectionValues', 'title': 'Applied selected marker values',
+              'type': 'Bool', 'default': False},
              {'name': 'showDendrograms', 'title': 'Dendrograms and merge inspection',
               'type': 'Bool', 'default': False},
              {'name': 'showScatter', 'title': 'Linked marker scatterplot',
@@ -88,6 +90,17 @@ SPEC = {'name': 'pyihcheatmap',
                   {'name': 'subject', 'title': 'Patient / Specimen', 'type': 'text'},
                   {'name': 'group', 'title': 'Group', 'type': 'text'},
                   {'name': 'region', 'title': 'Region', 'type': 'text'}]},
+             {'name': 'selectionValues', 'title': 'Applied Selected Marker Values', 'type': 'Table',
+              'visible': '(enableSelection && showSelectionValues)', 'columns': [
+                  {'name': 'position', 'title': 'Heatmap Row Order', 'type': 'integer'},
+                  {'name': 'sourceRow', 'title': 'Source Row', 'type': 'text'},
+                  {'name': 'subject', 'title': 'Patient / Specimen', 'type': 'text'},
+                  {'name': 'group', 'title': 'Group', 'type': 'text'},
+                  {'name': 'region', 'title': 'Region', 'type': 'text'},
+                  {'name': 'marker', 'title': 'Marker', 'type': 'text'},
+                  {'name': 'raw', 'title': 'Raw Value', 'type': 'number'},
+                  {'name': 'displayed', 'title': 'Displayed Value', 'type': 'number'},
+                  {'name': 'status', 'title': 'Measurement', 'type': 'text'}]},
              {'name': 'selectionFlag', 'title': 'Applied IHC Row Selection', 'type': 'Output',
               'varTitle': 'IHC_selection', 'varDescription': 'Applied row selection; missing means unassessed',
               'measureType': 'nominal'},
@@ -175,6 +188,8 @@ SPEC = {'name': 'pyihcheatmap',
                                    {'type': 'CheckBox', 'name': 'interactive'}]},
                      {'type': 'CollapseBox', 'label': 'Save Row Selection', 'collapsed': True,
                       'children': [{'type': 'CheckBox', 'name': 'enableSelection'},
+                                   {'type': 'CheckBox', 'name': 'showSelectionValues',
+                                    'enable': '(enableSelection)'},
                                    {'type': 'Output', 'name': 'selectionFlag', 'enable': '(enableSelection)'}]},
                      {'type': 'CollapseBox',
                       'label': 'Advanced Settings',
@@ -196,6 +211,20 @@ def run(data, options, out):
                 selected=len(selection['selectedRows']),unavailable=len(selection['unavailable']),retained=len(p['rows']))
         for row in selection['selected']:
             out.row('selectionRows',sourceRow=row['row'],**{k:row[k] for k in ('subject','group','region')})
+        if options.get('showSelectionValues'):
+            chosen = set(selection['selectedRows'])
+            for i, (row, raw, displayed) in enumerate(zip(p['rows'], p['raw'], p['values'])):
+                if row['row'] not in chosen:
+                    continue
+                for marker, value, shown in zip(p['markers'], raw, displayed):
+                    out.row('selectionValues', position=i+1, sourceRow=row['row'],
+                            **{k: row[k] for k in ('subject', 'group', 'region')},
+                            marker=marker, raw=value, displayed=shown,
+                            status='Missing' if value is None else 'Observed')
+            out.note('selectionValues', 'Applied retained source rows only, in heatmap row/marker order. '
+                     'Displayed values: '+p['scaleLabel']+'. Scaling uses the full retained heatmap cohort; '
+                     'selection does not refit it. Missing measurements remain missing. '
+                     'Unapplied previews do not update this table.')
         if not selection['valid']:
             out.warn('The saved selection no longer matches the supplied marker/annotation rows. All selection flags are unassessed. Review source rows and Apply again.')
         elif selection['unavailable']:

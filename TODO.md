@@ -1,3 +1,11 @@
+# Orange-inspired selected IHC marker data — 0.3.16
+
+- [x] Add optional native selected-data table with raw/displayed values and missingness.
+- [x] Preserve applied source rows, annotation roles and both heatmap clustering orders.
+- [x] Keep scaling on the full retained cohort and cap output at existing 200 × 20 bounds.
+- [x] Qualify generator, 247 Python tests, 242 native R assertions, 16 packaged smoke cases and macOS fresh-engine save/reopen.
+- [ ] Broader native keyboard/theme/maximum-size/platform acceptance remains separate.
+
 # Orange-inspired applied IHC selection — 0.3.15
 
 - [x] Add explicit Apply, row toggles, restore/clear preview and no-refit behavior.

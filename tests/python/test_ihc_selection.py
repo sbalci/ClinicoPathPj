@@ -80,3 +80,75 @@ class Selection(unittest.TestCase):
             bad.append(json.dumps(dict(good,**patch)))
         for value in bad:
             with self.assertRaises(InputError):applied_selection(value,p,IDS)
+
+    def test_selected_values_preserve_raw_units_and_full_cohort_z_scores(self):
+        import math
+        saved=definition(prepared(),['4','12'])
+        options=dict(BASE,selectionDefinition=saved,showSelectionValues=True,scaling='zscore')
+        r=runtime(options)
+        self.assertEqual(r['status'],'ok',r.get('error'))
+        table=r['tables']['selectionValues']
+        values={(v['sourceRow'],v['marker']):v for v in table['rows']}
+        self.assertEqual(list(values),[('4','a'),('4','b'),('12','a'),('12','b')])
+        self.assertEqual(values['4','a']['raw'],10)
+        self.assertAlmostEqual(values['4','a']['displayed'],4.5/math.sqrt(101/3))
+        self.assertAlmostEqual(values['4','b']['displayed'],10.6/math.sqrt(455.2/4))
+        self.assertEqual(values['12','a']['status'],'Missing')
+        self.assertIsNone(values['12','a']['raw']);self.assertIsNone(values['12','a']['displayed'])
+        self.assertEqual(values['12','b']['raw'],3)
+        self.assertEqual([v['position'] for v in table['rows']],[2,2,5,5])
+        self.assertIn('full retained heatmap cohort',table['notes'][0])
+        baseline=runtime(dict(options,showSelectionValues=False))
+        self.assertNotIn('selectionValues',baseline['tables'])
+        self.assertEqual(r['plots'],baseline['plots'])
+        self.assertEqual(r['outputs'],baseline['outputs'])
+        self.assertEqual(r['tables']['markerSummary'],baseline['tables']['markerSummary'])
+
+    def test_selected_values_follow_both_cluster_orders_and_complete_row_exclusions(self):
+        saved=definition(prepared(),['9','4','12'])
+        options=dict(BASE,selectionDefinition=saved,showSelectionValues=True,missing='complete',
+                     clusterRows=True,clusterColumns=True)
+        r=runtime(options);self.assertEqual(r['status'],'ok',r.get('error'))
+        values=r['tables']['selectionValues']['rows']
+        raw={('4','a'):10,('4','b'):20,('9','a'):11,('9','b'):22}
+        self.assertEqual({(v['sourceRow'],v['marker']):v['raw'] for v in values},raw)
+        self.assertTrue(all(v['displayed']==v['raw'] for v in values))
+        positions={v['sourceRow']:v['position'] for v in r['tables']['rowOrder']['rows']}
+        self.assertEqual([v['position'] for v in values],sorted(v['position'] for v in values))
+        for v in values:self.assertEqual(v['position'],positions[v['sourceRow']])
+        cells=r['plots']['heatmap']['columns']
+        markers=list(dict.fromkeys(cells['variable']))
+        for i in range(0,len(values),2):self.assertEqual([v['marker'] for v in values[i:i+2]],markers)
+        self.assertEqual(r['tables']['selectionSummary']['rows'][0]['unavailable'],1)
+
+    def test_selected_values_clear_for_empty_stale_disabled_and_pending_states(self):
+        good=definition(prepared(),['4'])
+        for extra in [dict(selectionDefinition=''),dict(selectionDefinition=good.replace(prepared()['snapshot'],'0'*64)),
+                      dict(enableSelection=False,selectionDefinition=good),dict(markers=[])]:
+            r=runtime(dict(BASE,showSelectionValues=True,**extra))
+            self.assertEqual(r.get('tables',{}).get('selectionValues',{}).get('rows',[]),[])
+
+    def test_maximum_selected_values_are_complete_and_constant_missing_values_stay_explicit(self):
+        from cpj_runtime import Output
+        import importlib.util
+        spec=importlib.util.spec_from_file_location('ihc_selection_test',ROOT/'inst/python/analyses/descriptives/pyihcheatmap.py')
+        module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+        data={f'm {j}':np.arange(200,dtype=float)+j for j in range(20)}
+        ids=[str(2*i+1) for i in range(200)]
+        options=dict(markers=list(data),enableSelection=True,showSelectionValues=True,interactive=False)
+        p=prepare(data,options,ids);options['selectionDefinition']=definition(p,ids)
+        out=Output(module.SPEC,ids);module.run(data,options,out)
+        values=out.tables['selectionValues']['rows']
+        self.assertEqual(len(values),4000)
+        self.assertEqual(len({(v['sourceRow'],v['marker']) for v in values}),4000)
+        self.assertEqual(values[-1]['raw'],218)
+        data={'A+B':np.array([7.,7.,np.nan]),'Grade 2/3':np.array([1.,2.,3.]),
+              'ID':['<same>','<same>','other']};ids=['2','4','7']
+        options=dict(markers=['A+B','Grade 2/3'],subject='ID',enableSelection=True,
+                     showSelectionValues=True,scaling='zscore',interactive=False)
+        options['selectionDefinition']=definition(prepare(data,options,ids),['4','7'])
+        out=Output(module.SPEC,ids);module.run(data,options,out)
+        values=out.tables['selectionValues']['rows']
+        self.assertEqual([v['raw'] for v in values],[7,2,None,3])
+        self.assertEqual([v['displayed'] for v in values],[0,0,None,1])
+        self.assertEqual(values[0]['subject'],'<same>')
