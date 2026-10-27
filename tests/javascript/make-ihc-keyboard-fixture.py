@@ -9,5 +9,5 @@ m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
 n,markers=(1,3) if '--single' in sys.argv else (200,20)
 data={f'm {j}':np.arange(n,dtype=float)+j for j in range(markers)}
 out=Output(m.SPEC,[str(2*i+1) for i in range(n)])
-m.run(data,dict(markers=list(data),enableSelection=True),out)
+m.run(data,dict(markers=list(data),enableSelection=True,showScatter='--scatter' in sys.argv),out)
 Path(sys.argv[1]).write_text(out.htmls['explorer'])

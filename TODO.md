@@ -1,3 +1,22 @@
+# Correlation matrix core — 0.3.20
+
+- [x] Implement the registered `pyjjcorrmat` target as a partial Pearson/Spearman core.
+- [x] Explicit listwise/pairwise counts, unavailable reasons, multiplicity family and Pearson intervals.
+- [x] Add native pair table/static matrix and offline keyboard/cell inspection.
+- [x] Pass six hand/edge Python tests and 406 independent/native R assertions.
+- [x] Pass all 253 Python tests, compiler/generator checks and 17 extracted packaged-runtime cases.
+- [ ] Qualify native desktop installation, rerun/save/reopen/export and additional platforms.
+- [ ] Remaining baseline methods: robust/Bayesian/partial/grouped, Spearman CI, other adjustments/style.
+
+# Current reassessment and scatter keyboard extension — 0.3.19
+
+- [x] Reconcile clean 0.3.18 HEAD with plan; retain linked scatter/tree/selection work from the other session.
+- [x] Add one remembered scatter Tab stop, displayed-row-order arrows and Home/End.
+- [x] Preserve complete-pair IDs/ties, existing local preview/toggle semantics and explicit Apply.
+- [x] Pass six DOM harnesses, 50 focused Python checks, 159 native R assertions, compiler and 16 packaged cases.
+- [ ] Qualify this build's native scatter keyboard, rerun/save/reopen/export and broader accessibility/platforms.
+- [ ] Next numerical specification: marker correlation matrix, explicit missingness/n and multiplicity.
+
 # Orange-inspired heatmap keyboard navigation — 0.3.18
 
 - [x] Add one remembered matrix Tab stop, arrows and row/matrix endpoint shortcuts.

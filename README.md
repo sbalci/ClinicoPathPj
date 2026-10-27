@@ -8,7 +8,7 @@ so users install nothing.
 Current direction and implemented/pending work: [revised migration plan](docs/python-migration-plan.md).
 See also the [web-researched Python analysis candidates](docs/python-analysis-opportunities.md).
 
-Status: experimental, 0.3.18 (descriptive ports; full migration remains incomplete). Verified only on jamovi 28.13 for macOS (Apple Silicon), with
+Status: experimental, 0.3.20 (descriptive ports; full migration remains incomplete). Verified only on jamovi 28.13 for macOS (Apple Silicon), with
 jmvtools 28.4.
 
 Analyses now use compact family menus: **Descriptives Py**, **Stats Plots Py**,
@@ -42,7 +42,7 @@ Open **Data Library > ClinicoPathPj > Python Core Examples**, or import
 `data/python_core_examples.csv`, for the synthetic examples.
 
 Build the single standard module without installing it:
-`Rscript --vanilla tools/build.R --build-only` → `ClinicoPathPj_0.3.18.jmo`.
+`Rscript --vanilla tools/build.R --build-only` → `ClinicoPathPj_0.3.20.jmo`.
 After replacing a loaded development build, use a fresh jamovi engine to avoid stale namespaces.
 
 `pywelch` reports the mean difference as *comparison minus reference*. The reference defaults to
@@ -53,6 +53,18 @@ p and the interval empty, as R's `t.test` refuses such data. scipy would report 
 `pyexacttests` defaults the reference group to the first level, the orientation of
 `fisher.test(table(group, outcome))`. Its odds ratio then equals jamovi's Contingency Tables odds
 ratio when the event is the outcome's second level, and is the reciprocal when it is the first.
+
+## Correlation matrix core in 0.3.20
+
+**Stats Plots Py → Associations → Correlation matrix (core)** adds Pearson/Spearman,
+explicit pair counts/missingness, adjusted p values, Pearson intervals and native/static/local
+outputs. It is a partial baseline port with [documented omissions and pending GUI gates](docs/python-correlation-matrix.md).
+
+## Linked-scatter keyboard navigation in 0.3.19
+
+The IHC scatterplot now has a remembered point Tab stop, row-order arrow navigation and
+Home/End shortcuts, including overlapping complete-pair observations. Navigation stays local;
+only Apply persists selected rows. See [checks and remaining native gates](docs/python-ihc-scatter-keyboard-validation.md).
 
 ## Heatmap keyboard navigation in 0.3.18
 

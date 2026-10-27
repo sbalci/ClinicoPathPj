@@ -1,9 +1,42 @@
-# ClinicoPathPj implementation plan — revised 2026-10-26
+# ClinicoPathPj implementation plan — revised 2026-10-27
 
 This is the current delivery plan. It supersedes the implementation recommendations in
 `python-roadmap.md` (2026-10-18) and the initial `interactive-analysis-plan.md`.
 The original 61-analysis inventory remains the target; a menu entry does not establish parity.
 Detailed per-analysis evidence remains in the [generated status matrix](python-migration-status.md).
+
+## Reassessment after parallel-session changes — 2026-10-27
+
+Reviewed clean starting HEAD `5b46301` (0.3.18), source/registry, TODO and dated IHC
+validation records. Work from the other session is retained. The entries below distinguish
+recorded earlier evidence from checks newly run for 0.3.19; no earlier GUI result is silently
+credited to a new build. At that reviewed HEAD the baseline had 16 partial ports, 45 planned and
+zero full-parity releases, with 26 implementation entries including utilities. The 0.3.20
+correlation core below now advances one planned baseline target to partial implementation.
+
+| Area | Current implementation | Remaining work |
+|---|---|---|
+| Annotated IHC core | Raw/z scales, missingness, original rows, annotations, clustering, static export | Larger native GUI payloads, themes and additional platforms |
+| Linked marker scatter | Native pair roles, complete-pair tables/static plot, local pair switching and row linking (0.3.12–0.3.13) | Broader assistive-technology/platform checks |
+| Dendrograms | Independent R fixtures, native merge/static trees and local member inspection (0.3.14) | Full tree keyboard workflow and marker-tree export qualification |
+| Applied selections | Snapshot guard, explicit Apply, native summaries and row-aligned dataset flag (0.3.15) | Broader lifecycle/platform/assistive-technology evidence |
+| Selected data | Native raw/displayed marker table retaining full-cohort scaling (0.3.16) | Large-output native GUI qualification |
+| Rectangle previews | Inclusive numeric/pointer preview, ties/missing pairs and explicit Apply (0.3.17) | Broader touch/theme/platform checks |
+| Matrix keyboard focus | One remembered Tab stop, directional/endpoints, preserved activation (0.3.18) | Screen-reader certification is not established |
+| Scatter keyboard focus | 0.3.19 adds one remembered complete-pair Tab stop, row-order arrows and endpoints | New-build native keyboard/save/reopen/export qualification remains separate |
+
+The original “start heatmap” milestone is complete as an exploratory utility. Repeating
+linked scatter, dendrogram or saved-selection implementation would duplicate work already
+present. Continue by closing the remaining usability gates, then specify the next numerical
+Orange-inspired analysis: a marker correlation matrix using explicit pairwise/common-cohort
+rules, pair-specific n, multiplicity controls and independent R references. Integrate it with
+existing row-linked inspection where useful; a new or existing registry target must state
+which baseline features it implements. Do not count this proposed work as implemented yet.
+
+Keep the Pj comparison available as an optional experiment; retain processx as default.
+The known host cutoff-field refresh limitation and planned future jamovi/Julia backends
+are not reasons to block these independent IHC presentation improvements. Deferred molecular
+scoring/enrichment and model-evaluation pipelines remain outside this keyboard milestone.
 
 ## What changes after the jamovi discussion
 
@@ -23,20 +56,22 @@ Do not add rpy2 or replace the current bridge based on an announced future engin
 
 ## Verified current inventory
 
-There are **26 registered implementation entry points**: **16 partial baseline ports** and
-**10 utility/demonstration analyses**. Of the 61 baseline targets, **45 are planned**,
+There are **27 registered implementation entry points**: **17 partial baseline ports** and
+**10 utility/demonstration analyses**. Of the 61 baseline targets, **44 are planned**,
 **0 have complete supported-feature parity and all release gates**.
 
 | Family | Baseline targets | Partial ports | Planned |
 |---|---:|---:|---:|
 | ClinicoPathDescriptives | 14 | 8 | 6 |
-| jjstatsplot | 19 | 0 | 19 |
+| jjstatsplot | 19 | 1 | 18 |
 | meddecide | 15 | 8 | 7 |
 | jsurvival | 9 | 0 | 9 |
 | OncoPath | 4 | 0 | 4 |
 
 Partial descriptives: `pyagepyramid`, `pybenford`, `pycategorize`, `pycheckdata`,
 `pychisqposttest`, `pydataquality`, `pyreportcat`, `pysummarydata`.
+
+Partial statistical plots: `pyjjcorrmat` (Pearson/Spearman core only).
 
 Partial medical decisions: `pycotest`, `pydecision`, `pydecisioncalculator`,
 `pydecisioncurve`, `pykappaci`, `pykappafixedn`, `pykappapower`, `pysequentialtests`.
@@ -117,7 +152,7 @@ saved-analysis/export qualification. No renderer is selected universally for all
 
 ### 3. Close gaps in existing ports before enlarging the catalog
 
-Prioritize GUI/saved-output/export gaps for the 16 partial ports, then remaining frozen-baseline
+Prioritize GUI/saved-output/export gaps for the 17 partial ports, then remaining frozen-baseline
 features and independent numerical agreement. Record implemented, independently validated,
 GUI-verified and release-ready status separately. Core accuracy or Benford calculations do not
 establish full umbrella feature parity. Keep statistical defaults and clinical rules unchanged.
@@ -156,7 +191,7 @@ or evidence of numerical equivalence. Orange desktop/Qt is not a module dependen
 
 | Idea | ClinicoPath adaptation | Current status |
 |---|---|---|
-| [Annotated heatmap](https://orangedatamining.com/widget-catalog/visualize/heatmap/) | IHC marker panel with original-row IDs, patient/specimen, group and region annotations; scaling, missingness and optional clustering | `pyihcheatmap` exploratory core in 0.3.10; 24 base-R fixtures, 104 native assertions and macOS save/reopen/export checked; full evidence/limits recorded separately |
+| [Annotated heatmap](https://orangedatamining.com/widget-catalog/visualize/heatmap/) | IHC marker panel with original-row IDs, patient/specimen, group and region annotations; scaling, missingness and optional clustering | `pyihcheatmap` core plus linked scatter, trees, selections, selected-data and previews through 0.3.18; 0.3.19 scatter keyboard extension under qualification; evidence/limits recorded separately |
 | [Differential expression / volcano](https://orangedatamining.com/widget-catalog/bioinformatics/volcano_plot/) | Effect magnitude versus multiplicity-adjusted evidence for specified marker designs | Proposed; distinguish gene expression, bounded IHC scores and repeated specimens |
 | [Test and Score](https://orangedatamining.com/widget-catalog/evaluate/testandscore/) | Consistent folds and saved predictions feeding linked ROC, confusion matrix and calibration | Proposed; existing diagnostic engines are a starting point, not a model-validation pipeline |
 | [Interactive survival](https://orangedatamining.com/widget-catalog/survival-analysis/kaplan-meier-plot/) | Risk-set and patient inspection with explicit time/event roles | Proposed within survival wave; selected cohorts require Apply and rerun |
@@ -223,6 +258,28 @@ cancellation/cleanup, row/factor/missingness transport and independent numerical
 A small numerical comparison is the first feasibility gate. Do not install Julia, replace
 the current Python backend or promise a speed advantage under this planning entry.
 
+## Correlation-matrix core — 0.3.20
+
+`pyjjcorrmat` is now a partial implementation of the already registered baseline target,
+under Stats Plots Py / Associations. Supported defaults retain Pearson, listwise deletion,
+Holm adjustment and 0.95 confidence. The core includes Spearman asymptotic p values,
+pairwise complete-pair n/exclusions, four adjustment choices, Pearson Fisher-z intervals,
+native unique-pair results/static matrix and local cell inspection. All planned unique
+pairs define the multiplicity family, including unavailable tests. Intervals are pointwise,
+not multiplicity-adjusted. Undefined estimates remain missing with explicit reasons.
+
+Independent base-R cor.test/p.adjust comparisons and native lifecycle/render checks passed
+(406 assertions over 16 configurations); the stable full Python suite passes 253 tests,
+and all 17 extracted packaged-runtime cases pass. Six hand/edge Python tests and a DOM inspector
+harness passed. Packaged runtime and current-build desktop acceptance are separate gates.
+Robust, Bayesian, partial/grouped correlations, Spearman CIs, additional p-adjust methods
+and full plot styling remain omitted. This is not full baseline parity or clinical validation.
+See [correlation methods and qualification](python-correlation-matrix.md).
+
+Current inventory: 61 baseline targets, **17 partial**, **44 planned**, **0 full-parity**;
+27 implementation entries including the 10 retained utilities. Existing IHC and diagnostic
+identifiers, defaults and production R analyses are unchanged.
+
 ## Next delivery sequence — planned, not currently implemented
 
 | Stage | Deliverables | Exit condition |
@@ -256,6 +313,7 @@ desktop acceptance for this addition are tracked in
 [the histogram validation record](python-categorize-histogram-validation.md). Inventory counts
 remain unchanged.
 
-Next implementation action: resolve or explicitly retain the comparison's host panel-synchronization
-limitation, then finish the remaining acceptance gaps for the existing descriptive cores before
-adding another broad batch of statistical ports.
+Next implementation actions: qualify the 0.3.19 scatter keyboard extension, complete remaining
+IHC keyboard/theme/platform gates, then qualify the 0.3.20 correlation core in the native GUI and decide its next baseline
+features from the explicit omission list. Keep the already documented host cutoff-panel limitation visible without treating it
+as a blocker for independent work. Preserve the existing migration waves and statistical defaults.

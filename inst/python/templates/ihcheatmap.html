@@ -24,7 +24,8 @@
 <button class="brush-preview" type="button">Preview rectangle rows</button>
 <p class="brush-status" role="status" aria-live="polite"></p></details>
 <p class="pair-scope" role="status" aria-live="polite"></p>
-<svg class="scatter-view" viewBox="0 0 650 400" role="group" aria-label="Marker scatterplot: focus or activate a point to highlight its source row"></svg>
+<p id="__ROOT___scatter_keys">Tab enters one remembered complete-pair point. Right/Down move to the next point in displayed heatmap row order; Left/Up move to the previous point. Home/End move to the first/last point. This is row-order navigation, not spatial movement. Enter/Space activates the point; only Apply saves a selection.</p>
+<svg aria-describedby="__ROOT___scatter_keys" class="scatter-view" viewBox="0 0 650 400" role="group" aria-label="Marker scatterplot: focus or activate a point to highlight its source row"></svg>
 <p>Points use displayed values and complete pairs only. Overlapping points are not jittered; use the heatmap for individual rows. Native scatterplot and tables retain the X/Y choices in the analysis options.</p></div>
 <p class="detail" role="status" aria-live="polite">Click or keyboard-focus a cell to inspect its original row, annotations and raw/displayed value.</p>
 <script>(function(){'use strict';
@@ -125,7 +126,8 @@ if(p.scatter){
  function element(tag,attrs,label){const el=document.createElementNS('http://www.w3.org/2000/svg',tag);Object.entries(attrs).forEach(([k,v])=>el.setAttribute(k,String(v)));if(label!==undefined)el.textContent=label;svg.appendChild(el);return el;}
  const mode=root.querySelector('.brush-mode'),preview=root.querySelector('.brush-preview'),status=root.querySelector('.brush-status');
  const fields=['xmin','xmax','ymin','ymax'].map(k=>root.querySelector('.brush-'+k));
- let geometry=null,drag=null,rectangle=null;
+ let geometry=null,drag=null,rectangle=null,activePoint=null,activeSource=null;
+ function rememberPoint(el,index){if(activePoint)activePoint.tabIndex=-1;activePoint=el;el.tabIndex=0;activeSource=p.rows[index].row;}
  function release(previous){if(previous&&previous.captured&&svg.releasePointerCapture){try{svg.releasePointerCapture(previous.id);}catch(_){}}}
  cancelBrush=()=>{const previous=drag;drag=null;release(previous);if(rectangle)rectangle.remove();rectangle=null;status.textContent='';};
  function box(x0,y0,x1,y1){if(!rectangle)rectangle=element('rect',{class:'brush-box',fill:'rgba(40,100,160,0.15)',stroke:'#111','stroke-width':2,'pointer-events':'none','aria-hidden':'true'});rectangle.setAttribute('x',Math.min(x0,x1));rectangle.setAttribute('y',Math.min(y0,y1));rectangle.setAttribute('width',Math.abs(x1-x0));rectangle.setAttribute('height',Math.abs(y1-y0));}
@@ -168,7 +170,8 @@ if(p.scatter){
  root.addEventListener('keydown',e=>{if(e.key==='Escape'&&drag){e.preventDefault();cancelBrush();}});
  function draw(){
   cancelBrush();geometry=null;preview.disabled=true;fields.forEach(f=>{f.value='';f.disabled=true;});
-  svg.replaceChildren();dots.length=0;const xi=Number(xs.value),yi=Number(ys.value);
+  const restoreFocus=activePoint!==null&&document.activeElement===activePoint;
+  activePoint=null;svg.replaceChildren();dots.length=0;const xi=Number(xs.value),yi=Number(ys.value);
   if(xi===yi){scope.textContent='Choose two distinct markers. Heatmap and native results unchanged.';return;}
   const points=p.rows.map((r,i)=>({index:i,x:p.values[i][xi],y:p.values[i][yi]})).filter(v=>v.x!==null&&v.y!==null);
   scope.textContent=points.length+' complete pairs; '+(p.rows.length-points.length)+' heatmap rows omitted for missing pair values. '+p.scaleLabel+'. Local view only; native results unchanged.';
@@ -181,8 +184,22 @@ if(p.scatter){
   element('path',{d:'M70 30V330H620',fill:'none',stroke:'#24364b'});
   for(let t=0;t<=4;t++){const x=xmin+(xmax-xmin)*t/4,y=ymin+(ymax-ymin)*t/4;element('text',{x:sx(x),y:350,'text-anchor':'middle','font-size':11},x.toPrecision(3));element('text',{x:62,y:sy(y)+4,'text-anchor':'end','font-size':11},y.toPrecision(3));}
   element('text',{x:345,y:385,'text-anchor':'middle'},p.markers[xi]);element('text',{x:18,y:180,transform:'rotate(-90 18 180)','text-anchor':'middle'},p.markers[yi]);
-  points.forEach(v=>{const el=element('circle',{cx:sx(v.x),cy:sy(v.y),r:5,fill:'#2864a0',stroke:'white',tabindex:0,role:'button','data-row':p.rows[v.index].row,'aria-label':'Source row '+p.rows[v.index].row+', '+p.markers[xi]+' '+text(v.x)+', '+p.markers[yi]+' '+text(v.y)});
-   el.addEventListener('click',()=>{if(!mode.checked)inspect(v.index);});el.addEventListener('focus',()=>inspect(v.index,undefined,false));el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();inspect(v.index);}});dots.push({el,index:v.index});});
+  const entry=points.find(v=>p.rows[v.index].row===activeSource)||points[0];
+  points.forEach((v,position)=>{const el=element('circle',{cx:sx(v.x),cy:sy(v.y),r:5,fill:'#2864a0',stroke:'white',tabindex:v===entry?0:-1,role:'button','data-row':p.rows[v.index].row,'aria-label':'Source row '+p.rows[v.index].row+', '+p.markers[xi]+' '+text(v.x)+', '+p.markers[yi]+' '+text(v.y)});
+   if(v===entry)rememberPoint(el,v.index);
+   el.addEventListener('click',()=>{rememberPoint(el,v.index);if(!mode.checked)inspect(v.index);});
+   el.addEventListener('focus',()=>{rememberPoint(el,v.index);inspect(v.index,undefined,false);});
+   el.addEventListener('keydown',e=>{
+    let next=position;
+    if(e.key==='ArrowRight'||e.key==='ArrowDown')next=Math.min(points.length-1,position+1);
+    else if(e.key==='ArrowLeft'||e.key==='ArrowUp')next=Math.max(0,position-1);
+    else if(e.key==='Home')next=0;
+    else if(e.key==='End')next=points.length-1;
+    else if(e.key==='Enter'||e.key===' '){e.preventDefault();inspect(v.index);return;}
+    else return;
+    e.preventDefault();dots[next].el.focus();
+   });dots.push({el,index:v.index});});
+  if(restoreFocus&&activePoint)activePoint.focus();
   refreshHighlights();
  }
  xs.addEventListener('change',draw);ys.addEventListener('change',draw);draw();
