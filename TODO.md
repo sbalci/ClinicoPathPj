@@ -2,7 +2,9 @@
 
 - [x] Add local heatmap/scatter row highlighting and marker-pair switching.
 - [x] Add native X/Y roles, complete-pair/source-row tables and static scatterplot.
-- [ ] Qualify new native controls, linked keyboard interaction, save/reopen and native export in jamovi.
+- [x] macOS arm64 / jamovi 28.13: mouse linking, custom native pair controls, save/fresh-engine reopen and native PNG export.
+- [x] Fix marker reuse across heatmap/scatter roles with persistent supplier items in 0.3.13.
+- [ ] Complete live keyboard, theme, maximum-matrix and additional-platform acceptance.
 - [ ] Later: dendrogram inspection and explicitly saved row selections.
 - [x] Record Julia backend idea as deferred feasibility work in the migration plan.
 
@@ -23,7 +25,7 @@
 - [x] Pass 24 independent base-R fixtures / 104 assertions and packaged runtime/native lifecycle checks.
 - [x] macOS arm64 GUI installation, annotations, z scaling, missing-cell inspection, save/fresh-engine reopen, clustering rerun and native PNG export.
 - [ ] Qualify large matrices, theme variants and additional platforms.
-- [x] Linked scatter core added in 0.3.12; desktop acceptance remains pending.
+- [x] Linked scatter core added in 0.3.12; macOS mouse/custom-role/save/reopen/export checks recorded in 0.3.13.
 - [ ] Later: dendrogram inspection and explicit saved selections.
 
 # Web-informed candidate backlog

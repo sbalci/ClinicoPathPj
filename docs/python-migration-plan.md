@@ -168,10 +168,12 @@ remains local; inferential cohort changes commit explicitly. Prevent preprocessi
 leakage across validation folds. Database licensing, offline gene-set versions and method-specific
 validation are prerequisites for molecular extensions.
 
-Version 0.3.12 extends the existing IHC utility with optional linked heatmap/scatter row
+Versions 0.3.12–0.3.13 extend the existing IHC utility with optional linked heatmap/scatter row
 inspection, saved native X/Y marker roles, complete-pair counts/source rows and a native
 static scatterplot. Browser marker switching and highlighting remain local and transient;
-no cohort changes or inferential refitting are introduced. See
+no cohort changes or inferential refitting are introduced. Version 0.3.13 fixes marker reuse
+in the shared supplier. Native mouse linking, custom pair controls, fresh-engine save/reopen
+and PNG export are checked on macOS arm64 / jamovi 28.13; broader gates remain open. See
 [linked-view checks and open acceptance gates](python-ihc-linked-validation.md).
 
 The first IHC heatmap is a separate utility extension, not completion of `pyihcheterogeneity`.

@@ -56,11 +56,49 @@ Executed results:
 
 Logs and the synthetic standalone HTML fixture are under `/private/tmp/cpj-ihc-linked/`.
 
+## Native desktop follow-up — 0.3.12 / 0.3.13
+
+On macOS arm64 / jamovi 28.13, the standard 0.3.12 package was installed via the module
+Sideload interface. A fresh engine loaded the synthetic IHC document. Enabling the linked
+scatter produced Ki67/ER with 11 heatmap rows, 9 complete pairs and 2 omitted pairs. Clicking
+the second scatter point highlighted only source row 2 (S01 / Edge); clicking source row 1's
+heatmap cell switched the linked selection to S01 / Center. Repeated specimen IDs stayed
+distinct. Switching local Y to PR showed 10 complete pairs / 1 omitted, while the native
+Ki67/ER table remained 9 / 2. Native Image → Export → PNG succeeded and was decoded/inspected.
+
+A separate saved 0.3.12 validation document reopened in a fresh engine with the native
+9-pair output and both images. The local PR view/highlight reset to the saved default pair,
+as intended; the transient state was not persisted as native options.
+
+Desktop inspection exposed a supplier problem: with `persistentItems: false`, the original
+heatmap/annotation assignments emptied the available-variable list, obstructing reuse of
+selected markers for native scatter roles. Version 0.3.13 changes only the IHC supplier to
+`persistentItems: true` (plus version metadata). After GUI installation and a fresh engine,
+all six source variables remained available. Dragging Ki67 into X and PR into Y preserved
+the three heatmap markers and recalculated native results to 10 complete pairs / 1 missing.
+The custom pair was saved, closed and reopened in another fresh engine. Both native roles,
+10-pair table, native scatter and heatmap restored; the restored scatter exported to PNG.
+
+Artifacts under `validation-exports/`:
+
+- `python-ihc-linked-0.3.12-validation.omv` and `python-ihc-linked-0.3.12-native-scatter.png`.
+- `python-ihc-linked-0.3.13-validation.omv` and `python-ihc-linked-0.3.13-native-scatter.png`.
+- `python-ihc-linked-desktop-saved-files.json`: independent ZIP/protobuf inspection confirms
+  `showScatter=true`, z scaling, three selected markers, explicit Ki67/PR roles in 0.3.13,
+  and two native PNG resources in each saved document.
+
+Focused IHC/generator tests: 37 passed; offline linked-interaction DOM harness passed.
+The final compiler build and 16 packaged-runtime cases are checked separately. Numerical
+methods, renderer and local interaction code are unchanged from the prior 234-Python-test /
+175-R-assertion implementation batch; those full counts were not rerun for this UI-only fix.
+The final rebuild updates registry acceptance text only; GUI-tested calculation/UI bytes
+are retained. The installed candidate may retain earlier coverage text until reinstalled.
+
 ## Remaining gates
 
-Fresh-engine jamovi controls/linked keyboard interaction, `.omv` save/reopen, native scatter
-export, live theme behavior, maximum matrix GUI behavior and other platforms remain pending.
-No browser-control surface was available for this batch's standalone visual acceptance.
-The prior 0.3.10 heatmap GUI evidence does not qualify these new controls or scatter output.
+Complete live keyboard navigation/activation, live theme behavior, maximum matrix GUI
+behavior and other platforms remain pending. The mouse/role-control/save/reopen/export
+checks above qualify the stated macOS configuration only. Initial implementation-batch
+DOM checks and prior 0.3.10 heatmap evidence remain separate from this desktop follow-up.
 Persisted row selection and dendrogram inspection remain future work. Numerical/software
 checks do not establish clinical validity or full IHC heterogeneity baseline parity.

@@ -1,3 +1,8 @@
+# 0.3.13 — 2026-10-26
+
+- Keep IHC supplier variables available for reuse in heatmap and native scatter roles.
+- Record native linked-view inspection and PNG-export acceptance separately from numerical tests.
+
 # 0.3.12 — 2026-10-26
 
 - Add optional linked heatmap/scatter inspection to the existing annotated IHC utility.

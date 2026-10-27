@@ -60,7 +60,10 @@ are transient; change native X/Y roles to persist the pair and update native out
 Overlapping points are not jittered; individual rows remain accessible in the heatmap.
 Native plots use the saved X/Y pair, not a transient local pair.
 
-See [0.3.12 validation and remaining desktop gates](python-ihc-linked-validation.md).
+Version 0.3.13 keeps supplier variables available for reuse in native scatter roles.
+Native mouse linking, custom pair controls, fresh-engine save/reopen and PNG export have
+been checked on macOS arm64 / jamovi 28.13; complete keyboard/theme/platform gates remain open.
+See [linked-view validation and remaining gates](python-ihc-linked-validation.md).
 No saved selected-row column is supplied. Other omissions:
 dendrogram interaction, cluster significance/stability, differential-expression tests, clinical
 cutoffs, pathway analysis, automatic imputation, spatial inference and patient-cluster inference.
