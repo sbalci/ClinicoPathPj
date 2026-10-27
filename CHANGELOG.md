@@ -1,3 +1,22 @@
+# 0.3.23 — 2026-10-27
+
+- Add Hochberg, Hommel and Benjamini-Yekutieli to the correlation core; retain Holm default.
+- Preserve all planned pairs in the multiplicity family and disclose dependence assumptions.
+- Validate all seven adjustments against 1,533 independent base-R fixtures.
+
+# 0.3.22 — 2026-10-27
+
+- Stop handled correlation navigation keys from bubbling into jamovi result navigation.
+- Record a native 0.3.21 boundary failure and add a host-bubbling regression.
+- Preserve Tab, native activation, modified shortcuts, statistics and saved options.
+
+# 0.3.21 — 2026-10-27
+
+- Give the correlation inspector one remembered Tab stop and bounded arrow/Home/End navigation.
+- Preserve native Enter/Space activation and local-only inspection; leave statistics/options unchanged.
+- Cover 2, 3 and 20-variable matrices, missing estimates and modified keys in DOM regression checks.
+- Keep native desktop keyboard qualification separate from 0.3.20 lifecycle evidence.
+
 # 0.3.20 — 2026-10-27
 
 - Add registered `pyjjcorrmat` partial core: Pearson/Spearman, explicit missingness and pair n.

@@ -5,7 +5,7 @@
   "menuGroup": "Stats Plots Py",
   "menuSubgroup": "Associations",
   "menuTitle": "Correlation matrix (core)",
-  "version": "0.3.20",
+  "version": "0.3.23",
   "jas": "1.2",
   "options": [
     {
@@ -72,6 +72,18 @@
         {
           "name": "BH",
           "title": "Benjamini-Hochberg"
+        },
+        {
+          "name": "BY",
+          "title": "Benjamini-Yekutieli"
+        },
+        {
+          "name": "hochberg",
+          "title": "Hochberg"
+        },
+        {
+          "name": "hommel",
+          "title": "Hommel"
         },
         {
           "name": "none",

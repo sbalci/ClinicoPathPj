@@ -802,10 +802,12 @@
       "status": "partial",
       "coverage": {
         "full_parity": false,
-        "numerical": "406 native R assertions: 16 method/missingness/adjustment configurations versus cor.test and p.adjust; six hand/edge Python tests; native clearing/raster checks passed",
-        "gui": "pending packaged native desktop installation, save/reopen and export",
+        "numerical": "1533 independent base-R p.adjust fixtures across seven adjustments; seven focused Python tests; 706 native R assertions over 28 method/missingness/adjustment configurations, cor.test/CI and lifecycle/raster checks",
+        "gui": "macOS arm64 jamovi 28.13: GUI install 0.3.20, fresh-engine Pearson/listwise and pairwise/Spearman reruns, keyboard cell inspection, OMV save/fresh-engine reopen/recalculation and native PNG export verified",
         "compatibility": "existing Python identifier preserved",
-        "platforms": []
+        "platforms": [
+          "macOS arm64"
+        ]
       },
       "methods": "plot first: ggcorrmat heatmap plus a correlation table from correlation::correlation: Pearson, Spearman, 20% winsorized ('robust'), or Bayesian (BF10 with an MCMC posterior-median rho). Optional partial correlations, p-adjustment (Holm by default) and CIs.",
       "oracle": "correlation::correlation, WRS2::wincor, stats::cor.test, stats::p.adjust, BayesFactor::correlationBF",
@@ -818,8 +820,8 @@
       "source_name": "jjcorrmat",
       "menu_group": "Stats Plots Py",
       "menu_title": "Correlation matrix (core)",
-      "supported_core": "Pearson, Spearman asymptotic p; listwise/pairwise n; Holm/Bonferroni/BH/none; Pearson Fisher-z CI n>=4; native table/static matrix and local cell inspection",
-      "omissions": "Grouped/partial/robust/Bayesian correlations, Spearman CI, additional p adjustments and full umbrella plot styling remain outside this first core."
+      "supported_core": "Pearson, Spearman asymptotic p; listwise/pairwise n; Holm/Bonferroni/Hochberg/Hommel/BH/BY/none; Pearson Fisher-z CI n>=4; native table/static matrix and local cell inspection",
+      "omissions": "Grouped/partial/robust/Bayesian correlations, Spearman CI, full umbrella plot styling remain outside this first core."
     },
     {
       "id": "pyjjdotchart",

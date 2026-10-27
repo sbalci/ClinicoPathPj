@@ -7,14 +7,29 @@ from cpj_runtime import Factor, InputError
 def adjust(values, method):
     p=np.array([np.nan if v is None else v for v in values],dtype=float)
     family=len(p);indices=np.flatnonzero(np.isfinite(p));answer=np.full(family,np.nan)
-    if method not in ('none','holm','bonferroni','BH'):
+    if method not in ('none','holm','bonferroni','BH','BY','hochberg','hommel'):
         raise InputError('Unsupported p-value adjustment.')
     if not len(indices):return [None]*family
     order=indices[np.argsort(p[indices],kind='stable')];ranked=p[order]
     if method=='none':q=ranked
     elif method=='bonferroni':q=ranked*family
     elif method=='holm':q=np.maximum.accumulate(ranked*(family-np.arange(len(order))))
-    else:q=np.minimum.accumulate((ranked*family/np.arange(1,len(order)+1))[::-1])[::-1]
+    elif method=='hochberg':
+        q=np.minimum.accumulate((ranked*(family-np.arange(len(order))))[::-1])[::-1]
+    elif method=='hommel':
+        # Unavailable planned tests count as p=1, retaining the stated family size.
+        padded=np.concatenate((ranked,np.ones(family-len(ranked))))
+        q=np.full(family,np.min(family*padded/np.arange(1,family+1)))
+        for size in range(family-1,1,-1):
+            split=family-size+1
+            bound=np.min(size*padded[split:]/np.arange(2,size+1))
+            step=np.minimum(size*padded[:split],bound)
+            candidate=np.concatenate((step,np.full(size-1,step[-1])))
+            q=np.maximum(q,candidate)
+        q=np.maximum(q,padded)[:len(ranked)]
+    else:
+        multiplier=family*(np.sum(1/np.arange(1,family+1)) if method=='BY' else 1)
+        q=np.minimum.accumulate((ranked*multiplier/np.arange(1,len(order)+1))[::-1])[::-1]
     answer[order]=np.minimum(1,q)
     return [float(v) if np.isfinite(v) else None for v in answer]
 

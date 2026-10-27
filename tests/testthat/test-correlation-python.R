@@ -1,7 +1,7 @@
 test_that('correlation cores agree with independent cor.test and p.adjust', {
  d<-data.frame(a=c(1,2,3,4,NA,6,8,9),b=c(4,1,5,3,4,9,NA,6),c=c(9,7,8,4,3,5,1,2),constant=rep(2,8))
  vars<-names(d)
- for(method in c('parametric','nonparametric'))for(missing in c('listwise','pairwise'))for(adjust in c('holm','bonferroni','BH','none')){
+ for(method in c('parametric','nonparametric'))for(missing in c('listwise','pairwise'))for(adjust in c('holm','bonferroni','BH','none','BY','hochberg','hommel')){
   got<-do.call(pyjjcorrmat,list(data=d,dep=vars,typestatistics=method,naHandling=missing,padjustmethod=adjust,conflevel=.9))
   tab<-got$correlations$asDF;expected.p<-rep(NA_real_,nrow(tab))
   for(i in seq_len(nrow(tab))){

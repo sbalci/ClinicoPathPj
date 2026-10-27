@@ -70,6 +70,17 @@ def check(path):
             result=json.loads(response.read_text())
             assert result['status']=='ok',(name,result.get('error'))
             assert result['tables'],name
+            if name=='pyjjcorrmat':
+                extended_columns=dict(columns,constant=numeric([2,2,2,2]))
+                for method in ['hochberg','hommel','BY']:
+                    extended_options=dict(options,dep=['a','b','constant'],padjustmethod=method)
+                    request.write_text(json.dumps(dict(analysis=name,columns=extended_columns,options=extended_options)))
+                    subprocess.run([sys.executable,'-B',str(runtime),str(request),str(response)],check=True,timeout=70)
+                    adjusted=json.loads(response.read_text())
+                    assert adjusted['status']=='ok',adjusted.get('error')
+                    rows=adjusted['tables']['correlations']['rows']
+                    assert abs(rows[0]['adjusted']-(1 if method=='BY' else .6))<1e-12
+                    assert rows[1]['adjusted'] is None and rows[2]['adjusted'] is None
             if name=='pyihcheatmap':
                 assert len(result['tables']['merges']['rows'])==3
                 assert result['plots']['rowDendrogram']['kind']=='dendrogram'
