@@ -1,3 +1,11 @@
+# Orange-inspired heatmap keyboard navigation — 0.3.18
+
+- [x] Add one remembered matrix Tab stop, arrows and row/matrix endpoint shortcuts.
+- [x] Preserve native Enter/Space, local focus inspection, toggle previews and explicit Apply.
+- [x] Test missing cells, boundaries, singleton and 4,000-cell matrices without native dispatch.
+- [x] Qualify 50 Python checks, 159 native R assertions, five DOM harnesses, 16 packaged cases and native keyboard Apply/save/reopen on macOS.
+- [ ] Broader screen-reader/theme/touch/scatter-tree/maximum-size/platform acceptance remains separate.
+
 # Orange-inspired scatter rectangle preview — 0.3.17
 
 - [x] Add inclusive numeric bounds and optional pointer rectangle previews using displayed values.

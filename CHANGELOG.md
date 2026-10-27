@@ -1,3 +1,10 @@
+# 0.3.18 — 2026-10-27
+
+- Add one remembered Tab stop for IHC heatmap cells and arrow-key movement.
+- Add Home/End for row endpoints and Ctrl/Command+Home/End for matrix endpoints.
+- Preserve native button activation, local focus inspection, toggle previews and explicit Apply.
+- Add keyboard instructions linked to the matrix; no statistical or cohort changes.
+
 # 0.3.17 — 2026-10-27
 
 - Add local scatter rectangle row previews with inclusive displayed-value bounds.

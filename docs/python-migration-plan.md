@@ -207,6 +207,11 @@ retain original source identities and ties remain separate rows. Only the existi
 action persists a row selection; it changes no statistical calculation. See
 [rectangle interaction checks](python-ihc-brush-validation.md).
 
+Version 0.3.18 adds a single remembered Tab stop and directional/endpoint keyboard focus
+navigation to the IHC matrix. Native cell activation and local preview semantics remain
+unchanged. This is a bounded keyboard improvement, not full accessibility certification.
+See [keyboard qualification](python-ihc-keyboard-validation.md).
+
 ## Deferred backend experiment: Julia
 
 Retain Julia as a future optional analysis backend, following the 2026-10-26 discussion.

@@ -166,3 +166,19 @@ These controls are transient. Enable saved selections and use **Apply** to updat
 selection summaries, the optional nominal flag and selected-marker table. Full-cohort
 analysis values and native X/Y roles are unaffected. See
 [validation and limitations](python-ihc-brush-validation.md).
+
+## Heatmap keyboard navigation (0.3.18)
+
+Tab enters the matrix at its last focused/clicked cell, initially the first displayed cell.
+The matrix contributes one Tab stop. Arrow keys move one cell horizontally/vertically;
+movement stops at the current row/column boundary. Home/End move to the first/last marker
+in the current row. Ctrl+Home/End (or Command+Home/End) move to the matrix endpoints.
+Native Enter/Space activation is retained; Tab/Shift+Tab leave the matrix normally.
+
+Focus follows displayed clustering order and inspects the original source row and marker,
+including missing cells. As before, focus replaces the local row preview in ordinary mode.
+When **Toggle individual rows on activation** is checked, focus inspects without changing
+selected rows; Enter/Space or clicking toggles that source row. Apply remains the only
+native write. Clear/Restore retain the remembered cell. Rerunning/reopening resets keyboard
+position to the first cell; saved applied rows remain governed by the snapshot guard.
+See [evidence and remaining accessibility gates](python-ihc-keyboard-validation.md).
