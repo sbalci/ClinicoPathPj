@@ -50,3 +50,25 @@ test_that('partial Pearson agrees with independent base-R residual regressions',
   expect_equal(tab$adjusted,p.adjust(raw,adjust,n=6),tolerance=1e-11)
  }
 })
+
+test_that('partial Spearman agrees with independent ranked residual regressions', {
+ set.seed(147)
+ d<-data.frame(a=sample(1:8,45,TRUE),b=sample(1:12,45,TRUE),c=sample(1:6,45,TRUE),z=sample(1:15,45,TRUE))
+ d$a[2]<-NA;d$c[4]<-NA
+ clean<-na.omit(d);ranked<-as.data.frame(lapply(clean,rank,ties.method='average'))
+ vars<-names(d);k<-length(vars)-2L;n<-nrow(clean);df<-n-k-2
+ for(adjust in c('holm','bonferroni','BH','BY','hochberg','hommel','none')){
+  got<-do.call(pyjjcorrmat,list(data=d,dep=vars,partial=TRUE,typestatistics='nonparametric',padjustmethod=adjust))
+  tab<-got$correlations$asDF;raw<-numeric(nrow(tab))
+  for(i in seq_len(nrow(tab))){
+   controls<-setdiff(vars,c(tab$first[i],tab$second[i]));design<-cbind(1,as.matrix(ranked[controls]))
+   a<-lm.fit(design,ranked[[tab$first[i]]])$residuals;b<-lm.fit(design,ranked[[tab$second[i]]])$residuals
+   r<-cor(a,b);raw[i]<-2*pt(-abs(r)*sqrt(df/(1-r*r)),df)
+   expect_equal(tab$n[i],n);expect_equal(tab$excluded[i],2L)
+   expect_equal(tab$controls[i],k);expect_equal(tab$df[i],df)
+   expect_equal(tab$estimate[i],r,tolerance=1e-11);expect_equal(tab$p[i],raw[i],tolerance=1e-11)
+   expect_true(is.na(tab$lower[i])&&is.na(tab$upper[i]))
+  }
+  expect_equal(tab$adjusted,p.adjust(raw,adjust,n=6),tolerance=1e-11)
+ }
+})

@@ -1,3 +1,13 @@
+# Partial Spearman core — 0.3.25
+
+- [x] Add common-cohort average-rank residual correlations using the existing partial option.
+- [x] Retain explicit control counts/df, approximate t p-values and no Spearman CI.
+- [x] Pass nine focused Python tests including ties/missingness and singular ranked systems.
+- [x] Pass 1,308 native R assertions including independent ranked-residual comparisons.
+- [x] Pass final compiler/freshness and all 17 packaged cases, including the independent tied-rank fixture.
+- [x] Qualify tied-data partial Spearman controls, R agreement, second-engine save/reopen/rerun and native PNG export on macOS arm64.
+- [ ] Broader accessibility/theme and cross-platform qualification remain open.
+
 # Partial Pearson core — 0.3.24
 
 - [x] Add baseline partial option for Pearson/common-cohort data with at least three variables.
@@ -7,7 +17,7 @@
 - [x] Pass compiler/freshness and all 17 rebuilt-package cases, including an analytical partial-correlation fixture.
 - [x] Qualify partial invalid/constant/valid recovery, second-engine save/reopen/rerun and native PNG export on macOS arm64.
 - [ ] Additional platforms and broader accessibility/theme checks remain open.
-- [ ] Partial Spearman, robust/Bayesian/grouped methods and Spearman intervals remain omitted.
+- [x] Partial Spearman added in 0.3.25; robust/Bayesian/grouped methods and Spearman intervals remain omitted.
 
 # Correlation adjustment expansion — 0.3.23
 

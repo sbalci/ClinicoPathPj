@@ -206,7 +206,7 @@ pyjjcorrmatBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             super$initialize(
                 package = "ClinicoPathPj",
                 name = "pyjjcorrmat",
-                version = c(0,3,24),
+                version = c(0,3,25),
                 options = options,
                 results = pyjjcorrmatResults$new(options=options),
                 data = data,

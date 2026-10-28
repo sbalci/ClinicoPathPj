@@ -1,4 +1,4 @@
-# Correlation matrix — pyjjcorrmat, core through 0.3.24
+# Correlation matrix — pyjjcorrmat, core through 0.3.25
 
 Open **Stats Plots Py → Associations → Correlation matrix (core)**. Select two to twenty
 numeric variables; each row must represent an independent observation. Do not treat
@@ -65,7 +65,7 @@ cluster inference and correlation clustering are not included in this first core
 
 ## Baseline features deliberately omitted
 
-Robust/winsorized and Bayesian correlations, BF/posterior outputs, partial Spearman correlations,
+Robust/winsorized and Bayesian correlations, BF/posterior outputs,
 grouped matrices, Spearman uncertainty and full umbrella
 plot styling remain outside this core. The frozen R baseline/provenance remains unchanged
 in the registry. This port advances a planned target to partial; it is not full parity.
@@ -135,8 +135,8 @@ silent dropping of controls is used. The diagonal is unavailable in such systems
 
 Classical t/Fisher-z inference assumes independent observations and an appropriate
 multivariate-normal linear model. Conditioning on selected variables does not establish
-causality or remove unmeasured confounding. Partial Spearman, grouped, robust/Bayesian
-methods and Spearman intervals remain omitted. Independent R residual-regression and
+causality or remove unmeasured confounding. Grouped, robust/Bayesian methods and Spearman intervals remain omitted; partial Spearman
+is added in 0.3.25 below. Independent R residual-regression and
 current GUI/package evidence are separate gates. The native suite passes 1,007 assertions,
 including seven partial-adjustment configurations against independent base-R `lm.fit`
 residuals, t tests and Fisher-z intervals, alongside the prior zero-order/lifecycle/raster
@@ -152,3 +152,37 @@ reopen, zero-order/partial reruns and native PNG export. See the
 [desktop report](validation-exports/python-correlation-partial-0.3.24-desktop.json) and
 [saved example](validation-exports/python-correlation-partial-0.3.24-validation.omv).
 Additional platforms and broader accessibility/theme checks remain open.
+
+## Partial Spearman — 0.3.25
+
+The existing **Partial correlations** option now also supports Spearman. Choose at
+least three variables and one common complete-case cohort. Each variable is ranked
+within that retained cohort, using average ranks for ties, before computing the inverse
+rank-covariance matrix. Every pair controls the other selected ranked variables. This
+is a linear residual correlation of ranks, not a general nonlinear conditional-independence
+test. Partial Pearson and all zero-order defaults remain unchanged.
+
+The native table/inspector report control count k and df=n−k−2. Two-sided t p-values
+are approximate for partial Spearman; no exact/permutation inference or confidence
+interval is supplied. Singular, constant or insufficient ranked systems remain unavailable
+with explicit reasons. Pairwise partial estimation is still rejected. The partial checkbox
+remains editable so an unsupported configuration can be recovered without resetting the
+analysis. Multiplicity uses the same planned-pair family and seven adjustment choices.
+
+Nine focused Python tests cover ranked residual agreement, ties/missingness, common-cohort
+ranking, df, unavailable intervals and singular ranks. Independent native R ranked-residual
+comparisons pass in the expanded 1,308-assertion suite, including coefficients,
+approximate p-values, control counts/df and unavailable intervals over all seven
+adjustment choices. Final packaged checks are recorded separately; native desktop partial Spearman qualification
+is not implied by the earlier Pearson desktop evidence.
+
+The 0.3.25 archive passes integrity/source checks and all 17 runtime cases, including
+a tied-rank fixture independently evaluated in R (partial r=0.1601592641029556,
+p=0.7969540733546533, one control, df=3, unavailable CI). See the
+[package report](validation-exports/python-correlation-partial-spearman-0.3.25-package.json).
+On 2026-10-28, native tied-data controls, R agreement, second-engine
+save/reopen/rerun and PNG export passed on macOS arm64 / jamovi 28.13. See
+[desktop checks](validation-exports/python-correlation-partial-spearman-0.3.25-desktop.json)
+and the [saved example](validation-exports/python-correlation-partial-spearman-0.3.25-validation.omv).
+Import `data/python_partial_spearman_examples.csv` to reproduce the tied fixture.
+Broader accessibility/theme and cross-platform qualification remain open.

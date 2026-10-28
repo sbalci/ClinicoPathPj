@@ -89,3 +89,29 @@ not full method parity, all accessibility/theme combinations, other platforms or
 
 The evidence-only registry update is rebuilt and its extracted runtime rechecked;
 statistical, interface and rendering implementation sources are unchanged.
+
+## Partial Spearman — 0.3.25 follow-up (2026-10-28)
+
+Loaded 0.3.25 through the GUI in a fresh jamovi engine. Imported the new synthetic
+`data/python_partial_spearman_examples.csv`, which contains ties in both marker columns.
+A new analysis retained Pearson/nonpartial/Holm defaults. With partial correlations and
+Spearman selected, the native table and local inspector showed r=0.1601592641029555,
+n=6, no exclusions, one control, df=3, approximate p=0.7969540733546534 and Holm
+adjusted p=1 for Marker_A versus Marker_B controlling Control_Z. The independent R
+ranked-residual fixture agrees. The Pearson interval control was disabled and interval
+cells remained unavailable.
+
+Saved a new partial/Spearman/listwise/Holm OMV and exported its native image as PNG.
+The PNG was visually inspected. A second fresh-engine restart/reopen restored settings
+and results. Toggling to zero-order and back reproduced the partial result. The original
+0.3.24 fixture and PNG hashes remained unchanged. One export attempt opened the whole
+results export panel; it was cancelled and the image-specific PNG route completed.
+
+- [Saved tied example](validation-exports/python-correlation-partial-spearman-0.3.25-validation.omv)
+- [Native PNG](validation-exports/python-correlation-partial-spearman-0.3.25-native.png)
+- [Checks and hashes](validation-exports/python-correlation-partial-spearman-0.3.25-desktop.json)
+
+This is one macOS arm64 / jamovi 28.13 configuration, not broad accessibility, theme,
+other-platform, full-baseline-parity or clinical qualification. The evidence-only registry
+update is rebuilt and the packaged runtime rechecked; the statistical implementation
+is unchanged by this follow-up.
