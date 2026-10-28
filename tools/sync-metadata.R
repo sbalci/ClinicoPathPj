@@ -23,6 +23,14 @@ sync_module_metadata <- function(root = ".") {
             "    tags: [Python, Diagnostic accuracy, Decision curves, Data quality]")
     }
     document <- yaml::yaml.load(paste(metadata, collapse = "\n"))
+    set_data <- "python_set_intersection_examples.csv"
+    if (file.exists(file.path(root, "data", set_data)) &&
+        !any(vapply(document$datasets, function(x) identical(x$path, set_data), logical(1)))) {
+        document$datasets[[length(document$datasets) + 1L]] <- list(
+            name = "Set Intersection Examples", path = set_data,
+            description = "Four synthetic binary markers with all sixteen membership patterns and two missing-value examples.",
+            tags = c("Python", "Set membership", "Marker panels"))
+    }
     registry_path <- file.path(root, "inst", "python", "registry.json")
     if (file.exists(registry_path)) {
         registry <- jsonlite::fromJSON(registry_path, simplifyVector = FALSE)

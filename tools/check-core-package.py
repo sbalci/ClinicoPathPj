@@ -14,7 +14,7 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parent.parent
 VERSION=re.search(r'^Version: (.+)$',(ROOT/'DESCRIPTION').read_text(),re.M)[1]
 REGISTRY=json.loads((ROOT/'inst/python/registry.json').read_text())
-NAMES=['pyjjcorrmat','pyihcheatmap','pybridgecompare','pysvgcutoff','pycheckdata','pyobservablecutoff','pyd3cutoff','pydecision','pydecisioncalculator','pysequentialtests','pychisqposttest','pybenford','pydecisioncurve','pysummarydata','pycategorize','pyagepyramid','pydataquality']
+NAMES=['pyvenn','pyjjcorrmat','pyihcheatmap','pybridgecompare','pysvgcutoff','pycheckdata','pyobservablecutoff','pyd3cutoff','pydecision','pydecisioncalculator','pysequentialtests','pychisqposttest','pybenford','pydecisioncurve','pysummarydata','pycategorize','pyagepyramid','pydataquality']
 
 
 def numeric(x):return dict(kind='number',values=x)
@@ -33,6 +33,8 @@ def check(path):
             manifest=archive.read('ClinicoPathPj/jamovi.yaml').decode()
             assert f'version: {VERSION}' in manifest
             assert 'python_core_examples.omv' in manifest
+            assert 'python_set_intersection_examples.csv' in manifest
+            assert archive.read('ClinicoPathPj/data/python_set_intersection_examples.csv')==(ROOT/'data/python_set_intersection_examples.csv').read_bytes()
             assert all(n.startswith('py') for n in re.findall(r'^    name: (\w+)$',manifest,re.M))
             for name in NAMES:
                 assert f'name: {name}\n' in manifest
@@ -40,13 +42,14 @@ def check(path):
                 member='ClinicoPathPj/R/ClinicoPathPj/python/'+entry['source']
                 assert archive.read(member)==(ROOT/'inst/python'/entry['source']).read_bytes()
                 assert f"name: {entry['id']}\n" in manifest
-            for file in ['cpj_correlation.py','templates/correlation.html','cpj_ihc.py','templates/ihcheatmap.html','cpj_runtime.py','cpj_svg_cutoff.py','cpj_accuracy.py','cpj_registry.py','cpj_plots.py','cpj_descriptive.py','cpj_binning.py','cpj_demographics.py','cpj_quality.py','templates/quality.html','cpj_cutoff.py','cpj_single_quality.py','templates/single-quality.html','cpj_cutoff_analysis.py','templates/bridgecutoff.html','templates/d3cutoff.html','templates/observablecutoff.html','vendor/observable-plot-0.6.17.min.js','vendor/observable-inputs-0.12.0.min.js','vendor/htl-0.3.1.min.js','vendor/observable-plot-LICENSE.txt','vendor/observable-inputs-LICENSE.txt','vendor/htl-LICENSE.txt','vendor/observable-manifest.json','vendor/d3-7.9.0.min.js','vendor/d3-LICENSE.txt','registry.json','font-cache.json']:
+            for file in ['cpj_sets.py','templates/sets.html','cpj_correlation.py','templates/correlation.html','cpj_ihc.py','templates/ihcheatmap.html','cpj_runtime.py','cpj_svg_cutoff.py','cpj_accuracy.py','cpj_registry.py','cpj_plots.py','cpj_descriptive.py','cpj_binning.py','cpj_demographics.py','cpj_quality.py','templates/quality.html','cpj_cutoff.py','cpj_single_quality.py','templates/single-quality.html','cpj_cutoff_analysis.py','templates/bridgecutoff.html','templates/d3cutoff.html','templates/observablecutoff.html','vendor/observable-plot-0.6.17.min.js','vendor/observable-inputs-0.12.0.min.js','vendor/htl-0.3.1.min.js','vendor/observable-plot-LICENSE.txt','vendor/observable-inputs-LICENSE.txt','vendor/htl-LICENSE.txt','vendor/observable-manifest.json','vendor/d3-7.9.0.min.js','vendor/d3-LICENSE.txt','registry.json','font-cache.json']:
                 assert archive.read(f'ClinicoPathPj/R/ClinicoPathPj/python/{file}')==(ROOT/'inst/python'/file).read_bytes()
             assert archive.read('ClinicoPathPj/R/ClinicoPathPj/js/pysvgcutoff.js')==(ROOT/'inst/js/pysvgcutoff.js').read_bytes()
             assert archive.read('ClinicoPathPj/data/python_core_examples.omv')==(ROOT/'data/python_core_examples.omv').read_bytes()
             archive.extractall(temp)
         runtime=temp/'ClinicoPathPj/R/ClinicoPathPj/python/cpj_runtime.py'
-        cases=[('pyjjcorrmat',{'a':numeric([1,2,3,4]),'b':numeric([1,2,4,3])},dict(dep=['a','b'])),
+        cases=[('pyvenn',{'a':{'kind':'factor','levels':['N','Y'],'codes':[0,1,0,1,None]},'b':{'kind':'factor','levels':['N','Y'],'codes':[0,0,1,1,1]}},dict(var1='a',var2='b',var1true='Y',var2true='Y',showMembershipTable=True)),
+          ('pyjjcorrmat',{'a':numeric([1,2,3,4]),'b':numeric([1,2,4,3])},dict(dep=['a','b'])),
           ('pyihcheatmap',{'a':numeric([1,2,3]),'b':numeric([2,4,6])},dict(markers=['a','b'],scaling='zscore',showScatter=True,clusterRows=True,clusterColumns=True,showDendrograms=True,enableSelection=True)),
           ('pybridgecompare',{'x':numeric([1,2,2,4,5,6]),'g':factor(['N','N','P','N','P','P'])},dict(marker='x',reference='g',positive='P',cutoff='2')),
           ('pysvgcutoff',{'x':numeric([1,2,2,4,5,6]),'g':factor(['N','N','P','N','P','P'])},dict(marker='x',reference='g',positive='P',cutoff='2')),
@@ -100,6 +103,24 @@ def check(path):
                 assert abs(row['estimate']-.1601592641029556)<1e-12
                 assert abs(row['p']-.7969540733546533)<1e-12
                 assert row['controls']==1 and row['df']==3 and row['lower'] is None and row['upper'] is None
+            if name=='pyjjcorrmat':
+                split_columns={'a':numeric([1,2,4,3,1,2,3,4,99]),'b':numeric([1,2,3,4,4,3,2,1,99]),'g':{'kind':'factor','levels':['unused','A','B'],'codes':[1,1,1,1,2,2,2,2,None]}}
+                request.write_text(json.dumps(dict(analysis=name,columns=split_columns,options=dict(dep=['a','b'],grvar='g'))))
+                subprocess.run([sys.executable,'-B',str(runtime),str(request),str(response)],check=True,timeout=70)
+                split=json.loads(response.read_text())
+                assert split['status']=='ok',split.get('error')
+                rows=split['tables']['correlations']['rows'];assert [r['group'] for r in rows]==['A','B']
+                assert abs(rows[0]['estimate']-.8)<1e-12 and abs(rows[1]['estimate']+1)<1e-12
+                assert len(split['tables']['cohorts']['rows'])==2
+                assert len(split['plots']['matrix']['columns']['value'])==8 and 'Inspect group' in split['htmls']['explorer']
+            if name=='pyvenn':
+                assert [r['n'] for r in result['tables']['intersections']['rows']]==[1,1,1,1]
+                assert result['tables']['membershipTable']['rows'][-1]['status'].startswith('Excluded')
+                request.write_text(json.dumps(dict(analysis=name,columns=columns,options=options,row_ids=['2','5','9','12','15'])))
+                subprocess.run([sys.executable,'-B',str(runtime),str(request),str(response)],check=True,timeout=70)
+                saved=json.loads(response.read_text());assert saved['status']=='ok',saved.get('error')
+                assert saved['outputs']['membershipGroups']['values']==[0,1,2,3,None]
+                assert saved['outputs']['membershipGroups']['measure_type']=='nominal'
             if name=='pyihcheatmap':
                 assert len(result['tables']['merges']['rows'])==3
                 assert result['plots']['rowDendrogram']['kind']=='dendrogram'

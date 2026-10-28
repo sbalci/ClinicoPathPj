@@ -115,3 +115,37 @@ This is one macOS arm64 / jamovi 28.13 configuration, not broad accessibility, t
 other-platform, full-baseline-parity or clinical qualification. The evidence-only registry
 update is rebuilt and the packaged runtime rechecked; the statistical implementation
 is unchanged by this follow-up.
+
+## Grouped correlations — 0.3.26 follow-up (2026-10-28)
+
+Installed 0.3.26 through the GUI and restarted jamovi. Reopened the 0.3.25 saved
+partial Spearman example and recalculated: the new All rows cohort appeared and the
+same r=0.1601592641029555, p=0.7969540733546534, one control and df=3 were preserved.
+That original fixture was not overwritten; its OMV and PNG hashes remained unchanged.
+
+In another clean engine, imported `data/python_grouped_correlation_examples.csv`,
+selected Marker_A/B/C and Group as Split By. Native results counted thirteen input rows,
+one missing group and two observed groups. Group_A had 6 input/6 common rows; Group_B
+had 6 input/5 common rows. Group_A partial Spearman matched the earlier R reference;
+Group_B's constant adjustment system remained unavailable. Unchecking partial recovered
+Group_B's valid zero-order Marker_A/B result (n=5, excluded=1, df=3, r approximately −1).
+Constant-marker pairs remained unavailable with their explicit reason.
+
+Local switching cleared prior details and left the native summary unchanged. Keyboard
+navigation remembered a different position per group; returning to Group_B and pressing
+Tab restored its previously inspected Marker_B/C cell. The saved example retains
+Spearman, listwise, Holm and partial=False. Local group choice/focus is transient.
+
+Saved the new grouped OMV and exported the native image as PNG. Visual inspection
+confirmed both matrices, group-prefixed row labels and unavailable gray cells. A fresh
+engine reopened the grouped roles/settings/results, and partial then zero-order reruns
+reproduced Group_B's result. The tests cover one two-group macOS arm64 / jamovi 28.13
+configuration, not exhaustive maximum-size/theme/accessibility/other-platform or clinical
+qualification. No between-group difference inference is supplied.
+
+- [Saved grouped example](validation-exports/python-correlation-groups-0.3.26-validation.omv)
+- [Native stacked PNG](validation-exports/python-correlation-groups-0.3.26-native.png)
+- [Desktop checks and hashes](validation-exports/python-correlation-groups-0.3.26-desktop.json)
+
+The registry evidence update is rebuilt and its extracted runtime rechecked; statistical
+and interface implementation sources are unchanged in this follow-up.

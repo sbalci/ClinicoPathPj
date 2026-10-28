@@ -1,10 +1,10 @@
 """Hand fixtures, missingness, multiplicity, degeneracy and safe local outputs."""
 import sys,unittest
 import numpy as np
-from cpjtest import ROOT,run_analysis,number
+from cpjtest import ROOT,run_analysis,number,factor
 sys.path.insert(0,str(ROOT/'inst/python'))
-from cpj_correlation import calculate,adjust
-from cpj_runtime import InputError
+from cpj_correlation import calculate,adjust,calculate_groups
+from cpj_runtime import InputError,Factor
 
 class Correlation(unittest.TestCase):
     def test_hand_calculated_pearson_and_sample_counts(self):
@@ -72,6 +72,31 @@ class Correlation(unittest.TestCase):
         self.assertTrue(all(row['estimate'] is None for row in singular['pairs']))
         empty=calculate({k:np.full(4,np.nan) for k in ['a','b','z']},dict(dep=['a','b','z'],partial=True,typestatistics='nonparametric'))
         self.assertEqual(empty['commonRows'],0);self.assertTrue(all(row['estimate'] is None for row in empty['pairs']))
+
+    def test_group_cohorts_labels_and_limits(self):
+        a=np.array([1.,2,4,3,1,2,3,4,90,91]);b=np.array([1.,2,3,4,4,3,2,1,90,91])
+        d=dict(a=a,b=b,g=Factor(np.array([1]*4+[2]*4+[-1,0]),[None,'NA','<group>','unused']))
+        groups,meta=calculate_groups(d,dict(dep=['a','b'],grvar='g'))
+        self.assertEqual([v['label'] for v in groups],['NA','<group>'])
+        self.assertEqual(meta['missingGroup'],2);self.assertEqual(meta['unusedLevels'],1)
+        self.assertEqual([v['result']['inputRows'] for v in groups],[4,4])
+        self.assertAlmostEqual(groups[0]['result']['pairs'][0]['estimate'],.8)
+        self.assertAlmostEqual(groups[1]['result']['pairs'][0]['estimate'],-1.)
+        d['g']=Factor(np.arange(10),[str(i) for i in range(10)])
+        with self.assertRaises(InputError):calculate_groups(d,dict(dep=['a','b'],grvar='g'))
+        with self.assertRaises(InputError):calculate_groups(d,dict(dep=['a','g'],grvar='g'))
+        allowed={'a':np.tile([1.,2,4,3],6),'b':np.tile([1.,2,3,4],6),'g':Factor(np.repeat(np.arange(6),4),list('ABCDEF'))}
+        self.assertEqual(len(calculate_groups(allowed,dict(dep=['a','b'],grvar='g'))[0]),6)
+        d['g']=Factor(np.full(10,-1),['none'])
+        with self.assertRaises(InputError):calculate_groups(d,dict(dep=['a','b'],grvar='g'))
+
+    def test_grouped_runtime_contract_and_missing_group(self):
+        r=run_analysis('pyjjcorrmat',{'a':number([1,2,4,3,1,2,3,4,9]),'b':number([1,2,3,4,4,3,2,1,9]),'g':factor(['A']*4+['<script>']*4+[None],levels=['unused','<script>','A'])},dict(dep=['a','b'],grvar='g'))
+        self.assertEqual(r['status'],'ok',r.get('error'))
+        self.assertEqual([v['group'] for v in r['tables']['cohorts']['rows']],['<script>','A'])
+        self.assertEqual(len(r['plots']['matrix']['columns']['value']),8)
+        self.assertNotIn('"label": "<script>"',r['htmls']['explorer']);self.assertIn('Inspect group',r['htmls']['explorer'])
+        self.assertIn('missing grouping rows: 1',r['texts']['summary'].replace(chr(92),''))
 
     def test_spearman_ties_and_insufficient_pairs(self):
         p=calculate({'a':np.array([1.,1,2,3]),'b':np.array([1.,2,3,4])},dict(dep=['a','b'],typestatistics='nonparametric'))

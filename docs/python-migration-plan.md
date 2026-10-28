@@ -1,4 +1,4 @@
-# ClinicoPathPj implementation plan — revised 2026-10-27
+# ClinicoPathPj implementation plan — revised 2026-10-28
 
 This is the current delivery plan. It supersedes the implementation recommendations in
 `python-roadmap.md` (2026-10-18) and the initial `interactive-analysis-plan.md`.
@@ -57,20 +57,20 @@ Do not add rpy2 or replace the current bridge based on an announced future engin
 
 ## Verified current inventory
 
-There are **27 registered implementation entry points**: **17 partial baseline ports** and
-**10 utility/demonstration analyses**. Of the 61 baseline targets, **44 are planned**,
+There are **28 registered implementation entry points**: **18 partial baseline ports** and
+**10 utility/demonstration analyses**. Of the 61 baseline targets, **43 are planned**,
 **0 have complete supported-feature parity and all release gates**.
 
 | Family | Baseline targets | Partial ports | Planned |
 |---|---:|---:|---:|
-| ClinicoPathDescriptives | 14 | 8 | 6 |
+| ClinicoPathDescriptives | 14 | 9 | 5 |
 | jjstatsplot | 19 | 1 | 18 |
 | meddecide | 15 | 8 | 7 |
 | jsurvival | 9 | 0 | 9 |
 | OncoPath | 4 | 0 | 4 |
 
 Partial descriptives: `pyagepyramid`, `pybenford`, `pycategorize`, `pycheckdata`,
-`pychisqposttest`, `pydataquality`, `pyreportcat`, `pysummarydata`.
+`pychisqposttest`, `pydataquality`, `pyreportcat`, `pysummarydata`, `pyvenn` (exact-count core).
 
 Partial statistical plots: `pyjjcorrmat` (Pearson/Spearman core only).
 
@@ -153,7 +153,7 @@ saved-analysis/export qualification. No renderer is selected universally for all
 
 ### 3. Close gaps in existing ports before enlarging the catalog
 
-Prioritize GUI/saved-output/export gaps for the 17 partial ports, then remaining frozen-baseline
+Prioritize GUI/saved-output/export gaps for the 18 partial ports, then remaining frozen-baseline
 features and independent numerical agreement. Record implemented, independently validated,
 GUI-verified and release-ready status separately. Core accuracy or Benford calculations do not
 establish full umbrella feature parity. Keep statistical defaults and clinical rules unchanged.
@@ -389,3 +389,38 @@ independent tied-rank fixture. Native tied-data controls, R agreement, second-en
 PNG export also pass on macOS arm64 / jamovi 28.13 (2026-10-28). Broader
 accessibility/theme and cross-platform qualification remain open. Inventory remains 17 partial,
 44 planned and zero full parity. Grouped, robust and Bayesian correlations remain open.
+
+## Grouped correlation extension — 0.3.26
+
+The frozen baseline `grvar` role is now implemented for up to six observed factor groups.
+Each group has separate missingness/cohorts, ranks, partial systems and adjustment family;
+missing grouping rows and unused levels are counted. Native cohort/grouped pair tables
+and a stacked static matrix accompany local group inspection with remembered per-group
+keyboard focus. Browser switching clears stale details without refitting or changing
+native options/results. No pooled/across-group inference or correlation-difference test
+is added. Ungrouped defaults and the 61-target inventory are unchanged. Eleven focused
+Python tests and ungrouped/grouped DOM checks pass. The native suite passes 1,886
+assertions, including twelve grouped configurations compared with independent within-group
+R estimates/inference and adjustment families, cohort counts, factor order and raster
+rendering. Final compiler/freshness and all 17 packaged runtime cases also pass. macOS arm64 / jamovi 28.13 also passes previous saved-file recalculation, grouped
+cohorts, local switching/remembered focus, constant-system recovery, fresh-engine
+save/reopen/rerun and stacked PNG export (2026-10-28). Broader maximum-size/theme/
+accessibility and cross-platform gates remain open. Robust/Bayesian methods,
+Spearman CI, more than six groups and full plot styling remain open.
+
+## Exact set-intersection core — 0.3.27
+
+The planned `pyvenn` baseline target now has a partial exact-count implementation:
+two to four factor variables, explicit positive levels, complete-case exclusive patterns
+(including none), marginal sizes/union/all-set intersection, native count/membership
+tables and intersection-size plot, bounded local inspection and saved nominal membership
+with original row alignment. Missing rows never become negative/none membership.
+A four-marker synthetic Data Library example covers all sixteen patterns and missingness.
+No geometric Venn/Euler, full UpSet, larger-set, weighted or inferential/enrichment features
+are claimed. Seven focused Python tests, 86 native R assertions and the DOM harness pass;
+the full Python suite passes 265 tests. Final compiler/freshness and all 18 packaged
+runtime cases pass. macOS arm64 desktop positive-level controls, exact counts/local
+inspection, nominal saved membership, second-engine OMV reopen/rerun and native PNG
+export pass. Long-label preview layout and broader accessibility/platform gates remain open. Current inventory advances to **18 partial**, **43 planned**, zero
+full parity and 28 implementation entries including 10 retained utilities. See
+[set-intersection methods and limits](python-set-intersections.md).

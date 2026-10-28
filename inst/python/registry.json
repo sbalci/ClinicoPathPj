@@ -542,10 +542,10 @@
     {
       "id": "pyvenn",
       "family": "descriptives",
-      "menu": "Descriptives",
+      "menu": "Sets and Overlaps",
       "title": "Venn Diagram",
       "aliases": [],
-      "source": null,
+      "source": "analyses/descriptives/pyvenn.py",
       "baseline": {
         "module": "ClinicoPathDescriptives",
         "version": "1.0.82.03",
@@ -559,11 +559,11 @@
         }
       },
       "wave": 1,
-      "status": "planned",
+      "status": "partial",
       "coverage": {
         "full_parity": false,
-        "numerical": "pending",
-        "gui": "pending",
+        "numerical": "Seven focused Python tests; 86 native R assertions against independent base-R predicates, exact pattern frequencies, saved nominal row alignment, lifecycle clearing and raster; full Python suite 265 tests",
+        "gui": "macOS arm64 jamovi 28.13: fresh-engine create, four explicit positive levels, exact counts/local inspection, nominal saved membership, second-engine OMV reopen/rerun and native PNG export verified; long membership-preview labels need layout refinement",
         "compatibility": "existing Python identifier preserved",
         "platforms": []
       },
@@ -575,7 +575,9 @@
       },
       "source_name": "venn",
       "menu_group": "Descriptives Py",
-      "menu_title": "Venn Diagram"
+      "menu_title": "Set intersections (core)",
+      "supported_core": "Two to four factor sets with explicit positive levels; common complete-case cohort; exact exclusive patterns including none, set sizes/union/all-set counts; native tables/static count plot/local inspection and row-aligned saved membership",
+      "omissions": "Venn/Euler geometry, full UpSet layout, more than four sets, weighted counts, enrichment/inferential testing and full baseline styling are omitted."
     },
     {
       "id": "pyadvancedraincloud",
@@ -802,8 +804,8 @@
       "status": "partial",
       "coverage": {
         "full_parity": false,
-        "numerical": "1308 native R assertions including partial Pearson and partial Spearman versus independent lm.fit residuals/t formulas, zero-order cor.test and all seven adjustments; nine focused Python tests; prior 1533 p.adjust fixtures retained",
-        "gui": "macOS arm64 jamovi 28.13: 0.3.23 GUI install, fresh-engine Hochberg/Hommel/BY native/local reruns match R, BY OMV save/second-engine reopen and Hochberg recalculation; keyboard repair qualified 0.3.22; native PNG export qualified 0.3.20; 0.3.24 partial Pearson invalid/constant/valid recovery, second-engine save/reopen/rerun and native PNG export verified on macOS arm64; 0.3.25 partial Spearman tied-data controls, R agreement, second-engine save/reopen/rerun and native PNG export verified on macOS arm64",
+        "numerical": "1886 native R assertions including 12 grouped configurations versus independent within-group cor.test/ranked or raw residual regressions/p.adjust, prior zero-order/partial suite and raster/lifecycle; 11 focused Python tests; ungrouped/grouped DOM checks",
+        "gui": "macOS arm64 jamovi 28.13: 0.3.23 GUI install, fresh-engine Hochberg/Hommel/BY native/local reruns match R, BY OMV save/second-engine reopen and Hochberg recalculation; keyboard repair qualified 0.3.22; native PNG export qualified 0.3.20; 0.3.24 partial Pearson invalid/constant/valid recovery, second-engine save/reopen/rerun and native PNG export verified on macOS arm64; 0.3.25 partial Spearman tied-data controls, R agreement, second-engine save/reopen/rerun and native PNG export verified on macOS arm64; 0.3.26 previous saved-file rerun, grouped cohorts, local switching/remembered focus, constant-system recovery, fresh-engine save/reopen/rerun and native stacked PNG export verified on macOS arm64",
         "compatibility": "existing Python identifier preserved",
         "platforms": [
           "macOS arm64"
@@ -820,8 +822,8 @@
       "source_name": "jjcorrmat",
       "menu_group": "Stats Plots Py",
       "menu_title": "Correlation matrix (core)",
-      "supported_core": "Pearson, Spearman asymptotic p; listwise/pairwise n; Holm/Bonferroni/Hochberg/Hommel/BH/BY/none; Pearson Fisher-z CI n>=4; native table/static matrix and local cell inspection; partial Pearson/Spearman controlling all other selected variables, common complete-case cohort only, explicit controls/df",
-      "omissions": "Grouped/robust/Bayesian correlations, Spearman CI and full umbrella plot styling remain outside this core."
+      "supported_core": "Pearson, Spearman asymptotic p; listwise/pairwise n; Holm/Bonferroni/Hochberg/Hommel/BH/BY/none; Pearson Fisher-z CI n>=4; native table/static matrix and local cell inspection; partial Pearson/Spearman controlling all other selected variables, common complete-case cohort only, explicit controls/df; optional grvar split into up to six observed groups, within-group cohorts/ranks/adjustments, stacked static matrices and local group selector",
+      "omissions": "More than six observed groups, between-group correlation inference, robust/Bayesian correlations, Spearman CI and full umbrella plot styling remain outside this core."
     },
     {
       "id": "pyjjdotchart",

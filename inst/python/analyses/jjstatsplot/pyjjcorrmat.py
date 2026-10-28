@@ -2,19 +2,20 @@
 import json,uuid
 from pathlib import Path
 from cpj_runtime import md_escape
-from cpj_correlation import calculate
+from cpj_correlation import calculate_groups
 
 SPEC = {'name': 'pyjjcorrmat',
  'title': 'Correlation Matrix (Python Core)',
  'menuGroup': 'Stats Plots Py',
  'menuSubgroup': 'Associations',
- 'version': '0.3.25',
+ 'version': '0.3.26',
  'options': [{'name': 'dep',
               'title': 'Numeric variables',
               'type': 'Variables',
               'permitted': ['numeric'],
               'suggested': ['continuous'],
               'required': True},
+             {'name': 'grvar', 'title': 'Split By (optional; at most six groups)', 'type': 'Variable', 'permitted': ['factor'], 'suggested': ['nominal','ordinal']},
              {'name': 'typestatistics',
               'title': 'Correlation method',
               'type': 'List',
@@ -50,10 +51,16 @@ SPEC = {'name': 'pyjjcorrmat',
               'type': 'Bool',
               'default': True}],
  'results': [{'name': 'summary', 'title': 'Correlation Cohort and Methods', 'type': 'Text'},
+             {'name': 'cohorts', 'title': 'Group Cohorts', 'type': 'Table', 'columns': [
+                 {'name': 'group', 'title': 'Group', 'type': 'text'},
+                 {'name': 'input', 'title': 'Input Rows', 'type': 'integer'},
+                 {'name': 'complete', 'title': 'Common Complete Rows', 'type': 'integer'},
+                 {'name': 'family', 'title': 'Planned Pairs', 'type': 'integer'}]},
              {'name': 'correlations',
               'title': 'Unique Variable Pairs',
               'type': 'Table',
-              'columns': [{'name': 'first', 'title': 'Variable 1', 'type': 'text'},
+              'columns': [{'name': 'group', 'title': 'Group', 'type': 'text'},
+                          {'name': 'first', 'title': 'Variable 1', 'type': 'text'},
                           {'name': 'second', 'title': 'Variable 2', 'type': 'text'},
                           {'name': 'n', 'title': 'Complete Pairs', 'type': 'integer'},
                           {'name': 'excluded', 'title': 'Excluded Rows', 'type': 'integer'},
@@ -85,7 +92,8 @@ SPEC = {'name': 'pyjjcorrmat',
                                     'label': 'Numeric variables',
                                     'children': [{'type': 'VariablesListBox',
                                                   'name': 'dep',
-                                                  'isTarget': True}]}]},
+                                                  'isTarget': True}]},
+                                   {'type': 'TargetLayoutBox', 'label': 'Split By (optional)', 'children': [{'type': 'VariablesListBox','name': 'grvar','isTarget': True,'maxItemCount': 1}]}]},
                      {'type': 'CollapseBox',
                       'label': 'Analysis and Model',
                       'collapsed': False,
@@ -111,15 +119,22 @@ SPEC = {'name': 'pyjjcorrmat',
 
 
 def run(data, options, out):
-    p=calculate(data,options)
-    for row in p['pairs']:out.row('correlations',**row)
-    cells=[dict(row=first,label=first[:80],variable=second,value=p['matrix'][i][j]) for i,first in enumerate(p['names']) for j,second in enumerate(p['names'])]
+    groups,cohort=calculate_groups(data,options)
+    p=groups[0]['result'];cells=[]
+    for index,group in enumerate(groups):
+        result=group['result'];label=group['label']
+        out.row('cohorts',group=label,input=result['inputRows'],complete=result['commonRows'],family=len(result['pairs']))
+        for row in result['pairs']:out.row('correlations',group=label,**row)
+        for i,first in enumerate(result['names']):
+            for j,second in enumerate(result['names']):
+                display=(label+' | ' if cohort['split'] else '')+first
+                cells.append(dict(row=f'g{index}:r{i}',label=display,variable=second,value=result['matrix'][i][j]))
     out.plot('matrix',cells,xlab='Correlation (fixed -1 to 1 when a diagonal is available)',ylab='Variable')
     method='Pearson' if p['method']=='parametric' else 'Spearman'
     out.markdown('summary',md_escape(
-        f"Input rows: {p['inputRows']}; common complete rows: {p['commonRows']}. "
+        f"Input rows: {cohort['inputRows']}; groups: {len(groups)}; missing grouping rows: {cohort['missingGroup']}; unused grouping levels: {cohort['unusedLevels']}. See Group Cohorts for each group's complete-case n. "
         f"Partial: {p['partial']}; controls per pair: {p['controls']}. Method: {method}; missingness: {p['missing']}; adjustment: {p['adjustment']}. "
-        f"Multiplicity family: all {len(p['pairs'])} unique pairs, including unavailable tests. "
+        f"Multiplicity family: all {len(p['pairs'])} unique pairs per group, including unavailable tests. Adjustment is separate within each group, not across groups. No pooled or between-group correlation-difference inference is performed. "
         "Zero-order coefficients and tests require at least three nonconstant complete pairs. Partial correlations control all other selected variables on a common complete-case cohort; Spearman first ranks each variable within that cohort (average ties); t-test df = n - controls - 2. Singular systems remain unavailable. "
         f"Pearson {100*p['confidence']:g}% Fisher-z intervals require n - controls >= 4; no Spearman intervals in this core. "
         "Intervals are pointwise and unadjusted; p-value adjustment does not adjust intervals. "
@@ -127,12 +142,12 @@ def run(data, options, out):
         "Holm/Bonferroni control family-wise error under arbitrary dependence; Hochberg/Hommel require independent or suitably positively dependent tests. BH controls false discovery rate under independence or suitable positive dependence; BY allows arbitrary dependence. "
         "Rows must represent independent observations; repeated specimens need a separate clustered method. "
         "Pairwise deletion can produce a non-positive-semidefinite matrix. "
-        "Gray cells are unavailable estimates, not zero associations. Robust, Bayesian and grouped methods are omitted. Classical partial Pearson t/Fisher-z inference assumes independent observations and an appropriate multivariate-normal linear model; partial Spearman uses approximate t p-values with residual df, without exact/permutation inference or intervals. Partial correlation does not establish causality or eliminate unmeasured confounding."))
-    unavailable=sum(row['estimate'] is None for row in p['pairs'])
+        "Gray cells are unavailable estimates, not zero associations. Robust and Bayesian methods are omitted. Ranks, partial adjustment systems and missingness are calculated separately within each group. Static matrix rows include group labels and may be thinned; native tables retain full labels. Classical partial Pearson t/Fisher-z inference assumes independent observations and an appropriate multivariate-normal linear model; partial Spearman uses approximate t p-values with residual df, without exact/permutation inference or intervals. Partial correlation does not establish causality or eliminate unmeasured confounding."))
+    unavailable=sum(row['estimate'] is None for g in groups for row in g['result']['pairs'])
     if unavailable:out.warn(f'{unavailable} pair(s) have unavailable estimates; see per-pair sample sizes and reasons.')
     if p['method']=='nonparametric':out.warn('Spearman p values are asymptotic; small samples need separate exact or permutation inference, which is not implemented in this core.')
     if options.get('interactive',True):
-        encoded=json.dumps(p,allow_nan=False,ensure_ascii=True)
+        encoded=json.dumps(dict(p,groups=groups),allow_nan=False,ensure_ascii=True)
         for char,safe in (('<','\\u003c'),('>','\\u003e'),('&','\\u0026')):encoded=encoded.replace(char,safe)
         template=(Path(__file__).resolve().parents[2]/'templates/correlation.html').read_text()
         out.html('explorer',template.replace('__ROOT__','cpjcorr'+uuid.uuid4().hex).replace('__PAYLOAD__',encoded))

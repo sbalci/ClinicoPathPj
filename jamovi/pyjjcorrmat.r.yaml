@@ -10,11 +10,44 @@
       "type": "Text"
     },
     {
+      "name": "cohorts",
+      "title": "Group Cohorts",
+      "type": "Table",
+      "rows": 0,
+      "columns": [
+        {
+          "name": "group",
+          "title": "Group",
+          "type": "text"
+        },
+        {
+          "name": "input",
+          "title": "Input Rows",
+          "type": "integer"
+        },
+        {
+          "name": "complete",
+          "title": "Common Complete Rows",
+          "type": "integer"
+        },
+        {
+          "name": "family",
+          "title": "Planned Pairs",
+          "type": "integer"
+        }
+      ]
+    },
+    {
       "name": "correlations",
       "title": "Unique Variable Pairs",
       "type": "Table",
       "rows": 0,
       "columns": [
+        {
+          "name": "group",
+          "title": "Group",
+          "type": "text"
+        },
         {
           "name": "first",
           "title": "Variable 1",

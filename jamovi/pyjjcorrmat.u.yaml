@@ -21,6 +21,18 @@
               "isTarget": true
             }
           ]
+        },
+        {
+          "type": "TargetLayoutBox",
+          "label": "Split By (optional)",
+          "children": [
+            {
+              "type": "VariablesListBox",
+              "name": "grvar",
+              "isTarget": true,
+              "maxItemCount": 1
+            }
+          ]
         }
       ]
     },

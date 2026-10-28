@@ -1,7 +1,7 @@
 ---
 title: ClinicoPathPj - Python-Backed Analyses
 name: ClinicoPathPj
-version: 0.3.25
+version: 0.3.27
 jms: '1.0'
 authors: Serdar Balci
 maintainer: Serdar Balci <serdarbalci@serdarbalci.com>
@@ -228,6 +228,14 @@ analyses:
     menuTitle: Correlation matrix (core)
     title: Correlation Matrix (Python Core)
     category: analyses
+  - name: pyvenn
+    ns: ClinicoPathPj
+    hidden: false
+    menuGroup: Descriptives Py
+    menuSubgroup: Sets and Overlaps
+    menuTitle: Set intersections (core)
+    title: Set Intersections (Python Core)
+    category: analyses
 usesNative: 'yes'
 datasets:
   - name: Python Core Examples
@@ -238,5 +246,14 @@ datasets:
       - Diagnostic accuracy
       - Decision curves
       - Data quality
+  - name: Set Intersection Examples
+    path: python_set_intersection_examples.csv
+    description: >-
+      Four synthetic binary markers with all sixteen membership patterns and two
+      missing-value examples.
+    tags:
+      - Python
+      - Set membership
+      - Marker panels
 
 ...

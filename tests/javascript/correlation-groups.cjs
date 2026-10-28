@@ -1,0 +1,11 @@
+const assert=require('node:assert/strict'),fs=require('node:fs'),{JSDOM}=require('jsdom');
+const errors=[],calls=[];const dom=new JSDOM(fs.readFileSync(process.argv[2],'utf8'),{runScripts:'dangerously',beforeParse(w){w.setOption=(...a)=>calls.push(a);w.fetch=()=>{throw Error('No network');};w.addEventListener('error',e=>errors.push(e.message));}});
+const d=dom.window.document,select=d.querySelector('select'),detail=()=>d.querySelector('.detail').textContent,buttons=()=>[...d.querySelectorAll('button')];
+assert.deepEqual([...select.options].map(v=>v.textContent),['<group A>','group B']);assert.equal(d.querySelector('group'),null);
+assert.equal(buttons().length,9);buttons()[1].focus();assert.match(detail(),/n = 4; excluded = 0/);assert.match(detail(),/Group: <group A>/);
+select.value='1';select.dispatchEvent(new dom.window.Event('change',{bubbles:true}));assert.match(detail(),/input rows: 5/);assert.doesNotMatch(detail(),/n = 4/);
+buttons()[1].focus();assert.match(detail(),/n = 5/);assert.match(detail(),/Correlation = -1/);buttons()[5].focus();assert.match(detail(),/Constant variable/);
+select.value='0';select.dispatchEvent(new dom.window.Event('change',{bubbles:true}));assert.equal(buttons()[1].tabIndex,0);assert.equal(buttons().filter(x=>x.tabIndex===0).length,1);
+buttons()[1].focus();buttons()[1].dispatchEvent(new dom.window.KeyboardEvent('keydown',{key:'ArrowDown',bubbles:true,cancelable:true}));assert.equal(d.activeElement,buttons()[4]);
+select.value='1';select.dispatchEvent(new dom.window.Event('change',{bubbles:true}));assert.equal(buttons()[5].tabIndex,0);
+assert.deepEqual(errors,[]);assert.equal(calls.length,0);dom.window.close();console.log('Grouped correlation local switching, literal labels, cohort/estimate clearing and remembered keyboard positions PASSED');

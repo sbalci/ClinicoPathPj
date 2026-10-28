@@ -22,7 +22,7 @@ test_that('correlation pending selections clear native results and plot states',
  a<-pyjjcorrmatClass$new(options=pyjjcorrmatOptions$new(dep=names(d)),data=d)
  a$init();a$run();expect_equal(a$results$correlations$rowCount,1)
  selected<-a$options$option('dep');selected$value<-character();a$.__enclos_env__$private$.run()
- expect_equal(a$results$correlations$rowCount,0);expect_null(a$results$matrix$state)
+ expect_equal(a$results$correlations$rowCount,0);expect_equal(a$results$cohorts$rowCount,0);expect_null(a$results$matrix$state)
  expect_equal(a$results$explorer$content,'<div></div>')
  selected$value<-names(d);a$.__enclos_env__$private$.run();expect_equal(a$results$correlations$rowCount,1)
  png<-ClinicoPathPj:::.cpjRenderPlot(a$results$matrix$state,800L,650L,list(palette='jmv'))
@@ -71,4 +71,38 @@ test_that('partial Spearman agrees with independent ranked residual regressions'
   }
   expect_equal(tab$adjusted,p.adjust(raw,adjust,n=6),tolerance=1e-11)
  }
+})
+
+test_that('split correlations agree with independent within-group R analyses', {
+ set.seed(187)
+ d<-data.frame(x=sample(1:8,40,TRUE),y=sample(1:12,40,TRUE),z=sample(1:5,40,TRUE),
+               group=factor(rep(c('B','A'),20),levels=c('unused','B','A')))
+ d$group[39]<-NA;d$x[2]<-NA;d$y[5]<-NA;d$z[8]<-NA
+ vars<-c('x','y','z')
+ for(method in c('parametric','nonparametric'))for(mode in c('listwise','pairwise','partial'))for(adjust in c('holm','BY')){
+  partial<-mode=='partial';missing<-if(mode=='pairwise')'pairwise'else'listwise'
+  got<-do.call(pyjjcorrmat,list(data=d,dep=vars,grvar='group',typestatistics=method,partial=partial,naHandling=missing,padjustmethod=adjust,conflevel=.9))
+  cohorts<-got$cohorts$asDF;tab<-got$correlations$asDF
+  expect_equal(cohorts$group,c('B','A'));expect_equal(cohorts$input,c(19L,20L));expect_equal(cohorts$complete,c(18L,18L));expect_equal(cohorts$family,c(3L,3L))
+  for(label in c('B','A')){
+   group<-d[which(d$group==label),vars];selected<-tab[tab$group==label,];raw<-numeric(nrow(selected))
+   for(i in seq_len(nrow(selected))){
+    pair<-c(selected$first[i],selected$second[i]);sub<-if(missing=='listwise')na.omit(group)else na.omit(group[pair])
+    n<-nrow(sub);k<-if(partial)1L else 0L;df<-n-k-2
+    if(partial){
+     if(method=='nonparametric')sub<-as.data.frame(lapply(sub,rank,ties.method='average'))
+     design<-cbind(1,as.matrix(sub[setdiff(vars,pair)]));a<-lm.fit(design,sub[[pair[1]]])$residuals;b<-lm.fit(design,sub[[pair[2]]])$residuals
+     r<-cor(a,b);p<-2*pt(-abs(r)*sqrt(df/(1-r*r)),df)
+    }else{ref<-cor.test(sub[[pair[1]]],sub[[pair[2]]],method=if(method=='parametric')'pearson'else'spearman',exact=FALSE);r<-unname(ref$estimate);p<-ref$p.value}
+    raw[i]<-p;expect_equal(selected$n[i],n);expect_equal(selected$excluded[i],nrow(group)-n)
+    expect_equal(selected$controls[i],k);expect_equal(selected$df[i],df)
+    expect_equal(selected$estimate[i],r,tolerance=1e-11);expect_equal(selected$p[i],p,tolerance=1e-11)
+    if(method=='parametric')expect_equal(c(selected$lower[i],selected$upper[i]),tanh(atanh(r)+c(-1,1)*qnorm(.95)/sqrt(n-k-3)),tolerance=1e-11)
+    else expect_true(is.na(selected$lower[i])&&is.na(selected$upper[i]))
+   }
+   expect_equal(selected$adjusted,p.adjust(raw,adjust,n=3),tolerance=1e-11)
+  }
+ }
+ raster<-ClinicoPathPj:::.cpjRenderPlot(got$matrix$state,800L,650L,list(palette='jmv'))
+ expect_equal(dim(raster)[1:2],c(650L,800L))
 })

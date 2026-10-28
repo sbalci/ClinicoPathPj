@@ -103,3 +103,31 @@ def calculate(data, options):
     q=adjust([row['p'] for row in pairs],options.get('padjustmethod','holm'))
     for row,value in zip(pairs,q):row['adjusted']=value
     return dict(partial=partial,controls=controls,names=names,pairs=pairs,matrix=[[None if not np.isfinite(v) else float(v) for v in row] for row in matrix],inputRows=len(x),commonRows=int(common.sum()),method=method,missing=missing,confidence=confidence,adjustment=options.get('padjustmethod','holm'))
+
+
+def calculate_groups(data, options):
+    """Independent within-group engines; no pooled or between-group inference."""
+    name=options.get('grvar')
+    if not name:
+        result=calculate(data,options)
+        return [dict(label='All rows',result=result)],dict(inputRows=result['inputRows'],missingGroup=0,unusedLevels=0,split=False)
+    if name in (options.get('dep') or []):raise InputError('Split By must be separate from the numeric correlation variables.')
+    column=data[name]
+    if not isinstance(column,Factor):raise InputError('Split By must be a categorical variable.')
+    labels=column.levels;codes=np.asarray(column.codes)
+    if any(v is not None and not isinstance(v,str) for v in labels):raise InputError('Grouping labels must be text.')
+    valid_labels=[v for v in labels if v is not None]
+    if len(set(valid_labels))!=len(valid_labels):raise InputError('Grouping labels must be distinct.')
+    if codes.ndim!=1 or codes.dtype.kind not in 'iu' or np.any(codes>=len(labels)):
+        raise InputError('Invalid grouping codes.')
+    if any(len(data[v])!=len(codes) for v in options.get('dep',[])):
+        raise InputError('Grouping and marker variables must have equal lengths.')
+    observed=[i for i,label in enumerate(labels) if label is not None and np.any(codes==i)]
+    if not observed:raise InputError('Split By has no observed nonmissing groups.')
+    if len(observed)>6:raise InputError('Split By supports at most six observed groups; select a smaller grouping factor.')
+    eligible=np.isin(codes,observed)
+    groups=[]
+    for i in observed:
+        subset={v:np.asarray(data[v])[codes==i] if not isinstance(data[v],Factor) else data[v] for v in options.get('dep',[])}
+        groups.append(dict(label=labels[i],result=calculate(subset,options)))
+    return groups,dict(inputRows=len(codes),missingGroup=int((~eligible).sum()),unusedLevels=len(valid_labels)-len(observed),split=True)

@@ -7,6 +7,7 @@ pyjjcorrmatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
     public = list(
         initialize = function(
             dep = NULL,
+            grvar = NULL,
             typestatistics = "parametric",
             partial = FALSE,
             naHandling = "listwise",
@@ -28,6 +29,15 @@ pyjjcorrmatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                     "numeric"),
                 suggested=list(
                     "continuous"),
+                default=NULL)
+            private$..grvar <- jmvcore::OptionVariable$new(
+                "grvar",
+                grvar,
+                permitted=list(
+                    "factor"),
+                suggested=list(
+                    "nominal",
+                    "ordinal"),
                 default=NULL)
             private$..typestatistics <- jmvcore::OptionList$new(
                 "typestatistics",
@@ -75,6 +85,7 @@ pyjjcorrmatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                 default=FALSE)
 
             self$.addOption(private$..dep)
+            self$.addOption(private$..grvar)
             self$.addOption(private$..typestatistics)
             self$.addOption(private$..partial)
             self$.addOption(private$..naHandling)
@@ -85,6 +96,7 @@ pyjjcorrmatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
         }),
     active = list(
         dep = function() private$..dep$value,
+        grvar = function() private$..grvar$value,
         typestatistics = function() private$..typestatistics$value,
         partial = function() private$..partial$value,
         naHandling = function() private$..naHandling$value,
@@ -94,6 +106,7 @@ pyjjcorrmatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
         showConsole = function() private$..showConsole$value),
     private = list(
         ..dep = NA,
+        ..grvar = NA,
         ..typestatistics = NA,
         ..partial = NA,
         ..naHandling = NA,
@@ -108,6 +121,7 @@ pyjjcorrmatResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
     inherit = jmvcore::Group,
     active = list(
         summary = function() private$.items[["summary"]],
+        cohorts = function() private$.items[["cohorts"]],
         correlations = function() private$.items[["correlations"]],
         matrix = function() private$.items[["matrix"]],
         explorer = function() private$.items[["explorer"]],
@@ -125,10 +139,36 @@ pyjjcorrmatResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                 title="Correlation Cohort and Methods"))
             self$add(jmvcore::Table$new(
                 options=options,
+                name="cohorts",
+                title="Group Cohorts",
+                rows=0,
+                columns=list(
+                    list(
+                        `name`="group", 
+                        `title`="Group", 
+                        `type`="text"),
+                    list(
+                        `name`="input", 
+                        `title`="Input Rows", 
+                        `type`="integer"),
+                    list(
+                        `name`="complete", 
+                        `title`="Common Complete Rows", 
+                        `type`="integer"),
+                    list(
+                        `name`="family", 
+                        `title`="Planned Pairs", 
+                        `type`="integer"))))
+            self$add(jmvcore::Table$new(
+                options=options,
                 name="correlations",
                 title="Unique Variable Pairs",
                 rows=0,
                 columns=list(
+                    list(
+                        `name`="group", 
+                        `title`="Group", 
+                        `type`="text"),
                     list(
                         `name`="first", 
                         `title`="Variable 1", 
@@ -206,7 +246,7 @@ pyjjcorrmatBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             super$initialize(
                 package = "ClinicoPathPj",
                 name = "pyjjcorrmat",
-                version = c(0,3,25),
+                version = c(0,3,26),
                 options = options,
                 results = pyjjcorrmatResults$new(options=options),
                 data = data,
@@ -224,6 +264,7 @@ pyjjcorrmatBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' 
 #' @param data .
 #' @param dep .
+#' @param grvar .
 #' @param typestatistics .
 #' @param partial .
 #' @param naHandling .
@@ -234,6 +275,7 @@ pyjjcorrmatBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$summary} \tab \tab \tab \tab \tab a text \cr
+#'   \code{results$cohorts} \tab \tab \tab \tab \tab a table \cr
 #'   \code{results$correlations} \tab \tab \tab \tab \tab a table \cr
 #'   \code{results$matrix} \tab \tab \tab \tab \tab an image \cr
 #'   \code{results$explorer} \tab \tab \tab \tab \tab a html \cr
@@ -242,14 +284,15 @@ pyjjcorrmatBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'
 #' Tables can be converted to data frames with \code{asDF} or \code{\link{as.data.frame}}. For example:
 #'
-#' \code{results$correlations$asDF}
+#' \code{results$cohorts$asDF}
 #'
-#' \code{as.data.frame(results$correlations)}
+#' \code{as.data.frame(results$cohorts)}
 #'
 #' @export
 pyjjcorrmat <- function(
     data,
     dep = NULL,
+    grvar = NULL,
     typestatistics = "parametric",
     partial = FALSE,
     naHandling = "listwise",
@@ -262,14 +305,18 @@ pyjjcorrmat <- function(
         stop("pyjjcorrmat requires jmvcore to be installed (restart may be required)")
 
     if ( ! missing(dep)) dep <- jmvcore::resolveQuo(jmvcore::enquo(dep))
+    if ( ! missing(grvar)) grvar <- jmvcore::resolveQuo(jmvcore::enquo(grvar))
     if (missing(data))
         data <- jmvcore::marshalData(
             parent.frame(),
-            `if`( ! missing(dep), dep, NULL))
+            `if`( ! missing(dep), dep, NULL),
+            `if`( ! missing(grvar), grvar, NULL))
 
+    for (v in grvar) if (v %in% names(data)) data[[v]] <- as.factor(data[[v]])
 
     options <- pyjjcorrmatOptions$new(
         dep = dep,
+        grvar = grvar,
         typestatistics = typestatistics,
         partial = partial,
         naHandling = naHandling,
