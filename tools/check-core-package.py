@@ -55,7 +55,7 @@ def check(path):
             assert archive.read('ClinicoPathPj/data/python_core_examples.omv')==(ROOT/'data/python_core_examples.omv').read_bytes()
             archive.extractall(temp)
         runtime=temp/'ClinicoPathPj/R/ClinicoPathPj/python/cpj_runtime.py'
-        cases=[('pyoutlierdetection',{'x':numeric([0,1,2,3,4,20,None])},dict(vars=['x'],method='iqr',showRows=True,showPlot=True)),('pyvenn',{'a':{'kind':'factor','levels':['N','Y'],'codes':[0,1,0,1,None]},'b':{'kind':'factor','levels':['N','Y'],'codes':[0,0,1,1,1]}},dict(var1='a',var2='b',var1true='Y',var2true='Y',showMembershipTable=True)),
+        cases=[('pyoutlierdetection',{'x':numeric([0,1,2,3,4,20,None])},dict(vars=['x'],method='iqr',showRows=True,showPlot=True,showFlaggedValues=True)),('pyvenn',{'a':{'kind':'factor','levels':['N','Y'],'codes':[0,1,0,1,None]},'b':{'kind':'factor','levels':['N','Y'],'codes':[0,0,1,1,1]}},dict(var1='a',var2='b',var1true='Y',var2true='Y',showMembershipTable=True)),
           ('pyjjcorrmat',{'a':numeric([1,2,3,4]),'b':numeric([1,2,4,3])},dict(dep=['a','b'])),
           ('pyihcheatmap',{'a':numeric([1,2,3]),'b':numeric([2,4,6])},dict(markers=['a','b'],scaling='zscore',showScatter=True,clusterRows=True,clusterColumns=True,showDendrograms=True,enableSelection=True)),
           ('pybridgecompare',{'x':numeric([1,2,2,4,5,6]),'g':factor(['N','N','P','N','P','P'])},dict(marker='x',reference='g',positive='P',cutoff='2')),
@@ -122,16 +122,19 @@ def check(path):
                 assert len(split['plots']['matrix']['columns']['value'])==8 and 'Inspect group' in split['htmls']['explorer']
             if name=='pyoutlierdetection':
                 assert result['tables']['variables']['rows'][0]['flagged']==1
+                detail=result['tables']['flaggedValues']['rows'][0]
+                assert (detail['row'],detail['value'],detail['lower'],detail['upper'])==('6',20.,-3.,8.)
                 assert result['tables']['rowPreview']['rows'][-1]['status']=='Excluded: missing/nonfinite'
                 with (temp/'ClinicoPathPj/data/python_outlier_screening_examples.csv').open() as handle:
                     panels=list(csv.DictReader(handle))
                 example_columns={v:numeric([float(r[v]) if r[v] else None for r in panels]) for v in ['Marker_A','Marker_B']}
                 for method in ['zscore_robust','zscore','iqr']:
-                    request.write_text(json.dumps(dict(analysis=name,columns=example_columns,options=dict(vars=['Marker_A','Marker_B'],method=method))))
+                    request.write_text(json.dumps(dict(analysis=name,columns=example_columns,options=dict(vars=['Marker_A','Marker_B'],method=method,showFlaggedValues=True))))
                     subprocess.run([sys.executable,'-B',str(runtime),str(request),str(response)],check=True,timeout=70)
                     example=json.loads(response.read_text());assert example['status']=='ok',example.get('error')
                     assert [r['flagged'] for r in example['tables']['variables']['rows']]==[1,1]
                     assert [r['n'] for r in example['tables']['variables']['rows']]==[31,31]
+                    assert [(r['row'],r['variable'],r['value']) for r in example['tables']['flaggedValues']['rows']]==[('31','Marker_A',200.),('31','Marker_B',-100.)]
 
             if name=='pyvenn':
                 assert [r['n'] for r in result['tables']['intersections']['rows']]==[1,1,1,1]

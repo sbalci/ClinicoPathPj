@@ -12,6 +12,7 @@ pyoutlierdetectionOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::
             iqr_multiplier = 1.7,
             showRows = FALSE,
             showPlot = FALSE,
+            showFlaggedValues = FALSE,
             showConsole = FALSE, ...) {
 
             super$initialize(
@@ -58,6 +59,10 @@ pyoutlierdetectionOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::
                 default=FALSE)
             private$..screenFlags <- jmvcore::OptionOutput$new(
                 "screenFlags")
+            private$..showFlaggedValues <- jmvcore::OptionBool$new(
+                "showFlaggedValues",
+                showFlaggedValues,
+                default=FALSE)
             private$..showConsole <- jmvcore::OptionBool$new(
                 "showConsole",
                 showConsole,
@@ -70,6 +75,7 @@ pyoutlierdetectionOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::
             self$.addOption(private$..showRows)
             self$.addOption(private$..showPlot)
             self$.addOption(private$..screenFlags)
+            self$.addOption(private$..showFlaggedValues)
             self$.addOption(private$..showConsole)
         }),
     active = list(
@@ -80,6 +86,7 @@ pyoutlierdetectionOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::
         showRows = function() private$..showRows$value,
         showPlot = function() private$..showPlot$value,
         screenFlags = function() private$..screenFlags$value,
+        showFlaggedValues = function() private$..showFlaggedValues$value,
         showConsole = function() private$..showConsole$value),
     private = list(
         ..vars = NA,
@@ -89,6 +96,7 @@ pyoutlierdetectionOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::
         ..showRows = NA,
         ..showPlot = NA,
         ..screenFlags = NA,
+        ..showFlaggedValues = NA,
         ..showConsole = NA)
 )
 
@@ -99,6 +107,8 @@ pyoutlierdetectionResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::
         summary = function() private$.items[["summary"]],
         variables = function() private$.items[["variables"]],
         rowPreview = function() private$.items[["rowPreview"]],
+        flaggedScope = function() private$.items[["flaggedScope"]],
+        flaggedValues = function() private$.items[["flaggedValues"]],
         countPlot = function() private$.items[["countPlot"]],
         screenFlags = function() private$.items[["screenFlags"]],
         console = function() private$.items[["console"]]),
@@ -178,6 +188,42 @@ pyoutlierdetectionResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::
                         `name`="undefined", 
                         `title`="Undefined Variables", 
                         `type`="text"))))
+            self$add(jmvcore::Text$new(
+                options=options,
+                name="flaggedScope",
+                title="Flagged Measurement Display",
+                visible="(showFlaggedValues)"))
+            self$add(jmvcore::Table$new(
+                options=options,
+                name="flaggedValues",
+                title="Flagged Measurements",
+                visible="(showFlaggedValues)",
+                rows=0,
+                columns=list(
+                    list(
+                        `name`="row", 
+                        `title`="Source Row", 
+                        `type`="text"),
+                    list(
+                        `name`="variable", 
+                        `title`="Variable", 
+                        `type`="text"),
+                    list(
+                        `name`="value", 
+                        `title`="Observed Value", 
+                        `type`="number"),
+                    list(
+                        `name`="lower", 
+                        `title`="Lower Limit", 
+                        `type`="number"),
+                    list(
+                        `name`="upper", 
+                        `title`="Upper Limit", 
+                        `type`="number"),
+                    list(
+                        `name`="basis", 
+                        `title`="Flag Basis", 
+                        `type`="text"))))
             self$add(jmvcore::Image$new(
                 options=options,
                 name="countPlot",
@@ -201,7 +247,8 @@ pyoutlierdetectionResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::
                     "iqr_multiplier",
                     "showRows",
                     "showPlot",
-                    "screenFlags")))
+                    "screenFlags",
+                    "showFlaggedValues")))
             self$add(jmvcore::Preformatted$new(
                 options=options,
                 name="console",
@@ -239,12 +286,15 @@ pyoutlierdetectionBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6C
 #' @param iqr_multiplier .
 #' @param showRows .
 #' @param showPlot .
+#' @param showFlaggedValues .
 #' @param showConsole .
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$summary} \tab \tab \tab \tab \tab a text \cr
 #'   \code{results$variables} \tab \tab \tab \tab \tab a table \cr
 #'   \code{results$rowPreview} \tab \tab \tab \tab \tab a table \cr
+#'   \code{results$flaggedScope} \tab \tab \tab \tab \tab a text \cr
+#'   \code{results$flaggedValues} \tab \tab \tab \tab \tab a table \cr
 #'   \code{results$countPlot} \tab \tab \tab \tab \tab an image \cr
 #'   \code{results$screenFlags} \tab \tab \tab \tab \tab an output \cr
 #'   \code{results$console} \tab \tab \tab \tab \tab a preformatted \cr
@@ -265,6 +315,7 @@ pyoutlierdetection <- function(
     iqr_multiplier = 1.7,
     showRows = FALSE,
     showPlot = FALSE,
+    showFlaggedValues = FALSE,
     showConsole = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
@@ -284,6 +335,7 @@ pyoutlierdetection <- function(
         iqr_multiplier = iqr_multiplier,
         showRows = showRows,
         showPlot = showPlot,
+        showFlaggedValues = showFlaggedValues,
         showConsole = showConsole)
 
     analysis <- pyoutlierdetectionClass$new(

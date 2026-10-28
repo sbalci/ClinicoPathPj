@@ -1,3 +1,11 @@
+# Flagged-measurement inspection — 0.3.33
+
+- [x] Add optional native source-row/variable/observed-value/limit details, bounded at 500 flagged measurements.
+- [x] Disclose measurement versus row counts, zero-spread flag basis and display truncation.
+- [x] Verify sparse IDs, multiple drivers, late rows, empty flags and full-output invariance in focused tests.
+- [x] Pass 281 Python tests (8 focused), 59 native assertions and 19 packaged runtime cases; core engine is unchanged from 0.3.32.
+- [ ] Qualify the native desktop details table and save/export lifecycle.
+
 # Univariate outlier screening — 0.3.32
 
 - [x] Implement robust/standard Z and IQR univariate core with baseline univariate thresholds, finite complete cases and explicit undefined states.

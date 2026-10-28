@@ -362,7 +362,7 @@
       "status": "partial",
       "coverage": {
         "full_parity": false,
-        "numerical": "278 full Python tests, 5 focused outlier tests, 45 native R assertions against base R/performance 0.18.2, and 19 packaged runtime cases; see docs/python-outlier-screening.md",
+        "numerical": "Validation history: 0.3.32 passed 278 Python tests, 45 native assertions and 19 packaged cases; current measurement-detail evidence is tracked in docs/python-outlier-screening.md",
         "gui": "pending new-analysis native installation, saved-output and export lifecycle",
         "compatibility": "Previously planned py identifier retained; no prior installed implementation or saved-analysis contract",
         "platforms": []
@@ -378,7 +378,7 @@
       "source_name": "outlierdetection",
       "menu_group": "Descriptives Py",
       "menu_title": "Univariate outlier screening (core)",
-      "supported_core": "Univariate robust/standard Z and IQR flags; common finite complete cohort; thresholds 3.29/1.7; native tables/count plot; row-aligned any-variable flags; no sampling",
+      "supported_core": "Univariate robust/standard Z and IQR flags; common finite complete cohort; thresholds 3.29/1.7; native tables/count plot; row-aligned any-variable flags; no sampling; optional flagged-measurement values/limits table capped at 500 matches (0.3.33)",
       "omissions": "Composite baseline default, multivariate/interval methods, subsampling, exclusion recommendations and full feature parity omitted. Core defaults to the baseline robust univariate option."
     },
     {

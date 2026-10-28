@@ -489,3 +489,17 @@ planned, zero full parity, and 29 implementation entries including 10 retained u
 runtime cases pass. Source infinities are excluded by the Python engine but rejected
 by the native option validator before dispatch; this host distinction is documented.
 New-analysis desktop qualification remains pending because native automation is unavailable.
+
+
+## Native flagged-measurement inspection — 0.3.33
+
+Extend pyoutlierdetection with optional original-row measurement/limit details. Report
+flagged measurement counts separately from flagged rows; cap the native detail view at
+500 matches while screening all retained rows and saving all row flags. Preserve every
+method, threshold and default. Check late-row visibility, multiple drivers, zero-spread
+labels, empty states and output invariance. Track new native desktop rendering/lifecycle
+separately; the inventory remains 19 partial targets and 42 planned.
+
+0.3.33 evidence: 281 Python tests, 59 native assertions and 19 packaged runtime cases
+pass; the numerical engine remains unchanged from 0.3.32. New details-table desktop
+rendering/save/export qualification remains pending.
