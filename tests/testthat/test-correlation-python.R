@@ -28,3 +28,25 @@ test_that('correlation pending selections clear native results and plot states',
  png<-ClinicoPathPj:::.cpjRenderPlot(a$results$matrix$state,800L,650L,list(palette='jmv'))
  expect_equal(dim(png)[1:2],c(650L,800L))
 })
+
+test_that('partial Pearson agrees with independent base-R residual regressions', {
+ set.seed(142)
+ d<-data.frame(a=rnorm(45),b=rnorm(45),c=rnorm(45),z=rnorm(45))
+ d$a<-d$a+2*d$z;d$b<-d$b+3*d$z;d$a[2]<-NA;d$c[4]<-NA
+ clean<-na.omit(d);vars<-names(d);k<-length(vars)-2L;n<-nrow(clean);df<-n-k-2
+ for(adjust in c('holm','bonferroni','BH','BY','hochberg','hommel','none')){
+  got<-do.call(pyjjcorrmat,list(data=d,dep=vars,partial=TRUE,padjustmethod=adjust,conflevel=.9))
+  tab<-got$correlations$asDF;raw<-numeric(nrow(tab))
+  for(i in seq_len(nrow(tab))){
+   controls<-setdiff(vars,c(tab$first[i],tab$second[i]));design<-cbind(1,as.matrix(clean[controls]))
+   a<-lm.fit(design,clean[[tab$first[i]]])$residuals;b<-lm.fit(design,clean[[tab$second[i]]])$residuals
+   r<-cor(a,b);p<-2*pt(-abs(r)*sqrt(df/(1-r*r)),df);raw[i]<-p
+   limits<-tanh(atanh(r)+c(-1,1)*qnorm(.95)/sqrt(n-k-3))
+   expect_equal(tab$n[i],n);expect_equal(tab$excluded[i],2L)
+   expect_equal(tab$controls[i],k);expect_equal(tab$df[i],df)
+   expect_equal(tab$estimate[i],r,tolerance=1e-11);expect_equal(tab$p[i],p,tolerance=1e-11)
+   expect_equal(c(tab$lower[i],tab$upper[i]),limits,tolerance=1e-11)
+  }
+  expect_equal(tab$adjusted,p.adjust(raw,adjust,n=6),tolerance=1e-11)
+ }
+})

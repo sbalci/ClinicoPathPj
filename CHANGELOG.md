@@ -1,3 +1,10 @@
+# 0.3.24 — 2026-10-27
+
+- Add common-cohort partial Pearson correlations adjusting for all other selected variables.
+- Report controls and test degrees of freedom; use adjusted-df t tests and Fisher-z intervals.
+- Retain singular/constant/insufficient systems as unavailable; reject unsupported partial combinations.
+- Preserve default zero-order calculations and Holm adjustment.
+
 # 0.3.23 — 2026-10-27
 
 - Add Hochberg, Hommel and Benjamini-Yekutieli to the correlation core; retain Holm default.

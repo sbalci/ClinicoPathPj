@@ -1,4 +1,4 @@
-# Correlation matrix — pyjjcorrmat, 0.3.20 core
+# Correlation matrix — pyjjcorrmat, core through 0.3.24
 
 Open **Stats Plots Py → Associations → Correlation matrix (core)**. Select two to twenty
 numeric variables; each row must represent an independent observation. Do not treat
@@ -65,7 +65,7 @@ cluster inference and correlation clustering are not included in this first core
 
 ## Baseline features deliberately omitted
 
-Robust/winsorized and Bayesian correlations, BF/posterior outputs, partial correlations,
+Robust/winsorized and Bayesian correlations, BF/posterior outputs, partial Spearman correlations,
 grouped matrices, Spearman uncertainty and full umbrella
 plot styling remain outside this core. The frozen R baseline/provenance remains unchanged
 in the registry. This port advances a planned target to partial; it is not full parity.
@@ -108,5 +108,47 @@ including base-R correlation estimates, p-values/intervals, adjusted native tabl
 stale-result clearing and native raster rendering. All 17 packaged runtime cases pass,
 with additional checks for each new adjustment. R emitted three "Operation not permitted"
 messages after completion; the runner exited zero with no failed assertions or test warnings.
-The new adjustment controls still need native GUI qualification.
+The new controls also pass macOS arm64 / jamovi 28.13 desktop qualification: all three
+reruns match R in native tables and the local inspector; BY settings/results survive
+separate OMV save and second fresh-engine reopen, followed by successful Hochberg
+recalculation. See [desktop checks](validation-exports/python-correlation-adjustments-0.3.23-desktop.json).
+Additional platforms and broader accessibility/theme qualification remain open.
 See [adjustment oracle report](validation-exports/python-correlation-adjustments-0.3.23-oracle.json).
+
+## Partial Pearson — 0.3.24
+
+Enable **Partial Pearson** with at least three numeric variables, Pearson method and
+one common complete-case cohort. Each pair controls every other selected variable;
+there is no separate covariate selector. Other method/missingness combinations are
+rejected explicitly, even if supplied through a restored or scripted option. The
+zero-order default and Holm adjustment remain unchanged. In the supplied CSV, choose
+Marker_A/Marker_B/Marker_C for a valid partial example; including Constant deliberately
+produces an unavailable adjustment system.
+
+Calculations use the inverse standardized covariance matrix on the common cohort.
+For k controls, the two-sided t test uses df=n−k−2 and Fisher-z interval standard error
+1/sqrt(n−k−3). Tests require positive df; intervals require n−k>=4. Native pair tables
+and local details report k and df. Multiplicity still includes all planned unique pairs.
+Constant variables, rank-deficient systems and insufficient residual degrees of freedom
+leave all partial estimates unavailable with explicit reasons; no pseudoinverse or
+silent dropping of controls is used. The diagonal is unavailable in such systems.
+
+Classical t/Fisher-z inference assumes independent observations and an appropriate
+multivariate-normal linear model. Conditioning on selected variables does not establish
+causality or remove unmeasured confounding. Partial Spearman, grouped, robust/Bayesian
+methods and Spearman intervals remain omitted. Independent R residual-regression and
+current GUI/package evidence are separate gates. The native suite passes 1,007 assertions,
+including seven partial-adjustment configurations against independent base-R `lm.fit`
+residuals, t tests and Fisher-z intervals, alongside the prior zero-order/lifecycle/raster
+checks. Eight focused Python tests and the local keyboard DOM regression pass.
+
+The final 0.3.24 archive passes source/registry integrity and all 17 runtime cases,
+including an analytical fixture where zero-order r=0.5 becomes partial r=0, p=1, df=1
+and the interval is unavailable at n=4 with one control. See the
+[package report](validation-exports/python-correlation-partial-0.3.24-package.json).
+On 2026-10-28, macOS arm64 jamovi 28.13 passed native partial-control qualification,
+pairwise/constant-system rejection and valid recovery, new OMV save/second-engine
+reopen, zero-order/partial reruns and native PNG export. See the
+[desktop report](validation-exports/python-correlation-partial-0.3.24-desktop.json) and
+[saved example](validation-exports/python-correlation-partial-0.3.24-validation.omv).
+Additional platforms and broader accessibility/theme checks remain open.

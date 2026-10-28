@@ -8,6 +8,7 @@ pyjjcorrmatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
         initialize = function(
             dep = NULL,
             typestatistics = "parametric",
+            partial = FALSE,
             naHandling = "listwise",
             padjustmethod = "holm",
             conflevel = 0.95,
@@ -35,6 +36,10 @@ pyjjcorrmatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                     "parametric",
                     "nonparametric"),
                 default="parametric")
+            private$..partial <- jmvcore::OptionBool$new(
+                "partial",
+                partial,
+                default=FALSE)
             private$..naHandling <- jmvcore::OptionList$new(
                 "naHandling",
                 naHandling,
@@ -71,6 +76,7 @@ pyjjcorrmatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
 
             self$.addOption(private$..dep)
             self$.addOption(private$..typestatistics)
+            self$.addOption(private$..partial)
             self$.addOption(private$..naHandling)
             self$.addOption(private$..padjustmethod)
             self$.addOption(private$..conflevel)
@@ -80,6 +86,7 @@ pyjjcorrmatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
     active = list(
         dep = function() private$..dep$value,
         typestatistics = function() private$..typestatistics$value,
+        partial = function() private$..partial$value,
         naHandling = function() private$..naHandling$value,
         padjustmethod = function() private$..padjustmethod$value,
         conflevel = function() private$..conflevel$value,
@@ -88,6 +95,7 @@ pyjjcorrmatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
     private = list(
         ..dep = NA,
         ..typestatistics = NA,
+        ..partial = NA,
         ..naHandling = NA,
         ..padjustmethod = NA,
         ..conflevel = NA,
@@ -136,6 +144,14 @@ pyjjcorrmatResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                     list(
                         `name`="excluded", 
                         `title`="Excluded Rows", 
+                        `type`="integer"),
+                    list(
+                        `name`="controls", 
+                        `title`="Controls", 
+                        `type`="integer"),
+                    list(
+                        `name`="df", 
+                        `title`="Test df", 
                         `type`="integer"),
                     list(
                         `name`="estimate", 
@@ -190,7 +206,7 @@ pyjjcorrmatBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             super$initialize(
                 package = "ClinicoPathPj",
                 name = "pyjjcorrmat",
-                version = c(0,3,23),
+                version = c(0,3,24),
                 options = options,
                 results = pyjjcorrmatResults$new(options=options),
                 data = data,
@@ -209,6 +225,7 @@ pyjjcorrmatBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param data .
 #' @param dep .
 #' @param typestatistics .
+#' @param partial .
 #' @param naHandling .
 #' @param padjustmethod .
 #' @param conflevel .
@@ -234,6 +251,7 @@ pyjjcorrmat <- function(
     data,
     dep = NULL,
     typestatistics = "parametric",
+    partial = FALSE,
     naHandling = "listwise",
     padjustmethod = "holm",
     conflevel = 0.95,
@@ -253,6 +271,7 @@ pyjjcorrmat <- function(
     options <- pyjjcorrmatOptions$new(
         dep = dep,
         typestatistics = typestatistics,
+        partial = partial,
         naHandling = naHandling,
         padjustmethod = padjustmethod,
         conflevel = conflevel,

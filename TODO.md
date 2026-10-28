@@ -1,9 +1,21 @@
+# Partial Pearson core — 0.3.24
+
+- [x] Add baseline partial option for Pearson/common-cohort data with at least three variables.
+- [x] Report controls/df, adjusted-df t tests/intervals and unavailable singular systems.
+- [x] Pass eight focused Python tests.
+- [x] Pass 1,007 native assertions including independent residual-regression comparisons and existing zero-order checks.
+- [x] Pass compiler/freshness and all 17 rebuilt-package cases, including an analytical partial-correlation fixture.
+- [x] Qualify partial invalid/constant/valid recovery, second-engine save/reopen/rerun and native PNG export on macOS arm64.
+- [ ] Additional platforms and broader accessibility/theme checks remain open.
+- [ ] Partial Spearman, robust/Bayesian/grouped methods and Spearman intervals remain omitted.
+
 # Correlation adjustment expansion — 0.3.23
 
 - [x] Add Hochberg/Hommel/BY without changing Holm default or saved option identifiers.
 - [x] Match base R across 1,533 independent fixtures and pass seven focused Python tests.
 - [x] Pass 706 native R assertions, compiler/freshness and 17 packaged runtimes (including all three added methods).
-- [ ] Qualify new adjustment controls in the native GUI; prior keyboard/export evidence retains its scope.
+- [x] Qualify Hochberg/Hommel/BY controls and values on macOS; BY save/second-engine reopen and Hochberg rerun pass.
+- [ ] Additional platforms and broader accessibility/theme qualification remain open.
 
 # Correlation keyboard navigation — 0.3.21
 

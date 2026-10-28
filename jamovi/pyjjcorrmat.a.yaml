@@ -5,7 +5,7 @@
   "menuGroup": "Stats Plots Py",
   "menuSubgroup": "Associations",
   "menuTitle": "Correlation matrix (core)",
-  "version": "0.3.23",
+  "version": "0.3.24",
   "jas": "1.2",
   "options": [
     {
@@ -39,6 +39,12 @@
         }
       ],
       "default": "parametric"
+    },
+    {
+      "name": "partial",
+      "title": "Partial Pearson (adjust for all other selected variables)",
+      "type": "Bool",
+      "default": false
     },
     {
       "name": "naHandling",

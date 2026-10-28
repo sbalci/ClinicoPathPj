@@ -43,6 +43,20 @@ class Correlation(unittest.TestCase):
         np.testing.assert_allclose(adjust([.01,.04,None],'hommel')[:2],[.03,.08])
         with self.assertRaises(InputError):adjust([.1],'unsupported')
 
+    def test_partial_pearson_residuals_and_degrees_of_freedom(self):
+        rng=np.random.default_rng(71);z=rng.normal(size=40);a=z+rng.normal(size=40);b=2*z+rng.normal(size=40)
+        p=calculate(dict(a=a,b=b,z=z),dict(dep=['a','b','z'],partial=True))
+        design=np.column_stack([np.ones(40),z]);ra=a-design@np.linalg.lstsq(design,a,rcond=None)[0];rb=b-design@np.linalg.lstsq(design,b,rcond=None)[0]
+        self.assertAlmostEqual(p['pairs'][0]['estimate'],np.corrcoef(ra,rb)[0,1],places=12)
+        self.assertEqual(p['pairs'][0]['df'],37);self.assertEqual(p['pairs'][0]['controls'],1)
+        for options in [dict(dep=['a','b']),dict(dep=['a','b','z'],naHandling='pairwise'),dict(dep=['a','b','z'],typestatistics='nonparametric')]:
+            with self.assertRaises(InputError):calculate(dict(a=a,b=b,z=z),dict(options,partial=True))
+        for data,reason in [(dict(a=a,b=b,z=np.ones(40)),'Constant'),(dict(a=a,b=b,z=a+b),'Singular'),(dict(a=a[:3],b=b[:3],z=z[:3]),'degrees')]:
+            result=calculate(data,dict(dep=['a','b','z'],partial=True))
+            self.assertTrue(all(r['estimate'] is None and reason in r['reason'] for r in result['pairs']))
+        short=calculate(dict(a=a[:4],b=b[:4],z=z[:4]),dict(dep=['a','b','z'],partial=True))
+        self.assertEqual(short['pairs'][0]['df'],1);self.assertIsNone(short['pairs'][0]['lower'])
+
     def test_spearman_ties_and_insufficient_pairs(self):
         p=calculate({'a':np.array([1.,1,2,3]),'b':np.array([1.,2,3,4])},dict(dep=['a','b'],typestatistics='nonparametric'))
         self.assertAlmostEqual(p['pairs'][0]['estimate'],3/np.sqrt(10));self.assertIsNone(p['pairs'][0]['lower'])

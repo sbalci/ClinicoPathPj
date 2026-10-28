@@ -8,7 +8,7 @@ so users install nothing.
 Current direction and implemented/pending work: [revised migration plan](docs/python-migration-plan.md).
 See also the [web-researched Python analysis candidates](docs/python-analysis-opportunities.md).
 
-Status: experimental, 0.3.23 (descriptive ports; full migration remains incomplete). Verified only on jamovi 28.13 for macOS (Apple Silicon), with
+Status: experimental, 0.3.24 (descriptive ports; full migration remains incomplete). Verified only on jamovi 28.13 for macOS (Apple Silicon), with
 jmvtools 28.4.
 
 Analyses now use compact family menus: **Descriptives Py**, **Stats Plots Py**,
@@ -42,7 +42,7 @@ Open **Data Library > ClinicoPathPj > Python Core Examples**, or import
 `data/python_core_examples.csv`, for the synthetic examples.
 
 Build the single standard module without installing it:
-`Rscript --vanilla tools/build.R --build-only` → `ClinicoPathPj_0.3.23.jmo`.
+`Rscript --vanilla tools/build.R --build-only` → `ClinicoPathPj_0.3.24.jmo`.
 After replacing a loaded development build, use a fresh jamovi engine to avoid stale namespaces.
 
 `pywelch` reports the mean difference as *comparison minus reference*. The reference defaults to
@@ -54,12 +54,13 @@ p and the interval empty, as R's `t.test` refuses such data. scipy would report 
 `fisher.test(table(group, outcome))`. Its odds ratio then equals jamovi's Contingency Tables odds
 ratio when the event is the outcome's second level, and is the reciprocal when it is the first.
 
-## Correlation matrix core (0.3.20–0.3.23)
+## Correlation matrix core (0.3.20–0.3.24)
 
 **Stats Plots Py → Associations → Correlation matrix (core)** adds Pearson/Spearman,
 explicit pair counts/missingness, adjusted p values, Pearson intervals and native/static/local
 outputs. Version 0.3.23 adds Hochberg/Hommel/BY alongside Holm/Bonferroni/BH/none,
-with Holm unchanged as default and explicit dependence assumptions. It is a partial baseline port with [documented omissions and pending GUI gates](docs/python-correlation-matrix.md).
+with Holm unchanged as default and explicit dependence assumptions. Version 0.3.24 adds
+common-cohort partial Pearson correlations with explicit control counts and residual df. It is a partial baseline port with [documented omissions and pending GUI gates](docs/python-correlation-matrix.md).
 
 ## Linked-scatter keyboard navigation in 0.3.19
 

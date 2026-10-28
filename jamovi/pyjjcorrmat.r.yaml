@@ -36,6 +36,16 @@
           "type": "integer"
         },
         {
+          "name": "controls",
+          "title": "Controls",
+          "type": "integer"
+        },
+        {
+          "name": "df",
+          "title": "Test df",
+          "type": "integer"
+        },
+        {
           "name": "estimate",
           "title": "Correlation",
           "type": "number"
