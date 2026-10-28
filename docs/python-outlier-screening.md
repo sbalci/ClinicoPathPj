@@ -69,3 +69,31 @@ R printed `Operation not permitted` messages around completion, with zero test f
 zero test warnings and exit status zero. Native desktop automation cannot start its
 pipe, so new-analysis installation/OMV/export qualification remains pending. See
 [separate validation record](validation-exports/python-outlier-screening-0.3.32-checks.json).
+
+
+## Flagged measurement details — 0.3.33
+
+Enable **Results and Interpretation → Flagged measurements (first 500)** to inspect
+original source row, variable, observed value, lower/upper limits and flag basis. Values
+and limits retain the original measurement units. Infinite Z scores from zero spread
+are identified in words; no infinite numeric score is serialized.
+
+The table contains flagged **measurements**, so two variables in one row produce two
+records. It searches all retained rows, including rows beyond the separate first-1,000-row
+preview. Records are shown in original source-row then selected-variable order, with a
+maximum of 500 displayed matches. The accompanying text reports shown/total measurement
+counts, including zero matches. A display limit does not change screening, per-variable
+counts or the full saved flag column. The option is off by default.
+
+New-table desktop installation/rendering/export/save-reopen qualification remains open
+separately from Python/native bridge evidence.
+
+
+Detail validation: all 281 Python tests pass, with eight focused outlier tests including
+late source rows, multiple drivers, the 500-match cap, empty matches and output invariance.
+After a SPEC-only option reorder preserving earlier scientific wrapper positions, focused
+and native checks pass again. The native suite passes 59 assertions including original
+row/value/limit mapping, optional/incomplete/recovery clearing and zero-spread labels.
+All 19 packaged runtime cases pass. The statistical engine is byte-identical to 0.3.32.
+See [detail validation](validation-exports/python-outlier-details-0.3.33-checks.json).
+Desktop details-table/save/export qualification remains pending.

@@ -6,7 +6,7 @@ pyoutlierdetectionClass <- R6::R6Class(
     private = list(
         .run = function() {
             .cpjRun(self, "pyoutlierdetection",
-                options = c("vars", "method", "zscore_threshold", "iqr_multiplier", "showRows", "showPlot", "screenFlags"),
+                options = c("vars", "method", "zscore_threshold", "iqr_multiplier", "showRows", "showPlot", "screenFlags", "showFlaggedValues"),
                 arrays = c("vars"),
                 terms = character(0),
                 numeric = c("vars"),

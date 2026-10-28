@@ -55,6 +55,10 @@
         {
           "type": "CheckBox",
           "name": "showRows"
+        },
+        {
+          "type": "CheckBox",
+          "name": "showFlaggedValues"
         }
       ]
     },

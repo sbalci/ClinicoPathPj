@@ -1,3 +1,9 @@
+# 0.3.33 — 2026-10-28
+
+- Add optional native flagged-measurement details to pyoutlierdetection: original row, variable, observed value, limits and flag basis.
+- Limit only the displayed detail records to 500 matches; retain full-cohort calculations and saved flags.
+- Preserve statistical methods, thresholds, defaults and the complete-case policy.
+
 # 0.3.32 — 2026-10-28
 
 - Add pyoutlierdetection univariate robust/standard Z and IQR core with finite complete-case cohorts and baseline univariate cutoffs.

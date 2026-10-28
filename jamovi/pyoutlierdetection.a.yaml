@@ -78,6 +78,12 @@
       "type": "Output"
     },
     {
+      "name": "showFlaggedValues",
+      "title": "Flagged measurements (first 500)",
+      "type": "Bool",
+      "default": false
+    },
+    {
       "name": "showConsole",
       "title": "Python console output",
       "type": "Bool",

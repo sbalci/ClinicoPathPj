@@ -56,3 +56,29 @@ test_that('zero spread preserves undefined versus infinite Z-score classificatio
 test_that('the native host rejects infinite source values before the Python bridge', {
  expect_error(pyoutlierdetection(data=data.frame(x=c(1,2,Inf)),vars='x'),'infinite values')
 })
+
+test_that('flagged measurement details preserve observed values and saved classification', {
+ d<-data.frame(x=c(0,1,2,3,4,20,NA),row.names=c('2','5','9','12','15','20','30'))
+ opts<-pyoutlierdetectionOptions$new(vars='x',method='iqr',showFlaggedValues=TRUE)
+ saved<-opts$option('screenFlags');saved$value<-list(value=TRUE,vars=list())
+ a<-pyoutlierdetectionClass$new(options=opts,data=d);a$init();a$run();jmvcore:::initProtoBuf()
+ details<-a$results$flaggedValues$asDF
+ expect_equal(details$row,'20');expect_equal(details$variable,'x');expect_equal(details$value,20)
+ expect_equal(details$lower,-3);expect_equal(details$upper,8);expect_equal(details$basis,'IQR fences')
+ before<-a$results$screenFlags$asProtoBuf(incAsText=TRUE)$outputs$outputs[[1]]$i
+ control<-a$options$option('showFlaggedValues');control$value<-FALSE;a$init();a$run()
+ expect_equal(a$results$flaggedValues$rowCount,0)
+ expect_equal(a$results$screenFlags$asProtoBuf(incAsText=TRUE)$outputs$outputs[[1]]$i,before)
+ control$value<-TRUE;role<-a$options$option('vars');role$value<-NULL;a$init();a$run()
+ expect_equal(a$results$flaggedValues$rowCount,0)
+ role$value<-'x';a$init();a$run();expect_equal(a$results$flaggedValues$rowCount,1)
+ empty<-pyoutlierdetection(data=data.frame(x=0:4),vars='x',method='iqr',showFlaggedValues=TRUE)
+ expect_equal(empty$flaggedValues$rowCount,0)
+ zero<-pyoutlierdetection(data=data.frame(x=c(0,0,0,0,10)),vars='x',showFlaggedValues=TRUE)
+ expect_equal(zero$flaggedValues$asDF$basis,'Infinite Z (zero spread)')
+ expect_equal(zero$flaggedValues$asDF$value,10)
+})
+
+test_that('measurement details do not shift existing scientific wrapper arguments', {
+ expect_equal(names(formals(pyoutlierdetection))[1:7],c('data','vars','method','zscore_threshold','iqr_multiplier','showRows','showPlot'))
+})

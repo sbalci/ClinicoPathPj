@@ -92,6 +92,51 @@
       ]
     },
     {
+      "name": "flaggedScope",
+      "title": "Flagged Measurement Display",
+      "type": "Text",
+      "visible": "(showFlaggedValues)"
+    },
+    {
+      "name": "flaggedValues",
+      "title": "Flagged Measurements",
+      "type": "Table",
+      "visible": "(showFlaggedValues)",
+      "rows": 0,
+      "columns": [
+        {
+          "name": "row",
+          "title": "Source Row",
+          "type": "text"
+        },
+        {
+          "name": "variable",
+          "title": "Variable",
+          "type": "text"
+        },
+        {
+          "name": "value",
+          "title": "Observed Value",
+          "type": "number"
+        },
+        {
+          "name": "lower",
+          "title": "Lower Limit",
+          "type": "number"
+        },
+        {
+          "name": "upper",
+          "title": "Upper Limit",
+          "type": "number"
+        },
+        {
+          "name": "basis",
+          "title": "Flag Basis",
+          "type": "text"
+        }
+      ]
+    },
+    {
       "name": "countPlot",
       "title": "Per-Variable Screening Flags",
       "type": "Image",
@@ -115,7 +160,8 @@
         "iqr_multiplier",
         "showRows",
         "showPlot",
-        "screenFlags"
+        "screenFlags",
+        "showFlaggedValues"
       ]
     },
     {

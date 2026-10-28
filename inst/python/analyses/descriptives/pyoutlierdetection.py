@@ -38,7 +38,8 @@ SPEC = {'name': 'pyoutlierdetection',
               'type': 'Bool',
               'default': False},
              {'name': 'showPlot', 'title': 'Per-variable flag counts', 'type': 'Bool', 'default': False},
-             {'name': 'screenFlags', 'title': 'Save any-variable screening flag', 'type': 'Output'}],
+             {'name': 'screenFlags', 'title': 'Save any-variable screening flag', 'type': 'Output'},
+             {'name': 'showFlaggedValues', 'title': 'Flagged measurements (first 500)', 'type': 'Bool', 'default': False}],
  'results': [{'name': 'summary', 'title': 'Cohort and Screening Rules', 'type': 'Text'},
              {'name': 'variables',
               'title': 'Univariate Screening Summary',
@@ -60,6 +61,14 @@ SPEC = {'name': 'pyoutlierdetection',
                           {'name': 'status', 'title': 'Status', 'type': 'text'},
                           {'name': 'drivers', 'title': 'Flagged Variables', 'type': 'text'},
                           {'name': 'undefined', 'title': 'Undefined Variables', 'type': 'text'}]},
+             {'name': 'flaggedScope', 'title': 'Flagged Measurement Display', 'type': 'Text', 'visible': '(showFlaggedValues)'},
+             {'name': 'flaggedValues', 'title': 'Flagged Measurements', 'type': 'Table', 'visible': '(showFlaggedValues)',
+              'columns': [{'name': 'row', 'title': 'Source Row', 'type': 'text'},
+                          {'name': 'variable', 'title': 'Variable', 'type': 'text'},
+                          {'name': 'value', 'title': 'Observed Value', 'type': 'number'},
+                          {'name': 'lower', 'title': 'Lower Limit', 'type': 'number'},
+                          {'name': 'upper', 'title': 'Upper Limit', 'type': 'number'},
+                          {'name': 'basis', 'title': 'Flag Basis', 'type': 'text'}]},
              {'name': 'countPlot',
               'title': 'Per-Variable Screening Flags',
               'type': 'Image',
@@ -97,7 +106,8 @@ SPEC = {'name': 'pyoutlierdetection',
                      {'type': 'CollapseBox',
                       'label': 'Results and Interpretation',
                       'collapsed': False,
-                      'children': [{'type': 'CheckBox', 'name': 'showRows'}]},
+                      'children': [{'type': 'CheckBox', 'name': 'showRows'},
+                                   {'type': 'CheckBox', 'name': 'showFlaggedValues'}]},
                      {'type': 'CollapseBox',
                       'label': 'Plots and Interaction',
                       'collapsed': True,
@@ -129,6 +139,16 @@ def run(data,options,out):
             status='Excluded: missing/nonfinite' if not retained else ('Undefined' if not np.isfinite(flag) else ('Flagged' if flag else 'Not flagged'))
             out.row('rowPreview',row=ids[i],status=status,drivers=', '.join(drivers),undefined=', '.join(undefined))
         if result['total']>1000:out.info('Only the first 1,000 source rows are shown; all rows contribute to summaries and saved flags.')
+    if options.get('showFlaggedValues',False):
+        pairs=np.argwhere(result['flags']==1)
+        source_positions=np.flatnonzero(result['keep'])
+        for i,j in pairs[:500]:
+            source=int(source_positions[i]);name=result['names'][j];limits=result['summaries'][j]
+            basis='IQR fences' if result['method']=='iqr' else ('Infinite Z (zero spread)' if limits['spread']==0 else 'Absolute Z cutoff')
+            out.row('flaggedValues',row=ids[source],variable=name,value=float(data[name][source]),
+                    lower=limits['lower'],upper=limits['upper'],basis=basis)
+        out.markdown('flaggedScope',f'Showing {min(len(pairs),500)} of {len(pairs)} flagged measurements, in source-row then selected-variable order. Several variables may flag in one row. Counts and saved flags use the full cohort; the display limit is not statistical subsampling. Limits and observed values use the original measurement units.')
+        if len(pairs)>500:out.info('Flagged measurement details are limited to the first 500 matches; full-cohort summaries and saved flags are unchanged.')
     if options.get('showPlot',False):
         out.plot('countPlot',[dict(label=r['variable'],value=r['flagged'],group='Flagged') for r in result['summaries']],xlab='Variable',ylab='Flagged complete rows')
     if out.row_ids is not None:
