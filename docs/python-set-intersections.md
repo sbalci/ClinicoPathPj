@@ -98,7 +98,105 @@ messages during/after completion, with exit status zero and no failed assertions
 test warnings. Native macOS arm64 desktop installation, four positive-level controls, count/local
 inspection, nominal saved membership, second-engine OMV reopen/rerun and native PNG
 export now pass. A missing positive level displays a prompt and restoring it recovers
-the expected counts. Long included-set labels crowd the optional membership preview;
-layout refinement and broader theme/accessibility/platform qualification remain open.
+the expected counts. Version 0.3.28 compacts the optional preview to source row, pattern and Included/Excluded
+status. The full included-set column remains in the result contract but is hidden in this
+preview; complete labels remain visible in the exact-pattern table and local inspector.
+Native macOS arm64 verification of the compact layout and 0.3.27 saved-file reopen/rerun
+passes in 0.3.28. Seven focused Python tests, 89 native assertions and 18 packaged cases
+pass; the full 265-test suite above belongs to 0.3.27. Broader theme/accessibility/platform
+qualification remains open. See [0.3.28 evidence](validation-exports/python-set-intersections-0.3.28-checks.json).
 See [desktop evidence](validation-exports/python-set-intersections-0.3.27-desktop.json)
 and the [clean saved example](validation-exports/python-set-intersections-0.3.27-desktop.omv).
+
+
+## Optional intersection matrix — 0.3.29
+
+Under **Plots and Interaction**, enable **Intersection membership matrix** to align
+exact-pattern count bars with a membership-dot matrix. The first set is the top row;
+filled dots and connecting lines indicate the sets included in each exclusive pattern.
+The all-zero pattern has no filled dots: these rows are in the complete cohort but
+outside every selected set. Gray background dots indicate absent membership.
+
+Pattern order, zero-pattern visibility and counts match the native exact-pattern table.
+The plot uses the existing common complete-case cohort; it does not merge inclusive
+intersections, change positive levels, sort by significance or add inference. Long set
+labels are shortened in the figure with disclosure; full names remain in Set Definitions.
+The existing local inspector provides source-row inspection for the same patterns.
+
+This optional static image has a native export counterpart through jamovi's usual image
+export. It is a bounded 2–4-set UpSet-style view, not full UpSet/Euler/Venn parity:
+set-size sidebars, arbitrary set counts, arbitrary ordering/customization and inferential overlap
+remain omitted. Defaults and saved membership codes remain unchanged. Matrix macOS arm64 GUI/export/save-reopen checks now pass separately from the existing
+0.3.27–28 set-count and compact-preview records. Broader platform/accessibility checks
+remain open.
+
+
+Matrix validation: 12 focused Python tests and all 270 Python tests pass. Independent
+fixtures verify every active-dot coordinate and count-bar height for two, three and four
+sets, none-only patterns, long labels, invalid signatures/counts and raster output. The
+native suite passes 97 assertions, including matching matrix/table signatures and counts,
+900×600 raster, disabled-state clearing and incomplete-input recovery. All 18 extracted
+package runtime cases pass, including the optional matrix and its PNG asset. These bridge/runtime checks are supplemented by a separate macOS arm64 desktop record:
+See [0.3.29 checks](validation-exports/python-set-matrix-0.3.29-checks.json) and
+[Python-rendered preview](validation-exports/python-set-matrix-0.3.29-preview.png).
+
+
+Desktop matrix qualification (macOS arm64, jamovi 28.13): GUI installation, rendering,
+off/on control, 1800×1200 native PNG export, second-engine OMV restoration/recalculation
+and missing-positive-level recovery pass. Counts and saved membership codes are unchanged.
+See [desktop record](validation-exports/python-set-matrix-0.3.29-desktop.json),
+[saved matrix example](validation-exports/python-set-matrix-0.3.29-desktop.omv) and
+[native export](validation-exports/python-set-matrix-0.3.29-native.png). This is focused
+platform evidence, not full accessibility/platform or clinical qualification.
+
+
+## Why are all bars the same height?
+
+The original **Set Intersection Examples** fixture deliberately contains every one of
+16 patterns exactly once. Consequently each bar is 1; this verifies complete pattern
+coverage rather than illustrating a typical frequency distribution.
+
+Version 0.3.30 adds **Data Library → ClinicoPathPj → Set Intersections: Unequal Frequencies**.
+Choose Marker_A–D and Positive for each set, enable the matrix and optionally Zero-count
+patterns. Its 60 complete synthetic rows have exact counts, in displayed signature order:
+`12, 8, 6, 10, 4, 5, 3, 2, 3, 1, 2, 1, 1, 0, 1, 1`.
+Two additional rows are excluded for missing selected values. The none pattern has
+12 rows, the union has 48 and the all-four pattern has 1. The zero-count pattern is
+`1011`. The height is an exclusive-pattern row count, not the marginal size of a set.
+
+The synthetic CSV is reproducible with
+`python3 data-raw/generate-set-intersection-examples.py`. Its counts were checked against
+independent raw-CSV predicates, the runtime matrix and saved nominal output. The varied
+matrix was rendered/exported through jamovi using the unchanged 0.3.29 runtime; 0.3.30
+packages the new CSV in the Data Library. See the
+[varied-bar saved example](validation-exports/python-set-matrix-unequal-0.3.30-desktop.omv)
+and [native PNG](validation-exports/python-set-matrix-unequal-0.3.30-native.png).
+
+Nine focused set tests and all 18 packaged runtime cases pass in 0.3.30, including
+the extracted unequal CSV and its exact matrix frequencies. Fresh-engine reopening and
+forced rerun reproduce the varied bars. Analysis/renderer assets match 0.3.29 exactly.
+
+
+## Pattern display order — 0.3.31
+
+**Results and Interpretation → Pattern order** offers **Membership order** (unchanged
+default) or **Frequency (largest first)**. Frequency sorting uses exact-pattern counts
+from the same complete cohort; ties retain the original bit-code order. The all-zero
+pattern remains included even when its count is zero; other zeros follow Zero-count
+patterns. The exact-pattern table, both static plots and local inspector share one order.
+
+Sorting changes presentation only. It does not reorder the source-row preview, change
+set definitions or cohorts, or recode saved membership. Saved codes and their labels
+continue to use canonical membership order, including when display sorting is reversed.
+The native option reruns the backend; the local inspector only displays those results.
+New control GUI/save-reopen qualification remains pending separately from the existing
+matrix and unequal-example desktop records.
+
+
+Ordering evidence: all 273 Python tests (11 focused set tests), two DOM harnesses, 106 native assertions
+and 18 packaged runtime cases pass. Fixtures independently specify tie order and check
+row/saved-code invariance, native reused-versus-fresh agreement and reversal to membership
+order. The [Python-rendered sorted preview](validation-exports/python-set-order-0.3.31-preview.png)
+uses the unequal example. Desktop automation failed to connect with native pipe startup
+errors, including after reset, so the new control/save-reopen gate remains open. See
+[ordering checks](validation-exports/python-set-order-0.3.31-checks.json).

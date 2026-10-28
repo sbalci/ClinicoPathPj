@@ -31,6 +31,22 @@ sync_module_metadata <- function(root = ".") {
             description = "Four synthetic binary markers with all sixteen membership patterns and two missing-value examples.",
             tags = c("Python", "Set membership", "Marker panels"))
     }
+    unequal_data <- "python_set_intersection_unequal_examples.csv"
+    if (file.exists(file.path(root, "data", unequal_data)) &&
+        !any(vapply(document$datasets, function(x) identical(x$path, unequal_data), logical(1)))) {
+        document$datasets[[length(document$datasets) + 1L]] <- list(
+            name = "Set Intersections: Unequal Frequencies", path = unequal_data,
+            description = "Sixty synthetic complete marker panels with unequal pattern counts (0 to 12) and two missing-value examples.",
+            tags = c("Python", "Set membership", "Unequal frequencies"))
+    }
+    outlier_data <- "python_outlier_screening_examples.csv"
+    if (file.exists(file.path(root, "data", outlier_data)) &&
+        !any(vapply(document$datasets, function(x) identical(x$path, outlier_data), logical(1)))) {
+        document$datasets[[length(document$datasets) + 1L]] <- list(
+            name = "Univariate Screening Examples", path = outlier_data,
+            description = "Thirty-one synthetic complete measurement pairs including one extreme pair, plus two rows with missing measurements.",
+            tags = c("Python", "Outliers", "Data quality"))
+    }
     registry_path <- file.path(root, "inst", "python", "registry.json")
     if (file.exists(registry_path)) {
         registry <- jsonlite::fromJSON(registry_path, simplifyVector = FALSE)

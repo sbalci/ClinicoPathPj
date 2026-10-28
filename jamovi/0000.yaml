@@ -1,7 +1,7 @@
 ---
 title: ClinicoPathPj - Python-Backed Analyses
 name: ClinicoPathPj
-version: 0.3.27
+version: 0.3.32
 jms: '1.0'
 authors: Serdar Balci
 maintainer: Serdar Balci <serdarbalci@serdarbalci.com>
@@ -236,6 +236,14 @@ analyses:
     menuTitle: Set intersections (core)
     title: Set Intersections (Python Core)
     category: analyses
+  - name: pyoutlierdetection
+    ns: ClinicoPathPj
+    hidden: false
+    menuGroup: Descriptives Py
+    menuSubgroup: Data quality
+    menuTitle: Univariate outlier screening (core)
+    title: Univariate Outlier Screening (Python Core)
+    category: analyses
 usesNative: 'yes'
 datasets:
   - name: Python Core Examples
@@ -255,5 +263,23 @@ datasets:
       - Python
       - Set membership
       - Marker panels
+  - name: 'Set Intersections: Unequal Frequencies'
+    path: python_set_intersection_unequal_examples.csv
+    description: >-
+      Sixty synthetic complete marker panels with unequal pattern counts (0 to
+      12) and two missing-value examples.
+    tags:
+      - Python
+      - Set membership
+      - Unequal frequencies
+  - name: Univariate Screening Examples
+    path: python_outlier_screening_examples.csv
+    description: >-
+      Thirty-one synthetic complete measurement pairs including one extreme
+      pair, plus two rows with missing measurements.
+    tags:
+      - Python
+      - Outliers
+      - Data quality
 
 ...

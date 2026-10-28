@@ -59,6 +59,8 @@ PLOT_COLUMNS = {  # column -> (type, required); drawn by R/utils-plots.R
     "histogram": {"group": ("text", True), "lower": ("number", True), "upper": ("number", True), "count": ("integer", True)},
 }
 MAX_PLOT_ROWS['dendrogram'] = 199
+MAX_PLOT_ROWS['setmatrix'] = 16
+PLOT_COLUMNS['setmatrix'] = {'pattern': ('text', True), 'count': ('integer', True), 'sets': ('text', True)}
 
 
 class InputError(Exception):

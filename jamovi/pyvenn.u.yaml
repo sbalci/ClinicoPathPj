@@ -87,6 +87,10 @@
       "collapsed": false,
       "children": [
         {
+          "type": "ComboBox",
+          "name": "patternOrder"
+        },
+        {
           "type": "CheckBox",
           "name": "showZero"
         },
@@ -101,6 +105,10 @@
       "label": "Plots and Interaction",
       "collapsed": true,
       "children": [
+        {
+          "type": "CheckBox",
+          "name": "showSetMatrix"
+        },
         {
           "type": "CheckBox",
           "name": "interactive"

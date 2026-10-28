@@ -1,5 +1,6 @@
 # R only displays a completed Python image. Both new and saved legacy states are supported.
 .cpjPlotColumns <- list(
+    setmatrix = c(pattern = "text", count = "integer", sets = "text"),
     dendrogram = c(xLeft = "number", xRight = "number", leftHeight = "number",
                    rightHeight = "number", height = "number", leftLabel = "text", rightLabel = "text"),
     interval = c(label = "text", estimate = "number", lower = "number", upper = "number"),

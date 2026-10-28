@@ -57,20 +57,21 @@ Do not add rpy2 or replace the current bridge based on an announced future engin
 
 ## Verified current inventory
 
-There are **28 registered implementation entry points**: **18 partial baseline ports** and
-**10 utility/demonstration analyses**. Of the 61 baseline targets, **43 are planned**,
+There are **29 registered implementation entry points**: **19 partial baseline ports** and
+**10 utility/demonstration analyses**. Of the 61 baseline targets, **42 are planned**,
 **0 have complete supported-feature parity and all release gates**.
 
 | Family | Baseline targets | Partial ports | Planned |
 |---|---:|---:|---:|
-| ClinicoPathDescriptives | 14 | 9 | 5 |
+| ClinicoPathDescriptives | 14 | 10 | 4 |
 | jjstatsplot | 19 | 1 | 18 |
 | meddecide | 15 | 8 | 7 |
 | jsurvival | 9 | 0 | 9 |
 | OncoPath | 4 | 0 | 4 |
 
 Partial descriptives: `pyagepyramid`, `pybenford`, `pycategorize`, `pycheckdata`,
-`pychisqposttest`, `pydataquality`, `pyreportcat`, `pysummarydata`, `pyvenn` (exact-count core).
+`pychisqposttest`, `pydataquality`, `pyreportcat`, `pysummarydata`, `pyvenn` (exact-count core),
+and `pyoutlierdetection` (univariate screening core).
 
 Partial statistical plots: `pyjjcorrmat` (Pearson/Spearman core only).
 
@@ -153,7 +154,7 @@ saved-analysis/export qualification. No renderer is selected universally for all
 
 ### 3. Close gaps in existing ports before enlarging the catalog
 
-Prioritize GUI/saved-output/export gaps for the 18 partial ports, then remaining frozen-baseline
+Prioritize GUI/saved-output/export gaps for the 19 partial ports, then remaining frozen-baseline
 features and independent numerical agreement. Record implemented, independently validated,
 GUI-verified and release-ready status separately. Core accuracy or Benford calculations do not
 establish full umbrella feature parity. Keep statistical defaults and clinical rules unchanged.
@@ -194,6 +195,7 @@ or evidence of numerical equivalence. Orange desktop/Qt is not a module dependen
 |---|---|---|
 | [Annotated heatmap](https://orangedatamining.com/widget-catalog/visualize/heatmap/) | IHC marker panel with original-row IDs, patient/specimen, group and region annotations; scaling, missingness and optional clustering | `pyihcheatmap` core plus linked scatter, trees, selections, selected-data and previews through 0.3.18; 0.3.19 scatter keyboard extension under qualification; evidence/limits recorded separately |
 | [Differential expression / volcano](https://orangedatamining.com/widget-catalog/bioinformatics/volcano_plot/) | Effect magnitude versus multiplicity-adjusted evidence for specified marker designs | Proposed; distinguish gene expression, bounded IHC scores and repeated specimens |
+| Set-overlap inspection | Exact marker-panel intersections with native aligned bars/dot matrix and local source-row inspection | `pyvenn` exact 2–4-set core and compact preview verified through 0.3.28; optional bounded matrix added in 0.3.29 with macOS GUI/export/fresh-engine reopen verified; full UpSet/Venn parity remains omitted |
 | [Test and Score](https://orangedatamining.com/widget-catalog/evaluate/testandscore/) | Consistent folds and saved predictions feeding linked ROC, confusion matrix and calibration | Proposed; existing diagnostic engines are a starting point, not a model-validation pipeline |
 | [Interactive survival](https://orangedatamining.com/widget-catalog/survival-analysis/kaplan-meier-plot/) | Risk-set and patient inspection with explicit time/event roles | Proposed within survival wave; selected cohorts require Apply and rerun |
 | [Gene-set enrichment](https://orangedatamining.com/widget-catalog/bioinformatics/gene_set_enrichment/) | Offline, versioned gene-set over-representation testing with stated background universe | Later molecular extension outside the 61; hypergeometric over-representation remains distinct from ranked-list GSEA |
@@ -421,6 +423,69 @@ are claimed. Seven focused Python tests, 86 native R assertions and the DOM harn
 the full Python suite passes 265 tests. Final compiler/freshness and all 18 packaged
 runtime cases pass. macOS arm64 desktop positive-level controls, exact counts/local
 inspection, nominal saved membership, second-engine OMV reopen/rerun and native PNG
-export pass. Long-label preview layout and broader accessibility/platform gates remain open. Current inventory advances to **18 partial**, **43 planned**, zero
+export pass. Version 0.3.28 hides redundant long labels in the optional row preview while retaining
+its result contract. Native compact-layout and 0.3.27 saved-file reopen/rerun checks pass;
+broader accessibility/platform gates remain open. At 0.3.27 the inventory advanced to **18 partial**, **43 planned**, zero
 full parity and 28 implementation entries including 10 retained utilities. See
 [set-intersection methods and limits](python-set-intersections.md).
+
+
+## Bounded intersection matrix — 0.3.29
+
+Extend the existing partial `pyvenn` baseline port with an optional native count-bar and
+membership-dot figure, reusing the exact common-cohort signatures. The organized tame UI
+places the default-off option under Plots and Interaction; native static export and the
+existing local inspector cover presentation and exploration separately. Counts, positive
+levels, missingness, pattern order and saved membership are unchanged. This is a feature
+extension within the same 61-target inventory (18 partial, 43 planned), not a new utility
+or full UpSet completion. Independently check bar/dot geometry, native state clearing,
+packaged raster rendering and new desktop/export lifecycle evidence separately.
+
+
+0.3.29 evidence: 270 Python tests (12 focused set/matrix tests), 97 native R assertions,
+and 18 packaged runtime cases pass, including bar/dot geometry, native raster and
+option/incomplete/recovery clearing. macOS arm64 desktop matrix controls, saved-image reopening/export, second-engine rerun
+and missing-level recovery pass. Accessibility, broader long-label/theme cases and other
+platforms remain open.
+
+
+## Unequal-frequency demonstration — 0.3.30
+
+The all-patterns-once validation fixture correctly produces equal bars. Retain it for
+coverage and add a separate reproducible Data Library example with 60 complete marker
+panels, two missing rows and unequal exact counts 0–12. This improves demonstration
+without altering the analysis, cohort policy or plot scale. Independent CSV/runtime/saved
+column checks and native varied-bar rendering/export are recorded separately. The new
+example is not another analysis or a full feature-parity claim.
+
+
+## Stable display ordering — 0.3.31
+
+Add optional largest-first exact-pattern display to the existing pyvenn core, preserving
+membership order as default. Native table, both static plots and local inspector share
+stable frequency ordering; equal counts use original membership codes. Saved membership
+and row previews remain canonical and row-aligned. Validate ties, zero patterns, source
+identities, order reversal and saved-code invariance separately from new-control desktop
+qualification. Inventory remains 18 partial targets and 43 planned.
+
+0.3.31 validation passes 273 Python tests, two DOM harnesses, 106 native assertions and
+18 packaged runtime cases. The new ordering control remains desktop-pending because
+native automation cannot start its pipe; prior desktop evidence is retained separately.
+
+
+## Univariate screening core — 0.3.32
+
+Advance the planned pyoutlierdetection target to a partial core: robust/standard Z and
+IQR methods, baseline univariate thresholds (3.29/1.7), one finite complete-case cohort,
+explicit undefined/flagged states, original-row nominal flags and native summaries/count
+plot. The core defaults to robust univariate screening; it does not implement the baseline
+composite default. Reject more than 10,000 rows instead of implicitly sampling; cap the
+preview at 1,000 source rows while retaining full saved output. Advanced multivariate,
+interval and exclusion features remain omitted. Validate against base R and performance
+and track the new desktop/lifecycle gate separately. Inventory becomes 19 partial, 42
+planned, zero full parity, and 29 implementation entries including 10 retained utilities.
+
+0.3.32 evidence: 278 Python tests, 45 independent/native assertions and 19 packaged
+runtime cases pass. Source infinities are excluded by the Python engine but rejected
+by the native option validator before dispatch; this host distinction is documented.
+New-analysis desktop qualification remains pending because native automation is unavailable.

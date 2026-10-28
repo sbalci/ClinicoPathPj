@@ -6,7 +6,7 @@ pyvennClass <- R6::R6Class(
     private = list(
         .run = function() {
             .cpjRun(self, "pyvenn",
-                options = c("var1", "var2", "var3", "var4", "var1true", "var2true", "var3true", "var4true", "showZero", "showMembershipTable", "interactive", "membershipGroups"),
+                options = c("var1", "var2", "var3", "var4", "var1true", "var2true", "var3true", "var4true", "patternOrder", "showZero", "showMembershipTable", "interactive", "showSetMatrix", "membershipGroups"),
                 arrays = character(0),
                 terms = character(0),
                 numeric = character(0),
