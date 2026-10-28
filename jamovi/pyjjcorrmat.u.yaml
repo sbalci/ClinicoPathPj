@@ -36,6 +36,10 @@
         {
           "type": "ComboBox",
           "name": "naHandling"
+        },
+        {
+          "type": "CheckBox",
+          "name": "partial"
         }
       ]
     },

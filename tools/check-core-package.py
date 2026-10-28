@@ -81,6 +81,15 @@ def check(path):
                     rows=adjusted['tables']['correlations']['rows']
                     assert abs(rows[0]['adjusted']-(1 if method=='BY' else .6))<1e-12
                     assert rows[1]['adjusted'] is None and rows[2]['adjusted'] is None
+            if name=='pyjjcorrmat':
+                partial_columns={'a':numeric([0,-2,0,2]),'b':numeric([0,-2,2,0]),'z':numeric([-1,-1,1,1])}
+                request.write_text(json.dumps(dict(analysis=name,columns=partial_columns,options=dict(dep=['a','b','z'],partial=True))))
+                subprocess.run([sys.executable,'-B',str(runtime),str(request),str(response)],check=True,timeout=70)
+                partial=json.loads(response.read_text())
+                assert partial['status']=='ok',partial.get('error')
+                row=partial['tables']['correlations']['rows'][0]
+                assert abs(row['estimate'])<1e-12 and abs(row['p']-1)<1e-12
+                assert row['controls']==1 and row['df']==1 and row['lower'] is None
             if name=='pyihcheatmap':
                 assert len(result['tables']['merges']['rows'])==3
                 assert result['plots']['rowDendrogram']['kind']=='dendrogram'

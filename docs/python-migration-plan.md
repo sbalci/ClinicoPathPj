@@ -355,6 +355,23 @@ choices in its frozen baseline; Holm remains the default. Unavailable pairs rema
 the planned family and produce no invented p-values. All seven methods match 1,533
 independent base-R fixtures, including sparse/empty families, ties, extremes and up to
 190 comparisons. Native integration passes 706 assertions over 28 configurations; compiler/freshness
-and 17 packaged runtime cases pass, including the added adjustment paths. New native
-GUI control qualification remains open. Remaining numerical gaps are robust/Bayesian, partial/grouped methods
+and 17 packaged runtime cases pass, including the added adjustment paths. The new controls pass macOS arm64 desktop checks: Hochberg/Hommel/BY values match
+R, BY settings/results survive separate OMV save and second fresh-engine reopen, and
+Hochberg recalculates afterward. Native export and keyboard evidence retain their
+0.3.20/0.3.22 scopes; broader platform/accessibility/theme checks remain open. Remaining numerical gaps are robust/Bayesian, partial/grouped methods
 and Spearman uncertainty; the 61-target inventory remains 17 partial and 44 planned.
+
+## Partial Pearson extension — 0.3.24
+
+The existing baseline partial option now supports Pearson with three or more variables
+and a common complete-case cohort. It controls all other selected variables and reports
+controls, residual df, adjusted-df t inference and Fisher-z intervals. Singular/constant
+systems remain unavailable, without a pseudoinverse. Unsupported method/missingness
+combinations are rejected. Zero-order defaults and inventory counts remain unchanged.
+Eight focused Python tests and 1,007 native R assertions pass, including independent
+residual-regression estimates/t tests/Fisher-z intervals across all seven adjustments.
+Final compiler/freshness and all 17 packaged runtime cases also pass, including an
+analytical partial-correlation fixture. Native desktop checks also pass on macOS arm64 / jamovi 28.13 (2026-10-28):
+unsupported/constant-system recovery, second-engine save/reopen/rerun and native PNG
+export. Additional platforms and broader accessibility/theme checks remain open. Partial
+Spearman and robust/Bayesian/grouped features remain open.

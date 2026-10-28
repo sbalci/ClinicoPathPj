@@ -6,7 +6,7 @@ pyjjcorrmatClass <- R6::R6Class(
     private = list(
         .run = function() {
             .cpjRun(self, "pyjjcorrmat",
-                options = c("dep", "typestatistics", "naHandling", "padjustmethod", "conflevel", "interactive"),
+                options = c("dep", "typestatistics", "partial", "naHandling", "padjustmethod", "conflevel", "interactive"),
                 arrays = c("dep"),
                 terms = character(0),
                 numeric = c("dep"),
