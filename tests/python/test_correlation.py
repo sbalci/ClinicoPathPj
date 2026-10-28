@@ -49,13 +49,29 @@ class Correlation(unittest.TestCase):
         design=np.column_stack([np.ones(40),z]);ra=a-design@np.linalg.lstsq(design,a,rcond=None)[0];rb=b-design@np.linalg.lstsq(design,b,rcond=None)[0]
         self.assertAlmostEqual(p['pairs'][0]['estimate'],np.corrcoef(ra,rb)[0,1],places=12)
         self.assertEqual(p['pairs'][0]['df'],37);self.assertEqual(p['pairs'][0]['controls'],1)
-        for options in [dict(dep=['a','b']),dict(dep=['a','b','z'],naHandling='pairwise'),dict(dep=['a','b','z'],typestatistics='nonparametric')]:
+        for options in [dict(dep=['a','b']),dict(dep=['a','b','z'],naHandling='pairwise'),dict(dep=['a','b','z'],naHandling='unsupported')]:
             with self.assertRaises(InputError):calculate(dict(a=a,b=b,z=z),dict(options,partial=True))
         for data,reason in [(dict(a=a,b=b,z=np.ones(40)),'Constant'),(dict(a=a,b=b,z=a+b),'Singular'),(dict(a=a[:3],b=b[:3],z=z[:3]),'degrees')]:
             result=calculate(data,dict(dep=['a','b','z'],partial=True))
             self.assertTrue(all(r['estimate'] is None and reason in r['reason'] for r in result['pairs']))
         short=calculate(dict(a=a[:4],b=b[:4],z=z[:4]),dict(dep=['a','b','z'],partial=True))
         self.assertEqual(short['pairs'][0]['df'],1);self.assertIsNone(short['pairs'][0]['lower'])
+
+    def test_partial_spearman_ranks_common_cohort_with_ties(self):
+        from scipy import stats
+        a=np.array([1.,1,2,3,5,8,np.nan,13]);b=np.array([5.,2,2,8,4,9,3,10]);z=np.array([1.,3,2,5,4,7,6,8])
+        keep=np.isfinite(a);ranks=stats.rankdata(np.column_stack([a[keep],b[keep],z[keep]]),axis=0,method='average')
+        design=np.column_stack([np.ones(keep.sum()),ranks[:,2]])
+        residuals=[ranks[:,i]-design@np.linalg.lstsq(design,ranks[:,i],rcond=None)[0] for i in [0,1]]
+        result=calculate(dict(a=a,b=b,z=z),dict(dep=['a','b','z'],partial=True,typestatistics='nonparametric'))
+        row=result['pairs'][0];self.assertAlmostEqual(row['estimate'],np.corrcoef(*residuals)[0,1],places=12)
+        self.assertEqual((row['n'],row['excluded'],row['controls'],row['df']),(7,1,1,4))
+        self.assertIsNone(row['lower']);self.assertIsNone(row['upper'])
+        self.assertGreaterEqual(row['p'],0);self.assertLessEqual(row['p'],1)
+        singular=calculate(dict(a=a,b=a,z=z),dict(dep=['a','b','z'],partial=True,typestatistics='nonparametric'))
+        self.assertTrue(all(row['estimate'] is None for row in singular['pairs']))
+        empty=calculate({k:np.full(4,np.nan) for k in ['a','b','z']},dict(dep=['a','b','z'],partial=True,typestatistics='nonparametric'))
+        self.assertEqual(empty['commonRows'],0);self.assertTrue(all(row['estimate'] is None for row in empty['pairs']))
 
     def test_spearman_ties_and_insufficient_pairs(self):
         p=calculate({'a':np.array([1.,1,2,3]),'b':np.array([1.,2,3,4])},dict(dep=['a','b'],typestatistics='nonparametric'))

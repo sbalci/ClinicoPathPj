@@ -1,3 +1,9 @@
+# 0.3.25 — 2026-10-28
+
+- Add partial Spearman using common-cohort average ranks and adjustment for all other selected variables.
+- Retain partial option identity, zero-order defaults, residual df and unavailable singular systems.
+- Label rank-based t p-values approximate; do not invent Spearman intervals.
+
 # 0.3.24 — 2026-10-27
 
 - Add common-cohort partial Pearson correlations adjusting for all other selected variables.

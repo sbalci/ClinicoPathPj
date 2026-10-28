@@ -8,7 +8,7 @@ SPEC = {'name': 'pyjjcorrmat',
  'title': 'Correlation Matrix (Python Core)',
  'menuGroup': 'Stats Plots Py',
  'menuSubgroup': 'Associations',
- 'version': '0.3.24',
+ 'version': '0.3.25',
  'options': [{'name': 'dep',
               'title': 'Numeric variables',
               'type': 'Variables',
@@ -21,7 +21,7 @@ SPEC = {'name': 'pyjjcorrmat',
               'options': [{'name': 'parametric', 'title': 'Pearson'},
                           {'name': 'nonparametric', 'title': 'Spearman (asymptotic p values)'}],
               'default': 'parametric'},
-             {'name': 'partial', 'title': 'Partial Pearson (adjust for all other selected variables)', 'type': 'Bool', 'default': False},
+             {'name': 'partial', 'title': 'Partial correlations (common cohort; adjust for all other selected variables)', 'type': 'Bool', 'default': False},
              {'name': 'naHandling',
               'title': 'Missing values',
               'type': 'List',
@@ -120,14 +120,14 @@ def run(data, options, out):
         f"Input rows: {p['inputRows']}; common complete rows: {p['commonRows']}. "
         f"Partial: {p['partial']}; controls per pair: {p['controls']}. Method: {method}; missingness: {p['missing']}; adjustment: {p['adjustment']}. "
         f"Multiplicity family: all {len(p['pairs'])} unique pairs, including unavailable tests. "
-        "Zero-order coefficients and tests require at least three nonconstant complete pairs. Partial Pearson controls all other selected variables on a common complete-case cohort; t-test df = n - controls - 2. Singular systems remain unavailable. "
+        "Zero-order coefficients and tests require at least three nonconstant complete pairs. Partial correlations control all other selected variables on a common complete-case cohort; Spearman first ranks each variable within that cohort (average ties); t-test df = n - controls - 2. Singular systems remain unavailable. "
         f"Pearson {100*p['confidence']:g}% Fisher-z intervals require n - controls >= 4; no Spearman intervals in this core. "
         "Intervals are pointwise and unadjusted; p-value adjustment does not adjust intervals. "
         "Spearman p values use the asymptotic t approximation, including ties. "
         "Holm/Bonferroni control family-wise error under arbitrary dependence; Hochberg/Hommel require independent or suitably positively dependent tests. BH controls false discovery rate under independence or suitable positive dependence; BY allows arbitrary dependence. "
         "Rows must represent independent observations; repeated specimens need a separate clustered method. "
         "Pairwise deletion can produce a non-positive-semidefinite matrix. "
-        "Gray cells are unavailable estimates, not zero associations. Robust, Bayesian, partial Spearman and grouped methods are omitted. Classical partial t/Fisher-z inference assumes independent observations and an appropriate multivariate-normal linear model. Partial correlation does not establish causality or eliminate unmeasured confounding."))
+        "Gray cells are unavailable estimates, not zero associations. Robust, Bayesian and grouped methods are omitted. Classical partial Pearson t/Fisher-z inference assumes independent observations and an appropriate multivariate-normal linear model; partial Spearman uses approximate t p-values with residual df, without exact/permutation inference or intervals. Partial correlation does not establish causality or eliminate unmeasured confounding."))
     unavailable=sum(row['estimate'] is None for row in p['pairs'])
     if unavailable:out.warn(f'{unavailable} pair(s) have unavailable estimates; see per-pair sample sizes and reasons.')
     if p['method']=='nonparametric':out.warn('Spearman p values are asymptotic; small samples need separate exact or permutation inference, which is not implemented in this core.')

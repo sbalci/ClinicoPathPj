@@ -375,3 +375,17 @@ analytical partial-correlation fixture. Native desktop checks also pass on macOS
 unsupported/constant-system recovery, second-engine save/reopen/rerun and native PNG
 export. Additional platforms and broader accessibility/theme checks remain open. Partial
 Spearman and robust/Bayesian/grouped features remain open.
+
+## Partial Spearman extension — 0.3.25
+
+The existing partial option now supports common-cohort average-ranked Spearman, with
+linear adjustment for all other selected ranked variables, explicit controls/residual df
+and approximate two-sided t p-values. No Spearman CI or exact/permutation inference is
+added. Pairwise partial settings and singular ranked systems remain explicitly unsupported
+or unavailable. Nine focused Python tests and 1,308 native R assertions pass, including independent
+ranked-residual coefficients, approximate p-values, controls/df and unavailable intervals
+over seven adjustment choices. Final compiler/freshness and all 17 packaged runtime cases also pass, including an
+independent tied-rank fixture. Native tied-data controls, R agreement, second-engine save/reopen/rerun and native
+PNG export also pass on macOS arm64 / jamovi 28.13 (2026-10-28). Broader
+accessibility/theme and cross-platform qualification remain open. Inventory remains 17 partial,
+44 planned and zero full parity. Grouped, robust and Bayesian correlations remain open.

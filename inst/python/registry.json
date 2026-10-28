@@ -802,8 +802,8 @@
       "status": "partial",
       "coverage": {
         "full_parity": false,
-        "numerical": "1007 native R assertions including partial Pearson versus independent lm.fit residuals/t/Fisher-z and zero-order cor.test; eight focused Python tests; 1533 independent p.adjust fixtures retained",
-        "gui": "macOS arm64 jamovi 28.13: 0.3.23 GUI install, fresh-engine Hochberg/Hommel/BY native/local reruns match R, BY OMV save/second-engine reopen and Hochberg recalculation; keyboard repair qualified 0.3.22; native PNG export qualified 0.3.20; 0.3.24 partial Pearson invalid/constant/valid recovery, second-engine save/reopen/rerun and native PNG export verified on macOS arm64",
+        "numerical": "1308 native R assertions including partial Pearson and partial Spearman versus independent lm.fit residuals/t formulas, zero-order cor.test and all seven adjustments; nine focused Python tests; prior 1533 p.adjust fixtures retained",
+        "gui": "macOS arm64 jamovi 28.13: 0.3.23 GUI install, fresh-engine Hochberg/Hommel/BY native/local reruns match R, BY OMV save/second-engine reopen and Hochberg recalculation; keyboard repair qualified 0.3.22; native PNG export qualified 0.3.20; 0.3.24 partial Pearson invalid/constant/valid recovery, second-engine save/reopen/rerun and native PNG export verified on macOS arm64; 0.3.25 partial Spearman tied-data controls, R agreement, second-engine save/reopen/rerun and native PNG export verified on macOS arm64",
         "compatibility": "existing Python identifier preserved",
         "platforms": [
           "macOS arm64"
@@ -820,8 +820,8 @@
       "source_name": "jjcorrmat",
       "menu_group": "Stats Plots Py",
       "menu_title": "Correlation matrix (core)",
-      "supported_core": "Pearson, Spearman asymptotic p; listwise/pairwise n; Holm/Bonferroni/Hochberg/Hommel/BH/BY/none; Pearson Fisher-z CI n>=4; native table/static matrix and local cell inspection; partial Pearson controlling all other selected variables, common complete-case cohort only, explicit controls/df",
-      "omissions": "Grouped/robust/Bayesian correlations, partial Spearman, Spearman CI and full umbrella plot styling remain outside this core."
+      "supported_core": "Pearson, Spearman asymptotic p; listwise/pairwise n; Holm/Bonferroni/Hochberg/Hommel/BH/BY/none; Pearson Fisher-z CI n>=4; native table/static matrix and local cell inspection; partial Pearson/Spearman controlling all other selected variables, common complete-case cohort only, explicit controls/df",
+      "omissions": "Grouped/robust/Bayesian correlations, Spearman CI and full umbrella plot styling remain outside this core."
     },
     {
       "id": "pyjjdotchart",

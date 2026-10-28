@@ -46,7 +46,7 @@ parity and GUI/platform acceptance remain separate gates.
 | pyjjarcdiagram | jjarcdiagram | jjstatsplot | 3 | planned | pending | pending |
 | pyjjbarstats | jjbarstats | jjstatsplot | 3 | planned | pending | pending |
 | pyjjbetweenstats | jjbetweenstats | jjstatsplot | 3 | planned | pending | pending |
-| pyjjcorrmat | jjcorrmat | jjstatsplot | 3 | partial | pending | macOS arm64 jamovi 28.13: 0.3.23 GUI install, fresh-engine Hochberg/Hommel/BY native/local reruns match R, BY OMV save/second-engine reopen and Hochberg recalculation; keyboard repair qualified 0.3.22; native PNG export qualified 0.3.20; 0.3.24 partial Pearson invalid/constant/valid recovery, second-engine save/reopen/rerun and native PNG export verified on macOS arm64 |
+| pyjjcorrmat | jjcorrmat | jjstatsplot | 3 | partial | pending | macOS arm64 jamovi 28.13: 0.3.23 GUI install, fresh-engine Hochberg/Hommel/BY native/local reruns match R, BY OMV save/second-engine reopen and Hochberg recalculation; keyboard repair qualified 0.3.22; native PNG export qualified 0.3.20; 0.3.24 partial Pearson invalid/constant/valid recovery, second-engine save/reopen/rerun and native PNG export verified on macOS arm64; 0.3.25 partial Spearman tied-data controls, R agreement, second-engine save/reopen/rerun and native PNG export verified on macOS arm64 |
 | pyjjdotchart | jjdotchart | jjstatsplot | 3 | planned | pending | pending |
 | pyjjdotplotstats | jjdotplotstats | jjstatsplot | 3 | planned | pending | pending |
 | pyjjhistostats | jjhistostats | jjstatsplot | 3 | planned | pending | pending |

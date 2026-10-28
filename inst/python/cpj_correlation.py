@@ -1,4 +1,4 @@
-"""Zero-order Pearson/Spearman and common-cohort partial Pearson correlations."""
+"""Zero-order Pearson/Spearman and common-cohort partial Pearson/Spearman correlations."""
 import numpy as np
 from scipy import stats
 from cpj_runtime import Factor, InputError
@@ -52,8 +52,8 @@ def calculate(data, options):
     if method not in ('parametric','nonparametric') or missing not in ('listwise','pairwise'):
         raise InputError('Unsupported correlation method or missingness rule.')
     partial=bool(options.get('partial',False))
-    if partial and (len(names)<3 or method!='parametric' or missing!='listwise'):
-        raise InputError('Partial Pearson requires at least three variables, Pearson, and one common complete-case cohort.')
+    if partial and (len(names)<3 or missing!='listwise'):
+        raise InputError('Partial correlations require at least three variables and one common complete-case cohort.')
     try:confidence=float(options.get('conflevel',.95))
     except (TypeError,ValueError):raise InputError('Confidence level must be a numeric proportion.') from None
     if not .5<=confidence<=.999:raise InputError('Confidence level must be between 0.5 and 0.999.')
@@ -62,6 +62,7 @@ def calculate(data, options):
     controls=len(names)-2 if partial else 0
     if partial:
         complete=x[common]
+        if method=='nonparametric':complete=stats.rankdata(complete,method='average',axis=0)
         if len(complete)<=len(names):partial_reason='Insufficient residual degrees of freedom'
         elif np.any(np.ptp(complete,axis=0)==0):partial_reason='Constant variable in adjustment system'
         else:

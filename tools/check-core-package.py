@@ -90,6 +90,16 @@ def check(path):
                 row=partial['tables']['correlations']['rows'][0]
                 assert abs(row['estimate'])<1e-12 and abs(row['p']-1)<1e-12
                 assert row['controls']==1 and row['df']==1 and row['lower'] is None
+            if name=='pyjjcorrmat':
+                ranked_columns={'a':numeric([1,1,2,3,5,8]),'b':numeric([5,2,2,8,4,9]),'z':numeric([1,3,2,5,4,7])}
+                request.write_text(json.dumps(dict(analysis=name,columns=ranked_columns,options=dict(dep=['a','b','z'],partial=True,typestatistics='nonparametric'))))
+                subprocess.run([sys.executable,'-B',str(runtime),str(request),str(response)],check=True,timeout=70)
+                ranked=json.loads(response.read_text())
+                assert ranked['status']=='ok',ranked.get('error')
+                row=ranked['tables']['correlations']['rows'][0]
+                assert abs(row['estimate']-.1601592641029556)<1e-12
+                assert abs(row['p']-.7969540733546533)<1e-12
+                assert row['controls']==1 and row['df']==3 and row['lower'] is None and row['upper'] is None
             if name=='pyihcheatmap':
                 assert len(result['tables']['merges']['rows'])==3
                 assert result['plots']['rowDendrogram']['kind']=='dendrogram'
