@@ -1,3 +1,37 @@
+# 0.3.32 — 2026-10-28
+
+- Add pyoutlierdetection univariate robust/standard Z and IQR core with finite complete-case cohorts and baseline univariate cutoffs.
+- Preserve undefined zero-spread classifications, original row alignment and explicit missing flags.
+- Add native summaries/row preview/count plot, saved nominal output and a synthetic Data Library example.
+- Explicitly omit baseline composite default, multivariate/interval methods, subsampling and automatic exclusion; full parity remains open.
+
+# 0.3.31 — 2026-10-28
+
+- Add optional descending-frequency pattern display to pyvenn with stable membership-order ties.
+- Synchronize the native table, both static plots and local inspector while preserving row previews and saved membership codes.
+- Retain membership order and all statistical defaults.
+
+# 0.3.30 — 2026-10-28
+
+- Add a second synthetic set-intersection example with unequal pattern frequencies (0–12), 60 complete rows and two missing rows.
+- Retain the exhaustive one-row-per-pattern fixture; its equal bar heights are expected.
+- Add reproducible data generation, independent frequency checks and a varied-bar native desktop example/export.
+- Preserve all calculation and plotting code and statistical defaults.
+
+# 0.3.29 — 2026-10-28
+
+- Add optional bounded UpSet-style exact-intersection bars and set-membership dots to pyvenn.
+- Retain existing cohort, positive levels, pattern order, zero visibility, local inspector and saved membership codes.
+- Place the default-off option in Plots and Interaction; disclose shortened figure labels.
+- Verify macOS arm64 matrix controls, native PNG export, second-engine OMV restoration/rerun and missing-level recovery.
+- Preserve full UpSet/Venn/Euler and broader accessibility/platform qualification omissions.
+
+# 0.3.28 — 2026-10-28
+
+- Compact the optional pyvenn row preview to source row, membership pattern and status.
+- Retain full included-set values in the result contract; display them in the exact-pattern table and local inspector.
+- Shorten excluded-row status without changing missingness, counts or saved membership.
+
 # 0.3.27 — 2026-10-28
 
 - Add registered pyvenn partial core for exact two-to-four factor-set memberships.

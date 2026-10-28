@@ -8,7 +8,7 @@ so users install nothing.
 Current direction and implemented/pending work: [revised migration plan](docs/python-migration-plan.md).
 See also the [web-researched Python analysis candidates](docs/python-analysis-opportunities.md).
 
-Status: experimental, 0.3.27 (descriptive ports; full migration remains incomplete). Verified only on jamovi 28.13 for macOS (Apple Silicon), with
+Status: experimental, 0.3.32 (descriptive ports; full migration remains incomplete). Verified only on jamovi 28.13 for macOS (Apple Silicon), with
 jmvtools 28.4.
 
 Analyses now use compact family menus: **Descriptives Py**, **Stats Plots Py**,
@@ -42,7 +42,7 @@ Open **Data Library > ClinicoPathPj > Python Core Examples**, or import
 `data/python_core_examples.csv`, for the synthetic examples.
 
 Build the single standard module without installing it:
-`Rscript --vanilla tools/build.R --build-only` → `ClinicoPathPj_0.3.27.jmo`.
+`Rscript --vanilla tools/build.R --build-only` → `ClinicoPathPj_0.3.32.jmo`.
 After replacing a loaded development build, use a fresh jamovi engine to avoid stale namespaces.
 
 `pywelch` reports the mean difference as *comparison minus reference*. The reference defaults to
@@ -54,14 +54,30 @@ p and the interval empty, as R's `t.test` refuses such data. scipy would report 
 `fisher.test(table(group, outcome))`. Its odds ratio then equals jamovi's Contingency Tables odds
 ratio when the event is the outcome's second level, and is the reciprocal when it is the first.
 
-## Set-intersection core in 0.3.27
+## Univariate outlier screening — 0.3.32
+
+**Descriptives Py → Data quality → Univariate outlier screening (core)** adds robust/standard
+Z and IQR flags, native summaries/plot and row-aligned saved flags. This exposes the univariate
+subset; the baseline composite default and advanced methods remain omitted. See
+[methods and qualification](docs/python-outlier-screening.md). New-analysis desktop checks remain pending.
+
+## Set-intersection core (0.3.27–0.3.31)
 
 **Descriptives Py → Sets and Overlaps → Set intersections (core)** adds exact two-to-four
 set counts, native membership tables/static plot, local inspection and saved membership
 patterns. Positive levels are explicit and missing rows remain missing. Geometric Venn/Euler
 and full UpSet layouts remain omitted. macOS arm64 desktop checks cover positive levels,
 local inspection, saved membership, fresh-engine reopening/rerunning and PNG export.
-Long-label preview layout and broader platform qualification remain open. See
+Version 0.3.29 adds an optional native UpSet-style count/membership matrix under
+Plots and Interaction; macOS arm64 rendering, PNG export and fresh-engine save/reopen
+checks pass. Broader platform and accessibility qualification remain open.
+For a varied-bar demonstration, open **Data Library → ClinicoPathPj → Set Intersections:
+Unequal Frequencies** (60 complete rows, counts 0–12). The original exhaustive fixture
+has one row per pattern, so equal bar heights are intentional.
+Version 0.3.31 adds **Pattern order → Frequency (largest first)**, with stable membership-order
+ties and unchanged saved codes; its new desktop-control gate remains pending.
+The compact row preview shows source row, pattern and status; full set names remain
+in the exact-pattern table and inspector. Broader platform qualification remains open. See
 [methods and qualification](docs/python-set-intersections.md).
 
 ## Correlation matrix core (0.3.20–0.3.26)

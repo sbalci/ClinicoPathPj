@@ -47,9 +47,54 @@ def figure(state, width=600, height=400, palette=None, background='white', foreg
     palette = palette or DEFAULT_PALETTE
     columns = state['columns']; kind = state['kind']
     n = len(next(iter(columns.values()), []))
-    if n > {'interval':200, 'line':20000, 'box':20000, 'bar':2000, 'scatter':5000, 'points':5000, 'histogram':2000, 'pyramid':200, 'qualitymap':4000, 'ihcheatmap':4000, 'dendrogram':199}.get(kind, 0):
+    if n > {'interval':200, 'line':20000, 'box':20000, 'bar':2000, 'scatter':5000, 'points':5000, 'histogram':2000, 'pyramid':200, 'qualitymap':4000, 'ihcheatmap':4000, 'dendrogram':199, 'setmatrix':16}.get(kind, 0):
         raise ValueError('Unsupported plot kind or excessive plot rows')
     if any(len(c) != n for c in columns.values()): raise ValueError('Plot columns have unequal lengths')
+    if kind == 'setmatrix':
+        # Only draw supplied exact counts; membership is encoded in the binary signatures.
+        patterns=columns['pattern']; counts=np.asarray(columns['count'],dtype=float)
+        if not n or n>16: raise ValueError('Set matrix requires one to sixteen patterns')
+        try:
+            names=json.loads(columns['sets'][0])
+        except (TypeError,ValueError):
+            raise ValueError('Invalid set matrix names') from None
+        if (not isinstance(names,list) or not 2<=len(names)<=4 or
+                any(not isinstance(v,str) or not v for v in names) or len(set(names))!=len(names)):
+            raise ValueError('Set matrix requires two to four distinct set names')
+        if any(v!=columns['sets'][0] for v in columns['sets']):
+            raise ValueError('Set matrix names must be constant across patterns')
+        k=len(names)
+        if (len(set(patterns))!=n or any(len(p)!=k or set(p)-{'0','1'} for p in patterns) or
+                np.any(~np.isfinite(counts)) or np.any(counts<0) or np.any(counts!=np.floor(counts))):
+            raise ValueError('Invalid set matrix patterns or counts')
+        fig.delaxes(ax)
+        grid=fig.add_gridspec(2,1,height_ratios=[3,2],hspace=.08)
+        top=fig.add_subplot(grid[0]); matrix=fig.add_subplot(grid[1],sharex=top)
+        for panel in (top,matrix):
+            panel.set_facecolor(background); panel.tick_params(colors=foreground)
+            for spine in panel.spines.values(): spine.set_color(foreground)
+        x=np.arange(n)
+        top.bar(x,counts,color=palette[0],width=.7)
+        top.set_ylabel('Exact pattern rows',color=foreground)
+        top.set_ylim(0,max(float(counts.max()),1)*1.18)
+        for i,count in enumerate(counts):
+            top.text(i,count,str(int(count)),ha='center',va='bottom',color=foreground)
+        top.tick_params(axis='x',bottom=False,labelbottom=False)
+        for i,p in enumerate(patterns):
+            active=[j for j,bit in enumerate(p) if bit=='1']
+            matrix.scatter([i]*k,np.arange(k),s=35,color=foreground,alpha=.16)
+            if active:
+                matrix.plot([i,i],[min(active),max(active)],color=palette[0],linewidth=2)
+                matrix.scatter([i]*len(active),active,s=45,color=palette[0],zorder=3)
+        import textwrap
+        labels=[str(i+1)+': '+textwrap.shorten(v,width=32,placeholder='...') for i,v in enumerate(names)]
+        matrix.set_yticks(np.arange(k),labels,color=foreground)
+        matrix.set_xticks(x,patterns,rotation=90 if n>8 else 0,color=foreground)
+        matrix.set_xlim(-.6,n-.4);matrix.set_ylim(k-.5,-.5)
+        matrix.set_xlabel('Exclusive patterns in set order; all-zero = none',color=foreground)
+        if any(len(v)>32 for v in names):
+            top.set_title('Set labels shortened; full names in Set Definitions',color=foreground,fontsize=9)
+        return fig
     if kind == 'histogram':
         boundaries = state.get('boundaries') or []
         if len(boundaries)>2001 or any(v is None or not np.isfinite(v) for v in boundaries):

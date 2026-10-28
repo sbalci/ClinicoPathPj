@@ -93,6 +93,22 @@
       "allowNone": true
     },
     {
+      "name": "patternOrder",
+      "title": "Pattern order",
+      "type": "List",
+      "options": [
+        {
+          "name": "membership",
+          "title": "Membership order"
+        },
+        {
+          "name": "frequency",
+          "title": "Frequency (largest first)"
+        }
+      ],
+      "default": "membership"
+    },
+    {
       "name": "showZero",
       "title": "Zero-count patterns",
       "type": "Bool",
@@ -109,6 +125,12 @@
       "title": "Local intersection inspection",
       "type": "Bool",
       "default": true
+    },
+    {
+      "name": "showSetMatrix",
+      "title": "Intersection membership matrix",
+      "type": "Bool",
+      "default": false
     },
     {
       "name": "membershipGroups",

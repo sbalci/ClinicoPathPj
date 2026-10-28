@@ -96,7 +96,8 @@
         {
           "name": "members",
           "title": "Included Sets",
-          "type": "text"
+          "type": "text",
+          "visible": false
         },
         {
           "name": "status",
@@ -111,6 +112,16 @@
       "type": "Image",
       "width": 800,
       "height": 500,
+      "renderFun": ".plot",
+      "requiresData": false
+    },
+    {
+      "name": "intersectionMatrix",
+      "title": "Exact Intersections and Set Membership",
+      "type": "Image",
+      "visible": "(showSetMatrix)",
+      "width": 900,
+      "height": 600,
       "renderFun": ".plot",
       "requiresData": false
     },
@@ -136,9 +147,11 @@
         "var2true",
         "var3true",
         "var4true",
+        "patternOrder",
         "showZero",
         "showMembershipTable",
         "interactive",
+        "showSetMatrix",
         "membershipGroups"
       ]
     },

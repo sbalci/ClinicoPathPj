@@ -57,7 +57,7 @@ SUGGESTED = {"continuous", "nominal", "ordinal", "id"}
 COLUMN_KEYS = {"name", "title", "type", "format", "superTitle", "visible"}
 COLUMN_TYPES = {"text", "integer", "number"}
 FORMAT_TOKENS = {"zto", "pvalue", "pc", "log10"}
-PLOT_KINDS = {"interval", "line", "box", "bar", "scatter", "points", "histogram", "pyramid", "qualitymap", "ihcheatmap", "dendrogram"}
+PLOT_KINDS = {"setmatrix", "interval", "line", "box", "bar", "scatter", "points", "histogram", "pyramid", "qualitymap", "ihcheatmap", "dendrogram"}
 IMAGE_KEYS = {"name", "type", "title", "plot", "width", "height", "xlab", "ylab", "visible"}
 
 

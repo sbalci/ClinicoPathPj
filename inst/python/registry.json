@@ -342,10 +342,10 @@
     {
       "id": "pyoutlierdetection",
       "family": "descriptives",
-      "menu": "Descriptives",
+      "menu": "Data quality",
       "title": "Outlier Detection",
       "aliases": [],
-      "source": null,
+      "source": "analyses/descriptives/pyoutlierdetection.py",
       "baseline": {
         "module": "ClinicoPathDescriptives",
         "version": "1.0.82.03",
@@ -359,12 +359,12 @@
         }
       },
       "wave": 1,
-      "status": "planned",
+      "status": "partial",
       "coverage": {
         "full_parity": false,
-        "numerical": "pending",
-        "gui": "pending",
-        "compatibility": "existing Python identifier preserved",
+        "numerical": "278 full Python tests, 5 focused outlier tests, 45 native R assertions against base R/performance 0.18.2, and 19 packaged runtime cases; see docs/python-outlier-screening.md",
+        "gui": "pending new-analysis native installation, saved-output and export lifecycle",
+        "compatibility": "Previously planned py identifier retained; no prior installed implementation or saved-analysis contract",
         "platforms": []
       },
       "methods": "Outlier screening via performance::check_outliers. The default composite combines robust z (MAD), IQR (x1.7) and classical Mahalanobis (chi-square cut-off) with a vote threshold. Optional methods: ETI/HDI, robust Mahalanobis, MCD, OPTICS, LOF. Data above 10,000 rows is subsampled.",
@@ -377,7 +377,9 @@
       },
       "source_name": "outlierdetection",
       "menu_group": "Descriptives Py",
-      "menu_title": "Outlier Detection"
+      "menu_title": "Univariate outlier screening (core)",
+      "supported_core": "Univariate robust/standard Z and IQR flags; common finite complete cohort; thresholds 3.29/1.7; native tables/count plot; row-aligned any-variable flags; no sampling",
+      "omissions": "Composite baseline default, multivariate/interval methods, subsampling, exclusion recommendations and full feature parity omitted. Core defaults to the baseline robust univariate option."
     },
     {
       "id": "pyreportcat",
@@ -562,8 +564,8 @@
       "status": "partial",
       "coverage": {
         "full_parity": false,
-        "numerical": "Seven focused Python tests; 86 native R assertions against independent base-R predicates, exact pattern frequencies, saved nominal row alignment, lifecycle clearing and raster; full Python suite 265 tests",
-        "gui": "macOS arm64 jamovi 28.13: fresh-engine create, four explicit positive levels, exact counts/local inspection, nominal saved membership, second-engine OMV reopen/rerun and native PNG export verified; long membership-preview labels need layout refinement",
+        "numerical": "0.3.29: 270 full Python tests including 12 focused set-count/bar-dot geometry and raster tests; 97 native R assertions against independent counts, saved alignment, native matrix raster and disable/incomplete/recovery lifecycle; 18 packaged cases including matrix PNG rendering",
+        "gui": "macOS arm64 jamovi 28.13: fresh-engine positive levels, exact counts/local inspection, nominal membership, OMV reopen/rerun and PNG export verified in 0.3.27; compact three-column preview and 0.3.27 saved-analysis reopen/rerun verified in 0.3.28; 0.3.29 matrix enable/off/on, visual rendering, native PNG export, second-engine OMV restore/rerun and missing-level recovery verified; unequal-frequency 0.3.30 dataset shown/exported using unchanged 0.3.29 runtime; new 0.3.31 pattern-order control desktop qualification pending",
         "compatibility": "existing Python identifier preserved",
         "platforms": []
       },
@@ -576,7 +578,7 @@
       "source_name": "venn",
       "menu_group": "Descriptives Py",
       "menu_title": "Set intersections (core)",
-      "supported_core": "Two to four factor sets with explicit positive levels; common complete-case cohort; exact exclusive patterns including none, set sizes/union/all-set counts; native tables/static count plot/local inspection and row-aligned saved membership",
+      "supported_core": "Two to four factor sets with explicit positive levels; common complete-case cohort; exact exclusive patterns including none, set sizes/union/all-set counts; native tables/static count plot/local inspection and row-aligned saved membership; optional bounded UpSet-style count-bar/membership-dot plot (0.3.29); optional stable descending-frequency display order (0.3.31), canonical saved membership unchanged",
       "omissions": "Venn/Euler geometry, full UpSet layout, more than four sets, weighted counts, enrichment/inferential testing and full baseline styling are omitted."
     },
     {

@@ -14,9 +14,11 @@ pyvennOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             var2true = NULL,
             var3true = NULL,
             var4true = NULL,
+            patternOrder = "membership",
             showZero = FALSE,
             showMembershipTable = FALSE,
             interactive = TRUE,
+            showSetMatrix = FALSE,
             showConsole = FALSE, ...) {
 
             super$initialize(
@@ -81,6 +83,13 @@ pyvennOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 var4true,
                 variable="(var4)",
                 allowNone=TRUE)
+            private$..patternOrder <- jmvcore::OptionList$new(
+                "patternOrder",
+                patternOrder,
+                options=list(
+                    "membership",
+                    "frequency"),
+                default="membership")
             private$..showZero <- jmvcore::OptionBool$new(
                 "showZero",
                 showZero,
@@ -93,6 +102,10 @@ pyvennOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 "interactive",
                 interactive,
                 default=TRUE)
+            private$..showSetMatrix <- jmvcore::OptionBool$new(
+                "showSetMatrix",
+                showSetMatrix,
+                default=FALSE)
             private$..membershipGroups <- jmvcore::OptionOutput$new(
                 "membershipGroups")
             private$..showConsole <- jmvcore::OptionBool$new(
@@ -108,9 +121,11 @@ pyvennOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$.addOption(private$..var2true)
             self$.addOption(private$..var3true)
             self$.addOption(private$..var4true)
+            self$.addOption(private$..patternOrder)
             self$.addOption(private$..showZero)
             self$.addOption(private$..showMembershipTable)
             self$.addOption(private$..interactive)
+            self$.addOption(private$..showSetMatrix)
             self$.addOption(private$..membershipGroups)
             self$.addOption(private$..showConsole)
         }),
@@ -123,9 +138,11 @@ pyvennOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         var2true = function() private$..var2true$value,
         var3true = function() private$..var3true$value,
         var4true = function() private$..var4true$value,
+        patternOrder = function() private$..patternOrder$value,
         showZero = function() private$..showZero$value,
         showMembershipTable = function() private$..showMembershipTable$value,
         interactive = function() private$..interactive$value,
+        showSetMatrix = function() private$..showSetMatrix$value,
         membershipGroups = function() private$..membershipGroups$value,
         showConsole = function() private$..showConsole$value),
     private = list(
@@ -137,9 +154,11 @@ pyvennOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         ..var2true = NA,
         ..var3true = NA,
         ..var4true = NA,
+        ..patternOrder = NA,
         ..showZero = NA,
         ..showMembershipTable = NA,
         ..interactive = NA,
+        ..showSetMatrix = NA,
         ..membershipGroups = NA,
         ..showConsole = NA)
 )
@@ -153,6 +172,7 @@ pyvennResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         intersections = function() private$.items[["intersections"]],
         membershipTable = function() private$.items[["membershipTable"]],
         intersectionPlot = function() private$.items[["intersectionPlot"]],
+        intersectionMatrix = function() private$.items[["intersectionMatrix"]],
         explorer = function() private$.items[["explorer"]],
         membershipGroups = function() private$.items[["membershipGroups"]],
         console = function() private$.items[["console"]]),
@@ -238,7 +258,8 @@ pyvennResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                     list(
                         `name`="members", 
                         `title`="Included Sets", 
-                        `type`="text"),
+                        `type`="text", 
+                        `visible`=FALSE),
                     list(
                         `name`="status", 
                         `title`="Status", 
@@ -249,6 +270,15 @@ pyvennResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 title="Exact Pattern Sizes",
                 width=800,
                 height=500,
+                renderFun=".plot",
+                requiresData=FALSE))
+            self$add(jmvcore::Image$new(
+                options=options,
+                name="intersectionMatrix",
+                title="Exact Intersections and Set Membership",
+                visible="(showSetMatrix)",
+                width=900,
+                height=600,
                 renderFun=".plot",
                 requiresData=FALSE))
             self$add(jmvcore::Html$new(
@@ -272,9 +302,11 @@ pyvennResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                     "var2true",
                     "var3true",
                     "var4true",
+                    "patternOrder",
                     "showZero",
                     "showMembershipTable",
                     "interactive",
+                    "showSetMatrix",
                     "membershipGroups")))
             self$add(jmvcore::Preformatted$new(
                 options=options,
@@ -315,9 +347,11 @@ pyvennBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param var2true .
 #' @param var3true .
 #' @param var4true .
+#' @param patternOrder .
 #' @param showZero .
 #' @param showMembershipTable .
 #' @param interactive .
+#' @param showSetMatrix .
 #' @param showConsole .
 #' @return A results object containing:
 #' \tabular{llllll}{
@@ -326,6 +360,7 @@ pyvennBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'   \code{results$intersections} \tab \tab \tab \tab \tab a table \cr
 #'   \code{results$membershipTable} \tab \tab \tab \tab \tab a table \cr
 #'   \code{results$intersectionPlot} \tab \tab \tab \tab \tab an image \cr
+#'   \code{results$intersectionMatrix} \tab \tab \tab \tab \tab an image \cr
 #'   \code{results$explorer} \tab \tab \tab \tab \tab a html \cr
 #'   \code{results$membershipGroups} \tab \tab \tab \tab \tab an output \cr
 #'   \code{results$console} \tab \tab \tab \tab \tab a preformatted \cr
@@ -348,9 +383,11 @@ pyvenn <- function(
     var2true,
     var3true,
     var4true,
+    patternOrder = "membership",
     showZero = FALSE,
     showMembershipTable = FALSE,
     interactive = TRUE,
+    showSetMatrix = FALSE,
     showConsole = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
@@ -382,9 +419,11 @@ pyvenn <- function(
         var2true = var2true,
         var3true = var3true,
         var4true = var4true,
+        patternOrder = patternOrder,
         showZero = showZero,
         showMembershipTable = showMembershipTable,
         interactive = interactive,
+        showSetMatrix = showSetMatrix,
         showConsole = showConsole)
 
     analysis <- pyvennClass$new(

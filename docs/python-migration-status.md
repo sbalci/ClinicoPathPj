@@ -20,12 +20,12 @@ parity and GUI/platform acceptance remain separate gates.
 | pychisqposttest | chisqposttest | descriptives | 1 | partial | pending | pending |
 | pycrosstable | crosstable | descriptives | 1 | planned | pending | pending |
 | pydataquality | dataquality | descriptives | 1 | partial | pending | fresh-engine native tables/maps, local paging/filter/focus events, .omv reopen and native PNG export verified |
-| pyoutlierdetection | outlierdetection | descriptives | 1 | planned | pending | pending |
+| pyoutlierdetection | outlierdetection | descriptives | 1 | partial | pending | pending new-analysis native installation, saved-output and export lifecycle |
 | pyreportcat | reportcat | descriptives | 1 | partial | pending | fresh-engine native tables and plot verified |
 | pysummarydata | summarydata | descriptives | 1 | partial | pending | fresh-engine run, .omv reopen and native histogram PNG export verified |
 | pytableone | tableone | descriptives | 1 | planned | pending | pending |
 | pyvartree | vartree | descriptives | 1 | planned | pending | pending |
-| pyvenn | venn | descriptives | 1 | partial | pending | macOS arm64 jamovi 28.13: fresh-engine create, four explicit positive levels, exact counts/local inspection, nominal saved membership, second-engine OMV reopen/rerun and native PNG export verified; long membership-preview labels need layout refinement |
+| pyvenn | venn | descriptives | 1 | partial | pending | macOS arm64 jamovi 28.13: fresh-engine positive levels, exact counts/local inspection, nominal membership, OMV reopen/rerun and PNG export verified in 0.3.27; compact three-column preview and 0.3.27 saved-analysis reopen/rerun verified in 0.3.28; 0.3.29 matrix enable/off/on, visual rendering, native PNG export, second-engine OMV restore/rerun and missing-level recovery verified; unequal-frequency 0.3.30 dataset shown/exported using unchanged 0.3.29 runtime; new 0.3.31 pattern-order control desktop qualification pending |
 | pydatetimeconverter | datetimeconverter | jsurvival | 1 | planned | pending | pending |
 | pyoutcomeorganizer | outcomeorganizer | jsurvival | 1 | planned | pending | pending |
 | pytimeinterval | timeinterval | jsurvival | 1 | planned | pending | pending |

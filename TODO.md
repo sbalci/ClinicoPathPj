@@ -1,3 +1,41 @@
+# Univariate outlier screening — 0.3.32
+
+- [x] Implement robust/standard Z and IQR univariate core with baseline univariate thresholds, finite complete cases and explicit undefined states.
+- [x] Add organized native controls, summaries, source-row preview, optional count plot and saved nominal flags.
+- [x] Add deterministic synthetic example; explicitly omit composite/multivariate/interval methods and subsampling.
+- [x] Pass 278 Python tests, 45 base-R/performance/native assertions, compiler/freshness and 19 packaged runtime cases.
+- [ ] Qualify new-analysis GUI, saved-file reopening/export and platforms.
+
+# Stable pattern display order — 0.3.31
+
+- [x] Add optional largest-first order with stable membership-order ties; retain membership order as default.
+- [x] Keep exact table, static plots and inspector synchronized; preserve saved codes/source-row preview.
+- [x] Pass all 273 Python tests (11 focused set tests) and two local focus/click DOM harnesses.
+- [x] Pass 106 native assertions and 18 packaged runtime cases, including saved-code invariance, reuse/fresh agreement and order reversal.
+- [ ] Qualify the new ordering control and save/reopen in desktop jamovi; automation currently fails at native pipe startup.
+
+# Unequal set-pattern example — 0.3.30
+
+- [x] Explain equal heights in the original exhaustive one-per-pattern fixture.
+- [x] Add reproducible synthetic 60-complete/2-missing CSV with pattern counts 0–12 and a distinct Data Library entry.
+- [x] Verify raw-CSV frequencies, runtime plot values and saved nominal output; show/export varied bars in native jamovi.
+- [x] Verify all 18 packaged runtime cases, unequal fixture frequencies and dataset archive integrity; fresh-engine example reopening/rerun passes.
+
+# Bounded intersection matrix — 0.3.29
+
+- [x] Add default-off native exact-count bars aligned with a membership-dot matrix for 2–4 sets.
+- [x] Reuse cohort, pattern order/zero visibility and counts; retain existing local inspection and saved codes.
+- [x] Add independent bar/dot geometry, invalid-input and raster fixtures.
+- [x] Pass 270 Python tests, 97 native assertions and 18 packaged runtime cases including matrix raster export.
+- [x] Verify macOS arm64 matrix GUI, native PNG export, second-engine OMV restore/rerun and missing-level recovery.
+- [ ] Broader themes/accessibility, long-label GUI and other-platform qualification remain open.
+
+# Compact set-membership preview — 0.3.28
+
+- [x] Preserve the result column contract while hiding redundant long set names in the row preview.
+- [x] Shorten row status to Included/Excluded; missingness definitions remain visible in the summary.
+- [x] Verify native table rendering and saved 0.3.27 compatibility with the packaged update (7 Python tests, 89 native assertions, 18 packaged cases).
+
 # Set-intersection core — 0.3.27
 
 - [x] Implement registered pyvenn with explicit levels and exact complete-case membership counts.
@@ -6,7 +44,8 @@
 - [x] Pass seven focused Python tests, 86 native R assertions and DOM checks; full Python suite 265 tests.
 - [x] Complete final compiler/freshness and all 18 extracted-package runtime checks.
 - [x] Verify macOS arm64 GUI installation, positive levels, saved membership, second-engine OMV reopen/rerun and native PNG export.
-- [ ] Refine long membership-preview labels; qualify broader themes/accessibility and other platforms.
+- [x] Refine long membership-preview labels in 0.3.28.
+- [ ] Qualify broader themes/accessibility and other platforms.
 
 # Grouped correlation core — 0.3.26
 
