@@ -1,4 +1,4 @@
-# Correlation matrix — pyjjcorrmat, core through 0.3.25
+# Correlation matrix — pyjjcorrmat, core through 0.3.26
 
 Open **Stats Plots Py → Associations → Correlation matrix (core)**. Select two to twenty
 numeric variables; each row must represent an independent observation. Do not treat
@@ -66,7 +66,7 @@ cluster inference and correlation clustering are not included in this first core
 ## Baseline features deliberately omitted
 
 Robust/winsorized and Bayesian correlations, BF/posterior outputs,
-grouped matrices, Spearman uncertainty and full umbrella
+Spearman uncertainty and full umbrella
 plot styling remain outside this core. The frozen R baseline/provenance remains unchanged
 in the registry. This port advances a planned target to partial; it is not full parity.
 The established production R implementation is unchanged.
@@ -135,7 +135,8 @@ silent dropping of controls is used. The diagonal is unavailable in such systems
 
 Classical t/Fisher-z inference assumes independent observations and an appropriate
 multivariate-normal linear model. Conditioning on selected variables does not establish
-causality or remove unmeasured confounding. Grouped, robust/Bayesian methods and Spearman intervals remain omitted; partial Spearman
+causality or remove unmeasured confounding. Robust/Bayesian methods and Spearman intervals remain omitted; grouped support is added
+in 0.3.26 and partial Spearman
 is added in 0.3.25 below. Independent R residual-regression and
 current GUI/package evidence are separate gates. The native suite passes 1,007 assertions,
 including seven partial-adjustment configurations against independent base-R `lm.fit`
@@ -186,3 +187,58 @@ save/reopen/rerun and PNG export passed on macOS arm64 / jamovi 28.13. See
 and the [saved example](validation-exports/python-correlation-partial-spearman-0.3.25-validation.omv).
 Import `data/python_partial_spearman_examples.csv` to reproduce the tied fixture.
 Broader accessibility/theme and cross-platform qualification remain open.
+
+## Split By — 0.3.26
+
+Select an optional categorical **Split By** variable (`grvar`) to run the same engine
+separately for each observed nonmissing group, in supplied factor-level order. At most
+six observed groups and twenty marker variables are supported; larger requests are
+rejected, not sampled or silently combined. Missing group values are excluded and counted
+before numeric analysis. Unused levels are counted but do not generate invented estimates.
+A genuine missing level remains distinct from the literal label "NA".
+
+Native Group Cohorts reports input/common complete-case counts and planned pairs for
+each group; pair tables add a Group column. Pairwise n/exclusions are relative to that
+group's input rows. Listwise cohorts, average ranks, partial adjustment systems and
+p-value adjustments are computed separately within each group. Unavailable/constant/
+insufficient systems retain their reasons. The multiplicity family is all unique selected
+pairs **within each group**, including unavailable tests. There is no across-group family,
+pooled estimate or between-group difference test. Significance in one group and absence
+in another do not establish a difference between correlations.
+
+The native static image stacks group matrices and prefixes row labels with the group.
+The renderer may shorten/thin labels; complete names remain in native tables. The local
+selector displays one precomputed matrix at a time, clears prior detail text on switching,
+and remembers a matrix keyboard position separately per group. Switching is local and
+transient: no refit, saved-option or cohort change occurs. All groups remain in native
+results and static exports. Each visible matrix has one remembered Tab stop; group
+selection itself uses a standard labelled select control.
+
+Use `data/python_grouped_correlation_examples.csv` for two synthetic groups, a missing
+group row and a constant marker in Group_B. Selecting partial correlations makes Group_B
+unavailable by design; unchecking partial restores available zero-order pairs. No Orange
+or new Python dependency is required. Robust/Bayesian methods, Spearman intervals,
+more than six observed groups, between-group inference and full plot styling remain omitted.
+Numerical, DOM, compiler/package and native desktop evidence are recorded separately.
+
+The expanded suite passes 1,886 native R assertions, including twelve grouped
+configurations (Pearson/Spearman, listwise/pairwise/partial and Holm/BY) against
+independent within-group `cor.test`, raw/ranked residual regressions, interval formulas
+and `p.adjust`. Cohort counts, factor order, lifecycle clearing and stacked raster output
+are checked separately. Eleven focused Python tests and both ungrouped/grouped DOM
+harnesses pass. One "Operation not permitted" message followed native test completion;
+the runner exited zero with no failed assertions or test warnings. Final packaged and
+native desktop grouped qualification remain separate gates.
+
+The final 0.3.26 archive passes compiler/freshness, source/registry integrity and all
+17 packaged runtime cases, including a grouped fixture with opposite correlations,
+an unused level and a missing-group row. See the
+[package report](validation-exports/python-correlation-groups-0.3.26-package.json).
+On 2026-10-28, macOS arm64 / jamovi 28.13 passed previous-version saved-file
+recalculation, grouped cohort counts, local switching/remembered focus, constant-system
+recovery, fresh-engine save/reopen/rerun and native stacked PNG export. See the
+[desktop report](validation-exports/python-correlation-groups-0.3.26-desktop.json) and
+[saved example](validation-exports/python-correlation-groups-0.3.26-validation.omv).
+Broader maximum-size/theme/accessibility and cross-platform qualification remain open. R scripts should pass method arguments by name: the new
+optional `grvar` precedes them in the generated signature. Existing saved jamovi option
+names remain unchanged.

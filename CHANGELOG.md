@@ -1,3 +1,19 @@
+# 0.3.27 — 2026-10-28
+
+- Add registered pyvenn partial core for exact two-to-four factor-set memberships.
+- Require explicit positive levels; exclude/count missing selected values and preserve none-of-sets.
+- Provide native count/membership tables, static bar plot, local inspection and row-aligned nominal output.
+- Add a synthetic Data Library dataset and independent Python/base-R validation.
+- Verify macOS arm64 GUI controls, local inspection, nominal saved membership, fresh-engine OMV reopen/rerun and PNG export; retain long-label layout and wider qualification follow-ups.
+- Keep geometric Venn/Euler, full UpSet, larger-set and inferential features explicitly omitted.
+
+# 0.3.26 — 2026-10-28
+
+- Add optional baseline grvar Split By role to the correlation core, capped at six observed groups.
+- Calculate cohorts, ranks, partial systems and multiplicity separately within groups; count missing/unused levels.
+- Add native cohort/grouped pair tables, stacked static matrix and local group selector with remembered keyboard positions.
+- Preserve ungrouped defaults; do not infer between-group correlation differences.
+
 # 0.3.25 — 2026-10-28
 
 - Add partial Spearman using common-cohort average ranks and adjustment for all other selected variables.

@@ -5,7 +5,7 @@
   "menuGroup": "Stats Plots Py",
   "menuSubgroup": "Associations",
   "menuTitle": "Correlation matrix (core)",
-  "version": "0.3.25",
+  "version": "0.3.26",
   "jas": "1.2",
   "options": [
     {
@@ -21,6 +21,19 @@
       ],
       "suggested": [
         "continuous"
+      ],
+      "default": null
+    },
+    {
+      "name": "grvar",
+      "title": "Split By (optional; at most six groups)",
+      "type": "Variable",
+      "permitted": [
+        "factor"
+      ],
+      "suggested": [
+        "nominal",
+        "ordinal"
       ],
       "default": null
     },

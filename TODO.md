@@ -1,3 +1,24 @@
+# Set-intersection core — 0.3.27
+
+- [x] Implement registered pyvenn with explicit levels and exact complete-case membership counts.
+- [x] Add native tables/static bar plot, bounded local inspection and nominal row-aligned output.
+- [x] Add four-set synthetic Data Library example and document geometric/advanced omissions.
+- [x] Pass seven focused Python tests, 86 native R assertions and DOM checks; full Python suite 265 tests.
+- [x] Complete final compiler/freshness and all 18 extracted-package runtime checks.
+- [x] Verify macOS arm64 GUI installation, positive levels, saved membership, second-engine OMV reopen/rerun and native PNG export.
+- [ ] Refine long membership-preview labels; qualify broader themes/accessibility and other platforms.
+
+# Grouped correlation core — 0.3.26
+
+- [x] Add optional baseline grvar role, preserving no-split defaults and factor-level order.
+- [x] Count missing grouping rows/unused levels, cap six observed groups and retain unavailable group results.
+- [x] Add native cohort/grouped pair tables, stacked static matrix and local selector with remembered focus.
+- [x] Pass 11 focused Python tests and ungrouped/grouped DOM checks.
+- [x] Pass 1,886 native R assertions including independent grouped cohorts, estimates, inference, adjustments and raster/lifecycle checks.
+- [x] Pass final compiler/freshness and all 17 packaged cases, including grouped cohorts/matrices and independent estimates.
+- [x] Qualify macOS grouped controls/counts, local switching/remembered focus, constant-system recovery, fresh-engine save/reopen/rerun and native PNG export.
+- [ ] Broader maximum-size/theme/accessibility and cross-platform qualification remain open.
+
 # Partial Spearman core — 0.3.25
 
 - [x] Add common-cohort average-rank residual correlations using the existing partial option.

@@ -1,0 +1,14 @@
+Group,Marker_A,Marker_B,Marker_C
+Group_A,1,5,1
+Group_A,1,2,3
+Group_A,2,2,2
+Group_A,3,8,5
+Group_A,5,4,4
+Group_A,8,9,7
+Group_B,1,6,2
+Group_B,2,5,2
+Group_B,3,4,2
+Group_B,4,3,2
+Group_B,5,2,2
+Group_B,,1,2
+,99,99,99
