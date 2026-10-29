@@ -1,3 +1,12 @@
+# Outcome status core — 0.3.44
+
+- [x] Implement explicit selected-event, numeric 0/1, vital-status and competing interchange coding.
+- [x] Add native mapping/counts, bounded source preview, static plot and saved status.
+- [x] Pass the 344-test Python run, 46 final policy/generator checks, 71 outcome native assertions and 143 targeted native regressions, compiler/freshness and 24 packaged cases.
+- [ ] Obtain a clean full-native rerun after policy scoping; retain the earlier broad-run result (3838 passes, two corrected legacy-contract failures).
+- [x] Sideload via jamovi; verify controls, saved statuses, failure clearing/recovery, HTML/1600×1000 PNG exports and fresh-engine persistence.
+- [ ] Recurrence composites, patient hierarchies, interval/administrative censoring, full parity and broader qualification remain open.
+
 # Standard overall Table One core — 0.3.43
 
 - [x] Implement standard-format summaries and explicit binary-level numerators without inference.

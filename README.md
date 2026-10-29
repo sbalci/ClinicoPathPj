@@ -8,12 +8,12 @@ so users install nothing.
 Current direction and implemented/pending work: [revised migration plan](docs/python-migration-plan.md).
 See also the [web-researched Python analysis candidates](docs/python-analysis-opportunities.md).
 
-Status: experimental, 0.3.43 (descriptive ports; full migration remains incomplete). Verified only on jamovi 28.13 for macOS (Apple Silicon), with
+Status: experimental, 0.3.44 (descriptives and outcome preparation; full migration remains incomplete). Verified only on jamovi 28.13 for macOS (Apple Silicon), with
 jmvtools 28.4.
 
 Analyses now use compact family menus: **Descriptives Py**, **Stats Plots Py**,
 **MedDecide Py** and **Python Lab**, with topic subgroups. The single module identity
-and existing analysis identifiers are retained. Survival and Oncology groups are reserved
+and existing analysis identifiers are retained. The **Survival Py** group now contains outcome preparation; Oncology is reserved
 in the registry until implementations are available.
 
 The optional `pybridgecompare` experiment runs the same cutoff engine through processx
@@ -42,7 +42,7 @@ Open **Data Library > ClinicoPathPj > Python Core Examples**, or import
 `data/python_core_examples.csv`, for the synthetic examples.
 
 Build the single standard module without installing it:
-`Rscript --vanilla tools/build.R --build-only` → `ClinicoPathPj_0.3.43.jmo`.
+`Rscript --vanilla tools/build.R --build-only` → `ClinicoPathPj_0.3.44.jmo`.
 After replacing a loaded development build, use a fresh jamovi engine to avoid stale namespaces.
 
 `pywelch` reports the mean difference as *comparison minus reference*. The reference defaults to
@@ -53,6 +53,13 @@ p and the interval empty, as R's `t.test` refuses such data. scipy would report 
 `pyexacttests` defaults the reference group to the first level, the orientation of
 `fisher.test(table(group, outcome))`. Its odds ratio then equals jamovi's Contingency Tables odds
 ratio when the event is the outcome's second level, and is the reciprocal when it is the first.
+
+## Outcome coding — 0.3.44
+
+**Survival Py → Data preparation → Outcome organizer (core)** prepares explicit status
+codes, native mapping/counts and row-aligned saved output. Recurrence composites,
+patient hierarchies and time-based censoring remain pending. See
+[methods, meanings and limits](docs/python-outcome-organizer.md).
 
 ## Overall Table One — 0.3.43
 

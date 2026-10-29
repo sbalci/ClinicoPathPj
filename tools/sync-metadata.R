@@ -104,6 +104,14 @@ sync_module_metadata <- function(root = ".") {
         if (length(tableone_index)) document$datasets[[tableone_index[1L]]] <- tableone_entry
         else document$datasets[[length(document$datasets) + 1L]] <- tableone_entry
     }
+    outcome_data <- "python_outcome_examples.csv"
+    if (file.exists(file.path(root, "data", outcome_data)) &&
+        !any(vapply(document$datasets, function(x) identical(x$path, outcome_data), logical(1)))) {
+        document$datasets[[length(document$datasets) + 1L]] <- list(
+            name = "Survival Outcome Coding Examples", path = outcome_data,
+            description = "Thirteen synthetic source records: six alive without disease, three alive with disease, two disease deaths, one other-cause death and one missing status. Competing-risk counts are 9, 2 and 1.",
+            tags = c("Python", "Outcome coding", "Survival preparation"))
+    }
     registry_path <- file.path(root, "inst", "python", "registry.json")
     if (file.exists(registry_path)) {
         registry <- jsonlite::fromJSON(registry_path, simplifyVector = FALSE)

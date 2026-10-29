@@ -38,7 +38,7 @@ RESULT_MEMBERS = {"add", "analysis", "asDF", "asProtoBuf", "asString", "clear", 
                   "itemNames", "items", "key", "name", "options", "parent", "path", "print", "remove",
                   "requiresData", "resetVisible", "root", "saveAs", "setError", "setRefs", "setState",
                   "setStatus", "setTitle", "setVisible", "state", "status", "title", "visible"}
-SPEC_KEYS = {"name", "title", "menuGroup", "menuSubgroup", "version", "options", "results", "ui", "executionOption", "timingResult"}
+SPEC_KEYS = {"name", "title", "menuGroup", "menuSubgroup", "version", "options", "results", "ui", "executionOption", "timingResult", "clearOnInputError"}
 OPTION_KEYS = {  # keys an option may carry besides name/type/title
     "Variable": {"permitted", "suggested", "required", "coerceNumeric"},
     "Variables": {"permitted", "suggested", "required", "coerceNumeric"},
@@ -115,7 +115,7 @@ def validate(spec, stem):
     if not isinstance(spec, dict):
         fail("SPEC must be a dict")
     unknown = set(spec) - SPEC_KEYS
-    missing = SPEC_KEYS - {"menuSubgroup", "ui", "executionOption", "timingResult"} - set(spec)
+    missing = SPEC_KEYS - {"menuSubgroup", "ui", "executionOption", "timingResult", "clearOnInputError"} - set(spec)
     if unknown or missing:
         fail(f"SPEC keys: unknown {sorted(unknown)}, missing {sorted(missing)}")
     check_name(spec["name"], "analysis name", ANALYSIS_NAME)
@@ -296,6 +296,8 @@ def validate(spec, stem):
                     fail(f"column {rname}.{cname}: visible must be True, False, '(x)' naming a Bool option or '(x:value)' naming a declared List choice")
 
 
+    if "clearOnInputError" in spec and not isinstance(spec["clearOnInputError"], bool):
+        fail("clearOnInputError must be True or False")
     if "executionOption" in spec:
         route = next((o for o in spec["options"] if o["name"] == spec["executionOption"]), {})
         if route.get("type") != "List" or {o["name"] for o in route.get("options", [])} != {"processx", "pj", "pjSystem"}:
@@ -425,6 +427,7 @@ def b_r(spec, header):
 
     execution = (f"                backend = self$options${spec['executionOption']},\n" if "executionOption" in spec else "")
     timing = (f"                timing = {r_string(spec['timingResult'])},\n" if "timingResult" in spec else "")
+    failure_policy = ("                clearOnInputError = TRUE,\n" if spec.get("clearOnInputError", False) else "")
     plot_method = (",\n        .plot = function(image, ggtheme, theme, ...) .cpjPlot(image, ggtheme, theme)"
                    if plots else "")
     scripts = "".join(
@@ -440,7 +443,7 @@ def b_r(spec, header):
         + f"        .run = function() {{\n"
         f"{scripts}"
         f"            .cpjRun(self, \"{name}\",\n"
-        f"{execution}{timing}"
+        f"{execution}{timing}{failure_policy}"
         f"                options = {vector(r_string(o) for o in options)},\n"
         f"                arrays = {vector(r_string(o) for o in arrays)},\n"
         f"                terms = {vector(r_string(o) for o in terms)},\n"

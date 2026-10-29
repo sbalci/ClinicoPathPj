@@ -59,8 +59,8 @@
     notice$setVisible(TRUE)
 }
 
-# Replace computed native state only on successful or pending runs. On failure,
-# jamovi keeps the previous results greyed behind its error, as usual.
+# Replace computed native state on successful/pending runs, or when a status
+# transformation explicitly opts in to clearing a Python input error.
 .cpjClearNative <- function(self, clearOutputs = FALSE) {
     for (item in self$results$items) {
         if (inherits(item, "Table")) {
@@ -151,7 +151,7 @@
 
 .cpjRun <- function(self, name, options, arrays = character(0), numeric = character(0),
                     required = character(0), events = character(0), terms = character(0), checkpoint = NULL,
-                    backend = "processx", timing = NULL) {
+                    backend = "processx", timing = NULL, clearOnInputError = FALSE) {
     # jmvcore restores Preformatted and Text content from the saved state, so clear it first:
     # otherwise an earlier run's traceback or interpretation would still show under this run's results.
     for (item in self$results$items)
@@ -253,7 +253,12 @@
     self$results$console$setContent(paste(c(if (is.character(result$report)) result$report,
         "----- Python output -----", if (nzchar(output)) output else "(the analysis printed nothing)"),
         collapse = "\n"))
-    if (identical(result$status, "ok")) .cpjClearNative(self)
+    # Successful answers replace saved output too, including incomplete Python answers.
+    # Status transformations may opt in to clearing errors; legacy analyses retain
+    # jamovi's greyed prior-results contract on failure.
+    if (identical(result$status, "ok") ||
+        (isTRUE(clearOnInputError) && identical(result$status, "input_error")))
+        .cpjClearNative(self, clearOutputs = TRUE)
     for (i in rev(seq_along(result$notices)))
         .cpjNotice(self, result$notices[[i]]$type, result$notices[[i]]$text, i)
 

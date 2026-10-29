@@ -745,3 +745,34 @@ passes. A separate permitted process-inspection run passed all 25 bridge asserti
 the full suite was not repeated outside the sandbox. The next
 Wave-1 candidates remain the three survival transformations. Advanced Table One engines
 and styles remain planned; this core does not count as full baseline parity.
+
+
+## Outcome status preparation — 0.3.44
+
+Implement `pyoutcomeorganizer` first in Survival Py → Data preparation. The released
+R coder supplies a frozen independent reference for selected-event/numeric 0/1,
+four-category overall/cause/competing coding and labelled competing-factor handoff.
+Add explicit multistate status snapshots with independent truth tables. Require
+complete observed-level mapping, preserved missingness and original row identities in
+saved output. Expose native mapping/counts, optional bounded source preview/report and
+static count plot in organized generator-owned UI. Keep event definitions visible.
+
+This wave deliberately does not expose recurrence composites, patient hierarchy,
+interval/administrative censoring or transition estimation before their time-variable
+contracts are implemented and validated. A status snapshot is not an event history.
+The inventory is 24 partial baseline targets, 37 planned, ten retained utilities and
+zero full-parity releases. Next transformation candidates remain datetimeconverter
+and timeinterval, followed by completion of the time-aware outcome methods.
+
+
+The 0.3.44 core now has frozen-R/independent row-code evidence, native saved-output
+lifecycle tests, a Data Library CSV, fresh-engine desktop persistence and HTML/PNG
+export evidence. Qualification comprises a 344-test Python run, 46 final focused
+checks, 71 outcome native assertions, 143 targeted native regressions and 24 packaged
+cases. The first broad error-clearing policy failed two legacy greyed-result contracts;
+scoping it through a generator-owned boolean restored both. The earlier full R run
+(3838 passes, two now-corrected compatibility errors) remains visible; a clean final
+full-native rerun, broader platforms/accessibility and clinical/release gates stay open.
+See docs/python-outcome-organizer.md and its machine-readable evidence. Next: calendar
+conversion and time intervals, then time-aware outcome methods; the inventory remains
+24 partial, 37 planned, ten utilities and zero full-parity releases.

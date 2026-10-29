@@ -14,11 +14,11 @@ ROOT = Path(__file__).resolve().parents[2]
 RUNTIME = ROOT / "inst" / "python" / "cpj_runtime.py"
 
 
-def run_analysis(name, columns=None, options=None, timeout=300):
+def run_analysis(name, columns=None, options=None, timeout=300, row_ids=None):
     """Return the runtime's response (status, tables, texts, plots, notices, console, error)."""
     with tempfile.TemporaryDirectory(prefix="cpj-test-") as folder:
         request, response = Path(folder) / "request.json", Path(folder) / "response.json"
-        request.write_text(json.dumps({"analysis": name, "options": options or {}, "columns": columns or {}}),
+        request.write_text(json.dumps({"analysis": name, "options": options or {}, "columns": columns or {}, "row_ids": row_ids}),
                            encoding="utf-8")
         done = subprocess.run([sys.executable, "-B", "-s", str(RUNTIME), str(request), str(response)],
                               capture_output=True, text=True, timeout=timeout)

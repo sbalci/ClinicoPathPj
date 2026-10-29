@@ -1,0 +1,468 @@
+# ============================================================================
+# EVENT INDICATOR: raw outcome column -> 0/1 (or 0/1/2) event coding
+# ============================================================================
+# Shared by survival, singlearm, survivalcont, multisurvival and outcomeorganizer.
+
+#' Build the survival event indicator from a raw outcome column
+#'
+#' Single source of truth for turning a user's outcome variable into the 0/1
+#' (or 0/1/2 competing-risk) status vector consumed by `survival::Surv()`.
+#' Replaces five near-identical `.definemyoutcome()` blocks that had drifted
+#' apart in their validation.
+#'
+#' Semantics, stated explicitly because they are easy to get wrong:
+#' \itemize{
+#'   \item On the single-event-level path every level that is *not* the selected
+#'     event level becomes 0 (right-censored). Labels alone cannot establish
+#'     whether this is ordinary censoring or a competing terminal event. In the
+#'     latter case Kaplan-Meier outputs describe net/cause-specific survival,
+#'     not absolute event risk. The caller is expected to surface `estimand` and
+#'     `censored_labels` to the user.
+#'   \item `NA` is never converted to a value. It stays `NA` and the row is
+#'     dropped downstream by `jmvcore::naOmit()` (complete-case analysis).
+#'     Coding it 0 would fabricate censoring.
+#'   \item In `multievent` mode every observed level must be assigned to one of
+#'     the four categories. An unmapped level is an error, never a silent `NA`
+#'     that later gets deleted along with the patient.
+#' }
+#'
+#' @param outcome The raw outcome vector (factor, character, numeric or logical).
+#' @param outcomeLevel The level representing the event, for the single-event
+#'   path. Honoured for numeric outcomes too, not only factors.
+#' @param multievent Logical. Use the four-category mapping.
+#' @param analysistype One of `"overall"`, `"cause"`, `"dfs"`, `"compete"`.
+#' @param dod,dooc,awd,awod Level labels for Dead of Disease, Dead of Other
+#'   Causes, Alive with Disease, Alive without Disease.
+#' @param outcome_name Display name of the outcome variable, used in messages.
+#' @return A list with `status` (0/1 or 0/1/2, `NA` preserved), `status_factor`
+#'   (Censored/Event/Competing, only when competing), the counts `n_event`,
+#'   `n_censored`, `n_competing`, `n_missing`, the labels `event_label` and
+#'   `censored_labels`, `competing_labels`, `n_levels`, `has_competing`,
+#'   `estimand`, and `error`
+#'   (`NULL`, or a ready-to-display message the caller should reject with).
+#' @keywords internal
+.defineEventIndicator <- function(outcome,
+                                  outcomeLevel = NULL,
+                                  multievent = FALSE,
+                                  analysistype = "overall",
+                                  dod = NULL, dooc = NULL, awd = NULL, awod = NULL,
+                                  outcome_name = "outcome") {
+
+    fail <- function(msg) list(status = NULL, error = msg)
+
+    ok <- function(status, event_label, censored_labels, estimand,
+                   n_levels, status_factor = NULL,
+                   competing_labels = character(0), competing_mode = NULL) {
+        list(
+            status          = status,
+            status_factor   = status_factor,
+            n_event         = sum(status == 1, na.rm = TRUE),
+            n_censored      = sum(status == 0, na.rm = TRUE),
+            n_competing     = sum(status == 2, na.rm = TRUE),
+            n_missing       = sum(is.na(status)),
+            event_label     = event_label,
+            censored_labels = censored_labels,
+            competing_labels = competing_labels,
+            n_levels        = n_levels,
+            # This flag means that competing-risk METHODS are required. It must
+            # remain TRUE when a competing state is declared but happens to have
+            # zero observations in the current cohort; otherwise the same
+            # outcome silently changes from Aalen-Johansen/CIF to Kaplan-Meier
+            # merely because one state is absent in a subset.
+            has_competing   = if (is.null(competing_mode))
+                any(status == 2, na.rm = TRUE) else isTRUE(competing_mode),
+            estimand        = estimand,
+            error           = NULL
+        )
+    }
+
+    if (is.null(outcome) || length(outcome) == 0)
+        return(fail("No outcome variable available. Please select an outcome variable."))
+
+    # Ordered factors compare awkwardly against a plain level string.
+    if (is.ordered(outcome)) outcome <- factor(outcome, ordered = FALSE)
+
+    observed <- unique(outcome[!is.na(outcome)])
+    observed_chr <- as.character(observed)
+
+    if (length(observed) == 0)
+        return(fail(sprintf(
+            "Outcome variable '%s' contains only missing values.", outcome_name)))
+
+    # ---- multievent: four-category mapping -------------------------------
+    if (isTRUE(multievent)) {
+
+        buckets <- list(dod = dod, dooc = dooc, awd = awd, awod = awod)
+        titles  <- c(dod  = "Dead of Disease",   dooc = "Dead of Other Causes",
+                     awd  = "Alive with Disease", awod = "Alive without Disease")
+        filled  <- vapply(buckets, function(b) !is.null(b) && length(b) > 0, logical(1))
+
+        if (!any(filled))
+            return(fail(paste0(
+                "Multiple Event Levels is enabled but no outcome levels have been assigned. ",
+                "Assign each level of '", outcome_name, "' to one of: ",
+                paste(titles, collapse = ", "), ".")))
+
+        selected <- unlist(buckets[filled], use.names = FALSE)
+
+        # Distinguish "you reused a level" from "you left one blank" -- these
+        # used to share one misleading message.
+        dupes <- unique(selected[duplicated(selected)])
+        if (length(dupes) > 0)
+            return(fail(paste0(
+                "Each outcome level may be assigned to only one category. ",
+                "Assigned to more than one: ", paste(dupes, collapse = ", "), ".")))
+
+        # Note the asymmetry with the single-event path below: a category with no
+        # patients (nobody Alive with Disease in this cohort) is perfectly normal
+        # and must not error. The resulting count shows up in the disclosure block.
+        # It is the other direction -- a level in the data with no category --
+        # that is a real problem.
+        #
+        # Every observed level must be assigned. Leaving one out used to make it
+        # NA, and naOmit then deleted those patients -- silently shrinking the
+        # denominator and inflating the event rate.
+        unmapped <- setdiff(observed_chr, as.character(selected))
+        if (length(unmapped) > 0)
+            return(fail(paste0(
+                "Outcome level(s) not assigned to any category: ",
+                paste(unmapped, collapse = ", "),
+                ". Assign every level of '", outcome_name, "' to one of: ",
+                paste(titles[!filled], collapse = ", "),
+                ". Unassigned levels would otherwise be dropped from the analysis.")))
+
+        # Codes per analysis type. "dfs" is the only one in which Alive with
+        # Disease counts as an event -- which is what disease-free survival means.
+        codes <- switch(analysistype,
+            overall = c(awd = 0, awod = 0, dod = 1, dooc = 1),
+            cause   = c(awd = 0, awod = 0, dod = 1, dooc = 0),
+            dfs     = c(awd = 1, awod = 0, dod = 1, dooc = 1),
+            compete = c(awd = 0, awod = 0, dod = 1, dooc = 2),
+            NULL)
+
+        if (is.null(codes))
+            return(fail(paste0("Unknown survival type '", analysistype, "'.")))
+
+        status <- rep(NA_integer_, length(outcome))
+        for (b in names(buckets)[filled])
+            status[!is.na(outcome) & as.character(outcome) == as.character(buckets[[b]])] <-
+                as.integer(codes[[b]])
+
+        estimand <- switch(analysistype,
+            overall = "overall survival",
+            cause   = "cause-specific survival",
+            dfs     = "disease-free survival",
+            compete = "competing risks")
+
+        status_factor <- NULL
+        if (identical(analysistype, "compete"))
+            status_factor <- factor(
+                c("Censored", "Event", "Competing")[status + 1L],
+                levels = c("Censored", "Event", "Competing"))
+
+        event_labels <- unlist(buckets[filled][codes[names(buckets)[filled]] == 1])
+        cens_labels  <- unlist(buckets[filled][codes[names(buckets)[filled]] == 0])
+        comp_labels  <- unlist(buckets[filled][codes[names(buckets)[filled]] == 2])
+
+        return(ok(status,
+                  event_label     = paste(event_labels, collapse = ", "),
+                  censored_labels = as.character(cens_labels),
+                  estimand        = estimand,
+                  n_levels        = length(observed),
+                  status_factor   = status_factor,
+                  competing_labels = as.character(comp_labels),
+                  competing_mode  = identical(analysistype, "compete")))
+    }
+
+    # ---- labelled cause factor handed over from outcomeorganizer ----------
+    # outcomeorganizer emits Censored/Event/Competing so the competing-risk
+    # coding survives the hand-off instead of being silently binarised.
+    #
+    # The test has to be strict. Matching on `"Event" %in% levels(outcome)` alone
+    # hijacked ordinary user data: a perfectly normal outcome with levels
+    # "Event"/"No event" was read as a hand-off, so choosing "No event" as the
+    # event level silently selected "Event" instead AND mapped every "No event"
+    # row to NA -- deleting those patients and reporting a 100% event rate.
+    # Require the complete DECLARED level set, not merely a subset of the names
+    # among observed rows. A user-created binary factor with levels
+    # Censored/Event is an ordinary outcome; conversely, an outcomeorganizer
+    # hand-off remains a competing-risk outcome when its Competing level is
+    # declared but unused in this particular cohort.
+    cause_levels <- c("Censored", "Event", "Competing")
+    looks_like_handoff <- is.factor(outcome) &&
+        setequal(levels(outcome), cause_levels) &&
+        all(observed_chr %in% cause_levels) &&
+        (is.null(outcomeLevel) || length(outcomeLevel) == 0 ||
+         identical(as.character(outcomeLevel), "") ||
+         as.character(outcomeLevel) %in% cause_levels)
+
+    if (looks_like_handoff) {
+        # "Censored" has an explicit structural meaning in this interchange
+        # format. Treating it as the event would turn both actual event states
+        # into censoring and produce a clinically meaningless analysis that
+        # nevertheless looks valid. Refuse the configuration instead.
+        if (!is.null(outcomeLevel) && length(outcomeLevel) > 0 &&
+            identical(as.character(outcomeLevel), "Censored"))
+            return(fail(paste0(
+                "'Censored' cannot be selected as the event level for a ",
+                "Censored/Event/Competing outcome. Select 'Event' or 'Competing'.")))
+
+        # An explicit choice of "Competing" as the event refocuses the
+        # competing-risk analysis: it becomes code 1 and the original Event
+        # becomes code 2. Previously the selection was ignored and Event was
+        # always coded 1.
+        focus_competing <- !is.null(outcomeLevel) && length(outcomeLevel) > 0 &&
+                           identical(as.character(outcomeLevel), "Competing")
+
+        status <- rep(NA_integer_, length(outcome))
+        status[!is.na(outcome) & outcome == "Censored"]  <- 0L
+        if (focus_competing) {
+            status[!is.na(outcome) & outcome == "Competing"] <- 1L
+            status[!is.na(outcome) & outcome == "Event"]     <- 2L
+        } else {
+            status[!is.na(outcome) & outcome == "Event"]     <- 1L
+            status[!is.na(outcome) & outcome == "Competing"] <- 2L
+        }
+        return(ok(status,
+                  event_label     = if (focus_competing) "Competing" else "Event",
+                  censored_labels = "Censored",
+                  competing_labels = if (focus_competing) "Event" else "Competing",
+                  estimand        = "competing risks",
+                  n_levels        = length(observed),
+                  status_factor   = factor(
+                      c("Censored", "Event", "Competing")[status + 1L],
+                      levels = c("Censored", "Event", "Competing")),
+                  competing_mode  = TRUE))
+    }
+
+    # ---- single event level ----------------------------------------------
+    if (is.logical(outcome)) {
+        # Honour an explicitly selected level. TRUE is the event by default, but
+        # selecting FALSE used to be read and then ignored, silently inverting
+        # the analysis.
+        lvl <- if (!is.null(outcomeLevel) && length(outcomeLevel) > 0)
+            toupper(as.character(outcomeLevel)) else "TRUE"
+        if (!lvl %in% c("TRUE", "FALSE"))
+            return(fail(paste0(
+                "Selected Event Level '", outcomeLevel,
+                "' is invalid for logical outcome '", outcome_name,
+                "'. Select TRUE or FALSE.")))
+        if (identical(lvl, "FALSE"))
+            return(ok(as.integer(!outcome), "FALSE", "TRUE",
+                      "Kaplan-Meier survival for the coded event", 2L))
+        return(ok(as.integer(outcome), "TRUE", "FALSE",
+                  "Kaplan-Meier survival for the coded event", 2L))
+    }
+
+    if (is.factor(outcome) || is.character(outcome)) {
+
+        if (is.null(outcomeLevel) || length(outcomeLevel) == 0 ||
+            identical(as.character(outcomeLevel), ""))
+            return(fail(paste0(
+                "Event Level is not selected. Outcome variable '", outcome_name,
+                "' has levels: ", paste(observed_chr, collapse = ", "),
+                ". Select the level that represents the event (e.g. death, recurrence).")))
+
+        # A DECLARED level with zero observations is a legitimate cohort, not an
+        # error. Everyone is censored: S(t) = 1 throughout, the median is not
+        # reached, the number at risk and the follow-up are reportable. Refusing
+        # it threw a valid analysis away -- and did so inconsistently, since an
+        # all-zero NUMERIC outcome was accepted a few dozen lines below.
+        #
+        # What remains unusable is a level the variable does not have AT ALL
+        # (a stale selection left behind when the outcome variable changed, or a
+        # typo): nothing can be coded from it, so that still fails.
+        #
+        # WHAT THIS COSTS: picking the WRONG event level now produces a silent
+        # all-censored analysis where it used to error. `.describeEventIndicator()`
+        # therefore flags any zero-event recode prominently -- if that block is
+        # ever removed, restore the rejection with it.
+        declared <- if (is.factor(outcome)) levels(outcome) else observed_chr
+        if (!as.character(outcomeLevel) %in% declared)
+            return(fail(paste0(
+                "Selected Event Level '", outcomeLevel, "' is not a level of '",
+                outcome_name, "'. Levels available: ",
+                paste(declared, collapse = ", "), ".")))
+
+        status <- ifelse(as.character(outcome) == as.character(outcomeLevel), 1L, 0L)
+        cens   <- setdiff(observed_chr, as.character(outcomeLevel))
+
+        return(ok(status,
+                  event_label     = as.character(outcomeLevel),
+                  censored_labels = cens,
+                  # Labels alone cannot establish that the selected event is
+                  # death from any cause. Calling every binary factor "overall
+                  # survival" silently turns recurrence, discharge, toxicity,
+                  # or one of two causes of death into OS.
+                  estimand        = "Kaplan-Meier survival for the selected event",
+                  n_levels        = length(observed)))
+    }
+
+    if (is.numeric(outcome)) {
+
+        # Honour an explicitly chosen event level for numeric outcomes too.
+        # Previously outcomeLevel was read and then ignored here, so a
+        # 0 = dead / 1 = alive registry column ran inverted without warning.
+        if (!is.null(outcomeLevel) && length(outcomeLevel) > 0 &&
+            !identical(as.character(outcomeLevel), "")) {
+
+            lvl <- suppressWarnings(as.numeric(as.character(outcomeLevel)))
+            if (is.na(lvl) || !any(observed == lvl))
+                return(fail(paste0(
+                    "Selected Event Level '", outcomeLevel, "' does not occur in the data. ",
+                    "Values found in '", outcome_name, "': ",
+                    paste(sort(observed), collapse = ", "), ".")))
+
+            status <- ifelse(outcome == lvl, 1L, 0L)
+            return(ok(status,
+                      event_label     = as.character(lvl),
+                      censored_labels = as.character(sort(setdiff(observed, lvl))),
+                      estimand        = "Kaplan-Meier survival for the selected event",
+                      n_levels        = length(observed)))
+        }
+
+        # No level chosen: accept only genuine 0/1 coding. A single distinct
+        # value is legitimate (a cohort in which everyone had the event, or
+        # nobody did) and used to be rejected. `sum(unique(x)) == 1` was the old
+        # test in three of the five copies and wrongly accepted e.g. {-1, 2}.
+        if (all(observed %in% c(0, 1)))
+            return(ok(as.integer(outcome), "1", "0",
+                      "Kaplan-Meier survival for the coded event",
+                      length(observed)))
+
+        return(fail(paste0(
+            "Outcome variable '", outcome_name, "' is numeric but not coded 0/1. ",
+            "Values found: ", paste(sort(observed), collapse = ", "),
+            ". The analysis does not guess which value is the event, because a coding ",
+            "such as 1/2 means 2 = event in some datasets and 1 = event in others. ",
+            "Either recode it as 0 = censored / 1 = event, or choose the value that ",
+            "represents the event in Event Level (in jamovi, first set the column's ",
+            "measure type to Nominal in Data > Setup so its values are listed); every ",
+            "other value is then treated as censored.")))
+    }
+
+    fail(paste0(
+        "Outcome variable '", outcome_name, "' has an unsupported type (",
+        class(outcome)[1], "). It must be a factor, character, logical, or ",
+        "numeric 0/1 variable."))
+}
+
+#' Describe an event recode for display to the user
+#'
+#' Turns the result of `.defineEventIndicator()` into the HTML disclosure block
+#' shown by every analysis that builds an event indicator. A silent recode is a
+#' clinical-safety hazard: the reader of a survival curve cannot otherwise see
+#' which levels were collapsed into "censored".
+#'
+#' @param res The list returned by `.defineEventIndicator()`.
+#' @param outcome_name Display name of the outcome variable.
+#' @return A character string of HTML.
+#' @keywords internal
+.describeEventIndicator <- function(res, outcome_name = "outcome") {
+
+    if (is.null(res) || !is.null(res$error)) return("")
+
+    esc <- function(x) as.character(htmltools::htmlEscape(as.character(x)))
+    event_label <- esc(res$event_label)
+    outcome_name <- esc(outcome_name)
+    censored_labels <- esc(res$censored_labels)
+    competing_labels <- esc(res$competing_labels)
+
+    cens <- if (length(res$censored_labels) > 0)
+        paste(sprintf('"%s"', censored_labels), collapse = ", ") else "(none)"
+    comp <- if (length(res$competing_labels) > 0)
+        paste(sprintf('"%s"', competing_labels), collapse = ", ") else "(not labelled)"
+
+    rows <- paste0(
+        "<tr><td>Event level</td><td>\"", event_label,
+            "\"</td><td align='right'>", res$n_event, "</td></tr>",
+        "<tr><td>Censored</td><td>", cens,
+            "</td><td align='right'>", res$n_censored, "</td></tr>",
+        if (isTRUE(res$has_competing))
+            paste0("<tr><td>Competing event</td><td>", comp,
+                   "</td><td align='right'>",
+                   res$n_competing, "</td></tr>") else "",
+        "<tr><td>Excluded (missing outcome)</td><td></td><td align='right'>",
+            res$n_missing, "</td></tr>",
+        "<tr><td>Estimand</td><td colspan='2'>", res$estimand, "</td></tr>")
+
+    warn <- ""
+    # Every Kaplan-Meier or cumulative-incidence analysis relies on an
+    # independent/non-informative right-censoring assumption. Previously this
+    # disclosure appeared only for two selected-event estimands, so an overall,
+    # disease-free, logical, numeric, or competing-risk analysis could be shown
+    # without stating its central identifying assumption.
+    if (length(res$censored_labels) > 0) {
+        collapsed_terminal <- res$estimand %in% c(
+            "cause-specific survival",
+            "Kaplan-Meier survival for the selected event",
+            "Kaplan-Meier survival for the coded event") &&
+            res$n_competing == 0
+        warn <- paste0(
+            "<p style='margin-top:8px'><b>Censoring assumption.</b> Level(s) ", cens,
+            " are being treated as <i>right-censored</i>. The estimates require censoring ",
+            "to be independent/non-informative for the endpoint, conditional on the analysis. ",
+            if (collapsed_terminal) paste0(
+                "If a collapsed level is a competing terminal event (for example death from ",
+                "another cause), Kaplan-Meier estimates net/cause-specific survival rather ",
+                "than absolute event risk and generally overstates the real-world probability ",
+                "of remaining event-free. Use Multiple Event Levels with survival type ",
+                "Competing Risk to estimate cumulative incidence."
+            ) else "This assumption cannot be verified from the displayed summaries.",
+            "</p>")
+    }
+
+    # A zero-event cohort is now ACCEPTED rather than rejected (see the declared-
+    # level check in .defineEventIndicator). That is the right call statistically
+    # -- a fully censored series is analysable -- but it means a mis-selected
+    # event level no longer announces itself as an error, so it has to announce
+    # itself here instead. This block is the safety net for that change and must
+    # stay as loud as the error it replaced.
+    zero <- ""
+    if (isTRUE(res$n_event == 0)) {
+        zero <- paste0(
+            "<p style='margin-top:8px;padding:8px;border-left:4px solid #c0392b;",
+            "background-color: rgba(234, 54, 33, 0.09); color: inherit'><b>No events: check the event level.</b> ",
+            "The event level (", event_label, ") occurs in <b>0</b> of the ",
+            res$n_event + res$n_censored + res$n_competing,
+            " rows with a non-missing '", outcome_name, "' value. ",
+            if (isTRUE(res$has_competing)) paste0(
+                res$n_competing, " competing event(s) did occur; these are a separate ",
+                "terminal state, not censoring, and the target-event cumulative incidence ",
+                "is estimated as 0 throughout") else
+                "This is a fully censored analysis cohort: every subject is treated as censored and the Kaplan-Meier point estimate is 100% throughout. This boundary estimate does not prove 100% population survival",
+            if (isTRUE(res$has_competing))
+                ". The median time to the target event is not reached" else
+                ". The Kaplan-Meier median time-to-event is not reached",
+            ", and the numbers at risk and the ",
+            "follow-up duration are still reportable. <b>But if you expected events, ",
+            "the wrong event level is selected</b>: check the level named above against ",
+            "your data before using any of the results below.</p>")
+    }
+
+    # Disease-free survival makes a timing assumption that nothing in the data
+    # can verify, so it has to be stated wherever the user chooses DFS. Alive
+    # with Disease is coded as an EVENT at whatever time the time variable holds
+    # for that subject; if that time is diagnosis-to-last-follow-up (what a
+    # follow-up date normally means, and what the UI suggests) the recurrence is
+    # recorded later than it happened and DFS is biased upward. This is a silent
+    # bias, not a detectable error -- there is no signature in the data to test.
+    dfs <- ""
+    if (identical(res$estimand, "disease-free survival")) {
+        dfs <- paste0(
+            "<p style='margin-top:8px;padding:8px;border-left:4px solid #d68910;",
+            "background-color: rgba(246, 163, 33, 0.11); color: inherit'><b>Disease-free survival requires a time to the ",
+            "DFS event.</b> \"Alive with Disease\" is counted as an event, and it is placed ",
+            "at whatever time the time variable gives for that subject. These results are ",
+            "correct only if that time is the time to recurrence or progression. If it is ",
+            "instead the time from diagnosis to the LAST FOLLOW-UP, every recurrence is ",
+            "dated later than it occurred and disease-free survival is over-estimated. ",
+            "For subjects with disease, supply the date of recurrence as the follow-up date ",
+            "(or an elapsed time measured to recurrence).</p>")
+    }
+
+    paste0(
+        "<div><b>Outcome recode for '", outcome_name,
+        "' (before analysis-specific row exclusions)</b>",
+        "<table style='margin-top:4px'>", rows, "</table>", warn, zero, dfs, "</div>")
+}

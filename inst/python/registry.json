@@ -2126,10 +2126,10 @@
     {
       "id": "pyoutcomeorganizer",
       "family": "jsurvival",
-      "menu": "Survival",
+      "menu": "Data preparation",
       "title": "Outcome Organizer for Survival Analysis",
       "aliases": [],
-      "source": null,
+      "source": "analyses/jsurvival/pyoutcomeorganizer.py",
       "baseline": {
         "module": "jsurvival",
         "version": "1.1.1",
@@ -2143,12 +2143,12 @@
         }
       },
       "wave": 1,
-      "status": "planned",
+      "status": "partial",
       "coverage": {
         "full_parity": false,
-        "numerical": "pending",
-        "gui": "pending",
-        "compatibility": "existing Python identifier preserved",
+        "numerical": "Frozen-R event coder, independent truth tables, missingness and saved-row/lifecycle evidence in docs/python-outcome-organizer.md",
+        "gui": "macOS arm64 desktop qualification evidence tracked separately in docs/python-outcome-organizer.md",
+        "compatibility": "New Python entry point; original R module retained",
         "platforms": []
       },
       "methods": "Data recoding: derives event indicators for overall, cause-specific, competing-risk, progression-free and multistate analyses from outcome/recurrence levels, with an event-priority hierarchy and interval/administrative censoring; writes Output columns and frequency/diagnostic tables",
@@ -2159,7 +2159,14 @@
       },
       "source_name": "outcomeorganizer",
       "menu_group": "Survival Py",
-      "menu_title": "Outcome Organizer for Survival Analysis"
+      "menu_title": "Outcome organizer (core)",
+      "supported_core": "Explicit selected-event/numeric 0/1 coding; four-state OS/cause/competing/multistate mapping; competing factor interchange; native mapping/counts/preview and row-aligned saved status",
+      "omissions": "Recurrence composites, patient hierarchy, interval/administrative censoring, time validation, survival estimation and full parity",
+      "recode_reference": {
+        "file": "R/utils-eventindicator.R",
+        "commit": "283a8275e3dd6704f6bba2164215442d3d293b8c",
+        "sha256": "fb2370fdcc1a84143fd1e819e487a6e142f06f0c7fc872a8df37225626dcff40"
+      }
     },
     {
       "id": "pysinglearm",
