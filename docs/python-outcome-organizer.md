@@ -126,8 +126,8 @@ fixture is retained as evidence.
   greyed-error behavior and unchanged valid scientific results.
 - The earlier full native run had **3,838 passes and two errors** in the legacy D3 and
   Observable greyed-result expectations. Both affected files pass after policy scoping.
-  That full run was not repeated against the final scoped build; a clean full-native
-  rerun remains an open gate. Nonfatal OS-permission messages in focused logs
+  At that milestone the full run had not been repeated against the scoped build.
+  The subsequent qualification below closes this gate. Nonfatal OS-permission messages in focused logs
   are recorded separately from assertion results.
 - Compiler, generator/status freshness and **24 packaged-runtime cases** pass.
   The installed R database, Python implementation and registry match the final JMO.
@@ -146,3 +146,13 @@ records the gates, initial failures and hashes. These checks qualify this experi
 status-only subset on the tested Mac; they do not establish clinical validity, general
 accessibility, other-platform support or full baseline parity. GUI filtering and
 pre-launch/transport failure recovery remain separate lifecycle limits.
+
+
+### Follow-up full native qualification
+
+The frozen 0.3.44 test inventory was subsequently rerun against the scoped 0.3.44
+compiled package with process-inspection permission: **3,852 assertions passed**, with
+zero failures, errors, warnings or skips. This includes the legacy greyed-result
+contracts and the outcome lifecycle. The earlier 3,838-pass/two-error attempt remains
+recorded. This closes the clean full-native rerun gate, while broader platforms,
+clinical/release review and omitted outcome methods remain open.

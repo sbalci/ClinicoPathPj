@@ -776,3 +776,59 @@ full-native rerun, broader platforms/accessibility and clinical/release gates st
 See docs/python-outcome-organizer.md and its machine-readable evidence. Next: calendar
 conversion and time intervals, then time-aware outcome methods; the inventory remains
 24 partial, 37 planned, ten utilities and zero full-parity releases.
+
+
+## Follow-up qualification and UTC datetime core — 0.3.45
+
+The scoped 0.3.44 package has now passed a full frozen native inventory rerun:
+3852 assertions, zero failures/errors/warnings/skips. This closes the previously open
+full-R gate without erasing the earlier compatibility-failure evidence.
+
+Continue Wave 1 with `pydatetimeconverter` in Survival Py → Data preparation. The first
+core uses strict explicit calendar formats in UTC, Excel 1900/1904 origins and Unix
+seconds, with native quality/preview tables and original-row-aligned saved components.
+It preserves Excel whole-second ties-to-even rounding and Jan-1-block week semantics.
+Reject invalid calendars and keep invalid vs missing accounting explicit. Expose UTC
+visibly; do not infer a system timezone, an epoch, day/month order or a century.
+
+The bundled Python lacks zoneinfo/tzdata. Auto-detection, two-digit-year policies,
+named/system timezones/DST, permissive parsing and native Date/POSIX inputs remain
+pending; this core uses explicit YMD/UTC instead of pretending to implement the R
+analysis's auto/system defaults. No new package installation is required.
+
+Inventory: 25 partial baseline targets, 36 planned, ten utilities and zero full-parity
+releases. Next: timeinterval, then complete time-aware outcome methods. Qualification
+and omissions are tracked in docs/python-datetime-converter.md.
+
+
+The UTC converter core now has independent conversion/component fixtures, native
+row-aligned output/lifecycle evidence and desktop save/reopen/HTML checks. A GUI-detected
+blank-column-title defect was corrected by supplying explicit output metadata; its
+initial .omv remains failure evidence. The 354-test Python run, 41 final focused checks,
+163 converter native assertions and 25 packaged cases pass. The separate 0.3.44 full
+native qualification remains 3852/3852; no full-0.3.45 native-run claim is made. See
+python-datetime-converter.md for default differences, exact scope and remaining gates.
+
+## Standardized UTC interval core — 0.3.46
+
+Activate `pytimeinterval` under Survival Py → Data preparation using the frozen
+umbrella 1.0.81.01 baseline (`9fae7c5c7af84e65dfff9262d3bb2a031618753e`).
+The first core supports fixed-length elapsed units, explicit negative/extreme
+exclusions, follow-up landmarks, arithmetic-mean t intervals and aligned saved
+values. It reuses the strict UTC date parser without changing its calculations.
+Calendar-aware months/years, auto parsing, packed numeric dates/epochs and the
+baseline's clinical plausibility bands remain omitted. No JavaScript interaction
+is needed for these controls: changing an option reruns the Python calculation.
+
+Inventory: 26 partial baseline targets, 35 planned, ten utilities, 36 executable
+entry points and zero full-parity releases. See [interval qualification](python-time-intervals.md)
+for current numerical, native, compiler, package and desktop evidence separately.
+Next: complete the applicable interval/date qualification and time-aware outcome
+methods before describing Wave 1 as complete.
+
+0.3.46 qualification: 362 Python tests, 45 focused native R assertions, generator/status
+freshness, compiler and 26 packaged-runtime cases pass. On macOS arm64 jamovi 28.13,
+sideload/restart, baseline/landmark/error/exclusion states, named saved output, HTML
+and fresh-engine reopen/rerun pass. The native artifacts independently retain source
+rows and expected intervals. Full native inventory qualification is not newly claimed;
+calendar-aware methods, broader platforms and full parity remain open.

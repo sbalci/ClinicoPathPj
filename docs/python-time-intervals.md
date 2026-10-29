@@ -1,0 +1,88 @@
+# Standardized UTC elapsed intervals
+
+`pytimeinterval` is under **Survival Py → Data preparation → Time intervals (UTC core)**.
+This partial Python port freezes umbrella `timeinterval` 1.0.81.01 at commit
+`9fae7c5c7af84e65dfff9262d3bb2a031618753e`; source hashes remain in the registry.
+The original R analysis is unchanged. NumPy/SciPy are bundled; no network or package
+installation is needed.
+
+| Feature | Status |
+|---|---|
+| Explicit four-digit text dates and UTC clocks | Implemented using the datetime core |
+| Days / weeks / fixed months / fixed years | Implemented: 1 / 7 / 30.4375 / 365.25 days |
+| Optional negative and extreme exclusions | Implemented with raw and removed counts |
+| Follow-up landmark | Retain raw interval ≥ landmark, then subtract landmark |
+| Summary and arithmetic-mean confidence interval | Native tables; sample SD and Student t |
+| Raw date-quality and source preview | Optional quality tables; bounded preview |
+| Saved interval | Continuous, full supplied-row alignment, named Calculated interval |
+| Calendar-aware months/years | Pending; no calendar-basis selector exposed |
+| Auto parsing, numeric packed/epoch dates, two-digit years | Pending; rejected rather than guessed |
+| System/named timezones, DST and R Date/POSIX input | Pending; UTC text only |
+| Baseline clinical plausibility bands and glossary | Omitted in this core |
+| Full parity, broader platforms and clinical/release review | Open |
+
+Months and years are durations, not calendar anniversaries. For example, January 31
+to February 29, 2024 is 29 days, or 29/30.4375 standardized months. Both source columns
+must parse at least 80% of their nonmissing values; missing and invalid pairs stay
+missing in saved output. The visible initial format is YMD in UTC, differing from
+the baseline's automatic parsing default. Review the original/parsed preview before
+using ambiguous day/month orders. Numeric encodings are not inferred.
+
+Negative raw intervals cause an error by default. Explicit exclusion is required;
+they never subtract from summed record-time. Potential extremes use the **raw**
+type-7 99th percentile multiplied by the selected factor (default 2), before either
+exclusions or landmark. Only a positive quantile enables this rule; strict exceedance
+is required. Small samples can make this rule unable to flag any interval, which is
+disclosed. Negative, extreme and below-landmark exclusions occur in that order.
+
+The optional landmark defaults to 6 selected units. Equality is retained and becomes
+zero after subtraction. This requires observed follow-up length, with no event input:
+it cannot establish event-free survival at the landmark. Rows are records, not deduplicated
+patients. Summed record-time is person-time only for appropriate nonoverlapping records.
+No incidence or censoring-adjusted survival estimate is calculated.
+
+The mean CI defaults to 95%, using n−1 degrees of freedom and sample SD. The lower
+bound is intersected with zero; the raw bound and clipping flag remain visible.
+This assumes independent observations and a suitable t approximation. Singleton
+SD/CI and empty-cohort summaries are unavailable. Constant intervals produce a point
+CI with a warning. These intervals do not quantify survival uncertainty.
+
+The synthetic **UTC Interval Examples** dataset has ten complete intervals and two
+missing pairs. Choose Start date / End date, YMD and days: total 871, n=10. A 6-day
+landmark retains seven intervals and yields total 826. End with reversal introduces
+one negative interval; exclude negatives to get n=9 and total 861 (without landmark).
+No real patient data are included.
+
+## Evidence and remaining gates
+
+- Focused Python: eight tests pass, including analytic t(1) CI, independent date fixtures,
+  type-7 thresholds, landmark ties, errors and runtime saved-row identities.
+- Native base-R numerical checks and R6 lifecycle: **45 assertions pass**, no testthat
+  failures, errors, warnings or skips. Initial harness failures were corrected to expect
+  jamovi's rejection exception and inspect `rowCount` for an emptied table; no backend
+  change was needed. Host subprocess checks emit `Operation not permitted` messages
+  under the sandbox; these are separate from numerical assertion results.
+- Generator/status freshness and compiler/build: pass. The built archive contains one
+  ClinicoPathPj namespace; **26 packaged-runtime cases pass**, including interval output
+  naming, source IDs and values. Installed manifest/R database/registry/interval helper
+  bytes match the archive.
+- Full Python regression suite: **362 tests pass** in 591.084 seconds for 0.3.46.
+- Native jamovi 28.13 macOS arm64: **Sideload** update and full application restart pass.
+  Baseline days: n=10/total=871; landmark 6: n=7/total=826; reversed interval rejects and
+  clears every saved value; explicit negative exclusion recovers n=9/total=861.
+  Four saved OMV states retain the source data and correctly aligned named output.
+  Native HTML export includes the expected summary and all 12 preview rows. Fresh-engine
+  reopening restores the excluded state, and toggling report output recalculates it.
+  `tools/check-interval-artifacts.py` independently checks source data, saved values and HTML.
+- Static plot export: not applicable; this preparation core has no plot.
+- Platform qualification beyond macOS arm64, full baseline parity and clinical review: pending.
+
+The prior full native inventory run was 3852 passing assertions for 0.3.44. It is
+historical evidence, not a full 0.3.46 native qualification claim.
+
+Reproduce from the repository with `tools/generate.py --check`,
+`tools/migration-status.py --check`, the bundled-Python unittest discovery command
+in `tools/check.sh`, the focused `tests/testthat/test-intervals-python.R` against the
+built library, `tools/check-core-package.py` and `tools/check-interval-artifacts.py`.
+Counts, limits and archive/source/artifact hashes are recorded in
+[the qualification record](validation-exports/python-interval-0.3.46-checks.json).

@@ -1,9 +1,28 @@
+# UTC interval core — 0.3.46
+
+- [x] Implement explicit UTC elapsed intervals, fixed units, baseline exclusions and follow-up landmarks.
+- [x] Add native tables, raw/clipped mean CI and aligned named saved output.
+- [x] Pass eight focused Python calculation/runtime tests.
+- [x] Pass 45 independent native R/lifecycle assertions, compiler/freshness and 26 packaged-runtime cases.
+- [x] Pass all 362 Python regression tests in 0.3.46.
+- [x] Sideload through jamovi and verify named saved output, valid-invalid-valid recovery, HTML and fresh-engine reopen/rerun.
+- [ ] Calendar-aware months/years, automatic/numeric parsing and full parity remain open.
+
+# UTC datetime core — 0.3.45
+
+- [x] Implement explicit four-digit UTC formats, Excel 1900/1904 and Unix arithmetic.
+- [x] Add quality/preview/components and aligned saved epoch/text/component columns.
+- [x] Pass nine focused Python tests, including every minute of an Excel day.
+- [x] Pass the 354-test Python run, 41 final focused checks, 163 native assertions, compiler/freshness and 25 packaged cases; retain the initial unnamed-output fixture.
+- [x] Sideload via jamovi; verify four named saved columns, all-unparsed clearing, calendar/Excel reversal, native HTML and fresh-engine persistence.
+- [ ] Auto detection, named/system timezones/DST, two-digit-year policies, native Date/POSIX support and full parity remain open.
+
 # Outcome status core — 0.3.44
 
 - [x] Implement explicit selected-event, numeric 0/1, vital-status and competing interchange coding.
 - [x] Add native mapping/counts, bounded source preview, static plot and saved status.
 - [x] Pass the 344-test Python run, 46 final policy/generator checks, 71 outcome native assertions and 143 targeted native regressions, compiler/freshness and 24 packaged cases.
-- [ ] Obtain a clean full-native rerun after policy scoping; retain the earlier broad-run result (3838 passes, two corrected legacy-contract failures).
+- [x] Pass the follow-up full-native rerun: 3852 assertions, no failures/errors/warnings/skips; retain the earlier compatibility failures as history.
 - [x] Sideload via jamovi; verify controls, saved statuses, failure clearing/recovery, HTML/1600×1000 PNG exports and fresh-engine persistence.
 - [ ] Recurrence composites, patient hierarchies, interval/administrative censoring, full parity and broader qualification remain open.
 

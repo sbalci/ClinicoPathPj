@@ -23,6 +23,14 @@ sync_module_metadata <- function(root = ".") {
             "    tags: [Python, Diagnostic accuracy, Decision curves, Data quality]")
     }
     document <- yaml::yaml.load(paste(metadata, collapse = "\n"))
+    interval_data <- "python_interval_examples.csv"
+    if (file.exists(file.path(root, "data", interval_data)) &&
+        !any(vapply(document$datasets, function(x) identical(x$path, interval_data), logical(1)))) {
+        document$datasets[[length(document$datasets) + 1L]] <- list(
+            name = "UTC Interval Examples", path = interval_data,
+            description = "Twelve synthetic date pairs with landmark ties, missing dates and an optional reversed interval.",
+            tags = c("Python", "Time intervals", "Data preparation"))
+    }
     set_data <- "python_set_intersection_examples.csv"
     if (file.exists(file.path(root, "data", set_data)) &&
         !any(vapply(document$datasets, function(x) identical(x$path, set_data), logical(1)))) {
@@ -111,6 +119,14 @@ sync_module_metadata <- function(root = ".") {
             name = "Survival Outcome Coding Examples", path = outcome_data,
             description = "Thirteen synthetic source records: six alive without disease, three alive with disease, two disease deaths, one other-cause death and one missing status. Competing-risk counts are 9, 2 and 1.",
             tags = c("Python", "Outcome coding", "Survival preparation"))
+    }
+    datetime_data <- "python_datetime_examples.csv"
+    if (file.exists(file.path(root, "data", datetime_data)) &&
+        !any(vapply(document$datasets, function(x) identical(x$path, datetime_data), logical(1)))) {
+        document$datasets[[length(document$datasets) + 1L]] <- list(
+            name = "UTC Date Conversion Examples", path = datetime_data,
+            description = "Twelve synthetic profiles with separate calendar, Excel and Unix examples. Explicit YYYY-MM-DD parsing gives seven valid, four invalid and one missing value; the numeric columns illustrate different origins and fractions.",
+            tags = c("Python", "UTC dates", "Data preparation"))
     }
     registry_path <- file.path(root, "inst", "python", "registry.json")
     if (file.exists(registry_path)) {

@@ -26,9 +26,9 @@ parity and GUI/platform acceptance remain separate gates.
 | pytableone | tableone | descriptives | 1 | partial | pending | macOS arm64 jamovi 28.13 sideload, typed example, 25/21 retention, mean/median and binary-level switching, native HTML and saved-state reopening/rerun (docs/python-table-one.md) |
 | pyvartree | vartree | descriptives | 1 | partial | pending | macOS arm64 jamovi 28.13: corrected CSV, disclosures, PNG and OMV lifecycle in 0.3.36; 0.3.37 compact/full path controls, previous-file compatibility, saved states and exact native HTML table export verified; broader keyboard/themes/platforms pending; new 0.3.39 continuous-summary controls/lifecycle tracked separately in docs/python-variable-tree.md |
 | pyvenn | venn | descriptives | 1 | partial | pending | macOS arm64 jamovi 28.13: matrix and saved membership lifecycle; 0.3.38 evidence closes frequency/membership reversal, stable ties, local inspection, HTML/PNG export and fresh-engine saved-order reopening/recalculation using unchanged 0.3.37 runtime; broader themes/accessibility/platforms pending |
-| pydatetimeconverter | datetimeconverter | jsurvival | 1 | planned | pending | pending |
+| pydatetimeconverter | datetimeconverter | jsurvival | 1 | partial | pending | macOS arm64 jamovi 28.13 sideload; 7/4/1 calendar and 11/0/1 Excel states, named saved outputs, all-unparsed clearing, HTML and fresh-engine reopen/rerun (docs/python-datetime-converter.md) |
 | pyoutcomeorganizer | outcomeorganizer | jsurvival | 1 | partial | pending | macOS arm64 desktop qualification evidence tracked separately in docs/python-outcome-organizer.md |
-| pytimeinterval | timeinterval | jsurvival | 1 | planned | pending | pending |
+| pytimeinterval | timeinterval | jsurvival | 1 | partial | pending | Desktop evidence tracked separately in docs/python-time-intervals.md |
 | pycotest | cotest | meddecide | 2 | partial | pending | pending |
 | pydecision | decision | meddecide | 2 | partial | pending | pending |
 | pydecisioncalculator | decisioncalculator | meddecide | 2 | partial | pending | pending |
