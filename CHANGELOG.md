@@ -1,3 +1,17 @@
+# 0.3.46 — 2026-10-29
+
+- Add `pytimeinterval` standardized UTC elapsed intervals and fixed-length units.
+- Preserve explicit negative/extreme exclusions, follow-up landmark ties and subtraction.
+- Add native cohort/quality/summary/mean-CI tables and a row-aligned named saved column.
+- Keep calendar-aware intervals, automatic parsing, numeric date encodings and full parity pending.
+
+# 0.3.45 — 2026-10-29
+
+- Add `pydatetimeconverter`, a strict explicit-format UTC calendar/Excel/Unix conversion core.
+- Add native source-row previews, parse-quality accounting, calendar components and row-aligned saved outputs.
+- Preserve Excel origin/whole-second rounding and distinguish invalid from missing input; keep auto-detection, named timezones and two-digit-year policies pending.
+- Close the 0.3.44 full native qualification gate with 3852 passing assertions and no failures/errors/warnings/skips.
+
 # 0.3.44 — 2026-10-29
 
 - Add `pyoutcomeorganizer` with explicit event/numeric 0/1 and four-category vital-status coding.

@@ -8,12 +8,12 @@ so users install nothing.
 Current direction and implemented/pending work: [revised migration plan](docs/python-migration-plan.md).
 See also the [web-researched Python analysis candidates](docs/python-analysis-opportunities.md).
 
-Status: experimental, 0.3.44 (descriptives and outcome preparation; full migration remains incomplete). Verified only on jamovi 28.13 for macOS (Apple Silicon), with
+Status: experimental, 0.3.46 (descriptives and data preparation; full migration remains incomplete). Verified only on jamovi 28.13 for macOS (Apple Silicon), with
 jmvtools 28.4.
 
 Analyses now use compact family menus: **Descriptives Py**, **Stats Plots Py**,
 **MedDecide Py** and **Python Lab**, with topic subgroups. The single module identity
-and existing analysis identifiers are retained. The **Survival Py** group now contains outcome preparation; Oncology is reserved
+and existing analysis identifiers are retained. The **Survival Py** group now contains outcome, datetime and interval preparation; Oncology is reserved
 in the registry until implementations are available.
 
 The optional `pybridgecompare` experiment runs the same cutoff engine through processx
@@ -42,7 +42,7 @@ Open **Data Library > ClinicoPathPj > Python Core Examples**, or import
 `data/python_core_examples.csv`, for the synthetic examples.
 
 Build the single standard module without installing it:
-`Rscript --vanilla tools/build.R --build-only` → `ClinicoPathPj_0.3.44.jmo`.
+`Rscript --vanilla tools/build.R --build-only` → `ClinicoPathPj_0.3.46.jmo`.
 After replacing a loaded development build, use a fresh jamovi engine to avoid stale namespaces.
 
 `pywelch` reports the mean difference as *comparison minus reference*. The reference defaults to
@@ -53,6 +53,13 @@ p and the interval empty, as R's `t.test` refuses such data. scipy would report 
 `pyexacttests` defaults the reference group to the first level, the orientation of
 `fisher.test(table(group, outcome))`. Its odds ratio then equals jamovi's Contingency Tables odds
 ratio when the event is the outcome's second level, and is the reciprocal when it is the first.
+
+## UTC datetime conversion — 0.3.45
+
+**Survival Py → Data preparation → Datetime converter (UTC core)** adds explicit
+calendar/Excel/Unix parsing, native quality/preview tables and saved components.
+Auto detection, named timezones and two-digit-year interpretation remain pending.
+See [conversion rules and limits](docs/python-datetime-converter.md).
 
 ## Outcome coding — 0.3.44
 
@@ -511,3 +518,10 @@ See [behaviour and comparison](docs/python-svg-cutoff.md) and
 [validation limits](docs/python-svg-cutoff-validation.md). Native GUI interaction and current-view SVG/PNG export are verified on macOS arm64.
 Native `.omv` saving with the Svg analysis remains unresolved on jamovi 28.13;
 saved-file acceptance is pending.
+
+## UTC elapsed intervals — 0.3.46
+
+`pytimeinterval` adds fixed-length days/weeks/months/years, explicit exclusions,
+follow-up landmarks, native summaries/mean CIs and an aligned saved interval column.
+See [scope and qualification](docs/python-time-intervals.md). Calendar-aware units and
+full baseline parity remain pending; desktop qualification is tracked separately.

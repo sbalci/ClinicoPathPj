@@ -1,7 +1,7 @@
 ---
 title: ClinicoPathPj - Python-Backed Analyses
 name: ClinicoPathPj
-version: 0.3.44
+version: 0.3.46
 jms: '1.0'
 authors: Serdar Balci
 maintainer: Serdar Balci <serdarbalci@serdarbalci.com>
@@ -284,6 +284,22 @@ analyses:
     menuTitle: Outcome organizer (core)
     title: Outcome Organizer (Python Core)
     category: analyses
+  - name: pydatetimeconverter
+    ns: ClinicoPathPj
+    hidden: false
+    menuGroup: Survival Py
+    menuSubgroup: Data preparation
+    menuTitle: Datetime converter (UTC core)
+    title: DateTime Converter (Python UTC Core)
+    category: analyses
+  - name: pytimeinterval
+    ns: ClinicoPathPj
+    hidden: false
+    menuGroup: Survival Py
+    menuSubgroup: Data preparation
+    menuTitle: Time intervals (UTC core)
+    title: Time Intervals (Python UTC Core)
+    category: analyses
 usesNative: 'yes'
 datasets:
   - name: Python Core Examples
@@ -387,5 +403,25 @@ datasets:
       - Python
       - Outcome coding
       - Survival preparation
+  - name: UTC Date Conversion Examples
+    path: python_datetime_examples.csv
+    description: >-
+      Twelve synthetic profiles with separate calendar, Excel and Unix examples.
+      Explicit YYYY-MM-DD parsing gives seven valid, four invalid and one
+      missing value; the numeric columns illustrate different origins and
+      fractions.
+    tags:
+      - Python
+      - UTC dates
+      - Data preparation
+  - name: UTC Interval Examples
+    path: python_interval_examples.csv
+    description: >-
+      Twelve synthetic date pairs with landmark ties, missing dates and an
+      optional reversed interval.
+    tags:
+      - Python
+      - Time intervals
+      - Data preparation
 
 ...

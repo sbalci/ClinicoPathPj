@@ -1970,10 +1970,10 @@
     {
       "id": "pydatetimeconverter",
       "family": "jsurvival",
-      "menu": "Survival",
+      "menu": "Data preparation",
       "title": "DateTime Converter",
       "aliases": [],
-      "source": null,
+      "source": "analyses/jsurvival/pydatetimeconverter.py",
       "baseline": {
         "module": "jsurvival",
         "version": "1.1.1",
@@ -1987,13 +1987,15 @@
         }
       },
       "wave": 1,
-      "status": "planned",
+      "status": "partial",
       "coverage": {
         "full_parity": false,
-        "numerical": "pending",
-        "gui": "pending",
-        "compatibility": "existing Python identifier preserved",
-        "platforms": []
+        "numerical": "354-test Python run, 41 final focused converter/generator checks and 163 native assertions against UTC lubridate/base R; output-name correction qualified separately (docs/python-datetime-converter.md)",
+        "gui": "macOS arm64 jamovi 28.13 sideload; 7/4/1 calendar and 11/0/1 Excel states, named saved outputs, all-unparsed clearing, HTML and fresh-engine reopen/rerun (docs/python-datetime-converter.md)",
+        "compatibility": "New Python entry point; original R module retained",
+        "platforms": [
+          "macos-arm64"
+        ]
       },
       "methods": "Data wrangling, not statistics: lubridate parsing of date-time text, Excel serials (1900/1904) and Unix epochs with format auto-detection and two-digit-year rules, timezone handling, then component extraction (year, month, weekday, week, quarter, day of year) written back as Output columns, plus parse-quality tables",
       "oracle": "lubridate::ymd_hms / dmy_hms / mdy_hms and date-only variants, lubridate::with_tz, lubridate::force_tz, lubridate::week, lubridate::quarter, lubridate::yday",
@@ -2005,7 +2007,9 @@
       },
       "source_name": "datetimeconverter",
       "menu_group": "Survival Py",
-      "menu_title": "DateTime Converter"
+      "menu_title": "Datetime converter (UTC core)",
+      "supported_core": "Explicit four-digit calendar formats in UTC, Excel 1900/1904 and Unix epochs, parse-quality accounting, preview/components and aligned saved outputs",
+      "omissions": "Auto format detection, named/system timezones and DST, two-digit-year policies, native Date/POSIX classes, locale month input, glossary and full parity"
     },
     {
       "id": "pylassocox",
@@ -2285,10 +2289,10 @@
     {
       "id": "pytimeinterval",
       "family": "jsurvival",
-      "menu": "Survival",
+      "menu": "Data preparation",
       "title": "Comprehensive Time Interval Calculator",
       "aliases": [],
-      "source": null,
+      "source": "analyses/jsurvival/pytimeinterval.py",
       "baseline": {
         "module": "ClinicoPathJamoviModule",
         "version": "1.0.81.01",
@@ -2302,12 +2306,12 @@
         }
       },
       "wave": 1,
-      "status": "planned",
+      "status": "partial",
       "coverage": {
         "full_parity": false,
-        "numerical": "pending",
-        "gui": "pending",
-        "compatibility": "existing Python identifier preserved",
+        "numerical": "Evidence tracked in docs/python-time-intervals.md",
+        "gui": "Desktop evidence tracked separately in docs/python-time-intervals.md",
+        "compatibility": "New Python entry point; original R analysis retained",
         "platforms": []
       },
       "methods": "Date arithmetic: parses start/end dates (lubridate formats), computes intervals in days/weeks/months/years on a calendar or average-length basis, landmark subsetting, negative/extreme flags, summary (mean with t CI, median, IQR) and person-time totals; writes an Output column",
@@ -2318,7 +2322,9 @@
       },
       "source_name": "timeinterval",
       "menu_group": "Survival Py",
-      "menu_title": "Comprehensive Time Interval Calculator"
+      "menu_title": "Time intervals (UTC core)",
+      "supported_core": "Explicit UTC text pairs; standardized elapsed days/weeks/months/years; negative/extreme exclusions, follow-up landmark selection, record-time summaries, bounded mean t CI, native audit tables and aligned saved intervals",
+      "omissions": "Calendar-aware months/years, auto/two-digit/numeric-packed parsing, numeric epochs, system/named timezone and DST, date plausibility classifiers, glossary, repeated-patient modelling and full parity"
     },
     {
       "id": "pydiagnosticmeta",
