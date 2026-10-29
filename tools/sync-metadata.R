@@ -93,6 +93,17 @@ sync_module_metadata <- function(root = ".") {
         if (length(cross_index)) document$datasets[[cross_index[1L]]] <- cross_entry
         else document$datasets[[length(document$datasets) + 1L]] <- cross_entry
     }
+    tableone_data <- "python_table_one_examples.omv"
+    if (file.exists(file.path(root, "data", tableone_data))) {
+        tableone_entry <- list(
+            name = "Overall Table One Examples", path = tableone_data,
+            description = "Twenty-five synthetic profiles with explicit continuous Age/Code types, binary categories and an entirely uncollected variable; a preconfigured overall Table One retains 25 rows, or 21 with complete-case exclusion.",
+            tags = c("Python", "Overall cohort", "Table One"))
+        tableone_index <- which(vapply(document$datasets, function(x)
+            x$path %in% c(tableone_data, "python_table_one_examples.csv"), logical(1)))
+        if (length(tableone_index)) document$datasets[[tableone_index[1L]]] <- tableone_entry
+        else document$datasets[[length(document$datasets) + 1L]] <- tableone_entry
+    }
     registry_path <- file.path(root, "inst", "python", "registry.json")
     if (file.exists(registry_path)) {
         registry <- jsonlite::fromJSON(registry_path, simplifyVector = FALSE)

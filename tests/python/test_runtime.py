@@ -326,6 +326,20 @@ class Runtime(unittest.TestCase):
         ''', columns=columns, options={"vars": ["Yaş grubu"]})
         self.assertEqual(result["status"], "ok", result["console"])
 
+    def test_optional_storage_metadata_preserves_existing_decoded_values(self):
+        result=self.run_probe('''
+            def run(data, options, out):
+                import numpy as np
+                assert set(data)=={'x','g'}
+                assert isinstance(data['x'],np.ndarray) and list(data['x'])==[1,2]
+                assert isinstance(data['g'],Factor) and data['g'].levels==['A','B']
+                assert data.metadata['x']['units']==['mm']
+                assert data.metadata['g']=={}
+        ''',columns={'x':{'kind':'number','values':[1,2],
+                         'storage':{'classes':['numeric'],'dimensions':None,'rows':2,'units':['mm']}},
+                     'g':{'kind':'factor','levels':['A','B'],'codes':[0,1]}})
+        self.assertEqual(result['status'],'ok',result['console'])
+
     def test_bad_cells_name_their_table_and_column(self):
         result = self.run_probe('''
             def run(data, options, out):
