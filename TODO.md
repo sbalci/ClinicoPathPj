@@ -1,3 +1,13 @@
+# Standard overall Table One core — 0.3.43
+
+- [x] Implement standard-format summaries and explicit binary-level numerators without inference.
+- [x] Omit all-missing/unsupported scalar classes before exclusion; preserve optional storage/units/labels metadata.
+- [x] Pass 38 focused Table One/runtime checks; add independent tableone/base-R and lifecycle fixtures.
+- [x] Pass compiler/freshness, 335 Python tests, 267 focused native assertions and 23 packaged-runtime cases.
+- [x] Resolve focused process checks outside the sandbox: 25 bridge assertions pass; retain the full-suite record (3775 passes, five sandbox errors).
+- [x] Verify typed example, mean/median and 25/21 retention reversal, binary-level display, native HTML and fresh-engine saved-file reopening/rerun.
+- [ ] Alternate table engines/styles, full parity, broader platform/accessibility and clinical/release review remain open.
+
 # Cross-table default-style core — 0.3.42
 
 - [x] Freeze baseline typing, display, test-selection and missingness rules.

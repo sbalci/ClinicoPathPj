@@ -478,10 +478,10 @@
     {
       "id": "pytableone",
       "family": "descriptives",
-      "menu": "Descriptives",
+      "menu": "Summaries",
       "title": "Table One",
       "aliases": [],
-      "source": null,
+      "source": "analyses/descriptives/pytableone.py",
       "baseline": {
         "module": "ClinicoPathDescriptives",
         "version": "1.0.82.03",
@@ -495,13 +495,15 @@
         }
       },
       "wave": 1,
-      "status": "planned",
+      "status": "partial",
       "coverage": {
         "full_parity": false,
-        "numerical": "pending",
-        "gui": "pending",
+        "numerical": "335 Python tests, 38 focused final checks, 267 native assertions against tableone 0.13.2/base R; full native suite 3775 passes with five sandbox process-inspection errors (docs/python-table-one.md)",
+        "gui": "macOS arm64 jamovi 28.13 sideload, typed example, 25/21 retention, mean/median and binary-level switching, native HTML and saved-state reopening/rerun (docs/python-table-one.md)",
         "compatibility": "existing Python identifier preserved",
-        "platforms": []
+        "platforms": [
+          "macos-arm64"
+        ]
       },
       "methods": "Table formatting: a Table 1 via tableone, gtsummary, arsenal or janitor.",
       "oracle": "tableone::CreateTableOne; gtsummary::tbl_summary",
@@ -511,7 +513,9 @@
       },
       "source_name": "tableone",
       "menu_group": "Descriptives Py",
-      "menu_title": "Table One"
+      "menu_title": "Table One (core)",
+      "supported_core": "Standard overall-cohort descriptive subset: mean/sample SD or median/type-7 quartiles; explicitly counted binary second level or all levels; valid/missing denominators; all-missing/unsupported scalar omission before listwise exclusion; text/logical/factor order and units/labels annotations",
+      "omissions": "Other table engines/styles, frequency weights, full baseline formatting and full parity; no grouping/inference in this overall-cohort analysis"
     },
     {
       "id": "pyvartree",

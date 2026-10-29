@@ -74,6 +74,13 @@ class InputError(Exception):
 Factor = namedtuple("Factor", "codes levels ordered", defaults=[False])
 
 
+class Columns(dict):
+    """Decoded values retain their existing types; optional storage metadata is separate."""
+    def __init__(self):
+        super().__init__()
+        self.metadata = {}
+
+
 def md_escape(text):
     """Escape user text (column names, level labels) for a Markdown result. Whitespace is collapsed
     first: a newline in a label would otherwise start a paragraph or a code block."""
@@ -263,8 +270,9 @@ class Output:
 
 def _decode(columns):
     import numpy as np
-    data = {}
+    data = Columns()
     for name, column in (columns or {}).items():  # R sends [] for a dataset without columns
+        data.metadata[name] = column.get('storage') or {}
         if column["kind"] == "number":
             data[name] = np.array([np.nan if v is None else v for v in column["values"]], dtype=float)
         elif column["kind"] == "factor":

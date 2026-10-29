@@ -718,3 +718,30 @@ measure-type guessing; source CSV remains the independent oracle input. Full cro
 parity and broader qualification remain open. Wave-1 core candidates now include
 pytableone and the three survival transformations; the inventory is 22 partial targets,
 39 planned, ten utilities and zero full-parity releases.
+
+
+## Standard overall-cohort Table One — 0.3.43
+
+Implement the frozen t1 subset as pytableone: mean/sample SD or median/type-7 quartiles,
+valid-value categorical percentages, explicit binary second-level counting and an
+optional all-levels view. Preserve low-distinct numeric columns as measurements. Omit
+all-missing and unsupported scalar classes before listwise exclusion; reject structured
+columns. Optional storage/shape/row-count/units/label metadata extends transport without
+changing old decoded numeric/factor/text values. Independent old-route regressions and
+full native testing are required because the R bridge is shared.
+
+Use native tables and optional explanation/report text; no plots or inference are
+introduced in this overall-cohort function. Other table engines/styles and full parity
+remain omitted. A typed synthetic example with an uncollected variable must retain
+25 rows by default and 21 after listwise exclusion. Inventory becomes 23 partial
+baseline ports, 38 planned, ten utilities and zero full-parity releases.
+
+
+Qualification: the 0.3.43 standard core passed 335 Python tests, 267 focused native R
+assertions and 23 packaged-runtime cases. Native GUI sideload, option reversal,
+HTML export and fresh-engine persistence were checked on macOS arm64 / jamovi 28.13.
+The full native suite retains five sandbox process-inspection errors alongside 3,775
+passes. A separate permitted process-inspection run passed all 25 bridge assertions;
+the full suite was not repeated outside the sandbox. The next
+Wave-1 candidates remain the three survival transformations. Advanced Table One engines
+and styles remain planned; this core does not count as full baseline parity.

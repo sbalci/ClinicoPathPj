@@ -1,3 +1,9 @@
+# 0.3.43 — 2026-10-29
+
+- Add `pytableone` standard overall-cohort native summaries, explicit binary second-level numerators, all-level display and valid/missing denominators.
+- Omit all-missing and unsupported scalar classes before listwise exclusion; reject matrix/list inputs and retain optional storage/units/label metadata through the bridge.
+- Add a synthetic uncollected-variable example and independent standard-tableone, base-R and lifecycle checks. Other table engines/styles remain omitted.
+
 # 0.3.42 — 2026-10-29
 
 - Add `pycrosstable` grouped/overall native summaries, per-variable or complete-case denominators and the default-style supported inference subset.

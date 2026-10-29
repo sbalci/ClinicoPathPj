@@ -26,19 +26,25 @@
 }
 
 .cpjColumn <- function(x, name) {
+    units <- attr(x, "units", exact = TRUE)
+    label <- attr(x, "label", exact = TRUE)
+    storage <- list(classes = I(class(x)),
+                    dimensions = if (is.null(dim(x))) NULL else I(dim(x)), rows = NROW(x),
+                    units = if (is.character(units)) I(units) else NULL,
+                    label = if (is.character(label)) I(label) else NULL)
     if (is.factor(x)) {  # preserve labels/unused levels, including a literal "NA" label
         if (anyNA(levels(x))) levels(x) <- levels(x)
         codes <- as.integer(x) - 1L
         # A genuine NA factor level is not is.na(x); encode its observations as missing.
         codes[codes %in% (which(is.na(levels(x))) - 1L)] <- NA_integer_
-        return(list(kind = "factor", levels = I(levels(x)), codes = I(codes), ordered = is.ordered(x)))
+        return(list(kind = "factor", levels = I(levels(x)), codes = I(codes), ordered = is.ordered(x), storage = storage))
     }
     if (is.numeric(x)) {
         if (any(is.infinite(x)))
             jmvcore::reject("{}", msg = paste0("'", name, "' contains infinite values; recode them as missing first."))
-        return(list(kind = "number", values = I(as.double(x))))
+        return(list(kind = "number", values = I(as.double(x)), storage = storage))
     }
-    list(kind = "text", values = I(as.character(x)))
+    list(kind = "text", values = I(as.character(x)), storage = storage)
 }
 
 .cpjNotice <- function(self, type, text, index) {

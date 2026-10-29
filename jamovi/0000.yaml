@@ -1,7 +1,7 @@
 ---
 title: ClinicoPathPj - Python-Backed Analyses
 name: ClinicoPathPj
-version: 0.3.42
+version: 0.3.43
 jms: '1.0'
 authors: Serdar Balci
 maintainer: Serdar Balci <serdarbalci@serdarbalci.com>
@@ -268,6 +268,14 @@ analyses:
     menuTitle: Cross tables (core)
     title: Cross Tables (Python Core)
     category: analyses
+  - name: pytableone
+    ns: ClinicoPathPj
+    hidden: false
+    menuGroup: Descriptives Py
+    menuSubgroup: Summaries
+    menuTitle: Table One (core)
+    title: Table One (Python Core)
+    category: analyses
 usesNative: 'yes'
 datasets:
   - name: Python Core Examples
@@ -351,5 +359,15 @@ datasets:
       - Python
       - Grouped summaries
       - Cross tables
+  - name: Overall Table One Examples
+    path: python_table_one_examples.omv
+    description: >-
+      Twenty-five synthetic profiles with explicit continuous Age/Code types,
+      binary categories and an entirely uncollected variable; a preconfigured
+      overall Table One retains 25 rows, or 21 with complete-case exclusion.
+    tags:
+      - Python
+      - Overall cohort
+      - Table One
 
 ...
