@@ -265,10 +265,10 @@
     {
       "id": "pycrosstable",
       "family": "descriptives",
-      "menu": "Descriptives",
+      "menu": "Contingency tables",
       "title": "Cross Tables",
       "aliases": [],
-      "source": null,
+      "source": "analyses/descriptives/pycrosstable.py",
       "baseline": {
         "module": "ClinicoPathDescriptives",
         "version": "1.0.82.03",
@@ -282,13 +282,15 @@
         }
       },
       "wave": 1,
-      "status": "planned",
+      "status": "partial",
       "coverage": {
         "full_parity": false,
-        "numerical": "pending",
-        "gui": "pending",
+        "numerical": "323 Python tests, 275 native assertions and independent R 4.6/gtsummary checks; tied-rank enumeration and 49+49 boundary agree; docs/python-cross-tables.md",
+        "gui": "0.3.42 macOS arm64: typed example, display/missingness reversal and native HTML exports; final saved-file gates tracked in docs/python-cross-tables.md",
         "compatibility": "existing Python identifier preserved",
-        "platforms": []
+        "platforms": [
+          "macOS arm64 / jamovi 28.13: bounded synthetic qualification"
+        ]
       },
       "methods": "Table formatting: grouped descriptive cross-tables via gtsummary, arsenal, finalfit or tangram, with their embedded tests (chi-square/Fisher, t/ANOVA/Kruskal), q-values and an SMD table.",
       "oracle": "gtsummary::tbl_summary + add_p; arsenal::tableby; finalfit::summary_factorlist",
@@ -298,7 +300,9 @@
       },
       "source_name": "crosstable",
       "menu_group": "Descriptives Py",
-      "menu_title": "Cross Tables"
+      "menu_title": "Cross tables (core)",
+      "supported_core": "Grouped/overall native summaries; baseline numeric \u22646-level typing or explicit numeric override; per-variable or complete-case missingness; type-7 quartiles/sample SD; exact/normal Wilcoxon, Kruskal\u2013Wallis, uncorrected Pearson with sparse 2\u00d72 Fisher switch; five p-adjust methods",
+      "omissions": "Larger exact RxC tests, alternate R table engines/styles, SMDs, copy-ready summaries and full baseline parity; unused group columns omitted"
     },
     {
       "id": "pydataquality",

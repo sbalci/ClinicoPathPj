@@ -18,7 +18,7 @@ parity and GUI/platform acceptance remain separate gates.
 | pycategorize | categorize | descriptives | 1 | partial | pending | fresh-engine run, ordinal saved column and .omv reopen verified; category plot export pending |
 | pycheckdata | checkdata | descriptives | 1 | partial | pending | macOS arm64: installed 0.3.6; valid-incomplete-valid saved flags; local filter; fresh-engine OMV reopen; native PNG export |
 | pychisqposttest | chisqposttest | descriptives | 1 | partial | pending | pending |
-| pycrosstable | crosstable | descriptives | 1 | planned | pending | pending |
+| pycrosstable | crosstable | descriptives | 1 | partial | pending | 0.3.42 macOS arm64: typed example, display/missingness reversal and native HTML exports; final saved-file gates tracked in docs/python-cross-tables.md |
 | pydataquality | dataquality | descriptives | 1 | partial | pending | fresh-engine native tables/maps, local paging/filter/focus events, .omv reopen and native PNG export verified |
 | pyoutlierdetection | outlierdetection | descriptives | 1 | partial | pending | macOS arm64 jamovi 28.13: default robust-Z example, native details/plots/saved flags, PNG and OMV fresh-engine reopen/rerun checked in 0.3.36; other GUI methods/table export/themes/platforms pending |
 | pyreportcat | reportcat | descriptives | 1 | partial | pending | fresh-engine native tables and plot verified |

@@ -4,6 +4,7 @@
       /Applications/jamovi.app/Contents/MacOS/python -B tools/check-core-package.py
 """
 import json
+import io
 import base64
 import struct
 import csv
@@ -17,7 +18,7 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parent.parent
 VERSION=re.search(r'^Version: (.+)$',(ROOT/'DESCRIPTION').read_text(),re.M)[1]
 REGISTRY=json.loads((ROOT/'inst/python/registry.json').read_text())
-NAMES=['pyalluvial','pyvartree','pyoutlierdetection','pyvenn','pyjjcorrmat','pyihcheatmap','pybridgecompare','pysvgcutoff','pycheckdata','pyobservablecutoff','pyd3cutoff','pydecision','pydecisioncalculator','pysequentialtests','pychisqposttest','pybenford','pydecisioncurve','pysummarydata','pycategorize','pyagepyramid','pydataquality']
+NAMES=['pycrosstable','pyalluvial','pyvartree','pyoutlierdetection','pyvenn','pyjjcorrmat','pyihcheatmap','pybridgecompare','pysvgcutoff','pycheckdata','pyobservablecutoff','pyd3cutoff','pydecision','pydecisioncalculator','pysequentialtests','pychisqposttest','pybenford','pydecisioncurve','pysummarydata','pycategorize','pyagepyramid','pydataquality']
 
 
 def numeric(x):return dict(kind='number',values=x)
@@ -37,6 +38,24 @@ def check(path):
             assert f'version: {VERSION}' in manifest
             assert 'python_core_examples.omv' in manifest
             assert 'python_set_intersection_examples.csv' in manifest
+            assert 'python_cross_table_examples.omv' in manifest
+            assert archive.read('ClinicoPathPj/data/python_cross_table_examples.omv')==(ROOT/'data/python_cross_table_examples.omv').read_bytes()
+            with zipfile.ZipFile(io.BytesIO(archive.read('ClinicoPathPj/data/python_cross_table_examples.omv'))) as example:
+                typed=json.loads(example.read('metadata.json'))['dataSet']
+                assert typed['rowCount']==25 and typed['columnCount']==4
+                fields={v['name']:v for v in typed['fields']}
+                assert fields['Age']['measureType']==fields['Code']['measureType']=='Continuous'
+                source=list(csv.DictReader((ROOT/'data/python_cross_table_examples.csv').open()))
+                raw=example.read('data.bin');labels=json.loads(example.read('xdata.json'));offset=0
+                for field in typed['fields']:
+                    kind='d' if field['type']=='number' else 'i';length=struct.calcsize(kind)*25
+                    values=struct.unpack('<'+kind*25,raw[offset:offset+length]);offset+=length
+                    if field['name'] in ('Group','Marker'):
+                        mapping={row[0]:row[1] for row in labels[field['name']]['labels']}
+                        assert ['' if v==-2147483648 else mapping[v] for v in values]==[r[field['name']] for r in source]
+                    else:
+                        assert all(v==float(r[field['name']]) if r[field['name']] else v==-2147483648 or v!=v for v,r in zip(values,source))
+                assert offset==len(raw)
             assert 'python_alluvial_examples.csv' in manifest
             assert archive.read('ClinicoPathPj/data/python_alluvial_examples.csv')==(ROOT/'data/python_alluvial_examples.csv').read_bytes()
             assert 'python_tree_reference_examples.csv' in manifest
@@ -57,13 +76,13 @@ def check(path):
                 member='ClinicoPathPj/R/ClinicoPathPj/python/'+entry['source']
                 assert archive.read(member)==(ROOT/'inst/python'/entry['source']).read_bytes()
                 assert f"name: {entry['id']}\n" in manifest
-            for file in ['cpj_alluvial.py','templates/alluvial.html','cpj_tree.py','cpj_outliers.py','cpj_sets.py','templates/sets.html','cpj_correlation.py','templates/correlation.html','cpj_ihc.py','templates/ihcheatmap.html','cpj_runtime.py','cpj_svg_cutoff.py','cpj_accuracy.py','cpj_registry.py','cpj_plots.py','cpj_descriptive.py','cpj_binning.py','cpj_demographics.py','cpj_quality.py','templates/quality.html','cpj_cutoff.py','cpj_single_quality.py','templates/single-quality.html','cpj_cutoff_analysis.py','templates/bridgecutoff.html','templates/d3cutoff.html','templates/observablecutoff.html','vendor/observable-plot-0.6.17.min.js','vendor/observable-inputs-0.12.0.min.js','vendor/htl-0.3.1.min.js','vendor/observable-plot-LICENSE.txt','vendor/observable-inputs-LICENSE.txt','vendor/htl-LICENSE.txt','vendor/observable-manifest.json','vendor/d3-7.9.0.min.js','vendor/d3-LICENSE.txt','registry.json','font-cache.json']:
+            for file in ['cpj_crosstable.py','cpj_alluvial.py','templates/alluvial.html','cpj_tree.py','cpj_outliers.py','cpj_sets.py','templates/sets.html','cpj_correlation.py','templates/correlation.html','cpj_ihc.py','templates/ihcheatmap.html','cpj_runtime.py','cpj_svg_cutoff.py','cpj_accuracy.py','cpj_registry.py','cpj_plots.py','cpj_descriptive.py','cpj_binning.py','cpj_demographics.py','cpj_quality.py','templates/quality.html','cpj_cutoff.py','cpj_single_quality.py','templates/single-quality.html','cpj_cutoff_analysis.py','templates/bridgecutoff.html','templates/d3cutoff.html','templates/observablecutoff.html','vendor/observable-plot-0.6.17.min.js','vendor/observable-inputs-0.12.0.min.js','vendor/htl-0.3.1.min.js','vendor/observable-plot-LICENSE.txt','vendor/observable-inputs-LICENSE.txt','vendor/htl-LICENSE.txt','vendor/observable-manifest.json','vendor/d3-7.9.0.min.js','vendor/d3-LICENSE.txt','registry.json','font-cache.json']:
                 assert archive.read(f'ClinicoPathPj/R/ClinicoPathPj/python/{file}')==(ROOT/'inst/python'/file).read_bytes()
             assert archive.read('ClinicoPathPj/R/ClinicoPathPj/js/pysvgcutoff.js')==(ROOT/'inst/js/pysvgcutoff.js').read_bytes()
             assert archive.read('ClinicoPathPj/data/python_core_examples.omv')==(ROOT/'data/python_core_examples.omv').read_bytes()
             archive.extractall(temp)
         runtime=temp/'ClinicoPathPj/R/ClinicoPathPj/python/cpj_runtime.py'
-        cases=[('pyalluvial',{'a':factor(['A']*9+['B']),'b':factor(['X']*10)},dict(vars=['a','b'],showFlowTable=True,showCategories=True)),('pyvartree',{'a':dict(kind='factor',levels=['X','Y'],codes=[0,0,1,None]),'b':factor(['P','Q','P','Q'])},dict(vars=['a','b'],showPlot=True)),('pyoutlierdetection',{'x':numeric([0,1,2,3,4,20,None])},dict(vars=['x'],method='iqr',showRows=True,showPlot=True,showFlaggedValues=True,showDistribution=True)),('pyvenn',{'a':{'kind':'factor','levels':['N','Y'],'codes':[0,1,0,1,None]},'b':{'kind':'factor','levels':['N','Y'],'codes':[0,0,1,1,1]}},dict(var1='a',var2='b',var1true='Y',var2true='Y',showMembershipTable=True)),
+        cases=[('pycrosstable',{'g':factor(['A']*5+['B']*5),'x':numeric(list(range(1,11)))},dict(vars=['x'],group='g',cont='median',p_adjust='holm')),('pyalluvial',{'a':factor(['A']*9+['B']),'b':factor(['X']*10)},dict(vars=['a','b'],showFlowTable=True,showCategories=True)),('pyvartree',{'a':dict(kind='factor',levels=['X','Y'],codes=[0,0,1,None]),'b':factor(['P','Q','P','Q'])},dict(vars=['a','b'],showPlot=True)),('pyoutlierdetection',{'x':numeric([0,1,2,3,4,20,None])},dict(vars=['x'],method='iqr',showRows=True,showPlot=True,showFlaggedValues=True,showDistribution=True)),('pyvenn',{'a':{'kind':'factor','levels':['N','Y'],'codes':[0,1,0,1,None]},'b':{'kind':'factor','levels':['N','Y'],'codes':[0,0,1,1,1]}},dict(var1='a',var2='b',var1true='Y',var2true='Y',showMembershipTable=True)),
           ('pyjjcorrmat',{'a':numeric([1,2,3,4]),'b':numeric([1,2,4,3])},dict(dep=['a','b'])),
           ('pyihcheatmap',{'a':numeric([1,2,3]),'b':numeric([2,4,6])},dict(markers=['a','b'],scaling='zscore',showScatter=True,clusterRows=True,clusterColumns=True,showDendrograms=True,enableSelection=True)),
           ('pybridgecompare',{'x':numeric([1,2,2,4,5,6]),'g':factor(['N','N','P','N','P','P'])},dict(marker='x',reference='g',positive='P',cutoff='2')),
@@ -88,6 +107,19 @@ def check(path):
             result=json.loads(response.read_text())
             assert result['status']=='ok',(name,result.get('error'))
             assert result['tables'],name
+            if name=='pycrosstable':
+                assert result['tables']['cohort']['rows'][0]['n']==10
+                summary=result['tables']['continuous']['rows'][0]
+                assert summary['mean']==5.5 and summary['median']==5.5
+                test=result['tables']['tests']['rows'][0]
+                assert test['method']=='Wilcoxon exact' and abs(test['p']-2/252)<1e-12
+                assert abs(test['adjusted']-test['p'])<1e-12
+                tied_columns={'g':factor(['A']*6+['B']*6),'x':numeric([1,2,2,3,4,5,2,3,4,4,6,8])}
+                request.write_text(json.dumps(dict(analysis=name,columns=tied_columns,options=dict(vars=['x'],group='g',numericMode='continuous'))))
+                subprocess.run([sys.executable,'-B',str(runtime),str(request),str(response)],check=True,timeout=70)
+                tied=json.loads(response.read_text());assert tied['status']=='ok',tied.get('error')
+                test=tied['tables']['tests']['rows'][0]
+                assert test['method']=='Wilcoxon exact (ties)' and abs(test['p']-178/924)<1e-12
             if name=='pyalluvial':
                 assert [r['n'] for r in result['tables']['flows']['rows']]==[9,1]
                 drawing=json.loads(result['plots']['flowPlot']['columns']['payload'][0])

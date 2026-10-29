@@ -1,3 +1,13 @@
+# Cross-table default-style core — 0.3.42
+
+- [x] Freeze baseline typing, display, test-selection and missingness rules.
+- [x] Implement native grouped/overall summaries, explicit denominators and supported inference.
+- [x] Pass 43 focused analysis/generator checks; support only declared List choices in native column visibility.
+- [x] Pass 323 Python tests (43 focused), 275 native R assertions, compiler/freshness and 22 packaged-runtime cases.
+- [x] Match R 4.6 conditional exact tied ranks, independent label enumeration and the 49+49 boundary; retain initial failed-oracle evidence.
+- [x] Verify installed GUI, typed Data Library example, native mean/median switching, 24/21 missingness reversal, native HTML exports and fresh-engine saved-state reopening/rerun.
+- [ ] Larger exact tables, alternate engines/styles, SMDs, full parity, broader platforms/accessibility and clinical/release review remain open.
+
 # Categorical alluvial flow core — 0.3.41
 
 - [x] Freeze baseline scope/default missing-category policy and retain registry hashes.
