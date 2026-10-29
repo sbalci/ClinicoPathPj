@@ -147,6 +147,22 @@
       "requiresData": false
     },
     {
+      "name": "distributionScope",
+      "title": "Distribution Display",
+      "type": "Text",
+      "visible": "(showDistribution)"
+    },
+    {
+      "name": "distributionPlot",
+      "title": "Empirical Distributions and Screening Limits",
+      "type": "Image",
+      "visible": "(showDistribution)",
+      "width": 1000,
+      "height": 800,
+      "renderFun": ".plot",
+      "requiresData": false
+    },
+    {
       "name": "screenFlags",
       "title": "Screening Flag",
       "type": "Output",
@@ -161,7 +177,8 @@
         "showRows",
         "showPlot",
         "screenFlags",
-        "showFlaggedValues"
+        "showFlaggedValues",
+        "showDistribution"
       ]
     },
     {

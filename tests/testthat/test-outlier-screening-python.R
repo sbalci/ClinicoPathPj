@@ -82,3 +82,24 @@ test_that('flagged measurement details preserve observed values and saved classi
 test_that('measurement details do not shift existing scientific wrapper arguments', {
  expect_equal(names(formals(pyoutlierdetection))[1:7],c('data','vars','method','zscore_threshold','iqr_multiplier','showRows','showPlot'))
 })
+
+test_that('distribution state uses complete cohorts and clears through native lifecycle', {
+ d<-data.frame(x=c(0:4,20,NA),y=c(10,20,30,40,50,60,999))
+ opts<-pyoutlierdetectionOptions$new(vars=c('x','y'),method='iqr',showDistribution=TRUE)
+ a<-pyoutlierdetectionClass$new(options=opts,data=d);a$init();a$run()
+ state<-a$results$distributionPlot$state
+ expect_equal(nrow(state$data),202L)
+ expect_equal(state$data$percentile,rep(0:100,2))
+ expect_equal(state$data$value[1:101],unname(quantile(d$x[1:6],seq(0,1,.01))))
+ expect_equal(state$data$value[102:202],unname(quantile(d$y[1:6],seq(0,1,.01))))
+ expect_equal(unique(state$data$lower[1:101]),-3)
+ expect_equal(unique(state$data$upper[1:101]),8)
+ raster<-ClinicoPathPj:::.cpjRenderPlot(state,1000L,800L,list(palette='jmv'))
+ expect_equal(dim(raster)[1:2],c(800L,1000L))
+ control<-a$options$option('showDistribution');control$value<-FALSE;a$init();a$run()
+ expect_null(a$results$distributionPlot$state)
+ control$value<-TRUE;role<-a$options$option('vars');role$value<-NULL;a$init();a$run()
+ expect_null(a$results$distributionPlot$state)
+ role$value<-c('x','y');a$init();a$run()
+ expect_equal(a$results$distributionPlot$state$data,state$data)
+})

@@ -20,12 +20,12 @@ parity and GUI/platform acceptance remain separate gates.
 | pychisqposttest | chisqposttest | descriptives | 1 | partial | pending | pending |
 | pycrosstable | crosstable | descriptives | 1 | planned | pending | pending |
 | pydataquality | dataquality | descriptives | 1 | partial | pending | fresh-engine native tables/maps, local paging/filter/focus events, .omv reopen and native PNG export verified |
-| pyoutlierdetection | outlierdetection | descriptives | 1 | partial | pending | pending new-analysis native installation, saved-output and export lifecycle |
+| pyoutlierdetection | outlierdetection | descriptives | 1 | partial | pending | macOS arm64 jamovi 28.13: default robust-Z example, native details/plots/saved flags, PNG and OMV fresh-engine reopen/rerun checked in 0.3.36; other GUI methods/table export/themes/platforms pending |
 | pyreportcat | reportcat | descriptives | 1 | partial | pending | fresh-engine native tables and plot verified |
 | pysummarydata | summarydata | descriptives | 1 | partial | pending | fresh-engine run, .omv reopen and native histogram PNG export verified |
 | pytableone | tableone | descriptives | 1 | planned | pending | pending |
-| pyvartree | vartree | descriptives | 1 | planned | pending | pending |
-| pyvenn | venn | descriptives | 1 | partial | pending | macOS arm64 jamovi 28.13: fresh-engine positive levels, exact counts/local inspection, nominal membership, OMV reopen/rerun and PNG export verified in 0.3.27; compact three-column preview and 0.3.27 saved-analysis reopen/rerun verified in 0.3.28; 0.3.29 matrix enable/off/on, visual rendering, native PNG export, second-engine OMV restore/rerun and missing-level recovery verified; unequal-frequency 0.3.30 dataset shown/exported using unchanged 0.3.29 runtime; new 0.3.31 pattern-order control desktop qualification pending |
+| pyvartree | vartree | descriptives | 1 | partial | pending | macOS arm64 jamovi 28.13: corrected CSV, disclosures, PNG and OMV lifecycle in 0.3.36; 0.3.37 compact/full path controls, previous-file compatibility, saved states and exact native HTML table export verified; broader keyboard/themes/platforms pending |
+| pyvenn | venn | descriptives | 1 | partial | pending | macOS arm64 jamovi 28.13: matrix and saved membership lifecycle; 0.3.38 evidence closes frequency/membership reversal, stable ties, local inspection, HTML/PNG export and fresh-engine saved-order reopening/recalculation using unchanged 0.3.37 runtime; broader themes/accessibility/platforms pending |
 | pydatetimeconverter | datetimeconverter | jsurvival | 1 | planned | pending | pending |
 | pyoutcomeorganizer | outcomeorganizer | jsurvival | 1 | planned | pending | pending |
 | pytimeinterval | timeinterval | jsurvival | 1 | planned | pending | pending |

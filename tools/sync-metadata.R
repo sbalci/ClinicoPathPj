@@ -47,6 +47,17 @@ sync_module_metadata <- function(root = ".") {
             description = "Thirty-one synthetic complete measurement pairs including one extreme pair, plus two rows with missing measurements.",
             tags = c("Python", "Outliers", "Data quality"))
     }
+    tree_data <- "python_variable_tree_examples.csv"
+    if (file.exists(file.path(root, "data", tree_data))) {
+        tree_entry <- list(
+            name = "Categorical Tree Examples", path = tree_data,
+            description = "Thirty-six synthetic complete tumor/grade/stage profiles across three tumor categories, plus two missing-category examples.",
+            tags = c("Python", "Categorical tree", "Descriptives"))
+        tree_index <- which(vapply(document$datasets,
+            function(x) identical(x$path, tree_data), logical(1)))
+        if (length(tree_index)) document$datasets[[tree_index[1L]]] <- tree_entry
+        else document$datasets[[length(document$datasets) + 1L]] <- tree_entry
+    }
     registry_path <- file.path(root, "inst", "python", "registry.json")
     if (file.exists(registry_path)) {
         registry <- jsonlite::fromJSON(registry_path, simplifyVector = FALSE)

@@ -1,3 +1,35 @@
+# 0.3.38 — 2026-10-29
+
+- Close the bounded macOS set-pattern ordering GUI gate: reversal, tied order, local inspection, native exports and fresh-engine saved-order reopening/recalculation.
+- Independently verify exported pattern/marginal counts and invariant row-aligned saved codes/labels against the CSV and original 0.3.30 fixture.
+- Reconcile registry/status records with completed 0.3.37 tree-path table-export checks.
+- Preserve all analysis, statistical engine, renderer and dependency assets; this is a qualification/metadata update.
+
+# 0.3.37 — 2026-10-28
+
+- Make full JSON branch paths optional in the pyvartree native table, off by default.
+- Retain every path value and existing column identity; enable Full branch paths in table before copying/exporting paths.
+- Preserve counts, percentages, node order, plots, local tree and the numerical engine.
+
+# 0.3.36 — 2026-10-28
+
+- Repair the synthetic tree CSV: use Type C instead of NA, which jamovi imports as missing.
+- Regenerate Data Library description and add blank/NA token regression checks; preserve engines and defaults.
+- Verify tree and outlier native installation, saved-file reopen/rerun and PNG exports on macOS arm64.
+
+# 0.3.35 — 2026-10-28
+
+- Add pyvartree categorical count-tree core with observed prefixes and common complete cases.
+- Preserve factor order and distinguish parent/cohort percentages, genuine missingness and literal NA.
+- Add local expandable disclosure tree, native node table and optional top-30 leaf count plot.
+- Bound input/nodes explicitly; omit advanced vtree features and retain separate qualification gates.
+
+# 0.3.34 — 2026-10-28
+
+- Add optional native empirical percentile panels and screening limits to pyoutlierdetection.
+- Use all common-cohort observations for 101 linearly interpolated percentiles per variable; disclose aggregation and separate scales.
+- Keep screening calculations, defaults, detail tables and saved flags unchanged.
+
 # 0.3.33 — 2026-10-28
 
 - Add optional native flagged-measurement details to pyoutlierdetection: original row, variable, observed value, limits and flag basis.

@@ -76,3 +76,25 @@ class Outliers(unittest.TestCase):
         result=run_analysis('pyoutlierdetection',dict(x=number([0,1,2,3,4])),dict(vars=['x'],method='iqr',showFlaggedValues=True))
         self.assertEqual(result['tables'].get('flaggedValues',{'rows':[]})['rows'],[])
         self.assertIn('0 of 0',result['texts']['flaggedScope'])
+
+    def test_distribution_uses_full_common_cohort_without_changing_flags(self):
+        opts=dict(vars=['x','y'],method='iqr')
+        data=dict(x=number([0,1,2,3,4,20,None]),y=number([10,20,30,40,50,60,999]))
+        before=run_analysis('pyoutlierdetection',data,opts)
+        after=run_analysis('pyoutlierdetection',data,dict(opts,showDistribution=True))
+        self.assertEqual(after['tables'],before['tables']);self.assertEqual(after['outputs'],before['outputs'])
+        c=after['plots']['distributionPlot']['columns']
+        self.assertEqual(len(c['value']),202)
+        self.assertEqual(c['percentile'],list(range(101))*2)
+        self.assertEqual(c['value'][:101],np.quantile([0,1,2,3,4,20],np.linspace(0,1,101)).tolist())
+        self.assertEqual(c['value'][101],10);self.assertEqual(c['value'][-1],60)
+        self.assertEqual(c['lower'][:101],[-3.]*101);self.assertEqual(c['upper'][:101],[8.]*101)
+        self.assertIn('not a display of individual',after['texts']['distributionScope'])
+        self.assertNotIn('distributionPlot',before['plots'])
+        spec=importlib.util.spec_from_file_location('distribution_outputs',ROOT/'inst/python/analyses/descriptives/pyoutlierdetection.py');m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
+        ids=['2','5','9','12','15','20','30']
+        numeric={name:np.array([np.nan if v is None else v for v in col['values']]) for name,col in data.items()}
+        before_saved=Output(m.SPEC,ids);m.run(numeric,opts,before_saved)
+        after_saved=Output(m.SPEC,ids);m.run(numeric,dict(opts,showDistribution=True),after_saved)
+        self.assertEqual(after_saved.outputs,before_saved.outputs)
+        self.assertEqual(after_saved.outputs['screenFlags']['values'],[0,0,0,0,0,1,None])

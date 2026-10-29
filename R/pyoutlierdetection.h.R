@@ -13,6 +13,7 @@ pyoutlierdetectionOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::
             showRows = FALSE,
             showPlot = FALSE,
             showFlaggedValues = FALSE,
+            showDistribution = FALSE,
             showConsole = FALSE, ...) {
 
             super$initialize(
@@ -63,6 +64,10 @@ pyoutlierdetectionOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::
                 "showFlaggedValues",
                 showFlaggedValues,
                 default=FALSE)
+            private$..showDistribution <- jmvcore::OptionBool$new(
+                "showDistribution",
+                showDistribution,
+                default=FALSE)
             private$..showConsole <- jmvcore::OptionBool$new(
                 "showConsole",
                 showConsole,
@@ -76,6 +81,7 @@ pyoutlierdetectionOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::
             self$.addOption(private$..showPlot)
             self$.addOption(private$..screenFlags)
             self$.addOption(private$..showFlaggedValues)
+            self$.addOption(private$..showDistribution)
             self$.addOption(private$..showConsole)
         }),
     active = list(
@@ -87,6 +93,7 @@ pyoutlierdetectionOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::
         showPlot = function() private$..showPlot$value,
         screenFlags = function() private$..screenFlags$value,
         showFlaggedValues = function() private$..showFlaggedValues$value,
+        showDistribution = function() private$..showDistribution$value,
         showConsole = function() private$..showConsole$value),
     private = list(
         ..vars = NA,
@@ -97,6 +104,7 @@ pyoutlierdetectionOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::
         ..showPlot = NA,
         ..screenFlags = NA,
         ..showFlaggedValues = NA,
+        ..showDistribution = NA,
         ..showConsole = NA)
 )
 
@@ -110,6 +118,8 @@ pyoutlierdetectionResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::
         flaggedScope = function() private$.items[["flaggedScope"]],
         flaggedValues = function() private$.items[["flaggedValues"]],
         countPlot = function() private$.items[["countPlot"]],
+        distributionScope = function() private$.items[["distributionScope"]],
+        distributionPlot = function() private$.items[["distributionPlot"]],
         screenFlags = function() private$.items[["screenFlags"]],
         console = function() private$.items[["console"]]),
     private = list(),
@@ -233,6 +243,20 @@ pyoutlierdetectionResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::
                 height=500,
                 renderFun=".plot",
                 requiresData=FALSE))
+            self$add(jmvcore::Text$new(
+                options=options,
+                name="distributionScope",
+                title="Distribution Display",
+                visible="(showDistribution)"))
+            self$add(jmvcore::Image$new(
+                options=options,
+                name="distributionPlot",
+                title="Empirical Distributions and Screening Limits",
+                visible="(showDistribution)",
+                width=1000,
+                height=800,
+                renderFun=".plot",
+                requiresData=FALSE))
             self$add(jmvcore::Output$new(
                 options=options,
                 name="screenFlags",
@@ -248,7 +272,8 @@ pyoutlierdetectionResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::
                     "showRows",
                     "showPlot",
                     "screenFlags",
-                    "showFlaggedValues")))
+                    "showFlaggedValues",
+                    "showDistribution")))
             self$add(jmvcore::Preformatted$new(
                 options=options,
                 name="console",
@@ -287,6 +312,7 @@ pyoutlierdetectionBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6C
 #' @param showRows .
 #' @param showPlot .
 #' @param showFlaggedValues .
+#' @param showDistribution .
 #' @param showConsole .
 #' @return A results object containing:
 #' \tabular{llllll}{
@@ -296,6 +322,8 @@ pyoutlierdetectionBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6C
 #'   \code{results$flaggedScope} \tab \tab \tab \tab \tab a text \cr
 #'   \code{results$flaggedValues} \tab \tab \tab \tab \tab a table \cr
 #'   \code{results$countPlot} \tab \tab \tab \tab \tab an image \cr
+#'   \code{results$distributionScope} \tab \tab \tab \tab \tab a text \cr
+#'   \code{results$distributionPlot} \tab \tab \tab \tab \tab an image \cr
 #'   \code{results$screenFlags} \tab \tab \tab \tab \tab an output \cr
 #'   \code{results$console} \tab \tab \tab \tab \tab a preformatted \cr
 #' }
@@ -316,6 +344,7 @@ pyoutlierdetection <- function(
     showRows = FALSE,
     showPlot = FALSE,
     showFlaggedValues = FALSE,
+    showDistribution = FALSE,
     showConsole = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
@@ -336,6 +365,7 @@ pyoutlierdetection <- function(
         showRows = showRows,
         showPlot = showPlot,
         showFlaggedValues = showFlaggedValues,
+        showDistribution = showDistribution,
         showConsole = showConsole)
 
     analysis <- pyoutlierdetectionClass$new(

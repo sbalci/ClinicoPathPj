@@ -189,8 +189,8 @@ Sorting changes presentation only. It does not reorder the source-row preview, c
 set definitions or cohorts, or recode saved membership. Saved codes and their labels
 continue to use canonical membership order, including when display sorting is reversed.
 The native option reruns the backend; the local inspector only displays those results.
-New control GUI/save-reopen qualification remains pending separately from the existing
-matrix and unequal-example desktop records.
+The new control GUI/save-reopen qualification was initially pending; the bounded
+0.3.38 gate below now supplements the matrix and unequal-example desktop records.
 
 
 Ordering evidence: all 273 Python tests (11 focused set tests), two DOM harnesses, 106 native assertions
@@ -198,5 +198,45 @@ and 18 packaged runtime cases pass. Fixtures independently specify tie order and
 row/saved-code invariance, native reused-versus-fresh agreement and reversal to membership
 order. The [Python-rendered sorted preview](validation-exports/python-set-order-0.3.31-preview.png)
 uses the unequal example. Desktop automation failed to connect with native pipe startup
-errors, including after reset, so the new control/save-reopen gate remains open. See
+errors, including after reset, so the new control/save-reopen gate was left open at
+that stage. See
 [ordering checks](validation-exports/python-set-order-0.3.31-checks.json).
+
+
+## Pattern-order desktop qualification — 0.3.38
+
+Computer use is available again. On macOS arm64 / jamovi 28.13, reopened the original
+unequal-frequency 0.3.30 OMV using the installed 0.3.37 runtime, retaining its marker
+roles, Positive levels, zero-pattern visibility, matrix and saved nominal output.
+Switched to Frequency (largest first), then back to Membership order. Native tables,
+both static plots and the local inspector follow the selected order. Cohort remains
+60 complete rows from 62, with two exclusions; union 48 and all-four count 1.
+
+Frequency counts are `12,10,8,6,5,4,3,3,2,2,1,1,1,1,1,0`. Ties follow canonical
+membership code order, and zero pattern 1011 is last. Native matrix PNG export is
+1800×1200. Local inspection of 1011 reports no matching source rows; after full restart
+and forced recalculation, 1100 still reports ten rows and source rows 27–36.
+
+Saved frequency and membership states separately. Both reopen with the correct native
+option; frequency was forced through membership → frequency recalculation after restart.
+No original fixture is overwritten. Independent read-only checks compare all exported
+pattern counts and marginal/missing counts with the synthetic CSV, and compare saved
+raw codes, labels and input-row values across both new OMVs and the original 0.3.30
+fixture. Every saved classification is identical; ordering changes presentation only.
+Run `python3 tools/check-set-order-artifacts.py`.
+
+The 0.3.38 package updates qualification metadata only. Analysis/engine/renderer/vendor
+assets remain byte-identical to the tested 0.3.37 package; registry evidence is the only
+Python-area change. This closes the bounded ordering desktop gate, not broader themes,
+accessibility, long labels, other platforms, full UpSet/Venn parity or clinical review.
+See [native evidence](validation-exports/python-set-order-0.3.38-checks.json),
+[frequency export](validation-exports/python-set-order-0.3.38-frequency.html),
+[membership export](validation-exports/python-set-order-0.3.38-membership.html), and
+[native matrix PNG](validation-exports/python-set-order-0.3.38-frequency.png).
+
+Final 0.3.38 verification: compiler and all 20 packaged runtime cases pass. All 15
+focused set/matrix Python tests and 106 native R assertions pass. The prior 293-test
+full suite remains unchanged-code evidence, not a fresh full-suite run. After installing
+0.3.38 through the GUI and fully restarting, reopened the frequency OMV and forced
+membership → frequency recalculation; cohort, output and saved order remain correct.
+The module namespace remains ClinicoPathPj.

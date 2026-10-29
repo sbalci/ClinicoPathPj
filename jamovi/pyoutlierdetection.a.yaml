@@ -84,6 +84,12 @@
       "default": false
     },
     {
+      "name": "showDistribution",
+      "title": "Empirical percentile distributions and limits",
+      "type": "Bool",
+      "default": false
+    },
+    {
       "name": "showConsole",
       "title": "Python console output",
       "type": "Bool",

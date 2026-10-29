@@ -47,9 +47,43 @@ def figure(state, width=600, height=400, palette=None, background='white', foreg
     palette = palette or DEFAULT_PALETTE
     columns = state['columns']; kind = state['kind']
     n = len(next(iter(columns.values()), []))
-    if n > {'interval':200, 'line':20000, 'box':20000, 'bar':2000, 'scatter':5000, 'points':5000, 'histogram':2000, 'pyramid':200, 'qualitymap':4000, 'ihcheatmap':4000, 'dendrogram':199, 'setmatrix':16}.get(kind, 0):
+    if n > {'interval':200, 'line':20000, 'box':20000, 'bar':2000, 'scatter':5000, 'points':5000, 'histogram':2000, 'pyramid':200, 'qualitymap':4000, 'ihcheatmap':4000, 'dendrogram':199, 'setmatrix':16, 'screeningquantiles':2020}.get(kind, 0):
         raise ValueError('Unsupported plot kind or excessive plot rows')
     if any(len(c) != n for c in columns.values()): raise ValueError('Plot columns have unequal lengths')
+    if kind == 'screeningquantiles':
+        names=list(dict.fromkeys(columns['variable']))
+        if not 1<=len(names)<=20 or any(not isinstance(v,str) or not v for v in names):
+            raise ValueError('Screening distributions require one to twenty named variables')
+        panels=[]
+        for name in names:
+            indices=[j for j,v in enumerate(columns['variable']) if v==name]
+            p=np.array([columns['percentile'][j] for j in indices],dtype=float)
+            y=np.array([columns['value'][j] for j in indices],dtype=float)
+            lo=np.array([columns['lower'][j] for j in indices],dtype=float)
+            hi=np.array([columns['upper'][j] for j in indices],dtype=float)
+            if (len(p)!=101 or not np.array_equal(p,np.arange(101)) or
+                    not np.isfinite(y).all() or not np.isfinite(lo).all() or not np.isfinite(hi).all() or
+                    np.any(y[1:]<y[:-1]) or np.any(lo!=lo[0]) or np.any(hi!=hi[0]) or lo[0]>hi[0]):
+                raise ValueError('Invalid empirical percentile curve or screening limits')
+            panels.append((name,p,y,lo[0],hi[0]))
+        fig.delaxes(ax)
+        cols=min(len(names),2 if len(names)<=6 else 4)
+        axes=fig.subplots(int(np.ceil(len(names)/cols)),cols,squeeze=False).flat
+        import textwrap
+        for i,panel in enumerate(axes):
+            if i>=len(panels):panel.set_visible(False);continue
+            name,p,y,lo,hi=panels[i]
+            panel.set_facecolor(background);panel.tick_params(colors=foreground,labelsize=8)
+            for spine in panel.spines.values():spine.set_color(foreground)
+            panel.plot(p,y,color=palette[0],linewidth=1.5)
+            for limit in dict.fromkeys([lo,hi]):
+                panel.axhline(limit,color=palette[1%len(palette)],linestyle='--',linewidth=1)
+            panel.set_title(textwrap.shorten(name,width=36,placeholder='...'),color=foreground,fontsize=9)
+            panel.set_xlim(0,100);panel.set_xticks([0,50,100])
+            panel.set_xlabel('Percentile',color=foreground,fontsize=8)
+            panel.set_ylabel('Value',color=foreground,fontsize=8)
+        fig.suptitle('Empirical percentiles; dashed lines = screening limits; separate scales',color=foreground,fontsize=10)
+        return fig
     if kind == 'setmatrix':
         # Only draw supplied exact counts; membership is encoded in the binary signatures.
         patterns=columns['pattern']; counts=np.asarray(columns['count'],dtype=float)

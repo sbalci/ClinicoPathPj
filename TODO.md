@@ -1,3 +1,45 @@
+# Set ordering native qualification — 0.3.38
+
+- [x] Verify frequency/membership controls, reversal, stable ties, both plots and local inspection in jamovi.
+- [x] Verify fresh-engine saved-option restore and forced recalculation with the same 60-row cohort.
+- [x] Independently validate all 16 exported patterns, marginal counts and unchanged saved row codes/labels against CSV/original fixture.
+- [x] Verify native 1800×1200 matrix PNG and both HTML table exports.
+- [x] Reconcile registry/tree table-export status; retain 20 partial and 41 planned targets.
+- [x] Pass refreshed compiler/archive, 15 focused Python tests, 106 native assertions and 20 packaged cases; all 1,272 Python-area assets except registry match 0.3.37.
+
+# Compact tree table — 0.3.37
+
+- [x] Move verbose JSON paths behind an organized optional native control; retain all stored values.
+- [x] Pass eight focused Python checks, including visible/hidden result invariance.
+- [x] Pass 293 Python tests, 95 native assertions, compiler/freshness and 20 packaged runtime cases.
+- [x] Verify compact/expanded GUI toggles, earlier OMV compatibility, fresh-engine saved options and exact native HTML exports.
+
+# Native qualification and example import repair — 0.3.36
+
+- [x] Recover native control and install through jamovi GUI with fresh engines.
+- [x] Preserve original NA-token failure fixture; repair synthetic category and Data Library description.
+- [x] Pass 292 Python tests (7 focused tree tests), 83 native R assertions and 20 packaged cases.
+- [x] Verify repaired tree cohort 36/38, local mouse/Enter/Space expansion, OMV reopen/rerun and native PNG export.
+- [x] Verify outlier 31/33 cohort, row-31 details, saved flags, OMV reopen/rerun and native percentile PNG export.
+- [ ] Broader keyboard navigation, other table-export formats, themes, other platforms and full baseline parity remain open (native HTML table export verified in 0.3.37).
+- [x] Improve tree-table width while retaining paths and native HTML export data (0.3.37).
+
+# Categorical variable tree — 0.3.35
+
+- [x] Implement observed categorical prefixes, cohort/parent percentages and declared level order.
+- [x] Add native table, local expandable tree, bounded static leaf plot and synthetic Data Library example.
+- [x] Pass six focused count/cohort/escaping/bounds fixtures.
+- [x] Pass 291 Python tests, 78 native R assertions, compiler/freshness and 20 packaged runtime cases; final metadata rebuild and extracted-package recheck pass.
+- [ ] Qualify desktop installation, controls, keyboard, export and fresh-engine saved-file reopening.
+- [ ] Full baseline vtree parity remains open.
+
+# Empirical screening distributions — 0.3.34
+
+- [x] Add default-off native percentile panels with screening limits, separate scales and explicit aggregation text.
+- [x] Preserve full-cohort screening and saved outputs; bound plotting at 101 percentiles × 20 variables.
+- [x] Pass 285 Python tests (12 focused), 69 native assertions, compiler/freshness and 19 packaged runtime cases including plot raster export.
+- [ ] Qualify desktop installation, rendering, save/reopen and export; native automation remains unavailable.
+
 # Flagged-measurement inspection — 0.3.33
 
 - [x] Add optional native source-row/variable/observed-value/limit details, bounded at 500 flagged measurements.
@@ -20,7 +62,7 @@
 - [x] Keep exact table, static plots and inspector synchronized; preserve saved codes/source-row preview.
 - [x] Pass all 273 Python tests (11 focused set tests) and two local focus/click DOM harnesses.
 - [x] Pass 106 native assertions and 18 packaged runtime cases, including saved-code invariance, reuse/fresh agreement and order reversal.
-- [ ] Qualify the new ordering control and save/reopen in desktop jamovi; automation currently fails at native pipe startup.
+- [x] Qualify ordering, native exports and fresh-engine save/reopen/recalculation (0.3.38); earlier pipe-startup blocker resolved.
 
 # Unequal set-pattern example — 0.3.30
 
