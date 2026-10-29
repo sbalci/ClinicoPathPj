@@ -1,11 +1,11 @@
 ---
 title: ClinicoPathPj - Python-Backed Analyses
 name: ClinicoPathPj
-version: 0.3.33
+version: 0.3.38
 jms: '1.0'
 authors: Serdar Balci
 maintainer: Serdar Balci <serdarbalci@serdarbalci.com>
-date: '2026-10-28'
+date: '2026-10-29'
 type: R
 description: >-
   Experimental analyses generated from Python specifications and computed in the
@@ -244,6 +244,14 @@ analyses:
     menuTitle: Univariate outlier screening (core)
     title: Univariate Outlier Screening (Python Core)
     category: analyses
+  - name: pyvartree
+    ns: ClinicoPathPj
+    hidden: false
+    menuGroup: Descriptives Py
+    menuSubgroup: Descriptive plots
+    menuTitle: Categorical variable tree (core)
+    title: Categorical Variable Tree (Python Core)
+    category: analyses
 usesNative: 'yes'
 datasets:
   - name: Python Core Examples
@@ -281,5 +289,14 @@ datasets:
       - Python
       - Outliers
       - Data quality
+  - name: Categorical Tree Examples
+    path: python_variable_tree_examples.csv
+    description: >-
+      Thirty-six synthetic complete tumor/grade/stage profiles across three
+      tumor categories, plus two missing-category examples.
+    tags:
+      - Python
+      - Categorical tree
+      - Descriptives
 
 ...

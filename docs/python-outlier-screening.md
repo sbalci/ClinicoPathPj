@@ -97,3 +97,55 @@ row/value/limit mapping, optional/incomplete/recovery clearing and zero-spread l
 All 19 packaged runtime cases pass. The statistical engine is byte-identical to 0.3.32.
 See [detail validation](validation-exports/python-outlier-details-0.3.33-checks.json).
 Desktop details-table/save/export qualification remains pending.
+
+
+## Empirical distribution panels — 0.3.34
+
+Enable **Plots and Interaction → Empirical percentile distributions and limits**.
+Every selected variable gets a panel with its own measurement scale. The solid curve
+connects 101 empirical percentiles (0–100), calculated by linear interpolation from all
+common complete rows. Dashed horizontal lines show the lower and upper screening
+limits; these are not confidence intervals. Coincident limits use one dashed line.
+
+This is an aggregated distribution view, not individual-observation inspection.
+Interpolated percentiles need not equal observed measurements. Use the flagged-detail
+table for actual values and original source IDs. Flat zero-spread Z distributions do
+not turn undefined center scores into nonflags. No data are sampled for calculations;
+flags, tables and saved outputs are unchanged. All 1–20 variables are retained, with
+a maximum of 2,020 plot records. Long panel titles may be shortened; full names remain
+in the native summary. The option defaults to off.
+
+New plot desktop installation, rendering, export and save/reopen qualification remains
+pending while computer-use automation fails at native-pipe startup.
+
+Validation: 285 full Python tests and 12 focused screening/plot tests pass. The native
+R suite passes 69 assertions, including independent type-7 percentiles, cohort exclusion,
+1,000×800 raster rendering and valid → incomplete → valid recovery. All 19 packaged
+runtime cases pass, including rendering the new curve through the extracted runtime.
+The screening engine is byte-identical to 0.3.33. Source/generator checks pass. Native
+R emits environment-level “Operation not permitted” messages despite exit 0 and
+zero failed/warning assertions. See the [separate validation record](validation-exports/python-outlier-distributions-0.3.34-checks.json)
+and [locally rendered preview](validation-exports/python-outlier-distributions-0.3.34-preview.png).
+These checks do not qualify the desktop, other platforms or clinical use.
+
+
+## Bounded native lifecycle checks — 0.3.36
+
+Installed through jamovi's GUI on macOS arm64 / jamovi 28.13. The synthetic 33-row
+example retains 31 complete pairs and excludes two. Native details show source row 31,
+Marker_A=200 and Marker_B=−100; both count and percentile plots render. Enabled the
+nominal saved flag output, saved OMV, fully restarted, reopened and toggled details
+off/on to force a fresh calculation. Details clear/restore and counts remain unchanged.
+The saved column contains 30 not-flagged rows, one flagged row and two missing flags,
+confirmed independently from the saved archive's row-aligned codes and labels.
+
+The [native percentile PNG](validation-exports/python-outlier-distributions-0.3.36-native.png)
+is 2000×1600. The [saved fixture](validation-exports/python-outlier-screening-0.3.36-desktop.omv)
+retains tables, flags, plot options and plot snapshots across fresh-engine reopening.
+The GUI configuration uses the default robust-Z method; the independent native R suite
+covers all three methods. Other GUI methods, table export, themes/accessibility, further
+platforms and clinical/release review remain separate gates. Earlier pending statements
+above are historical; this bounded lifecycle gate supersedes them.
+
+See the [0.3.36 native/core evidence](validation-exports/python-native-core-0.3.36-checks.json).
+Persisted artifacts can be rechecked with `python3 tools/check-native-core-artifacts.py`.

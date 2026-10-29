@@ -8,7 +8,7 @@ so users install nothing.
 Current direction and implemented/pending work: [revised migration plan](docs/python-migration-plan.md).
 See also the [web-researched Python analysis candidates](docs/python-analysis-opportunities.md).
 
-Status: experimental, 0.3.33 (descriptive ports; full migration remains incomplete). Verified only on jamovi 28.13 for macOS (Apple Silicon), with
+Status: experimental, 0.3.38 (descriptive ports; full migration remains incomplete). Verified only on jamovi 28.13 for macOS (Apple Silicon), with
 jmvtools 28.4.
 
 Analyses now use compact family menus: **Descriptives Py**, **Stats Plots Py**,
@@ -42,7 +42,7 @@ Open **Data Library > ClinicoPathPj > Python Core Examples**, or import
 `data/python_core_examples.csv`, for the synthetic examples.
 
 Build the single standard module without installing it:
-`Rscript --vanilla tools/build.R --build-only` → `ClinicoPathPj_0.3.33.jmo`.
+`Rscript --vanilla tools/build.R --build-only` → `ClinicoPathPj_0.3.38.jmo`.
 After replacing a loaded development build, use a fresh jamovi engine to avoid stale namespaces.
 
 `pywelch` reports the mean difference as *comparison minus reference*. The reference defaults to
@@ -54,13 +54,20 @@ p and the interval empty, as R's `t.test` refuses such data. scipy would report 
 `fisher.test(table(group, outcome))`. Its odds ratio then equals jamovi's Contingency Tables odds
 ratio when the event is the outcome's second level, and is the reciprocal when it is the first.
 
-## Univariate outlier screening — 0.3.32–0.3.33
+## Categorical variable tree — 0.3.35–0.3.36
+
+**Descriptives Py → Descriptive plots → Categorical variable tree (core)** adds observed
+branch counts, parent/cohort percentages, a local expandable tree and optional native
+top-leaf count plot. This is a partial categorical core; advanced vtree features and
+broader desktop/platform qualification remain open. Version 0.3.36 repairs CSV missing-token ambiguity and verifies macOS save/reopen/rerun and native PNG export. Version 0.3.37 makes full table paths optional to reduce width. See [methods and limits](docs/python-variable-tree.md).
+
+## Univariate outlier screening — 0.3.32–0.3.34
 
 **Descriptives Py → Data quality → Univariate outlier screening (core)** adds robust/standard
 Z and IQR flags, native summaries/plot and row-aligned saved flags. Version 0.3.33 adds
-an optional native table of flagged observed values, limits and source rows (first 500 matches). This exposes the univariate
+an optional native table of flagged observed values, limits and source rows (first 500 matches). Version 0.3.34 adds default-off empirical percentile panels with screening limits and separate measurement scales. This exposes the univariate
 subset; the baseline composite default and advanced methods remain omitted. See
-[methods and qualification](docs/python-outlier-screening.md). New-analysis desktop checks remain pending.
+[methods and qualification](docs/python-outlier-screening.md). Version 0.3.36 verifies the default robust-Z native details/plots/flags, fresh-engine save/reopen/rerun and PNG export; broader GUI/platform checks remain open.
 
 ## Set-intersection core (0.3.27–0.3.31)
 

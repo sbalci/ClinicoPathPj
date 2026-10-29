@@ -57,13 +57,13 @@ Do not add rpy2 or replace the current bridge based on an announced future engin
 
 ## Verified current inventory
 
-There are **29 registered implementation entry points**: **19 partial baseline ports** and
-**10 utility/demonstration analyses**. Of the 61 baseline targets, **42 are planned**,
+There are **30 registered implementation entry points**: **20 partial baseline ports** and
+**10 utility/demonstration analyses**. Of the 61 baseline targets, **41 are planned**,
 **0 have complete supported-feature parity and all release gates**.
 
 | Family | Baseline targets | Partial ports | Planned |
 |---|---:|---:|---:|
-| ClinicoPathDescriptives | 14 | 10 | 4 |
+| ClinicoPathDescriptives | 14 | 11 | 3 |
 | jjstatsplot | 19 | 1 | 18 |
 | meddecide | 15 | 8 | 7 |
 | jsurvival | 9 | 0 | 9 |
@@ -71,7 +71,7 @@ There are **29 registered implementation entry points**: **19 partial baseline p
 
 Partial descriptives: `pyagepyramid`, `pybenford`, `pycategorize`, `pycheckdata`,
 `pychisqposttest`, `pydataquality`, `pyreportcat`, `pysummarydata`, `pyvenn` (exact-count core),
-and `pyoutlierdetection` (univariate screening core).
+`pyoutlierdetection` (univariate screening core), and `pyvartree` (categorical count-tree core).
 
 Partial statistical plots: `pyjjcorrmat` (Pearson/Spearman core only).
 
@@ -154,7 +154,7 @@ saved-analysis/export qualification. No renderer is selected universally for all
 
 ### 3. Close gaps in existing ports before enlarging the catalog
 
-Prioritize GUI/saved-output/export gaps for the 19 partial ports, then remaining frozen-baseline
+Prioritize GUI/saved-output/export gaps for the 20 partial ports, then remaining frozen-baseline
 features and independent numerical agreement. Record implemented, independently validated,
 GUI-verified and release-ready status separately. Core accuracy or Benford calculations do not
 establish full umbrella feature parity. Keep statistical defaults and clinical rules unchanged.
@@ -196,6 +196,7 @@ or evidence of numerical equivalence. Orange desktop/Qt is not a module dependen
 | [Annotated heatmap](https://orangedatamining.com/widget-catalog/visualize/heatmap/) | IHC marker panel with original-row IDs, patient/specimen, group and region annotations; scaling, missingness and optional clustering | `pyihcheatmap` core plus linked scatter, trees, selections, selected-data and previews through 0.3.18; 0.3.19 scatter keyboard extension under qualification; evidence/limits recorded separately |
 | [Differential expression / volcano](https://orangedatamining.com/widget-catalog/bioinformatics/volcano_plot/) | Effect magnitude versus multiplicity-adjusted evidence for specified marker designs | Proposed; distinguish gene expression, bounded IHC scores and repeated specimens |
 | Set-overlap inspection | Exact marker-panel intersections with native aligned bars/dot matrix and local source-row inspection | `pyvenn` exact 2–4-set core and compact preview verified through 0.3.28; optional bounded matrix added in 0.3.29 with macOS GUI/export/fresh-engine reopen verified; full UpSet/Venn parity remains omitted |
+| Categorical hierarchy inspection | Ordered category partitions with native counts and local branch expansion | `pyvartree` partial categorical core in 0.3.35; no learned classifier or row-selection pipeline |
 | [Test and Score](https://orangedatamining.com/widget-catalog/evaluate/testandscore/) | Consistent folds and saved predictions feeding linked ROC, confusion matrix and calibration | Proposed; existing diagnostic engines are a starting point, not a model-validation pipeline |
 | [Interactive survival](https://orangedatamining.com/widget-catalog/survival-analysis/kaplan-meier-plot/) | Risk-set and patient inspection with explicit time/event roles | Proposed within survival wave; selected cohorts require Apply and rerun |
 | [Gene-set enrichment](https://orangedatamining.com/widget-catalog/bioinformatics/gene_set_enrichment/) | Offline, versioned gene-set over-representation testing with stated background universe | Later molecular extension outside the 61; hypergeometric over-representation remains distinct from ranked-list GSEA |
@@ -503,3 +504,107 @@ separately; the inventory remains 19 partial targets and 42 planned.
 0.3.33 evidence: 281 Python tests, 59 native assertions and 19 packaged runtime cases
 pass; the numerical engine remains unchanged from 0.3.32. New details-table desktop
 rendering/save/export qualification remains pending.
+
+
+## Empirical screening distributions — 0.3.34
+
+Continue Orange-inspired distribution inspection with an optional static native view in
+`pyoutlierdetection`: 101 empirical percentiles per variable (linear interpolation),
+method-specific screening limits and independent measurement axes. This is aggregation
+for display; the full common complete cohort supplies every percentile and all flags.
+It does not add individual-row selection, deletion or new inferential methods.
+The default is off. Maximum payload is 2,020 percentile records across 20 variables.
+Native tables remain authoritative for observed values, original row IDs and classifications.
+Desktop installation/export/OMV evidence remains a separate pending gate while computer
+use fails at native-pipe startup. Inventory and full-parity counts do not change.
+
+0.3.34 implementation evidence: 285 full Python tests, 12 focused tests, 69 native
+assertions and 19 packaged runtime cases pass. Compiler/generator checks pass; the
+packaged renderer produces the expected 1,000×800 PNG. The screening engine remains
+byte-identical to 0.3.33. Desktop and clinical/release gates remain open.
+
+
+## Categorical variable tree — 0.3.35
+
+Advance planned `pyvartree` to a partial categorical count-tree core, using the existing
+registry identity and frozen baseline. Shared Python prefix counting supplies native node
+counts, parent/cohort percentages and declared factor order. A local native-disclosure
+view provides expansion without changing cohorts; a native top-30 leaf count plot gives
+a static export counterpart. Cohort is complete across all 1–4 selected variables.
+Bounded at 10,000 rows and 200 non-root nodes, with rejection instead of silent sampling.
+Advanced pruning/follow rules, missing-category branches, continuous/percentage-variable
+summaries, DiagrammeR geometry and styling remain omitted. Full baseline oracle parity
+is not claimed. See [feature/omission and validation guide](python-variable-tree.md).
+
+Inventory now contains 20 partial targets, 41 planned targets and 10 retained utilities
+(30 installed implementation entries), with zero fully qualified baseline ports. Desktop,
+accessibility, platform and clinical/release evidence remain separate acceptance gates.
+
+0.3.35 evidence: 291 full Python tests (six focused tree tests), 78 independent
+base-R/native assertions and 20 packaged runtime cases pass. Compiler/freshness passes;
+packaged CSV counts and raster dimensions agree. Native interaction/save/export gates
+remain pending because computer use still fails at native-pipe startup. This does not
+establish full vtree equivalence or clinical/release readiness.
+
+
+## Native qualification and synthetic CSV repair — 0.3.36
+
+Native control recovered. GUI installation and fresh-engine testing exposed the tree
+example's NA-token ambiguity (34 complete rather than 36). Use Type C in the synthetic
+CSV and regenerate its Data Library description; genuine/literal NA engine handling
+remains unchanged. Independent blank/NA import fixtures now retain 36 of 38 rows.
+
+macOS arm64 / jamovi 28.13 tree and default robust-Z outlier examples now pass native
+installation, rendering, OMV save/fresh-engine reopen/recalculation and native PNG
+export. Tree mouse and focused Enter/Space disclosures work. Saved outlier flags remain
+row-aligned (30 nonflags, one flag, two missing). Record numerical, GUI and archive
+evidence separately; this does not qualify broader keyboard, table export, long labels,
+themes, other platforms, full baseline parity or clinical/release readiness.
+
+292 Python tests (seven focused tree tests), 83 native tree assertions and 20 packaged
+runtime cases pass. No numerical engine or existing analysis defaults change. Inventory
+remains 20 partial targets, 41 planned and 10 retained utilities.
+
+
+## Compact native tree table — 0.3.37
+
+Address the observed table-width gap without dropping stored paths or changing tree
+counts: hide the full JSON path column by default and provide a native Results and
+Interpretation checkbox for display/copy/export. Preserve column identity and every
+value; `asDF` follows native visibility, while `nodes$columns$path` retains hidden data.
+Validate earlier OMV reopening and true/false toggling separately from numerical
+invariance. Inventory and numerical scope remain unchanged.
+
+0.3.37 bounded gate passes: 293 Python tests, 95 native assertions, 20 packaged
+runtime cases, earlier-file compatibility, compact/expanded fresh-engine option
+persistence, and native HTML table exports with independent path/count checks.
+The count engine is unchanged; broader layout/accessibility/platform gates remain open.
+
+
+## Qualification reconciliation — 2026-10-29 / 0.3.38
+
+Close the previously blocked pyvenn pattern-order desktop gate using unchanged 0.3.37
+calculation/presentation assets: native frequency/membership reversal, stable ties, local
+inspection, both static views, HTML/PNG exports, saved-option reopening and forced
+recalculation pass on macOS arm64 / jamovi 28.13. Independent artifact checks verify all
+16 CSV pattern counts, marginal/missing counts and original row-aligned nominal codes
+and labels. No source observations are reordered or recoded.
+
+Reconcile the pyvartree registry entry with the completed 0.3.37 compact/full-path saved
+states and native HTML table exports. Earlier pending checklist items remain historical
+where the original version is stated; the current registry and dated evidence govern
+the current bounded gate. Other themes, accessibility, broader platforms and full
+feature parity stay open. The next core-delivery targets remain the three unimplemented
+descriptives (pyalluvial, pycrosstable, pytableone) and the three Wave-1 survival
+transformations; select scope against their frozen baseline before adding methods.
+
+This qualification/metadata update retains all numerical defaults and dependencies.
+Inventory remains 20 partial baseline targets, 41 planned, 10 utilities and zero full
+parity/release-ready claims. Do not credit it as an additional analysis port.
+
+Current 0.3.38 checks: 15 focused Python tests, 106 native assertions, compiler and
+20 packaged cases pass. Archive comparison checks 1,272 Python-area files: registry
+evidence is the only difference. The prior 293-test suite remains historical
+unchanged-code evidence. GUI install of 0.3.38, full restart, saved frequency restore
+and forced recalculation pass. The dated artifact checker confirms raw saved-code and
+label identity with the original 0.3.30 fixture.

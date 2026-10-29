@@ -17,7 +17,7 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parent.parent
 VERSION=re.search(r'^Version: (.+)$',(ROOT/'DESCRIPTION').read_text(),re.M)[1]
 REGISTRY=json.loads((ROOT/'inst/python/registry.json').read_text())
-NAMES=['pyoutlierdetection','pyvenn','pyjjcorrmat','pyihcheatmap','pybridgecompare','pysvgcutoff','pycheckdata','pyobservablecutoff','pyd3cutoff','pydecision','pydecisioncalculator','pysequentialtests','pychisqposttest','pybenford','pydecisioncurve','pysummarydata','pycategorize','pyagepyramid','pydataquality']
+NAMES=['pyvartree','pyoutlierdetection','pyvenn','pyjjcorrmat','pyihcheatmap','pybridgecompare','pysvgcutoff','pycheckdata','pyobservablecutoff','pyd3cutoff','pydecision','pydecisioncalculator','pysequentialtests','pychisqposttest','pybenford','pydecisioncurve','pysummarydata','pycategorize','pyagepyramid','pydataquality']
 
 
 def numeric(x):return dict(kind='number',values=x)
@@ -37,6 +37,8 @@ def check(path):
             assert f'version: {VERSION}' in manifest
             assert 'python_core_examples.omv' in manifest
             assert 'python_set_intersection_examples.csv' in manifest
+            assert 'python_variable_tree_examples.csv' in manifest
+            assert archive.read('ClinicoPathPj/data/python_variable_tree_examples.csv')==(ROOT/'data/python_variable_tree_examples.csv').read_bytes()
             assert 'python_outlier_screening_examples.csv' in manifest
             assert archive.read('ClinicoPathPj/data/python_outlier_screening_examples.csv')==(ROOT/'data/python_outlier_screening_examples.csv').read_bytes()
             assert 'python_set_intersection_unequal_examples.csv' in manifest
@@ -49,13 +51,13 @@ def check(path):
                 member='ClinicoPathPj/R/ClinicoPathPj/python/'+entry['source']
                 assert archive.read(member)==(ROOT/'inst/python'/entry['source']).read_bytes()
                 assert f"name: {entry['id']}\n" in manifest
-            for file in ['cpj_outliers.py','cpj_sets.py','templates/sets.html','cpj_correlation.py','templates/correlation.html','cpj_ihc.py','templates/ihcheatmap.html','cpj_runtime.py','cpj_svg_cutoff.py','cpj_accuracy.py','cpj_registry.py','cpj_plots.py','cpj_descriptive.py','cpj_binning.py','cpj_demographics.py','cpj_quality.py','templates/quality.html','cpj_cutoff.py','cpj_single_quality.py','templates/single-quality.html','cpj_cutoff_analysis.py','templates/bridgecutoff.html','templates/d3cutoff.html','templates/observablecutoff.html','vendor/observable-plot-0.6.17.min.js','vendor/observable-inputs-0.12.0.min.js','vendor/htl-0.3.1.min.js','vendor/observable-plot-LICENSE.txt','vendor/observable-inputs-LICENSE.txt','vendor/htl-LICENSE.txt','vendor/observable-manifest.json','vendor/d3-7.9.0.min.js','vendor/d3-LICENSE.txt','registry.json','font-cache.json']:
+            for file in ['cpj_tree.py','cpj_outliers.py','cpj_sets.py','templates/sets.html','cpj_correlation.py','templates/correlation.html','cpj_ihc.py','templates/ihcheatmap.html','cpj_runtime.py','cpj_svg_cutoff.py','cpj_accuracy.py','cpj_registry.py','cpj_plots.py','cpj_descriptive.py','cpj_binning.py','cpj_demographics.py','cpj_quality.py','templates/quality.html','cpj_cutoff.py','cpj_single_quality.py','templates/single-quality.html','cpj_cutoff_analysis.py','templates/bridgecutoff.html','templates/d3cutoff.html','templates/observablecutoff.html','vendor/observable-plot-0.6.17.min.js','vendor/observable-inputs-0.12.0.min.js','vendor/htl-0.3.1.min.js','vendor/observable-plot-LICENSE.txt','vendor/observable-inputs-LICENSE.txt','vendor/htl-LICENSE.txt','vendor/observable-manifest.json','vendor/d3-7.9.0.min.js','vendor/d3-LICENSE.txt','registry.json','font-cache.json']:
                 assert archive.read(f'ClinicoPathPj/R/ClinicoPathPj/python/{file}')==(ROOT/'inst/python'/file).read_bytes()
             assert archive.read('ClinicoPathPj/R/ClinicoPathPj/js/pysvgcutoff.js')==(ROOT/'inst/js/pysvgcutoff.js').read_bytes()
             assert archive.read('ClinicoPathPj/data/python_core_examples.omv')==(ROOT/'data/python_core_examples.omv').read_bytes()
             archive.extractall(temp)
         runtime=temp/'ClinicoPathPj/R/ClinicoPathPj/python/cpj_runtime.py'
-        cases=[('pyoutlierdetection',{'x':numeric([0,1,2,3,4,20,None])},dict(vars=['x'],method='iqr',showRows=True,showPlot=True,showFlaggedValues=True)),('pyvenn',{'a':{'kind':'factor','levels':['N','Y'],'codes':[0,1,0,1,None]},'b':{'kind':'factor','levels':['N','Y'],'codes':[0,0,1,1,1]}},dict(var1='a',var2='b',var1true='Y',var2true='Y',showMembershipTable=True)),
+        cases=[('pyvartree',{'a':dict(kind='factor',levels=['X','Y'],codes=[0,0,1,None]),'b':factor(['P','Q','P','Q'])},dict(vars=['a','b'],showPlot=True)),('pyoutlierdetection',{'x':numeric([0,1,2,3,4,20,None])},dict(vars=['x'],method='iqr',showRows=True,showPlot=True,showFlaggedValues=True,showDistribution=True)),('pyvenn',{'a':{'kind':'factor','levels':['N','Y'],'codes':[0,1,0,1,None]},'b':{'kind':'factor','levels':['N','Y'],'codes':[0,0,1,1,1]}},dict(var1='a',var2='b',var1true='Y',var2true='Y',showMembershipTable=True)),
           ('pyjjcorrmat',{'a':numeric([1,2,3,4]),'b':numeric([1,2,4,3])},dict(dep=['a','b'])),
           ('pyihcheatmap',{'a':numeric([1,2,3]),'b':numeric([2,4,6])},dict(markers=['a','b'],scaling='zscore',showScatter=True,clusterRows=True,clusterColumns=True,showDendrograms=True,enableSelection=True)),
           ('pybridgecompare',{'x':numeric([1,2,2,4,5,6]),'g':factor(['N','N','P','N','P','P'])},dict(marker='x',reference='g',positive='P',cutoff='2')),
@@ -120,7 +122,38 @@ def check(path):
                 assert abs(rows[0]['estimate']-.8)<1e-12 and abs(rows[1]['estimate']+1)<1e-12
                 assert len(split['tables']['cohorts']['rows'])==2
                 assert len(split['plots']['matrix']['columns']['value'])==8 and 'Inspect group' in split['htmls']['explorer']
+            if name=='pyvartree':
+                nodes=result['tables']['nodes']['rows']
+                assert nodes[0]['n']==3 and sum(v['n'] for v in nodes if v['leaf']=='Yes')==3
+                assert '<details open>' in result['htmls']['explorer']
+                assert sum(result['plots']['leafPlot']['columns']['value'])==3
+                request.write_text(json.dumps(dict(analysis=name,columns=columns,options=dict(options,showPaths=True))))
+                subprocess.run([sys.executable,'-B',str(runtime),str(request),str(response)],check=True,timeout=70)
+                paths=json.loads(response.read_text());assert paths['status']=='ok',paths.get('error')
+                assert paths['tables']==result['tables'] and paths['plots']==result['plots']
+                request.write_text(json.dumps(dict(operation='render_plot',plot=result['plots']['leafPlot'],settings=dict(width=1000,height=650))))
+                subprocess.run([sys.executable,'-B',str(runtime),str(request),str(response)],check=True,timeout=70)
+                rendered=json.loads(response.read_text());assert rendered['status']=='ok',rendered.get('error')
+                png=base64.b64decode(rendered['asset']['png']);assert struct.unpack('>II',png[16:24])==(1000,650)
+                with (temp/'ClinicoPathPj/data/python_variable_tree_examples.csv').open() as handle:
+                    records=list(csv.DictReader(handle))
+                example_columns={}
+                for variable in ['Tumor','Grade','Stage']:
+                    labels=list(dict.fromkeys(r[variable] for r in records if r[variable]))
+                    example_columns[variable]=dict(kind='factor',levels=labels,codes=[labels.index(r[variable]) if r[variable] else None for r in records])
+                request.write_text(json.dumps(dict(analysis=name,columns=example_columns,options=dict(vars=['Tumor','Grade','Stage'],showPlot=True))))
+                subprocess.run([sys.executable,'-B',str(runtime),str(request),str(response)],check=True,timeout=70)
+                example=json.loads(response.read_text());assert example['status']=='ok',example.get('error')
+                nodes=example['tables']['nodes']['rows'];assert nodes[0]['n']==36 and len(nodes)==15
+                assert [v['n'] for v in nodes if v['leaf']=='Yes']==[12,6,4,5,7,2]
             if name=='pyoutlierdetection':
+                c=result['plots']['distributionPlot']['columns']
+                assert c['value'][0]==0 and c['value'][-1]==20 and len(c['value'])==101
+                assert c['lower']==[-3.]*101 and c['upper']==[8.]*101
+                request.write_text(json.dumps(dict(operation='render_plot',plot=result['plots']['distributionPlot'],settings=dict(width=1000,height=800))))
+                subprocess.run([sys.executable,'-B',str(runtime),str(request),str(response)],check=True,timeout=70)
+                rendered=json.loads(response.read_text());assert rendered['status']=='ok',rendered.get('error')
+                png=base64.b64decode(rendered['asset']['png']);assert struct.unpack('>II',png[16:24])==(1000,800)
                 assert result['tables']['variables']['rows'][0]['flagged']==1
                 detail=result['tables']['flaggedValues']['rows'][0]
                 assert (detail['row'],detail['value'],detail['lower'],detail['upper'])==('6',20.,-3.,8.)

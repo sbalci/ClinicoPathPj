@@ -39,7 +39,8 @@ SPEC = {'name': 'pyoutlierdetection',
               'default': False},
              {'name': 'showPlot', 'title': 'Per-variable flag counts', 'type': 'Bool', 'default': False},
              {'name': 'screenFlags', 'title': 'Save any-variable screening flag', 'type': 'Output'},
-             {'name': 'showFlaggedValues', 'title': 'Flagged measurements (first 500)', 'type': 'Bool', 'default': False}],
+             {'name': 'showFlaggedValues', 'title': 'Flagged measurements (first 500)', 'type': 'Bool', 'default': False},
+             {'name': 'showDistribution', 'title': 'Empirical percentile distributions and limits', 'type': 'Bool', 'default': False}],
  'results': [{'name': 'summary', 'title': 'Cohort and Screening Rules', 'type': 'Text'},
              {'name': 'variables',
               'title': 'Univariate Screening Summary',
@@ -76,6 +77,9 @@ SPEC = {'name': 'pyoutlierdetection',
               'width': 800,
               'height': 500,
               'visible': '(showPlot)'},
+             {'name': 'distributionScope', 'title': 'Distribution Display', 'type': 'Text', 'visible': '(showDistribution)'},
+             {'name': 'distributionPlot', 'title': 'Empirical Distributions and Screening Limits', 'type': 'Image',
+              'plot': 'screeningquantiles', 'width': 1000, 'height': 800, 'visible': '(showDistribution)'},
              {'name': 'screenFlags',
               'title': 'Screening Flag',
               'type': 'Output',
@@ -111,7 +115,8 @@ SPEC = {'name': 'pyoutlierdetection',
                      {'type': 'CollapseBox',
                       'label': 'Plots and Interaction',
                       'collapsed': True,
-                      'children': [{'type': 'CheckBox', 'name': 'showPlot'}]},
+                      'children': [{'type': 'CheckBox', 'name': 'showPlot'},
+                                   {'type': 'CheckBox', 'name': 'showDistribution'}]},
                      {'type': 'CollapseBox',
                       'label': 'Save and Export',
                       'collapsed': True,
@@ -151,6 +156,14 @@ def run(data,options,out):
         if len(pairs)>500:out.info('Flagged measurement details are limited to the first 500 matches; full-cohort summaries and saved flags are unchanged.')
     if options.get('showPlot',False):
         out.plot('countPlot',[dict(label=r['variable'],value=r['flagged'],group='Flagged') for r in result['summaries']],xlab='Variable',ylab='Flagged complete rows')
+    if options.get('showDistribution',False):
+        rows=[]
+        for name,limits in zip(result['names'],result['summaries']):
+            quantiles=np.quantile(np.asarray(data[name])[result['keep']],np.linspace(0,1,101))
+            rows.extend(dict(variable=name,percentile=i,value=float(v),lower=limits['lower'],upper=limits['upper'])
+                        for i,v in enumerate(quantiles))
+        out.plot('distributionPlot',rows,xlab='Percentile',ylab='Original measurement units')
+        out.markdown('distributionScope','Each panel shows 101 empirical percentiles (0–100, linear interpolation) from the full common complete cohort, on its own measurement scale. This aggregated curve is not a display of individual observations. Dashed lines are screening limits, not confidence intervals; coincident limits use one line. Zero-spread Z values at the center remain undefined even when the curve is flat. Individual flags and source IDs remain in the native tables. No analysis rows are sampled or removed.')
     if out.row_ids is not None:
         values=[int(v) if np.isfinite(v) else None for v in result['aggregate']]
         out.column('screenFlags',values,levels=['Not flagged','Flagged'],measure_type='nominal',title='Univariate screening flag',description='Any selected variable flagged; excluded/all-undefined rows remain missing')
