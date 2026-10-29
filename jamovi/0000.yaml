@@ -1,7 +1,7 @@
 ---
 title: ClinicoPathPj - Python-Backed Analyses
 name: ClinicoPathPj
-version: 0.3.43
+version: 0.3.44
 jms: '1.0'
 authors: Serdar Balci
 maintainer: Serdar Balci <serdarbalci@serdarbalci.com>
@@ -276,6 +276,14 @@ analyses:
     menuTitle: Table One (core)
     title: Table One (Python Core)
     category: analyses
+  - name: pyoutcomeorganizer
+    ns: ClinicoPathPj
+    hidden: false
+    menuGroup: Survival Py
+    menuSubgroup: Data preparation
+    menuTitle: Outcome organizer (core)
+    title: Outcome Organizer (Python Core)
+    category: analyses
 usesNative: 'yes'
 datasets:
   - name: Python Core Examples
@@ -369,5 +377,15 @@ datasets:
       - Python
       - Overall cohort
       - Table One
+  - name: Survival Outcome Coding Examples
+    path: python_outcome_examples.csv
+    description: >-
+      Thirteen synthetic source records: six alive without disease, three alive
+      with disease, two disease deaths, one other-cause death and one missing
+      status. Competing-risk counts are 9, 2 and 1.
+    tags:
+      - Python
+      - Outcome coding
+      - Survival preparation
 
 ...

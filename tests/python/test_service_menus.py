@@ -20,7 +20,7 @@ class ServiceMenus(unittest.TestCase):
             self.assertEqual(options['menuSubgroup'],e['menu'])
             self.assertEqual(options['menuTitle'],e['menu_title'])
             groups.add(options['menuGroup'])
-        self.assertEqual(groups,{'Descriptives Py','Stats Plots Py','MedDecide Py','Python Lab'})
+        self.assertEqual(groups,{'Descriptives Py','Stats Plots Py','MedDecide Py','Survival Py','Python Lab'})
         self.assertEqual(registry['module'],'ClinicoPathPj')
         self.assertTrue(all(len(g)<=15 for g in groups))
         self.assertEqual(next(e for e in entries if e['id']=='pykappaci')['id'],'pykappaci')

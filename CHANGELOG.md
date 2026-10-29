@@ -1,3 +1,11 @@
+# 0.3.44 — 2026-10-29
+
+- Add `pyoutcomeorganizer` with explicit event/numeric 0/1 and four-category vital-status coding.
+- Preserve competing-risk interchange, missing outcomes and original saved-output row identities.
+- Add native mapping/counts, optional source preview/static plot/report, organized Survival Py controls and a synthetic example.
+- Add an explicit outcome input-error clearing policy; preserve legacy greyed results and clear superseded saved values on successful incomplete answers.
+- Keep recurrence composites, patient hierarchy, time-based censoring and full parity pending.
+
 # 0.3.43 — 2026-10-29
 
 - Add `pytableone` standard overall-cohort native summaries, explicit binary second-level numerators, all-level display and valid/missing denominators.

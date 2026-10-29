@@ -9,3 +9,11 @@ pyvartree <- local({
     compiled
 })
 
+pyoutcomeorganizer <- local({
+    compiled <- pyoutcomeorganizer
+    defaults <- formals(compiled)
+    defaults[c("outcomeLevel", "dod", "dooc", "awd", "awod")] <- rep(list(NULL), 5L)
+    formals(compiled) <- defaults
+    compiled
+})
+
