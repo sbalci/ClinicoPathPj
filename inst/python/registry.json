@@ -48,10 +48,10 @@
     {
       "id": "pyalluvial",
       "family": "descriptives",
-      "menu": "Descriptives",
+      "menu": "Descriptive plots",
       "title": "Alluvial Diagrams",
       "aliases": [],
-      "source": null,
+      "source": "analyses/descriptives/pyalluvial.py",
       "baseline": {
         "module": "ClinicoPathDescriptives",
         "version": "1.0.82.03",
@@ -65,13 +65,15 @@
         }
       },
       "wave": 1,
-      "status": "planned",
+      "status": "partial",
       "coverage": {
         "full_parity": false,
-        "numerical": "pending",
-        "gui": "pending",
+        "numerical": "311 Python tests including eight alluvial checks; independent Counter/base-R masks, 71 native assertions, unequal-width geometry and 21 package cases; docs/python-alluvial.md",
+        "gui": "macOS arm64 jamovi 28.13: 0.3.41 install, inclusion/exclusion, keyboard local highlighting/Clear, native HTML and PNG exports, OMV full-restart reopen and forced rerun pass; broader themes/accessibility pending",
         "compatibility": "existing Python identifier preserved",
-        "platforms": []
+        "platforms": [
+          "macOS arm64 / jamovi 28.13: bounded synthetic lifecycle only"
+        ]
       },
       "methods": "Plot only: alluvial/Sankey flow diagrams (easyalluvial / ggalluvial) with an optional flow-count table.",
       "oracle": "none (plot)",
@@ -81,7 +83,9 @@
       },
       "source_name": "alluvial",
       "menu_group": "Descriptives Py",
-      "menu_title": "Alluvial Diagrams"
+      "menu_title": "Categorical alluvial flows (core)",
+      "supported_core": "Counts for 2\u20134 categorical axes, retain missing categories by default or complete-case exclusion, collision-free missing labels, native flow/marginal tables, shared count-scaled static/local geometry and local highlighting; 10,000 rows/60 paths/20 categories per axis without sampling",
+      "omissions": "Weights, condensation, numeric binning, marginal plot panels, alternative fill rules/orientations and baseline styling; no full parity"
     },
     {
       "id": "pybenford",
@@ -528,8 +532,8 @@
       "status": "partial",
       "coverage": {
         "full_parity": false,
-        "numerical": "Core counts/percentages: 292 full Python tests, 7 focused tree tests, 83 native assertions and 20 packaged cases in 0.3.36; full vtree parity pending",
-        "gui": "macOS arm64 jamovi 28.13: corrected CSV, disclosures, PNG and OMV lifecycle in 0.3.36; 0.3.37 compact/full path controls, previous-file compatibility, saved states and exact native HTML table export verified; broader keyboard/themes/platforms pending",
+        "numerical": "Counts/continuous evidence retained; reference-summary base-R/public-vtree and new native evidence tracked in docs/python-variable-tree.md",
+        "gui": "macOS arm64 jamovi 28.13: corrected CSV, disclosures, PNG and OMV lifecycle in 0.3.36; 0.3.37 compact/full path controls, previous-file compatibility, saved states and exact native HTML table export verified; broader keyboard/themes/platforms pending; new 0.3.39 continuous-summary controls/lifecycle tracked separately in docs/python-variable-tree.md",
         "compatibility": "existing Python identifier preserved",
         "platforms": [
           "macOS arm64 / jamovi 28.13: bounded example lifecycle only"
@@ -544,8 +548,8 @@
       "source_name": "vartree",
       "menu_group": "Descriptives Py",
       "menu_title": "Categorical variable tree (core)",
-      "supported_core": "Observed prefix counts for 1\u20134 factors; common complete cohort; parent/cohort percentages; native node table; local expandable tree; optional top-30 leaf bar plot; maximum 200 non-root nodes and 10,000 input rows",
-      "omissions": "Pruning/follow rules, continuous summaries, percentage variables, missing-category branches, baseline styling and full vtree parity"
+      "supported_core": "Observed prefix counts for 1\u20134 factors; common complete cohort; parent/cohort percentages; native node table; local expandable tree; optional top-30 leaf bar plot; maximum 200 non-root nodes and 10,000 input rows; optional continuous node mean/sample SD with valid/missing counts, leaf-only or all-node locations (0.3.39); explicit reference-level matches/valid-reference percentages, missing counts and combined numeric annotations (0.3.40)",
+      "omissions": "Pruning/follow rules, missing-category branches, baseline styling and full vtree parity; numeric and reference summaries supported in retained complete-cohort core"
     },
     {
       "id": "pyvenn",

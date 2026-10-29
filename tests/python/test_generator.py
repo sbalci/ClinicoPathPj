@@ -41,6 +41,36 @@ class GeneratedFiles(unittest.TestCase):
             with self.assertRaisesRegex(generate.SpecError,'naming Bool options'):
                 generate.validate(spec,'pyihcheatmap')
 
+    def test_explicit_ui_can_append_variable_without_shifting_legacy_options(self):
+        spec=generate.read_spec(generate.ANALYSES/'descriptives/pyvartree.py')
+        generate.validate(spec,'pyvartree')
+        self.assertEqual([o['name'] for o in spec['options']][:4],['vars','showTree','showPlot','showPaths'])
+        self.assertGreater([o['name'] for o in spec['options']].index('summaryvar'),[o['name'] for o in spec['options']].index('showNodeSummary'))
+        bad=copy.deepcopy(spec)
+        bad['ui']['children'][0]['children'][1]['enable']='(showNodeSummary)'
+        with self.assertRaisesRegex(generate.SpecError,'TargetLayoutBox does not support enable'):
+            generate.validate_ui(bad)
+        inferred=copy.deepcopy(spec);del inferred['ui']
+        with self.assertRaisesRegex(generate.SpecError,'must come before'):
+            generate.validate(inferred,'pyvartree')
+
+    def test_optional_levels_get_public_defaults_without_global_event_gating(self):
+        spec=generate.read_spec(generate.ANALYSES/'descriptives/pyvartree.py')
+        options={o['name']:o for o in generate.a_yaml(spec)['options']}
+        self.assertTrue(options['percvarLevel']['allowNone'])
+        self.assertNotIn('optional',options['percvarLevel'])
+        code=generate.optional_level_defaults([dict(id='pyvartree',source='analyses/descriptives/pyvartree.py',aliases=['pytreelegacy'])])
+        self.assertIn('pyvartree <- local',code);self.assertIn('pytreelegacy <- local',code)
+        self.assertIn('defaults[c("percvarLevel")] <- rep(list(NULL), 1L)',code)
+        generated=generate.render(generate.ANALYSES/'descriptives/pyvartree.py')
+        self.assertIn('events = character(0)',generated[ROOT/'R/pyvartree.b.R'])
+        bad=copy.deepcopy(spec);bad['options'][-1]['optional']='yes'
+        with self.assertRaisesRegex(generate.SpecError,'optional must be'):
+            generate.validate(bad,'pyvartree')
+        bad['options'][-1].update(optional=True,role='event')
+        with self.assertRaisesRegex(generate.SpecError,'global event gate'):
+            generate.validate(bad,'pyvartree')
+
     def test_committed_files_are_current(self):
         self.assertEqual(generate.main(["--check"]), 0, "run tools/build.R (or tools/generate.py)")
 

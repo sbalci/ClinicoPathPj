@@ -40,4 +40,68 @@ def calculate(data, options):
                           variable=names[depth-1] if depth else '',level=path[-1][1] if depth else 'Complete cohort',
                           path=path,n=count,cohortPercent=count/n,parentPercent=count/counts[parent] if depth else 1.,
                           leaf=depth==len(names)))
-    return dict(names=names,total=total,n=n,excluded=total-n,unused=unused,nodes=nodes)
+    return dict(names=names,total=total,n=n,excluded=total-n,unused=unused,nodes=nodes,sourceRows=np.flatnonzero(keep).tolist())
+
+
+def _mean_sd(values):
+    """Scaled, anchored moments avoid overflow and preserve small within-node spreads."""
+    if not len(values):return None,None
+    anchor=float(values[0])
+    with np.errstate(over='ignore',invalid='ignore',under='ignore'):
+        shifted=values-anchor
+        if np.isfinite(shifted).all():
+            scale=float(np.max(np.abs(shifted)))
+            if not scale:return anchor,0. if len(values)>1 else None
+            scaled=shifted/scale
+            mean=float(anchor+float(np.mean(scaled))*scale)
+        else:
+            scale=float(np.max(np.abs(values)));scaled=values/scale
+            mean=float(np.mean(scaled)*scale)
+        sd=float(np.std(scaled,ddof=1)*scale) if len(values)>1 else None
+    if not np.isfinite(mean) or (sd is not None and not np.isfinite(sd)):
+        raise InputError('The summary mean or SD exceeds numerical limits. Rescale the summary variable.')
+    return mean,sd
+
+
+def node_summaries(data,result,variable,location='leafonly'):
+    if location not in ('leafonly','allnodes'):raise InputError('Unknown summary location.')
+    if variable in result['names']:raise InputError('The continuous summary variable must differ from the categorical tree variables.')
+    column=data.get(variable)
+    if (not isinstance(column,np.ndarray) or column.ndim!=1 or column.dtype.kind not in 'fiu' or
+            len(column)!=result['total']):raise InputError('Choose a numeric summary variable with one value per input row.')
+    values=column.astype(float)
+    if np.isinf(values).any():raise InputError('The summary variable contains infinite values. Recode them as missing or rescale before analysis.')
+    indices=np.asarray(result['sourceRows'],dtype=int);values=values[indices];rows=[]
+    for node in result['nodes']:
+        if location=='leafonly' and not node['leaf']:continue
+        keep=np.ones(result['n'],dtype=bool)
+        for name,level in node['path']:
+            factor=data[name];keep &= factor.codes[indices]==factor.levels.index(level)
+        selected=values[keep];observed=selected[np.isfinite(selected)]
+        mean,sd=_mean_sd(observed)
+        rows.append(dict(node=node['node'],variable=variable,nodeN=node['n'],valid=len(observed),
+                         missing=len(selected)-len(observed),mean=mean,sd=sd))
+    return rows
+
+
+def reference_summaries(data,result,variable,level):
+    """Match/valid-reference percentage, independently of tree node percentages."""
+    if not isinstance(variable,str) or not variable:raise InputError('Choose a categorical reference variable.')
+    column=data.get(variable)
+    if not isinstance(column,Factor):raise InputError('The reference variable must be categorical and separate from the numeric summary role.')
+    codes=np.asarray(column.codes);labels=column.levels;text=[v for v in labels if v is not None]
+    if (codes.ndim!=1 or codes.dtype.kind not in 'iu' or len(codes)!=result['total'] or
+            np.any(codes < -1) or np.any(codes>=len(labels)) or any(not isinstance(v,str) for v in text) or len(set(text))!=len(text)):
+        raise InputError('Invalid reference factor labels or codes.')
+    if level is None or level not in text:raise InputError('Choose an existing, nonmissing reference level explicitly.')
+    indices=np.asarray(result['sourceRows'],dtype=int);selected=codes[indices]
+    valid=(selected>=0)&~np.isin(selected,[j for j,v in enumerate(labels) if v is None]);matches=selected==labels.index(level)
+    rows=[]
+    for node in result['nodes']:
+        keep=np.ones(result['n'],dtype=bool)
+        for name,label in node['path']:
+            factor=data[name];keep &= factor.codes[indices]==factor.levels.index(label)
+        n=int(np.sum(keep&valid));matched=int(np.sum(keep&matches))
+        rows.append(dict(node=node['node'],variable=variable,level=level,nodeN=node['n'],valid=n,
+                         missing=node['n']-n,matches=matched,percent=matched/n if n else None))
+    return rows

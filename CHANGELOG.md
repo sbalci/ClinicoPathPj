@@ -1,3 +1,23 @@
+# 0.3.41
+
+- Add `pyalluvial`: categorical row-count flows across two to four axes, explicit missing-category inclusion/exclusion, native counts and axis marginals.
+- Share count-scaled geometry between a Python static diagram and local JavaScript highlighting; preserve literal labels and declared level order.
+- Add unequal synthetic paths and independent count/geometry/lifecycle checks. Weights, condensation and full baseline styling remain omitted.
+
+# 0.3.40 — 2026-10-29
+
+- Add explicit reference-level node percentages, matches and valid/missing reference counts to pyvartree.
+- Follow vtree valid-reference denominators; retain categorical cohorts and continuous summaries independently.
+- Support literal level labels and reference reuse of a tree variable; append separate native/local annotations.
+- Generate optional Level wrapper defaults after compiler headers to retain existing R calls.
+
+# 0.3.39 — 2026-10-29
+
+- Add optional continuous node mean/sample-SD summaries to pyvartree, with baseline leaf-only/all-node locations.
+- Report node/valid/missing counts, undefined small-n summaries and explanatory text; keep categorical cohorts and plots unchanged.
+- Add numeric summaries to the expandable local tree and native tables, with a synthetic Data Library example.
+- Permit appended variable roles when an explicit UI is supplied, retaining legacy R argument positions.
+
 # 0.3.38 — 2026-10-29
 
 - Close the bounded macOS set-pattern ordering GUI gate: reversal, tied order, local inspection, native exports and fresh-engine saved-order reopening/recalculation.

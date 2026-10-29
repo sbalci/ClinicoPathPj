@@ -1,7 +1,7 @@
 ---
 title: ClinicoPathPj - Python-Backed Analyses
 name: ClinicoPathPj
-version: 0.3.38
+version: 0.3.41
 jms: '1.0'
 authors: Serdar Balci
 maintainer: Serdar Balci <serdarbalci@serdarbalci.com>
@@ -252,6 +252,14 @@ analyses:
     menuTitle: Categorical variable tree (core)
     title: Categorical Variable Tree (Python Core)
     category: analyses
+  - name: pyalluvial
+    ns: ClinicoPathPj
+    hidden: false
+    menuGroup: Descriptives Py
+    menuSubgroup: Descriptive plots
+    menuTitle: Categorical alluvial flows (core)
+    title: Categorical Alluvial Flows (Python Core)
+    category: analyses
 usesNative: 'yes'
 datasets:
   - name: Python Core Examples
@@ -298,5 +306,32 @@ datasets:
       - Python
       - Categorical tree
       - Descriptives
+  - name: Tree Node Summary Examples
+    path: python_tree_node_summary_examples.csv
+    description: >-
+      Eight synthetic profiles: seven categorical complete rows, four valid
+      marker scores and node-local numeric missingness.
+    tags:
+      - Python
+      - Categorical tree
+      - Node summaries
+  - name: Tree Reference Percentage Examples
+    path: python_tree_reference_examples.csv
+    description: >-
+      Eight synthetic profiles with seven categorical complete rows, four valid
+      reference classifications and both numeric/reference missingness.
+    tags:
+      - Python
+      - Categorical tree
+      - Reference percentages
+  - name: Categorical Flow Examples
+    path: python_alluvial_examples.csv
+    description: >-
+      Twenty complete synthetic profiles on four unequal paths (12, 5, 2, 1
+      rows), plus two missing-category profiles.
+    tags:
+      - Python
+      - Alluvial
+      - Categorical flows
 
 ...

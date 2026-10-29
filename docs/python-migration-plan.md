@@ -608,3 +608,82 @@ evidence is the only difference. The prior 293-test suite remains historical
 unchanged-code evidence. GUI install of 0.3.38, full restart, saved frequency restore
 and forced recalculation pass. The dated artifact checker confirms raw saved-code and
 label identity with the original 0.3.30 fixture.
+
+
+## Continuous within-node summaries — 0.3.39
+
+Extend the retained pyvartree baseline with optional summaryvar and summarylocation
+(leafonly default / allnodes). Python computes mean, sample SD and explicit node/valid/
+missing n without changing the categorical complete cohort or node percentages. Native
+tables are authoritative; local disclosures append the same statistics with display
+rounding. Preserve old scientific R argument positions by allowing appended variable
+roles only when the SPEC supplies an explicit tame UI.
+
+Require independent base-R node masks/moments, all-missing and singleton cases, numeric
+limits, stale annotation clearing, original categorical-result invariance, packaged
+fixtures and new-feature GUI/save/reopen/export qualification. Full baseline missing-
+category/pruning/percentage-variable/styling features remain outside this increment.
+Inventory stays 20 partial targets, 41 planned and 10 utilities.
+
+0.3.39 bounded acceptance passes: compiler/freshness, 299 Python tests, 43 focused
+tree/generator tests, 188 native assertions and 20 packaged runtime cases. Native GUI
+roles, both summary locations, missing/singleton annotations, on/off clearing, native
+HTML export, saved settings and fresh-engine recalculation pass on macOS arm64/jamovi
+28.13. Earlier categorical-only saved-file behavior and original data/labels are retained.
+Independent artifact checks derive every exported node summary from the synthetic CSV.
+Full vtree parity and broader platform/accessibility/clinical gates remain open.
+
+
+## Reference-level node summaries — 0.3.40
+
+Extend pyvartree with explicit percvar/percvarLevel and the optional pct toggle. Public
+vtree 5.7.0 checks establish that reference percentages use valid reference n, not all
+node rows or the categorical parent's count. Report matches and missing n explicitly;
+keep all-missing percentages undefined. Preserve the complete categorical cohort and
+independent numeric summaries, including when reference configuration is pending.
+
+Add generator-owned optional-Level public-wrapper defaults after compiler headers so
+existing R calls retain their prior argument behavior. Preserve literal labels without
+vtree parser restrictions, and allow a categorical tree variable to be its own reference.
+Require independent base-R masks, public-vtree percentage fixtures, literal/true-NA
+cases, combined annotations, lifecycle and packaged/new-GUI checks. Inventory remains
+20 partial targets, 41 planned and 10 utilities; no full-parity claim.
+
+
+0.3.40 bounded acceptance passes: 303 Python tests (47 focused), 251 native R assertions,
+compiler/freshness and 20 packaged cases. Installed GUI roles, waiting-level state,
+reference-only clearing/recovery, combined labels, native HTML export and full-restart
+OMV reopening/forced rerun pass on macOS arm64 / jamovi 28.13. An independent artifact
+checker derives every native reference count/percentage and mean/SD from source CSV.
+Old R call positions/default behavior pass native checks. Full vtree parity and remaining
+platform/accessibility/clinical gates stay open; the 61-target inventory is unchanged.
+
+
+## Next descriptive port: categorical flow core — 0.3.41
+
+Implement `pyalluvial` from the frozen alluvial baseline, with two to four categorical
+axes and count-based paths. Preserve excl=false: show genuine missing categories with
+a distinct collision-free label, or explicitly exclude all incomplete profiles. Preserve
+recorded factor order and omit unused categories. Weights, condensation, numeric binning,
+marginal plot panels, other fill rules, orientations and full styling remain omitted.
+
+A shared Python geometry keeps complete-path identity and row-count thickness across
+every axis; independent tests verify marginal conservation, node tiling and unequal
+widths. Native flow/category tables remain authoritative. JavaScript hover and a native
+keyboard-operated select highlight existing geometry locally; they never alter cohorts
+or trigger fits. The same counts have a Python static counterpart for native export.
+Enforce 10,000 input rows, 60 paths and 20 categories/axis without hidden sampling.
+
+The inventory becomes 21 partial and 40 planned baseline targets, plus 10 utilities;
+zero full-parity claims. Acceptance still requires full-suite, independent base-R, native
+lifecycle, packaged runtime and installed desktop save/reopen/export evidence.
+
+
+0.3.41 bounded acceptance passes: 311 Python tests, eight focused alluvial tests,
+71 native alluvial assertions, compiler and 21 packaged-runtime cases. Installed GUI
+inclusion/exclusion, keyboard highlighting/Clear, native HTML/PNG export, saved roles
+and full-restart forced rerun pass on macOS arm64 / jamovi 28.13. Independent exported
+artifact checks agree with CSV counts/proportions and unchanged saved inputs. The
+registry now counts 21 partial targets and 40 planned, with ten utilities retained.
+Next Wave-1 core candidates remain pycrosstable, pytableone and survival transformations;
+advanced alluvial options remain explicit omissions rather than completed parity.

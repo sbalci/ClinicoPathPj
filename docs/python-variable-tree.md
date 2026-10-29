@@ -42,7 +42,8 @@ cohorts are rejected; unconfigured native analyses use the normal module welcome
 | Native table, local expansion, static top-leaf counts | Implemented; new-analysis desktop qualification pending |
 | Factor labels/order, unused/missing levels, literal `NA` | Explicit input/cohort policy |
 | Baseline pruning/follow rules and missing-category branches | Omitted |
-| Continuous node summaries and percentage-variable summaries | Omitted |
+| Continuous node summaries | Implemented in 0.3.39; valid/missing n, mean/sample SD and leaf/all-node locations |
+| Reference-level percentage summaries | Implemented in 0.3.40, with explicit level and valid/missing denominators |
 | Baseline styles, palettes, titles and DiagrammeR/SVG layout | Omitted |
 | Saved row classifications, local row selection or inferential cohort filtering | Omitted |
 | Inferential tests, clinical interpretation or prediction | Outside this core |
@@ -137,3 +138,118 @@ values, all 15 counts against CSV prefixes, and every path in both saved OMV arc
 Run `python3 tools/check-tree-path-artifacts.py`. See the
 [validation record](validation-exports/python-tree-paths-0.3.37-checks.json).
 Broader labels/themes/platforms/accessibility and full baseline parity remain open.
+
+
+## Continuous node summaries — 0.3.39
+
+Enable **Results and Interpretation → Continuous node summaries** and assign a numeric
+variable to the optional summary role in the main supplier. **Summary location** follows
+the frozen baseline: **Leaf nodes only** by default, or **All nodes** including the root.
+Node IDs map the native numeric table to the categorical count table. The local
+expandable tree appends the same statistics at the requested nodes; native tables retain
+unformatted estimates while local labels use six significant digits.
+
+The categorical cohort is unchanged. Missing summary values reduce only that node's
+valid summary n; they do not remove observations from the tree or change parent/cohort
+percentages. Mean uses observed values, SD uses n−1; mean is undefined at valid n=0
+and SD at n<2. Reported missing n equals node n minus valid n. No imputation, automatic
+exclusion, confidence intervals or tests are added. Repeated subjects remain supplied
+rows. Numerical moments use anchored/scaled calculations; unrepresentable mean/SD is
+rejected with rescaling guidance. Infinite source summary values are rejected rather
+than treated as ordinary observations. Native jamovi also rejects source infinities
+before Python dispatch.
+
+With the feature enabled but no numeric role, the categorical results remain available
+and an information notice requests the role. Disabling summaries or clearing that role
+clears numeric tables and local annotations. Existing count/plot options and the first
+five R wrapper arguments retain their positions. The generator permits appended roles
+only with explicit UI; inferred-UI ordering safeguards remain in place.
+
+**Data Library → ClinicoPathPj → Tree Node Summary Examples** contains eight synthetic
+profiles: seven categorical complete rows, four valid scores and three node-local missing
+scores. The category-missing row with score 999 is excluded from every node. For all
+nodes, root mean is 18.5 and sample SD is √(227/3); leaves demonstrate n=2, n=1 and
+all-missing summaries. The original categorical example and prior saved fixtures are
+preserved. Full vtree missing-category, pruning/follow, percentage-variable and styling
+parity remains omitted.
+
+0.3.39 validation: 299 full Python tests, 43 focused tree/generator tests, 188 native R
+assertions and 20 extracted-package cases pass. Independent Python statistics and base R
+mean/sd fixtures agree for each node; valid/missing counts, singleton/all-missing nodes,
+large/tiny moments, role clearing/recovery and unchanged categorical results are covered.
+The initial unsupported UI-container enable property was corrected before the successful
+compile, and a generator regression now rejects it. Native R continues to emit environment
+Operation not permitted messages despite exit 0 and no failed/warning assertions.
+
+Installed 0.3.39 through jamovi GUI on macOS arm64 / jamovi 28.13. Both summary locations,
+waiting-for-role information, local annotations and on/off clearing work. After full
+restart, both saved states reopen with the correct numeric role and location; all-node
+results recalculate through leaf/all-node reversal. The earlier 0.3.37 categorical-only
+file reopens with summaries off and retains 36 complete rows/six leaves after rerun; its
+original file hash is unchanged. A separate compatibility copy preserves input values
+and labels. Native HTML export agrees independently with all eight CSV-derived nodes
+at displayed precision; raw numeric estimates are checked by the native R suite.
+
+See [validation evidence](validation-exports/python-tree-summary-0.3.39-checks.json),
+[native all-node export](validation-exports/python-tree-summary-0.3.39-allnodes.html) and
+[saved example](validation-exports/python-tree-summary-0.3.39-allnodes.omv). Run
+`python3 tools/check-tree-summary-artifacts.py` to recheck persisted artifacts.
+
+
+## Reference-level percentages — 0.3.40
+
+Enable **Reference-level percentages** and select a categorical reference variable and
+its level explicitly in the main supplier. No level is guessed. Reference summaries
+appear at every node. A reference variable can also be a categorical branching role;
+it must be distinct from an assigned numeric summary role. Existing count and numeric
+results remain available while a reference role/level is incomplete.
+
+The denominator follows the public vtree 5.7.0 `%npct%` summary: **matches / valid
+(nonmissing) reference values within that node**. It is independent of the categorical
+node count and parent/cohort percentages. Missing reference observations stay in the
+tree and are reported separately. All-missing reference nodes have undefined percentages;
+a valid node with no matches has 0%. Literal labels, including spaces, punctuation and
+text NA, are compared directly; true missing factor levels remain missing. No vtree
+condition-string parsing or automatic reference recoding is used.
+
+Native tables report node rows, valid/missing reference n, matches and percentage. Local
+annotations keep the reference variable/level separate from numeric mean/SD labels. No
+intervals or tests are added. Disabling the feature or clearing its role/level clears
+reference annotations and tables without changing categorical or numeric results.
+
+The new Level is explicitly optional in the SPEC. Jamovi's generated header still has
+a required R formal; a generator-owned `R/zzz-optional-level-defaults.R` applies NULL
+defaults after headers load. No compiler header is hand-edited, existing argument
+positions remain, and other analyses' required event-level formals are unchanged.
+This optional level does not use the bridge's global event gate, so incomplete
+reference configuration does not suppress the independent categorical/numeric outputs.
+
+**Data Library → Tree Reference Percentage Examples** has eight synthetic rows, seven
+categorical complete rows, four valid references (two Positive) and three missing
+references. Root percentage is 2/4 = 50%, while the node has seven rows. Numeric scores
+still give mean 18.5 and SD √(227/3). Leaves illustrate 100%, 50%, 0% and undefined.
+Pruning/follow rules, missing categorical branches, baseline styling and full vtree
+parity remain outside this increment.
+
+
+0.3.40 validation passes: 303 full Python tests (47 focused tree/generator), 251 native R
+assertions, compiler/freshness and 20 extracted-package runtime cases. Base R masks and
+public vtree 5.7.0 agree on the valid-reference denominator; true missing versus literal
+NA, unused levels, all-missing nodes, same-variable roles and legacy R calls are covered.
+Native R emits environment Operation not permitted messages despite exit 0, zero failed
+assertions and zero test warnings. This remains separate from numerical evidence.
+
+Installed 0.3.40 through jamovi GUI on macOS arm64 / jamovi 28.13, then restarted the
+application. Explicit Positive level, incomplete-level information, combined numeric and
+reference annotations, and reference-only clearing/restoration work. Root 2/4 = 50%
+and leaf 100%/50%/0%/undefined agree. Native HTML export independently matches all
+eight node reference counts/percentages and numeric statistics at displayed precision.
+The saved document reopens after another full restart with all roles/options retained;
+reference off/on forces fresh-engine recalculation and preserves numeric summaries.
+
+See [evidence](validation-exports/python-tree-reference-0.3.40-checks.json),
+[native HTML](validation-exports/python-tree-reference-0.3.40-desktop.html) and
+[saved example](validation-exports/python-tree-reference-0.3.40-desktop.omv). Reproduce
+with `python3 tools/check-tree-reference-artifacts.py`. No new static plot geometry was
+introduced in this increment; earlier count-plot export evidence remains historical.
+Full baseline, broader platform/accessibility and clinical/release gates remain open.

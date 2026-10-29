@@ -63,6 +63,8 @@ PLOT_COLUMNS['screeningquantiles'] = {key: (kind, True) for key,kind in [('varia
 MAX_PLOT_ROWS['dendrogram'] = 199
 MAX_PLOT_ROWS['setmatrix'] = 16
 PLOT_COLUMNS['setmatrix'] = {'pattern': ('text', True), 'count': ('integer', True), 'sets': ('text', True)}
+MAX_PLOT_ROWS['alluvial'] = 1
+PLOT_COLUMNS['alluvial'] = {'payload': ('text', True)}
 
 
 class InputError(Exception):
