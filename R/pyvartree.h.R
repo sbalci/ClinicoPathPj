@@ -10,6 +10,12 @@ pyvartreeOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             showTree = TRUE,
             showPlot = FALSE,
             showPaths = FALSE,
+            showNodeSummary = FALSE,
+            summaryvar = NULL,
+            summarylocation = "leafonly",
+            pct = FALSE,
+            percvar = NULL,
+            percvarLevel = NULL,
             showConsole = FALSE, ...) {
 
             super$initialize(
@@ -39,6 +45,43 @@ pyvartreeOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 "showPaths",
                 showPaths,
                 default=FALSE)
+            private$..showNodeSummary <- jmvcore::OptionBool$new(
+                "showNodeSummary",
+                showNodeSummary,
+                default=FALSE)
+            private$..summaryvar <- jmvcore::OptionVariable$new(
+                "summaryvar",
+                summaryvar,
+                permitted=list(
+                    "numeric"),
+                suggested=list(
+                    "continuous"),
+                default=NULL)
+            private$..summarylocation <- jmvcore::OptionList$new(
+                "summarylocation",
+                summarylocation,
+                options=list(
+                    "leafonly",
+                    "allnodes"),
+                default="leafonly")
+            private$..pct <- jmvcore::OptionBool$new(
+                "pct",
+                pct,
+                default=FALSE)
+            private$..percvar <- jmvcore::OptionVariable$new(
+                "percvar",
+                percvar,
+                permitted=list(
+                    "factor"),
+                suggested=list(
+                    "nominal",
+                    "ordinal"),
+                default=NULL)
+            private$..percvarLevel <- jmvcore::OptionLevel$new(
+                "percvarLevel",
+                percvarLevel,
+                variable="(percvar)",
+                allowNone=TRUE)
             private$..showConsole <- jmvcore::OptionBool$new(
                 "showConsole",
                 showConsole,
@@ -48,6 +91,12 @@ pyvartreeOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$.addOption(private$..showTree)
             self$.addOption(private$..showPlot)
             self$.addOption(private$..showPaths)
+            self$.addOption(private$..showNodeSummary)
+            self$.addOption(private$..summaryvar)
+            self$.addOption(private$..summarylocation)
+            self$.addOption(private$..pct)
+            self$.addOption(private$..percvar)
+            self$.addOption(private$..percvarLevel)
             self$.addOption(private$..showConsole)
         }),
     active = list(
@@ -55,12 +104,24 @@ pyvartreeOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         showTree = function() private$..showTree$value,
         showPlot = function() private$..showPlot$value,
         showPaths = function() private$..showPaths$value,
+        showNodeSummary = function() private$..showNodeSummary$value,
+        summaryvar = function() private$..summaryvar$value,
+        summarylocation = function() private$..summarylocation$value,
+        pct = function() private$..pct$value,
+        percvar = function() private$..percvar$value,
+        percvarLevel = function() private$..percvarLevel$value,
         showConsole = function() private$..showConsole$value),
     private = list(
         ..vars = NA,
         ..showTree = NA,
         ..showPlot = NA,
         ..showPaths = NA,
+        ..showNodeSummary = NA,
+        ..summaryvar = NA,
+        ..summarylocation = NA,
+        ..pct = NA,
+        ..percvar = NA,
+        ..percvarLevel = NA,
         ..showConsole = NA)
 )
 
@@ -70,6 +131,10 @@ pyvartreeResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     active = list(
         summary = function() private$.items[["summary"]],
         nodes = function() private$.items[["nodes"]],
+        summaryScope = function() private$.items[["summaryScope"]],
+        nodeSummary = function() private$.items[["nodeSummary"]],
+        referenceScope = function() private$.items[["referenceScope"]],
+        referenceSummary = function() private$.items[["referenceSummary"]],
         explorer = function() private$.items[["explorer"]],
         leafPlot = function() private$.items[["leafPlot"]],
         console = function() private$.items[["console"]]),
@@ -133,6 +198,91 @@ pyvartreeResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `name`="leaf", 
                         `title`="Leaf", 
                         `type`="text"))))
+            self$add(jmvcore::Text$new(
+                options=options,
+                name="summaryScope",
+                title="Continuous Summary Rules",
+                visible="(showNodeSummary)"))
+            self$add(jmvcore::Table$new(
+                options=options,
+                name="nodeSummary",
+                title="Continuous Node Summaries",
+                visible="(showNodeSummary)",
+                rows=0,
+                columns=list(
+                    list(
+                        `name`="node", 
+                        `title`="Node ID", 
+                        `type`="integer"),
+                    list(
+                        `name`="variable", 
+                        `title`="Summary Variable", 
+                        `type`="text"),
+                    list(
+                        `name`="nodeN", 
+                        `title`="Node Rows", 
+                        `type`="integer"),
+                    list(
+                        `name`="valid", 
+                        `title`="Valid", 
+                        `type`="integer"),
+                    list(
+                        `name`="missing", 
+                        `title`="Missing", 
+                        `type`="integer"),
+                    list(
+                        `name`="mean", 
+                        `title`="Mean", 
+                        `type`="number"),
+                    list(
+                        `name`="sd", 
+                        `title`="SD", 
+                        `type`="number"))))
+            self$add(jmvcore::Text$new(
+                options=options,
+                name="referenceScope",
+                title="Reference Percentage Rules",
+                visible="(pct)"))
+            self$add(jmvcore::Table$new(
+                options=options,
+                name="referenceSummary",
+                title="Reference-Level Node Percentages",
+                visible="(pct)",
+                rows=0,
+                columns=list(
+                    list(
+                        `name`="node", 
+                        `title`="Node ID", 
+                        `type`="integer"),
+                    list(
+                        `name`="variable", 
+                        `title`="Reference Variable", 
+                        `type`="text"),
+                    list(
+                        `name`="level", 
+                        `title`="Reference Level", 
+                        `type`="text"),
+                    list(
+                        `name`="nodeN", 
+                        `title`="Node Rows", 
+                        `type`="integer"),
+                    list(
+                        `name`="valid", 
+                        `title`="Valid Reference", 
+                        `type`="integer"),
+                    list(
+                        `name`="missing", 
+                        `title`="Missing Reference", 
+                        `type`="integer"),
+                    list(
+                        `name`="matches", 
+                        `title`="Matches", 
+                        `type`="integer"),
+                    list(
+                        `name`="percent", 
+                        `title`="Reference (%)", 
+                        `type`="number", 
+                        `format`="pc"))))
             self$add(jmvcore::Html$new(
                 options=options,
                 name="explorer",
@@ -182,11 +332,21 @@ pyvartreeBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param showTree .
 #' @param showPlot .
 #' @param showPaths .
+#' @param showNodeSummary .
+#' @param summaryvar .
+#' @param summarylocation .
+#' @param pct .
+#' @param percvar .
+#' @param percvarLevel .
 #' @param showConsole .
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$summary} \tab \tab \tab \tab \tab a text \cr
 #'   \code{results$nodes} \tab \tab \tab \tab \tab a table \cr
+#'   \code{results$summaryScope} \tab \tab \tab \tab \tab a text \cr
+#'   \code{results$nodeSummary} \tab \tab \tab \tab \tab a table \cr
+#'   \code{results$referenceScope} \tab \tab \tab \tab \tab a text \cr
+#'   \code{results$referenceSummary} \tab \tab \tab \tab \tab a table \cr
 #'   \code{results$explorer} \tab \tab \tab \tab \tab a html \cr
 #'   \code{results$leafPlot} \tab \tab \tab \tab \tab an image \cr
 #'   \code{results$console} \tab \tab \tab \tab \tab a preformatted \cr
@@ -205,24 +365,41 @@ pyvartree <- function(
     showTree = TRUE,
     showPlot = FALSE,
     showPaths = FALSE,
+    showNodeSummary = FALSE,
+    summaryvar = NULL,
+    summarylocation = "leafonly",
+    pct = FALSE,
+    percvar = NULL,
+    percvarLevel,
     showConsole = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("pyvartree requires jmvcore to be installed (restart may be required)")
 
     if ( ! missing(vars)) vars <- jmvcore::resolveQuo(jmvcore::enquo(vars))
+    if ( ! missing(summaryvar)) summaryvar <- jmvcore::resolveQuo(jmvcore::enquo(summaryvar))
+    if ( ! missing(percvar)) percvar <- jmvcore::resolveQuo(jmvcore::enquo(percvar))
     if (missing(data))
         data <- jmvcore::marshalData(
             parent.frame(),
-            `if`( ! missing(vars), vars, NULL))
+            `if`( ! missing(vars), vars, NULL),
+            `if`( ! missing(summaryvar), summaryvar, NULL),
+            `if`( ! missing(percvar), percvar, NULL))
 
     for (v in vars) if (v %in% names(data)) data[[v]] <- as.factor(data[[v]])
+    for (v in percvar) if (v %in% names(data)) data[[v]] <- as.factor(data[[v]])
 
     options <- pyvartreeOptions$new(
         vars = vars,
         showTree = showTree,
         showPlot = showPlot,
         showPaths = showPaths,
+        showNodeSummary = showNodeSummary,
+        summaryvar = summaryvar,
+        summarylocation = summarylocation,
+        pct = pct,
+        percvar = percvar,
+        percvarLevel = percvarLevel,
         showConsole = showConsole)
 
     analysis <- pyvartreeClass$new(

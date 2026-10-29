@@ -6,10 +6,10 @@ pyvartreeClass <- R6::R6Class(
     private = list(
         .run = function() {
             .cpjRun(self, "pyvartree",
-                options = c("vars", "showTree", "showPlot", "showPaths"),
+                options = c("vars", "showTree", "showPlot", "showPaths", "showNodeSummary", "summaryvar", "summarylocation", "pct", "percvar", "percvarLevel"),
                 arrays = c("vars"),
                 terms = character(0),
-                numeric = character(0),
+                numeric = c("summaryvar"),
                 required = c(vars = "Categorical variables in branching order"),
                 events = character(0),
                 checkpoint = function() private$.checkpoint(flush = FALSE))

@@ -1,3 +1,33 @@
+# Categorical alluvial flow core — 0.3.41
+
+- [x] Freeze baseline scope/default missing-category policy and retain registry hashes.
+- [x] Implement counts, missing-label collision avoidance, native tables and shared static/local geometry.
+- [x] Pass eight focused Python checks plus offline local highlight/restore/clear checks.
+- [x] Pass 311 Python tests, 71 alluvial native assertions, compiler and 21 packaged cases.
+- [x] Verify installed GUI, keyboard highlighting/Clear, native HTML/2200×1400 PNG export and fresh-engine saved-document reopen/rerun.
+- [ ] Weights, condensation, numeric binning, alternative fill/orientation/style and full baseline parity remain open.
+
+# Reference-level tree percentages — 0.3.40
+
+- [x] Verify vtree 5.7.0 reference denominator: matching / nonmissing reference values.
+- [x] Add explicit variable/level roles, valid/missing counts and combined numeric/reference annotations.
+- [x] Retain legacy R calls through generator-owned optional Level defaults; leave compiler headers owned by compiler.
+- [x] Pass 47 focused tree/generator tests and add independent native/public-vtree and packaged fixtures.
+- [x] Pass compiler/freshness, 303 Python tests (47 focused), 251 native assertions and 20 packaged cases.
+- [x] Verify GUI roles, incomplete level, reference on/off clearing, combined annotations, HTML export and fresh-engine OMV reopen/rerun.
+- [x] Independently check all eight native reference/numeric rows against the synthetic CSV.
+- [ ] Full baseline parity, broader platforms/accessibility and clinical/release review remain open.
+
+# Continuous tree-node summaries — 0.3.39
+
+- [x] Follow frozen summaryvar/summarylocation mean/sample-SD baseline for the retained complete-cohort core.
+- [x] Add native summaries, local tree labels, valid/missing counts and an organized optional numeric role.
+- [x] Preserve categorical counts/plots and existing scientific argument positions; handle missing/undefined summaries.
+- [x] Pass 43 focused tree/generator tests; add independent native R and packaged numeric fixtures.
+- [x] Pass compiler/freshness, 299 Python tests (43 focused tree/generator), 188 native assertions and 20 packaged cases.
+- [x] Verify native roles, waiting state, both locations, on/off clearing, HTML export, fresh-engine OMV reopen/rerun and earlier-file compatibility.
+- [ ] Full vtree baseline methods, platform/accessibility and clinical/release qualification remain open.
+
 # Set ordering native qualification — 0.3.38
 
 - [x] Verify frequency/membership controls, reversal, stable ties, both plots and local inspection in jamovi.

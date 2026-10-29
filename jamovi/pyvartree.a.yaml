@@ -44,6 +44,66 @@
       "default": false
     },
     {
+      "name": "showNodeSummary",
+      "title": "Continuous node summaries",
+      "type": "Bool",
+      "default": false
+    },
+    {
+      "name": "summaryvar",
+      "title": "Continuous summary variable",
+      "type": "Variable",
+      "permitted": [
+        "numeric"
+      ],
+      "suggested": [
+        "continuous"
+      ],
+      "default": null
+    },
+    {
+      "name": "summarylocation",
+      "title": "Summary location",
+      "type": "List",
+      "options": [
+        {
+          "name": "leafonly",
+          "title": "Leaf nodes only"
+        },
+        {
+          "name": "allnodes",
+          "title": "All nodes"
+        }
+      ],
+      "default": "leafonly"
+    },
+    {
+      "name": "pct",
+      "title": "Reference-level percentages",
+      "type": "Bool",
+      "default": false
+    },
+    {
+      "name": "percvar",
+      "title": "Reference variable",
+      "type": "Variable",
+      "permitted": [
+        "factor"
+      ],
+      "suggested": [
+        "nominal",
+        "ordinal"
+      ],
+      "default": null
+    },
+    {
+      "name": "percvarLevel",
+      "title": "Reference level",
+      "type": "Level",
+      "variable": "(percvar)",
+      "allowNone": true
+    },
+    {
       "name": "showConsole",
       "title": "Python console output",
       "type": "Bool",

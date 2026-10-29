@@ -8,7 +8,7 @@
   "children": [
     {
       "type": "VariableSupplier",
-      "persistentItems": false,
+      "persistentItems": true,
       "stretchFactor": 1,
       "children": [
         {
@@ -21,6 +21,37 @@
               "isTarget": true
             }
           ]
+        },
+        {
+          "type": "TargetLayoutBox",
+          "label": "Continuous summary variable (optional)",
+          "children": [
+            {
+              "type": "VariablesListBox",
+              "name": "summaryvar",
+              "maxItemCount": 1,
+              "isTarget": true,
+              "enable": "(showNodeSummary)"
+            }
+          ]
+        },
+        {
+          "type": "TargetLayoutBox",
+          "label": "Reference variable (optional)",
+          "children": [
+            {
+              "type": "VariablesListBox",
+              "name": "percvar",
+              "maxItemCount": 1,
+              "isTarget": true,
+              "enable": "(pct)"
+            }
+          ]
+        },
+        {
+          "type": "LevelSelector",
+          "name": "percvarLevel",
+          "enable": "(pct)"
         }
       ]
     },
@@ -32,6 +63,19 @@
         {
           "type": "CheckBox",
           "name": "showPaths"
+        },
+        {
+          "type": "CheckBox",
+          "name": "showNodeSummary"
+        },
+        {
+          "type": "CheckBox",
+          "name": "pct"
+        },
+        {
+          "type": "ComboBox",
+          "name": "summarylocation",
+          "enable": "(showNodeSummary)"
         }
       ]
     },

@@ -47,9 +47,35 @@ def figure(state, width=600, height=400, palette=None, background='white', foreg
     palette = palette or DEFAULT_PALETTE
     columns = state['columns']; kind = state['kind']
     n = len(next(iter(columns.values()), []))
-    if n > {'interval':200, 'line':20000, 'box':20000, 'bar':2000, 'scatter':5000, 'points':5000, 'histogram':2000, 'pyramid':200, 'qualitymap':4000, 'ihcheatmap':4000, 'dendrogram':199, 'setmatrix':16, 'screeningquantiles':2020}.get(kind, 0):
+    if n > {'alluvial':1, 'interval':200, 'line':20000, 'box':20000, 'bar':2000, 'scatter':5000, 'points':5000, 'histogram':2000, 'pyramid':200, 'qualitymap':4000, 'ihcheatmap':4000, 'dendrogram':199, 'setmatrix':16, 'screeningquantiles':2020}.get(kind, 0):
         raise ValueError('Unsupported plot kind or excessive plot rows')
     if any(len(c) != n for c in columns.values()): raise ValueError('Plot columns have unequal lengths')
+    if kind == 'alluvial':
+        from cpj_alluvial import validate_geometry
+        from matplotlib.path import Path as MplPath
+        from matplotlib.patches import PathPatch, Rectangle
+        if n != 1: raise ValueError('Alluvial plot needs one bounded drawing payload')
+        g = validate_geometry(json.loads(columns['payload'][0]))
+        for ribbon in g['ribbons']:
+            left = ribbon['axis']+.025; right = ribbon['axis']+1-.025
+            mid = (left+right)/2; a = ribbon['source']; b = ribbon['target']; count = ribbon['n']
+            vertices = [(left,a),(mid,a),(mid,b),(right,b),(right,b+count),
+                        (mid,b+count),(mid,a+count),(left,a+count),(left,a)]
+            codes = [MplPath.MOVETO]+[MplPath.CURVE4]*3+[MplPath.LINETO]+[MplPath.CURVE4]*3+[MplPath.CLOSEPOLY]
+            ax.add_patch(PathPatch(MplPath(vertices,codes),facecolor=palette[ribbon['group']%len(palette)],
+                                   edgecolor='none',alpha=.48))
+        for node in g['nodes']:
+            ax.add_patch(Rectangle((node['axis']-.025,node['y']),.05,node['n'],
+                                   facecolor=foreground,alpha=.65))
+            last = node['axis']==len(g['names'])-1
+            ax.text(node['axis']+(-.04 if last else .04),node['y']+node['n']/2,
+                    node['label']+' (n='+str(node['n'])+')',ha='right' if last else 'left',
+                    va='center',color=foreground,fontsize=8)
+        for axis,name in enumerate(g['names']):
+            ax.text(axis,-g['height']*.04,name,ha='center',va='bottom',color=foreground,fontsize=10)
+        ax.set_xlim(-.16,len(g['names'])-1+.16); ax.set_ylim(g['height']*1.02,-g['height']*.09)
+        ax.set_axis_off()
+        return fig
     if kind == 'screeningquantiles':
         names=list(dict.fromkeys(columns['variable']))
         if not 1<=len(names)<=20 or any(not isinstance(v,str) or not v for v in names):

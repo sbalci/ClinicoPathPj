@@ -71,6 +71,112 @@
       ]
     },
     {
+      "name": "summaryScope",
+      "title": "Continuous Summary Rules",
+      "type": "Text",
+      "visible": "(showNodeSummary)"
+    },
+    {
+      "name": "nodeSummary",
+      "title": "Continuous Node Summaries",
+      "type": "Table",
+      "visible": "(showNodeSummary)",
+      "rows": 0,
+      "columns": [
+        {
+          "name": "node",
+          "title": "Node ID",
+          "type": "integer"
+        },
+        {
+          "name": "variable",
+          "title": "Summary Variable",
+          "type": "text"
+        },
+        {
+          "name": "nodeN",
+          "title": "Node Rows",
+          "type": "integer"
+        },
+        {
+          "name": "valid",
+          "title": "Valid",
+          "type": "integer"
+        },
+        {
+          "name": "missing",
+          "title": "Missing",
+          "type": "integer"
+        },
+        {
+          "name": "mean",
+          "title": "Mean",
+          "type": "number"
+        },
+        {
+          "name": "sd",
+          "title": "SD",
+          "type": "number"
+        }
+      ]
+    },
+    {
+      "name": "referenceScope",
+      "title": "Reference Percentage Rules",
+      "type": "Text",
+      "visible": "(pct)"
+    },
+    {
+      "name": "referenceSummary",
+      "title": "Reference-Level Node Percentages",
+      "type": "Table",
+      "visible": "(pct)",
+      "rows": 0,
+      "columns": [
+        {
+          "name": "node",
+          "title": "Node ID",
+          "type": "integer"
+        },
+        {
+          "name": "variable",
+          "title": "Reference Variable",
+          "type": "text"
+        },
+        {
+          "name": "level",
+          "title": "Reference Level",
+          "type": "text"
+        },
+        {
+          "name": "nodeN",
+          "title": "Node Rows",
+          "type": "integer"
+        },
+        {
+          "name": "valid",
+          "title": "Valid Reference",
+          "type": "integer"
+        },
+        {
+          "name": "missing",
+          "title": "Missing Reference",
+          "type": "integer"
+        },
+        {
+          "name": "matches",
+          "title": "Matches",
+          "type": "integer"
+        },
+        {
+          "name": "percent",
+          "title": "Reference (%)",
+          "type": "number",
+          "format": "pc"
+        }
+      ]
+    },
+    {
       "name": "explorer",
       "title": "Expandable Categorical Tree",
       "type": "Html",

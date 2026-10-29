@@ -1,0 +1,9 @@
+Tumor,Grade,MarkerScore
+Type A,I,10
+Type A,I,14
+Type A,II,20
+Type A,II,
+Type B,III,30
+Type B,III,
+Type C,III,
+,III,999

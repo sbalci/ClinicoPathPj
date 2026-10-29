@@ -58,6 +58,30 @@ sync_module_metadata <- function(root = ".") {
         if (length(tree_index)) document$datasets[[tree_index[1L]]] <- tree_entry
         else document$datasets[[length(document$datasets) + 1L]] <- tree_entry
     }
+    summary_data <- "python_tree_node_summary_examples.csv"
+    if (file.exists(file.path(root, "data", summary_data)) &&
+        !any(vapply(document$datasets, function(x) identical(x$path, summary_data), logical(1)))) {
+        document$datasets[[length(document$datasets) + 1L]] <- list(
+            name = "Tree Node Summary Examples", path = summary_data,
+            description = "Eight synthetic profiles: seven categorical complete rows, four valid marker scores and node-local numeric missingness.",
+            tags = c("Python", "Categorical tree", "Node summaries"))
+    }
+    reference_data <- "python_tree_reference_examples.csv"
+    if (file.exists(file.path(root, "data", reference_data)) &&
+        !any(vapply(document$datasets, function(x) identical(x$path, reference_data), logical(1)))) {
+        document$datasets[[length(document$datasets) + 1L]] <- list(
+            name = "Tree Reference Percentage Examples", path = reference_data,
+            description = "Eight synthetic profiles with seven categorical complete rows, four valid reference classifications and both numeric/reference missingness.",
+            tags = c("Python", "Categorical tree", "Reference percentages"))
+    }
+    alluvial_data <- "python_alluvial_examples.csv"
+    if (file.exists(file.path(root, "data", alluvial_data)) &&
+        !any(vapply(document$datasets, function(x) identical(x$path, alluvial_data), logical(1)))) {
+        document$datasets[[length(document$datasets) + 1L]] <- list(
+            name = "Categorical Flow Examples", path = alluvial_data,
+            description = "Twenty complete synthetic profiles on four unequal paths (12, 5, 2, 1 rows), plus two missing-category profiles.",
+            tags = c("Python", "Alluvial", "Categorical flows"))
+    }
     registry_path <- file.path(root, "inst", "python", "registry.json")
     if (file.exists(registry_path)) {
         registry <- jsonlite::fromJSON(registry_path, simplifyVector = FALSE)
