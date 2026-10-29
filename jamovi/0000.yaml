@@ -1,7 +1,7 @@
 ---
 title: ClinicoPathPj - Python-Backed Analyses
 name: ClinicoPathPj
-version: 0.3.41
+version: 0.3.42
 jms: '1.0'
 authors: Serdar Balci
 maintainer: Serdar Balci <serdarbalci@serdarbalci.com>
@@ -260,6 +260,14 @@ analyses:
     menuTitle: Categorical alluvial flows (core)
     title: Categorical Alluvial Flows (Python Core)
     category: analyses
+  - name: pycrosstable
+    ns: ClinicoPathPj
+    hidden: false
+    menuGroup: Descriptives Py
+    menuSubgroup: Contingency tables
+    menuTitle: Cross tables (core)
+    title: Cross Tables (Python Core)
+    category: analyses
 usesNative: 'yes'
 datasets:
   - name: Python Core Examples
@@ -333,5 +341,15 @@ datasets:
       - Python
       - Alluvial
       - Categorical flows
+  - name: Grouped Cross Table Examples
+    path: python_cross_table_examples.omv
+    description: >-
+      Twenty-five synthetic profiles with explicit continuous Age/Code types and
+      a preconfigured cross table (Holm adjustment); default retention is 24,
+      complete-case retention is 21.
+    tags:
+      - Python
+      - Grouped summaries
+      - Cross tables
 
 ...

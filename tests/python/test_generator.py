@@ -30,6 +30,19 @@ def parse_generated(text):
 
 
 class GeneratedFiles(unittest.TestCase):
+    def test_column_visibility_accepts_only_declared_list_choices(self):
+        spec=copy.deepcopy(VALID)
+        spec['options'].append(dict(name='display',title='Display',type='List',
+            options=[dict(name='mean',title='Mean'),dict(name='median',title='Median')],default='mean'))
+        column=spec['results'][0]['columns'][0]
+        column['visible']='(display:mean)';generate.validate(spec,'probe')
+        generated=generate.r_yaml(spec)
+        self.assertEqual(generated['items'][0]['columns'][0]['visible'],'(display:mean)')
+        for invalid in ['(display:absent)','(missing:mean)','(ci:mean)',
+                        '(display:mean || display:median)','(display:mean); print(1)']:
+            column['visible']=invalid
+            with self.assertRaises(generate.SpecError):generate.validate(spec,'probe')
+
     def test_two_bool_result_visibility_is_bounded_and_preserved(self):
         spec=generate.read_spec(generate.ANALYSES/'descriptives/pyihcheatmap.py')
         generate.validate(spec,'pyihcheatmap')

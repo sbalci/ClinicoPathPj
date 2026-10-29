@@ -687,3 +687,34 @@ artifact checks agree with CSV counts/proportions and unchanged saved inputs. Th
 registry now counts 21 partial targets and 40 planned, with ten utilities retained.
 Next Wave-1 core candidates remain pycrosstable, pytableone and survival transformations;
 advanced alluvial options remain explicit omissions rather than completed parity.
+
+
+## Next descriptive port: grouped cross tables — 0.3.42
+
+Deliver pycrosstable's supported default gtsummary subset: grouped/overall native
+summaries, valid/missing denominators, baseline low-distinct numeric typing with an
+explicit continuous override, R 4.6 exact Wilcoxon (including conditional ties)/normal approximation, Kruskal–Wallis and categorical
+Pearson/sparse-Fisher selection. Larger exact tables remain explicitly unavailable;
+no substitute p-value is supplied. Retain means/sample SD versus median/type-7 quartiles
+as display choices without changing rank inference. Apply selected multiplicity over
+available variable-level tests, matching base R's default NA handling.
+
+Extend generator-owned column visibility only to declared List choices, so the numeric
+columns switch natively. Validate source labels, actual-NA levels, zero marginals,
+incomplete roles, missingness reversal, independent R/gtsummary outputs, package/runtime
+and installed export/save/reopen. Alternate styles, SMDs, weights and full parity remain
+omitted. Inventory becomes 22 partial and 39 planned targets, plus ten utilities.
+
+
+0.3.42 bounded acceptance passes: 323 Python tests (43 focused), 275 native R assertions,
+compiler/freshness and 22 packaged cases. Independent R 4.6 comparison detected and
+resolved the small-sample tied-Wilcoxon default difference; conditional exact counts
+now agree with brute-force label assignments and extreme-tail boundary fixtures.
+
+Native GUI mean/median visibility, available/complete-case cohort reversal, typed Data
+Library loading, Holm results, HTML exports and fresh-engine saved-state reopening/
+forced rerun pass on macOS arm64 / jamovi 28.13. The typed .omv avoids CSV integer
+measure-type guessing; source CSV remains the independent oracle input. Full crosstable
+parity and broader qualification remain open. Wave-1 core candidates now include
+pytableone and the three survival transformations; the inventory is 22 partial targets,
+39 planned, ten utilities and zero full-parity releases.

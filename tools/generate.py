@@ -211,6 +211,8 @@ def validate(spec, stem):
     if not spec["results"]:
         fail("SPEC needs at least one result")
     bools = {o["name"] for o in spec["options"] if o["type"] == "Bool"}
+    list_choices = {o['name']: {v['name'] for v in o['options']}
+                    for o in spec['options'] if o['type'] == 'List'}
     results = set()
     for result in spec["results"]:
         if not isinstance(result, dict):
@@ -288,8 +290,10 @@ def validate(spec, stem):
             if "visible" in column:
                 shown = column["visible"]
                 match = re.fullmatch(r"\(([a-z][A-Za-z0-9_]*)\)", shown) if isinstance(shown, str) else None
-                if not (isinstance(shown, bool) or (match and match.group(1) in bools)):
-                    fail(f"column {rname}.{cname}: visible must be True, False or '(x)' naming a Bool option")
+                selected = re.fullmatch(r"\(([a-z][A-Za-z0-9_]*):([A-Za-z0-9_]+)\)", shown) if isinstance(shown, str) else None
+                if not (isinstance(shown, bool) or (match and match.group(1) in bools) or
+                        (selected and selected.group(2) in list_choices.get(selected.group(1), set()))):
+                    fail(f"column {rname}.{cname}: visible must be True, False, '(x)' naming a Bool option or '(x:value)' naming a declared List choice")
 
 
     if "executionOption" in spec:

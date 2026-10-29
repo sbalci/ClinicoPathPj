@@ -1,3 +1,9 @@
+# 0.3.42 — 2026-10-29
+
+- Add `pycrosstable` grouped/overall native summaries, per-variable or complete-case denominators and the default-style supported inference subset.
+- Preserve baseline low-distinct numeric typing and rank-based continuous comparisons; provide an explicit numeric override and unavailable reasons for unsupported larger exact tables.
+- Add multiplicity choices, native summary-column switching and a synthetic grouped Data Library example.
+
 # 0.3.41
 
 - Add `pyalluvial`: categorical row-count flows across two to four axes, explicit missing-category inclusion/exclusion, native counts and axis marginals.

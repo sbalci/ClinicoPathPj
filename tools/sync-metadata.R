@@ -82,6 +82,17 @@ sync_module_metadata <- function(root = ".") {
             description = "Twenty complete synthetic profiles on four unequal paths (12, 5, 2, 1 rows), plus two missing-category profiles.",
             tags = c("Python", "Alluvial", "Categorical flows"))
     }
+    cross_data <- "python_cross_table_examples.omv"
+    if (file.exists(file.path(root, "data", cross_data))) {
+        cross_entry <- list(
+            name = "Grouped Cross Table Examples", path = cross_data,
+            description = "Twenty-five synthetic profiles with explicit continuous Age/Code types and a preconfigured cross table (Holm adjustment); default retention is 24, complete-case retention is 21.",
+            tags = c("Python", "Grouped summaries", "Cross tables"))
+        cross_index <- which(vapply(document$datasets, function(x)
+            x$path %in% c(cross_data, "python_cross_table_examples.csv"), logical(1)))
+        if (length(cross_index)) document$datasets[[cross_index[1L]]] <- cross_entry
+        else document$datasets[[length(document$datasets) + 1L]] <- cross_entry
+    }
     registry_path <- file.path(root, "inst", "python", "registry.json")
     if (file.exists(registry_path)) {
         registry <- jsonlite::fromJSON(registry_path, simplifyVector = FALSE)
