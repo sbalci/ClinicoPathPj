@@ -2323,8 +2323,18 @@
       "source_name": "timeinterval",
       "menu_group": "Survival Py",
       "menu_title": "Time intervals (UTC core)",
-      "supported_core": "Explicit UTC text pairs; standardized elapsed days/weeks/months/years; negative/extreme exclusions, follow-up landmark selection, record-time summaries, bounded mean t CI, native audit tables and aligned saved intervals",
-      "omissions": "Calendar-aware months/years, auto/two-digit/numeric-packed parsing, numeric epochs, system/named timezone and DST, date plausibility classifiers, glossary, repeated-patient modelling and full parity"
+      "supported_core": "Explicit UTC text pairs; standardized elapsed and calendar-anniversary days/weeks/months/years; negative/extreme exclusions, follow-up landmark selection, record-time summaries, bounded mean t CI, native audit tables and aligned saved intervals",
+      "omissions": "auto/two-digit/numeric-packed parsing, numeric epochs, system/named timezone and DST, date plausibility classifiers, glossary, repeated-patient modelling and full parity",
+      "feature_references": {
+        "calendar_anniversaries": {
+          "commit": "381df71e98e4fb460d44e5a6cc439a04289acfdd",
+          "module": "ClinicoPathJamoviModule",
+          "source": "R/timeinterval.b.R",
+          "sha256": "991bc0053ccbfb4a52132ffd27ae462969b34f783a3bb8c08ad8882f275c14e2",
+          "extracted_fixture": "tests/fixtures/timeinterval-calendar-reference.R",
+          "reason": "Recent month-end span correction; original frozen source retained as historical baseline"
+        }
+      }
     },
     {
       "id": "pydiagnosticmeta",

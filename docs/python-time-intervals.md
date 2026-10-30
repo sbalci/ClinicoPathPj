@@ -1,4 +1,4 @@
-# Standardized UTC elapsed intervals
+# UTC elapsed and calendar-anniversary intervals
 
 `pytimeinterval` is under **Survival Py → Data preparation → Time intervals (UTC core)**.
 This partial Python port freezes umbrella `timeinterval` 1.0.81.01 at commit
@@ -15,13 +15,13 @@ installation is needed.
 | Summary and arithmetic-mean confidence interval | Native tables; sample SD and Student t |
 | Raw date-quality and source preview | Optional quality tables; bounded preview |
 | Saved interval | Continuous, full supplied-row alignment, named Calculated interval |
-| Calendar-aware months/years | Pending; no calendar-basis selector exposed |
+| Calendar-aware months/years | Implemented in 0.3.47; corrected R feature reference below |
 | Auto parsing, numeric packed/epoch dates, two-digit years | Pending; rejected rather than guessed |
 | System/named timezones, DST and R Date/POSIX input | Pending; UTC text only |
 | Baseline clinical plausibility bands and glossary | Omitted in this core |
 | Full parity, broader platforms and clinical/release review | Open |
 
-Months and years are durations, not calendar anniversaries. For example, January 31
+Under the standardized default, months and years are fixed durations. For example, January 31
 to February 29, 2024 is 29 days, or 29/30.4375 standardized months. Both source columns
 must parse at least 80% of their nonmissing values; missing and invalid pairs stay
 missing in saved output. The visible initial format is YMD in UTC, differing from
@@ -53,7 +53,7 @@ landmark retains seven intervals and yields total 826. End with reversal introdu
 one negative interval; exclude negatives to get n=9 and total 861 (without landmark).
 No real patient data are included.
 
-## Evidence and remaining gates
+## Standardized 0.3.46 evidence and remaining gates
 
 - Focused Python: eight tests pass, including analytic t(1) CI, independent date fixtures,
   type-7 thresholds, landmark ties, errors and runtime saved-row identities.
@@ -86,3 +86,62 @@ in `tools/check.sh`, the focused `tests/testthat/test-intervals-python.R` agains
 built library, `tools/check-core-package.py` and `tools/check-interval-artifacts.py`.
 Counts, limits and archive/source/artifact hashes are recorded in
 [the qualification record](validation-exports/python-interval-0.3.46-checks.json).
+
+## Calendar anniversaries — 0.3.47
+
+The **Time basis** selector now offers Standardized elapsed units (the unchanged
+default) and Calendar rollback anniversaries. Days and weeks remain elapsed units
+under both bases. Calendar months count whole monthly anniversaries from the
+original start date, rolling invalid days back to month end and preserving the
+clock. The remainder is divided by the actual span to the next anniversary in
+the interval's direction. Calendar years are these months divided by 12.
+
+Examples starting 31 January 2024 at the same UTC clock:
+28 February = 28/29 months; 29 February = 1 month; 1 March = 1 + 1/31 months.
+The direction matters: swapping dates need not negate a fractional calendar result.
+Use standardized durations when a constant unit of exposure is required. The
+landmark and extreme-flag rules use the selected unit and basis; changing basis
+can therefore change retention. Column metadata and the native scope identify
+the basis and landmark used. No local display interaction or hidden refit is added.
+
+The feature reference is the **recent corrected R method** at umbrella commit
+`381df71e98e4fb460d44e5a6cc439a04289acfdd`, frozen in
+`tests/fixtures/timeinterval-calendar-reference.R`. Full-source SHA256 is
+`991bc0053ccbfb4a52132ffd27ae462969b34f783a3bb8c08ad8882f275c14e2`.
+The original migration baseline remains recorded unchanged. Its calendar remainder
+divisor used days in the rollback month: for 31 January → 1 March 2024 it gives
+1 + 1/29, whereas the corrected adjacent-anniversary method gives 1 + 1/31. This
+new option intentionally follows the corrected method; it is not claimed to match
+the original formula. Existing 0.3.46 saved analyses omit `time_basis` and continue
+with the standardized default.
+
+Evidence: ten focused Python tests pass, with 408 frozen R date-pair references
+(months and years), analytic month-end expectations, year 0001/9999 bounds and
+full supplied-row saved output. The R fixture generator fixes its sampling indices
+through a local seed and records lubridate's version; the resulting JSON fixture
+is committed as the oracle input. The 65 focused native R assertions, 364-test Python regression run, compiler and
+26 packaged-runtime cases pass. Desktop macOS arm64 jamovi 28.13 Sideload/restart,
+standardized/calendar comparison, named aligned saved values, native HTML and fresh-engine
+calendar reopen/rerun pass. The previous 0.3.46 file defaults to standardized and reruns
+without changing source/saved values; its compatibility result is saved separately.
+A final label-only rebuild removes fixed day lengths from the unit selector; the
+selected basis and scope supply those definitions. Numerical-engine hashes are checked
+unchanged across that rebuild. No new full native
+inventory, platform or clinical qualification is claimed.
+
+The **Calendar Anniversary Examples** dataset contains five complete synthetic
+month-end pairs and one missing end date. Select Start date / End date, months,
+then switch the time basis and inspect raw/used values and the saved column.
+
+Reproduce additional checks with `data-raw/generate-calendar-reference.R`, the
+focused Python/R interval tests, `tools/check-core-package.py` and
+`tools/check-calendar-artifacts.py`. The latter reads native OMV/HTML without importing
+the interval engine. This extension's machine-readable qualification record is
+`docs/validation-exports/python-calendar-0.3.47-checks.json`.
+
+The final label-only build passes 42 interval/generator checks. The numerical
+engine hash matches the one used by the 364-test full run and 65 native assertions.
+Final installed manifest, R database, registry and interval-engine bytes match the
+archive; fresh restart/reopen shows **Months** with **Calendar rollback anniversaries**.
+The full 0.3.47 native inventory was not rerun; other platforms and clinical review
+remain unqualified.

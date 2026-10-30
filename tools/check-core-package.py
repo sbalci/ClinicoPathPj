@@ -38,6 +38,8 @@ def check(path):
             assert f'version: {VERSION}' in manifest
             assert 'python_core_examples.omv' in manifest
             assert 'python_set_intersection_examples.csv' in manifest
+            assert 'python_calendar_interval_examples.csv' in manifest
+            assert archive.read('ClinicoPathPj/data/python_calendar_interval_examples.csv')==(ROOT/'data/python_calendar_interval_examples.csv').read_bytes()
             assert 'python_interval_examples.csv' in manifest
             assert archive.read('ClinicoPathPj/data/python_interval_examples.csv')==(ROOT/'data/python_interval_examples.csv').read_bytes()
             assert 'python_datetime_examples.csv' in manifest
@@ -123,6 +125,12 @@ def check(path):
                 assert result['outputs']['calculated_time']['row_ids']==['2','5','9','20']
                 assert result['tables']['statistics']['rows'][0]['total']==4
                 assert result['tables']['cohort']['rows'][0]['used']==2
+                request.write_text(json.dumps(dict(analysis=name,columns={'a':factor(['2024-01-31','2023-01-31']), 'b':factor(['2024-02-29','2023-02-28'])}, options=dict(dx_date='a',fu_date='b',time_basis='calendar'),row_ids=['2','9'])))
+                subprocess.run([sys.executable,'-B',str(runtime),str(request),str(response)],check=True,timeout=70)
+                calendar_result=json.loads(response.read_text())
+                assert calendar_result['status']=='ok'
+                assert calendar_result['outputs']['calculated_time']['values']==[1,1]
+                assert 'basis: calendar' in calendar_result['outputs']['calculated_time']['description']
             if name=='pydatetimeconverter':
                 assert result['outputs']['corrected_datetime_numeric']['values']==[1709164800.,None,None,1609459200.]
                 assert result['outputs']['year_out']['values']==[2024,None,None,2021]

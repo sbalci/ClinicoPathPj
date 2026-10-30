@@ -6,7 +6,7 @@ SPEC = {'name': 'pytimeinterval',
  'title': 'Time Intervals (Python UTC Core)',
  'menuGroup': 'Survival Py',
  'menuSubgroup': 'Data preparation',
- 'version': '0.3.46',
+ 'version': '0.3.47',
  'clearOnInputError': True,
  'options': [{'name': 'dx_date',
               'title': 'Start date',
@@ -39,9 +39,13 @@ SPEC = {'name': 'pytimeinterval',
               'type': 'List',
               'options': [{'name': 'days', 'title': 'Days'},
                           {'name': 'weeks', 'title': 'Weeks'},
-                          {'name': 'months', 'title': 'Months (30.4375 days)'},
-                          {'name': 'years', 'title': 'Years (365.25 days)'}],
+                          {'name': 'months', 'title': 'Months'},
+                          {'name': 'years', 'title': 'Years'}],
               'default': 'months'},
+             {'name': 'time_basis', 'title': 'Time basis', 'type': 'List',
+              'options': [{'name': 'standardized', 'title': 'Standardized elapsed units'},
+                          {'name': 'calendar', 'title': 'Calendar rollback anniversaries'}],
+              'default': 'standardized'},
              {'name': 'use_landmark',
               'title': 'Follow-up landmark selection',
               'type': 'Bool',
@@ -183,9 +187,10 @@ SPEC = {'name': 'pytimeinterval',
                       'collapsed': False,
                       'children': [{'type': 'ComboBox', 'name': 'time_format'},
                                    {'type': 'ComboBox', 'name': 'output_unit'},
+                                   {'type': 'ComboBox', 'name': 'time_basis'},
                                    {'type': 'Label',
-                                    'label': 'UTC; standardized elapsed time (calendar months/years '
-                                             'pending)',
+                                    'label': 'UTC; review the selected time basis and unit before '
+                                             'using saved intervals',
                                     'children': []}]},
                      {'type': 'CollapseBox',
                       'label': 'Cohort and Exclusions',
@@ -226,21 +231,21 @@ def run(data, options, out):
     for source,row in list(zip(ids,r['rows']))[:r['preview_limit']]:out.row('preview',source=source,**row)
     if r['total']>r['preview_limit']:out.info(f"The preview shows the first {r['preview_limit']} source rows; all source rows contribute to accounting and saved-output alignment.")
     if out.row_ids is not None:
-        out.column('calculated_time',r['values'],measure_type='continuous',title='Calculated interval',description=f"Unit: {r['unit']}; standardized elapsed time in UTC; landmark subtracted: {r['landmark']} {r['unit']}. Excluded/missing/invalid rows remain missing.")
+        out.column('calculated_time',r['values'],measure_type='continuous',title='Calculated interval',description=f"Unit: {r['unit']}; basis: {r['basis']} in UTC; landmark subtracted: {r['landmark']} {r['unit']}. Excluded/missing/invalid rows remain missing.")
     for warning in r['warnings']:out.warn(warning)
     if not r['n']:out.info('No usable intervals remain after exclusions/landmark; summary estimates are unavailable and saved intervals are missing.')
     if r['n']==1:out.info('Only one used interval: sample SD and mean confidence interval are undefined.')
     out.markdown('summary',md_escape(
-        f"Input rows: {r['total']}; complete pairs: {r['complete']}; used intervals: {r['n']}; unit: {r['unit']}; landmark subtracted: {r['landmark']}. "
-        'UTC and explicit four-digit text formats are used. Days/weeks are elapsed durations; months use 30.4375 days and years use 365.25 days. Calendar-aware months/years are not implemented. '
+        f"Input rows: {r['total']}; complete pairs: {r['complete']}; used intervals: {r['n']}; unit: {r['unit']}; basis: {r['basis']}; landmark subtracted: {r['landmark']}. "
+        'UTC and explicit four-digit text formats are used. Days/weeks are elapsed durations under both bases. Standardized months use 30.4375 days and years use 365.25 days. Calendar months use whole rollback anniversaries plus the fraction of the span to the next directional anniversary; calendar years divide those months by 12. End-of-month rollback preserves the start clock. '
         'Both date columns must parse at least 80% of their nonmissing values. Invalid/missing pairs retain their source positions with missing saved output. '
         'Potential extreme flags use the positive raw type-7 99th percentile times the selected multiplier, before exclusions and landmark. Flags change the cohort only when exclusion is enabled. '
         'Landmark selection requires observed follow-up at least the selected value, then subtracts that value; no event indicator is available to establish event-free survival at the landmark. '
         'Rows are supplied records, not deduplicated patients. Summed record-time is person-time only when records represent appropriate nonoverlapping observation intervals. '
         'The t confidence interval concerns the arithmetic mean of used intervals, assumes independent observations and a suitable t approximation, and is clipped at zero with its raw lower bound shown. '
-        'This core does not estimate survival, incidence, censoring-adjusted follow-up or repeated-patient inference. Auto parsing, numeric packed dates/epochs, named timezones/DST, calendar basis and full baseline parity remain pending.'))
+        'This core does not estimate survival, incidence, censoring-adjusted follow-up or repeated-patient inference. Auto parsing, numeric packed dates/epochs, named timezones/DST and full baseline parity remain pending.'))
     if options.get('show_summary',False):
-        text=(f"Using explicit {r['fmt']} parsing in UTC, {r['n']} of {r['total']} supplied records contributed usable standardized intervals in {r['unit']}. "
+        text=(f"Using explicit {r['fmt']} parsing in UTC, {r['n']} of {r['total']} supplied records contributed usable {r['basis']} intervals in {r['unit']}. "
               f"Negative exclusions: {r['negativeRemoved']}; extreme exclusions: {r['extremeRemoved']}; below-landmark exclusions: {r['landmarkRemoved']}; invalid date pairs: {r['invalid']}; missing date pairs: {r['missing']}. "
               f"The follow-up landmark subtracted was {r['landmark']} {r['unit']}. These are observed record intervals, not survival or incidence estimates.")
         out.markdown('report',md_escape(text))

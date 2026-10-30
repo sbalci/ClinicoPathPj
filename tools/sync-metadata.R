@@ -23,6 +23,14 @@ sync_module_metadata <- function(root = ".") {
             "    tags: [Python, Diagnostic accuracy, Decision curves, Data quality]")
     }
     document <- yaml::yaml.load(paste(metadata, collapse = "\n"))
+    calendar_data <- "python_calendar_interval_examples.csv"
+    if (file.exists(file.path(root, "data", calendar_data)) &&
+        !any(vapply(document$datasets, function(x) identical(x$path, calendar_data), logical(1)))) {
+        document$datasets[[length(document$datasets) + 1L]] <- list(
+            name = "Calendar Anniversary Examples", path = calendar_data,
+            description = "Six synthetic month-end pairs comparing fixed-length durations with calendar rollback anniversaries, including one missing end date.",
+            tags = c("Python", "Calendar intervals", "Data preparation"))
+    }
     interval_data <- "python_interval_examples.csv"
     if (file.exists(file.path(root, "data", interval_data)) &&
         !any(vapply(document$datasets, function(x) identical(x$path, interval_data), logical(1)))) {

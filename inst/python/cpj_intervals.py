@@ -1,5 +1,6 @@
 """Standardized UTC elapsed intervals with auditable exclusions and row-aligned output."""
 import math
+import calendar
 import numpy as np
 from scipy.stats import t
 from cpj_runtime import InputError
@@ -8,6 +9,49 @@ from cpj_tree import _mean_sd
 from cpj_crosstable import quantiles
 
 DAYS_PER_UNIT={'days':1.,'weeks':7.,'months':30.4375,'years':365.25}
+
+DAY_US = 86400 * 1000000
+MONTH_START = (0,31,59,90,120,151,181,212,243,273,304,334)
+
+
+def month_anchor_us(start, shift):
+    """Rollback anniversary in integer microseconds; adjacent years 0/10000 are safe."""
+    year, month0 = divmod(start.year * 12 + start.month - 1 + shift, 12)
+    month = month0 + 1
+    day = min(start.day, calendar.monthrange(year, month)[1])
+    previous = year - 1
+    ordinal = (365 * previous + previous // 4 - previous // 100 + previous // 400
+               + MONTH_START[month0] + (month > 2 and calendar.isleap(year)) + day)
+    clock = ((start.hour * 60 + start.minute) * 60 + start.second) * 1000000 + start.microsecond
+    return ordinal * DAY_US + clock
+
+
+def calendar_months(start, end):
+    """Whole rollback months plus fraction to the next directional anniversary."""
+    end_us = month_anchor_us(end, 0)
+    start_us = month_anchor_us(start, 0)
+    whole = (end.year - start.year) * 12 + end.month - start.month
+    anchor = month_anchor_us(start, whole)
+    direction = 1 if end_us >= start_us else -1
+    if direction == 1 and anchor > end_us:
+        whole -= 1
+    elif direction == -1 and anchor < end_us:
+        whole += 1
+    anchor = month_anchor_us(start, whole)
+    remainder = end_us - anchor
+    if not remainder:
+        return float(whole)
+    span = abs(month_anchor_us(start, whole + direction) - anchor)
+    return whole + remainder / span
+
+
+def interval_value(start, end, unit, basis):
+    if start is None or end is None:
+        return np.nan
+    if basis == 'calendar' and unit in ('months', 'years'):
+        months = calendar_months(start, end)
+        return months if unit == 'months' else months / 12
+    return (end - start).total_seconds() / 86400 / DAYS_PER_UNIT[unit]
 
 
 def number(value,name,minimum,maximum=math.inf):
@@ -22,7 +66,8 @@ def calculate(data,options,row_ids=None):
     fmt=options.get('time_format','ymd');unit=options.get('output_unit','months')
     if fmt not in ORDERS:raise InputError('Choose a supported explicit text date format; numeric encodings and automatic detection are not available in this core.')
     if unit not in DAYS_PER_UNIT:raise InputError('Unknown elapsed-time unit.')
-    if options.get('time_basis','standardized')!='standardized':raise InputError('Calendar-aware months/years are not implemented; this core uses standardized elapsed units.')
+    basis=options.get('time_basis','standardized')
+    if basis not in ('standardized','calendar'):raise InputError('Choose standardized or calendar-anniversary time basis.')
     if options.get('timezone','utc')!='utc':raise InputError('This explicit-format interval core supports UTC only.')
     flags={name:options.get(name,False) for name in ('remove_negative','remove_extreme','use_landmark')}
     if any(not isinstance(v,bool) for v in flags.values()):raise InputError('Exclusion and landmark choices must be true or false.')
@@ -41,8 +86,7 @@ def calculate(data,options,row_ids=None):
         if parsed['success'] is None or parsed['parsed']==0 or parsed['success']<.8:
             raise InputError(f'{role} column {name}: at least 80% of nonmissing dates must parse; {parsed["parsed"]} parsed, {parsed["invalid"]} invalid, {parsed["missing"]} missing/blank. Check the explicit format.')
         quality.append(dict(role=role,variable=name,parsed=parsed['parsed'],invalid=parsed['invalid'],missing=parsed['missing'],success=parsed['success']))
-    raw=np.array([np.nan if x is None or y is None else (y-x).total_seconds()/86400/DAYS_PER_UNIT[unit]
-                  for x,y in zip(a['dates'],b['dates'])],dtype=float)
+    raw=np.array([interval_value(x,y,unit,basis) for x,y in zip(a['dates'],b['dates'])],dtype=float)
     complete=np.isfinite(raw)
     if not complete.any():raise InputError('No complete date pairs remain after parsing.')
     invalid=np.array([x['status']=='Invalid' or y['status']=='Invalid' for x,y in zip(a['rows'],b['rows'])])
@@ -79,6 +123,8 @@ def calculate(data,options,row_ids=None):
     rows=[dict(start=x['original'],end=y['original'],unit=unit,raw=float(v) if np.isfinite(v) else None,value=final,status=reason)
           for x,y,v,final,reason in zip(a['rows'],b['rows'],raw,values,reasons)]
     warnings=[]
+    if basis=='calendar' and unit in ('months','years'):
+        warnings.append('Calendar units follow rollback anniversaries and vary in elapsed length. Use standardized durations for constant-unit record-time denominators. Calendar fractions are directional and need not reverse sign exactly when start/end are swapped.')
     if invalid.any():warnings.append(f'{int(invalid.sum())} pair(s) contain an invalid date; saved intervals remain missing.')
     if missing.any():warnings.append(f'{int(missing.sum())} pair(s) are missing a date; saved intervals remain missing.')
     if flags['remove_extreme'] and threshold is None:warnings.append('Extreme exclusion is disabled because the raw 99th percentile is not positive; no interval was removed by this rule.')
@@ -91,4 +137,4 @@ def calculate(data,options,row_ids=None):
                 negative=int(negative.sum()),zero=int(zero.sum()),extreme=int(extreme.sum()),
                 negativeRemoved=int(removed_negative.sum()),extremeRemoved=int(removed_extreme.sum()),landmarkRemoved=int(below.sum()),
                 n=count,q99=q99,threshold=threshold,multiplier=multiplier,landmark=landmark,preview_limit=limit,
-                quality=quality,rows=rows,values=values,statistics=statistics,uncertainty=uncertainty,warnings=warnings,unit=unit,fmt=fmt)
+                quality=quality,rows=rows,values=values,statistics=statistics,uncertainty=uncertainty,warnings=warnings,unit=unit,fmt=fmt,basis=basis)

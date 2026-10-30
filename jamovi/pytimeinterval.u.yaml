@@ -51,8 +51,12 @@
           "name": "output_unit"
         },
         {
+          "type": "ComboBox",
+          "name": "time_basis"
+        },
+        {
           "type": "Label",
-          "label": "UTC; standardized elapsed time (calendar months/years pending)",
+          "label": "UTC; review the selected time basis and unit before using saved intervals",
           "children": []
         }
       ]

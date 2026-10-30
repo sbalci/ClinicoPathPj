@@ -1,3 +1,11 @@
+# 0.3.47 — 2026-10-29
+
+- Add an explicit calendar-anniversary time basis to `pytimeinterval`; keep standardized defaults.
+- Use whole rollback months plus fractions of the adjacent anniversary span, preserving UTC clocks.
+- Freeze the recent corrected R method separately from the original migration baseline.
+- Add 408 independent R fixtures, boundary checks, a Data Library example and basis-reversal tests.
+- Calendar intervals have varying elapsed lengths; disclose directional fractions and denominator limits.
+
 # 0.3.46 — 2026-10-29
 
 - Add `pytimeinterval` standardized UTC elapsed intervals and fixed-length units.

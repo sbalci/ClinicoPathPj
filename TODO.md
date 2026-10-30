@@ -1,3 +1,13 @@
+# Calendar-anniversary option — 0.3.47
+
+- [x] Compare recent R calendar repair with the original frozen baseline; preserve both provenance records.
+- [x] Add explicit calendar choice, basis-specific saved metadata and rollback arithmetic.
+- [x] Pass ten focused Python tests, including 408 frozen R date pairs and calendar bounds.
+- [x] Pass 65 focused native assertions, 364 Python regressions, compiler and 26 packaged-runtime cases.
+- [x] Pass final label-only compiler/freshness, 42 focused interval/generator checks and installed archive byte comparisons.
+- [x] Sideload and verify basis switching, saved values, HTML and fresh-engine persistence; preserve the legacy compatibility fixture.
+- [ ] Auto/numeric parsing, named timezones, time-aware outcomes and full baseline parity remain open.
+
 # UTC interval core — 0.3.46
 
 - [x] Implement explicit UTC elapsed intervals, fixed units, baseline exclusions and follow-up landmarks.
