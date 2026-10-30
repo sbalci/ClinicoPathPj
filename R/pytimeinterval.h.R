@@ -10,6 +10,7 @@ pytimeintervalOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cl
             fu_date = NULL,
             time_format = "ymd",
             output_unit = "months",
+            time_basis = "standardized",
             use_landmark = FALSE,
             landmark_time = 6,
             remove_negative = FALSE,
@@ -69,6 +70,13 @@ pytimeintervalOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cl
                     "months",
                     "years"),
                 default="months")
+            private$..time_basis <- jmvcore::OptionList$new(
+                "time_basis",
+                time_basis,
+                options=list(
+                    "standardized",
+                    "calendar"),
+                default="standardized")
             private$..use_landmark <- jmvcore::OptionBool$new(
                 "use_landmark",
                 use_landmark,
@@ -123,6 +131,7 @@ pytimeintervalOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cl
             self$.addOption(private$..fu_date)
             self$.addOption(private$..time_format)
             self$.addOption(private$..output_unit)
+            self$.addOption(private$..time_basis)
             self$.addOption(private$..use_landmark)
             self$.addOption(private$..landmark_time)
             self$.addOption(private$..remove_negative)
@@ -140,6 +149,7 @@ pytimeintervalOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cl
         fu_date = function() private$..fu_date$value,
         time_format = function() private$..time_format$value,
         output_unit = function() private$..output_unit$value,
+        time_basis = function() private$..time_basis$value,
         use_landmark = function() private$..use_landmark$value,
         landmark_time = function() private$..landmark_time$value,
         remove_negative = function() private$..remove_negative$value,
@@ -156,6 +166,7 @@ pytimeintervalOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cl
         ..fu_date = NA,
         ..time_format = NA,
         ..output_unit = NA,
+        ..time_basis = NA,
         ..use_landmark = NA,
         ..landmark_time = NA,
         ..remove_negative = NA,
@@ -430,6 +441,7 @@ pytimeintervalResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cl
                     "fu_date",
                     "time_format",
                     "output_unit",
+                    "time_basis",
                     "use_landmark",
                     "landmark_time",
                     "remove_negative",
@@ -454,7 +466,7 @@ pytimeintervalBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             super$initialize(
                 package = "ClinicoPathPj",
                 name = "pytimeinterval",
-                version = c(0,3,46),
+                version = c(0,3,47),
                 options = options,
                 results = pytimeintervalResults$new(options=options),
                 data = data,
@@ -475,6 +487,7 @@ pytimeintervalBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
 #' @param fu_date .
 #' @param time_format .
 #' @param output_unit .
+#' @param time_basis .
 #' @param use_landmark .
 #' @param landmark_time .
 #' @param remove_negative .
@@ -512,6 +525,7 @@ pytimeinterval <- function(
     fu_date = NULL,
     time_format = "ymd",
     output_unit = "months",
+    time_basis = "standardized",
     use_landmark = FALSE,
     landmark_time = 6,
     remove_negative = FALSE,
@@ -540,6 +554,7 @@ pytimeinterval <- function(
         fu_date = fu_date,
         time_format = time_format,
         output_unit = output_unit,
+        time_basis = time_basis,
         use_landmark = use_landmark,
         landmark_time = landmark_time,
         remove_negative = remove_negative,

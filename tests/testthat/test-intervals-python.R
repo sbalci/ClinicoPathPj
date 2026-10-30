@@ -74,3 +74,38 @@ test_that('saved numeric output and reusable input-error lifecycle stay aligned'
     expect_equal(a$results$statistics$asDF$total,4)
     expect_equal(as.numeric(saved()[[1]]$d),c(NA,NA,0,4,NA))
 })
+
+test_that('calendar units match frozen R anniversary method including month-end clocks', {
+    skip_if_not_installed('lubridate')
+    source(testthat::test_path('..','fixtures','timeinterval-calendar-reference.R'),local=TRUE)
+    fixtures <- jsonlite::read_json(testthat::test_path('..','fixtures','timeinterval-calendar.json'),simplifyVector=TRUE)$cases
+    for(index in split(seq_len(nrow(fixtures)),ceiling(seq_len(nrow(fixtures))/100))) {
+        f <- fixtures[index,]
+        d <- data.frame(start=f$start,end=f$end)
+        got <- pytimeinterval(data=d,dx_date='start',fu_date='end',time_format='ymdhms',
+                  output_unit='months',time_basis='calendar',remove_negative=TRUE,preview_rows=100)
+        ref <- calendar_reference(as.POSIXct(f$start,tz='UTC'),as.POSIXct(f$end,tz='UTC'),'months')
+        expect_equal(got$preview$asDF$raw,ref,tolerance=1e-10)
+        expect_equal(got$preview$asDF$value,ifelse(ref<0,NA_real_,ref),tolerance=1e-10)
+        expect_equal(got$statistics$asDF$total,sum(ref[ref>=0]),tolerance=1e-10)
+    }
+    got <- pytimeinterval(data=data.frame(start='2024-01-31',end='2024-02-29'),
+             dx_date='start',fu_date='end',time_basis='calendar',output_unit='years')
+    expect_equal(got$preview$asDF$value,1/12,tolerance=1e-12)
+})
+
+test_that('basis changes update the named saved output and survive a reversal', {
+    opts <- pytimeintervalOptions$new(dx_date='start',fu_date='end',output_unit='months')
+    output <- opts$option('calculated_time');output$value <- list(value=TRUE,vars=list())
+    a <- pytimeintervalClass$new(options=opts,
+             data=data.frame(start=c('2024-01-31','2023-01-31',NA),
+                             end=c('2024-02-29','2023-02-28','2024-03-01')))
+    a$init();a$run();jmvcore:::initProtoBuf()
+    saved <- function() as.numeric(a$results$calculated_time$asProtoBuf(incAsText=TRUE)$outputs$outputs[[1]]$d)
+    expect_equal(saved(),c(29/30.4375,28/30.4375,NA),tolerance=1e-10)
+    basis <- opts$option('time_basis');basis$value <- 'calendar';a$init();a$run()
+    expect_equal(saved(),c(1,1,NA),tolerance=1e-10)
+    expect_equal(a$results$statistics$asDF$mean,1)
+    basis$value <- 'standardized';a$init();a$run()
+    expect_equal(saved(),c(29/30.4375,28/30.4375,NA),tolerance=1e-10)
+})

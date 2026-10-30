@@ -5,7 +5,7 @@
   "menuGroup": "Survival Py",
   "menuSubgroup": "Data preparation",
   "menuTitle": "Time intervals (UTC core)",
-  "version": "0.3.46",
+  "version": "0.3.47",
   "jas": "1.2",
   "options": [
     {
@@ -105,14 +105,30 @@
         },
         {
           "name": "months",
-          "title": "Months (30.4375 days)"
+          "title": "Months"
         },
         {
           "name": "years",
-          "title": "Years (365.25 days)"
+          "title": "Years"
         }
       ],
       "default": "months"
+    },
+    {
+      "name": "time_basis",
+      "title": "Time basis",
+      "type": "List",
+      "options": [
+        {
+          "name": "standardized",
+          "title": "Standardized elapsed units"
+        },
+        {
+          "name": "calendar",
+          "title": "Calendar rollback anniversaries"
+        }
+      ],
+      "default": "standardized"
     },
     {
       "name": "use_landmark",

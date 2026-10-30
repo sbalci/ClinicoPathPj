@@ -7,7 +7,7 @@ pytimeintervalClass <- R6::R6Class(
         .run = function() {
             .cpjRun(self, "pytimeinterval",
                 clearOnInputError = TRUE,
-                options = c("dx_date", "fu_date", "time_format", "output_unit", "use_landmark", "landmark_time", "remove_negative", "remove_extreme", "extreme_multiplier", "confidence_level", "preview_rows", "include_quality_metrics", "show_summary", "calculated_time"),
+                options = c("dx_date", "fu_date", "time_format", "output_unit", "time_basis", "use_landmark", "landmark_time", "remove_negative", "remove_extreme", "extreme_multiplier", "confidence_level", "preview_rows", "include_quality_metrics", "show_summary", "calculated_time"),
                 arrays = character(0),
                 terms = character(0),
                 numeric = character(0),

@@ -1,7 +1,7 @@
 ---
 title: ClinicoPathPj - Python-Backed Analyses
 name: ClinicoPathPj
-version: 0.3.46
+version: 0.3.47
 jms: '1.0'
 authors: Serdar Balci
 maintainer: Serdar Balci <serdarbalci@serdarbalci.com>
@@ -422,6 +422,15 @@ datasets:
     tags:
       - Python
       - Time intervals
+      - Data preparation
+  - name: Calendar Anniversary Examples
+    path: python_calendar_interval_examples.csv
+    description: >-
+      Six synthetic month-end pairs comparing fixed-length durations with
+      calendar rollback anniversaries, including one missing end date.
+    tags:
+      - Python
+      - Calendar intervals
       - Data preparation
 
 ...

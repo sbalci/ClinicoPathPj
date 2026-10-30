@@ -832,3 +832,30 @@ sideload/restart, baseline/landmark/error/exclusion states, named saved output, 
 and fresh-engine reopen/rerun pass. The native artifacts independently retain source
 rows and expected intervals. Full native inventory qualification is not newly claimed;
 calendar-aware methods, broader platforms and full parity remain open.
+
+## Calendar-anniversary extension — 0.3.47
+
+Extend the existing `pytimeinterval` rather than add a duplicate entry. Keep the
+standardized default and expose calendar units explicitly. The current R method
+(`381df71e98e4fb460d44e5a6cc439a04289acfdd`) repairs fractional month ends by dividing
+by the span between rollback anniversaries; the original frozen baseline divided
+by the number of days in the rollback month. Preserve the original source hashes
+and add this feature-specific reference in the registry and frozen fixtures.
+Do not describe agreement with the corrected reference as parity with the original
+calendar formula.
+
+Calendar months/years use actual anniversary lengths, preserve UTC clocks and
+retain the existing exclusion/landmark/summary/output contracts. Days and weeks
+remain elapsed units under either basis. Disclose that calendar fractions are
+directional and do not supply constant-unit exposure denominators. Ten focused
+Python tests, including 408 independent R fixtures, pass. Numerical, native,
+compiler/package and desktop qualification continue in `python-time-intervals.md`.
+Inventory remains 26 partial targets, 35 planned, ten utilities, zero full-parity
+releases. Next: time-aware outcome preparation and remaining parser contracts.
+
+0.3.47 evidence: 408 date-pair oracles, 65 focused native assertions, 364 Python
+regressions and 26 packaged-runtime cases pass. Native macOS Sideload/restart,
+basis-specific outputs/metadata, old-file compatibility, HTML and fresh-engine
+persistence/recalculation pass. Unit labels are neutral across bases; fixed lengths
+are explained in the standardized definition. Full parity and broader qualification
+remain open.

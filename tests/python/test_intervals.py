@@ -1,10 +1,11 @@
 import sys
+import json
 import unittest
 from datetime import date,timedelta
 import numpy as np
 from cpjtest import ROOT,text,run_analysis
 sys.path.insert(0,str(ROOT/'inst/python'))
-from cpj_intervals import calculate,DAYS_PER_UNIT
+from cpj_intervals import calculate,DAYS_PER_UNIT,calendar_months
 from cpj_runtime import _decode,InputError
 
 
@@ -18,6 +19,36 @@ def calc(days,**kwargs):
 
 
 class Intervals(unittest.TestCase):
+    def test_calendar_matches_frozen_independent_R_reference(self):
+        from cpj_datetime import parse_value
+        fixture=json.loads((ROOT/'tests/fixtures/timeinterval-calendar.json').read_text())
+        self.assertEqual(len(fixture['cases']),408)
+        for row in fixture['cases']:
+            a=parse_value(row['start'],'ymdhms');b=parse_value(row['end'],'ymdhms')
+            with self.subTest(start=row['start'],end=row['end']):
+                self.assertAlmostEqual(calendar_months(a,b),row['months'],places=10)
+                self.assertAlmostEqual(calendar_months(a,b)/12,row['years'],places=10)
+
+    def test_calendar_month_end_boundary_and_fractional_clock(self):
+        from cpj_datetime import parse_value
+        a=parse_value('2024-01-31 15:30:00','ymdhms')
+        expected=[28/29,1,1+1/31]
+        for value,want in zip(['2024-02-28 15:30:00','2024-02-29 15:30:00','2024-03-01 15:30:00'],expected):
+            self.assertAlmostEqual(calendar_months(a,parse_value(value,'ymdhms')),want)
+        for start,end in [('0001-01-31','0001-01-01'),('9999-12-01','9999-12-31')]:
+            result=calendar_months(parse_value(start,'ymd'),parse_value(end,'ymd'))
+            self.assertAlmostEqual(abs(result),30/31)
+        r=calculate(_decode({'a':text(['2024-01-31']), 'b':text(['2024-02-29'])}),
+                    dict(dx_date='a',fu_date='b',time_basis='calendar'))
+        self.assertEqual(r['values'],[1]);self.assertEqual(r['basis'],'calendar')
+        r=calc([0,6,31],time_basis='calendar',use_landmark=True,landmark_time=6)
+        self.assertEqual(r['values'],[None,0,25])
+        r=run_analysis('pytimeinterval',{'a':text(['2024-01-31']),'b':text(['2024-02-29'])},
+                       dict(dx_date='a',fu_date='b',time_basis='calendar'),row_ids=['20'])
+        self.assertEqual(r['status'],'ok');self.assertEqual(r['outputs']['calculated_time']['values'],[1])
+        self.assertIn('basis: calendar',r['outputs']['calculated_time']['description'])
+        self.assertIn('calendar',r['texts']['summary'])
+
     def test_elapsed_units_and_arithmetic_summary(self):
         x=[0,1,2,6,10,30,31,60,365,366]
         for unit,divisor in DAYS_PER_UNIT.items():
@@ -86,7 +117,7 @@ class Intervals(unittest.TestCase):
     def test_same_role_and_unsupported_or_invalid_choices(self):
         r=calculate(_decode(dates([1,2])),dict(dx_date='start',fu_date='start',output_unit='days'))
         self.assertEqual(r['values'],[0,0])
-        for options in [dict(time_basis='calendar'),dict(time_format='auto'),dict(timezone='system'),
+        for options in [dict(time_basis='unknown'),dict(time_format='auto'),dict(timezone='system'),
                         dict(confidence_level=89),dict(extreme_multiplier=1),dict(remove_negative=1),
                         dict(preview_rows=10.5),dict(use_landmark=True,landmark_time=-1)]:
             with self.assertRaises(InputError):calc([1,2],**options)
