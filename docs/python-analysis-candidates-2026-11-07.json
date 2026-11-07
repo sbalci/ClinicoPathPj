@@ -1,0 +1,243 @@
+{
+  "schema_version": 1,
+  "review_date": "2026-11-07",
+  "review_document": "docs/python-ecosystem-review-2026-11-07.md",
+  "runtime_version_reviewed": "0.3.57",
+  "baseline": {
+    "targets": 61,
+    "partial": 27,
+    "planned": 34,
+    "utilities": 12,
+    "full_parity": 0
+  },
+  "scope_note": "Planning backlog only; does not register public identifiers or expand the frozen denominator",
+  "candidates": [
+    {
+      "key": "agreement-core",
+      "priority": "P1",
+      "family": "meddecide",
+      "existing_registry_targets": [
+        "pyagreement"
+      ],
+      "scope": "existing-target feature work",
+      "dependency_class": "A",
+      "first_contract": "Continuous agreement and explicitly selected balanced ICC",
+      "status": "proposed; not implemented by this review"
+    },
+    {
+      "key": "diagnostic-curves",
+      "priority": "P1",
+      "family": "meddecide",
+      "existing_registry_targets": [
+        "pyenhancedroc"
+      ],
+      "scope": "existing-target feature work",
+      "dependency_class": "A",
+      "first_contract": "Empirical ROC and threshold engine; separately specified PR/AP extension",
+      "status": "proposed; not implemented by this review"
+    },
+    {
+      "key": "paired-diagnostics",
+      "priority": "P1",
+      "family": "meddecide",
+      "existing_registry_targets": [
+        "pydecisioncompare"
+      ],
+      "scope": "existing-target feature work",
+      "dependency_class": "A",
+      "first_contract": "Paired test comparison with matched denominators",
+      "status": "proposed; not implemented by this review"
+    },
+    {
+      "key": "external-calibration",
+      "priority": "P1",
+      "family": "meddecide",
+      "existing_registry_targets": [
+        "pyenhancedroc",
+        "pydecisioncurve"
+      ],
+      "scope": "existing-target feature work",
+      "dependency_class": "A/B",
+      "first_contract": "Supplied prediction evaluation before recalibration fitting",
+      "status": "proposed; not implemented by this review"
+    },
+    {
+      "key": "between-estimation",
+      "priority": "P1",
+      "family": "jjstatsplot",
+      "existing_registry_targets": [
+        "pyjjbetweenstats",
+        "pyraincloud"
+      ],
+      "scope": "existing-target feature work",
+      "dependency_class": "A/B",
+      "first_contract": "Independent-group estimation and raw-data plots",
+      "status": "proposed; not implemented by this review"
+    },
+    {
+      "key": "paired-change",
+      "priority": "P1",
+      "family": "jjstatsplot",
+      "existing_registry_targets": [
+        "pyjjwithinstats",
+        "pylinechart"
+      ],
+      "scope": "existing-target feature work",
+      "dependency_class": "A/B",
+      "first_contract": "Two-occasion paired estimation before general repeated models",
+      "status": "proposed; not implemented by this review"
+    },
+    {
+      "key": "survival-km",
+      "priority": "P1",
+      "family": "jsurvival",
+      "existing_registry_targets": [
+        "pysurvival",
+        "pysinglearm"
+      ],
+      "scope": "existing-target feature work",
+      "dependency_class": "A/B",
+      "first_contract": "Deterministic KM and risk-table core",
+      "status": "proposed; not implemented by this review"
+    },
+    {
+      "key": "laboratory-regression",
+      "priority": "P2",
+      "family": "meddecide",
+      "existing_registry_targets": [],
+      "scope": "optional extension; registry allocation pending",
+      "dependency_class": "A/B",
+      "first_contract": "Assay Deming and Passing-Bablok extension after overlap review",
+      "status": "proposed; not implemented by this review"
+    },
+    {
+      "key": "equivalence",
+      "priority": "P2",
+      "family": "meddecide",
+      "existing_registry_targets": [],
+      "scope": "optional extension; registry allocation pending",
+      "dependency_class": "A/B",
+      "first_contract": "User-specified raw-unit equivalence bounds",
+      "status": "proposed; not implemented by this review"
+    },
+    {
+      "key": "reference-intervals",
+      "priority": "P2",
+      "family": "descriptives",
+      "existing_registry_targets": [],
+      "scope": "optional extension; registry allocation pending",
+      "dependency_class": "A/B",
+      "first_contract": "Explicit percentile/order-statistic reference-limit contract",
+      "status": "proposed; not implemented by this review"
+    },
+    {
+      "key": "biomarker-pca",
+      "priority": "P2",
+      "family": "descriptives",
+      "existing_registry_targets": [],
+      "scope": "optional extension; registry allocation pending",
+      "dependency_class": "A",
+      "first_contract": "PCA scores/loadings with original-row alignment",
+      "status": "proposed; not implemented by this review"
+    },
+    {
+      "key": "correspondence",
+      "priority": "P2",
+      "family": "descriptives",
+      "existing_registry_targets": [],
+      "scope": "optional extension; registry allocation pending",
+      "dependency_class": "A",
+      "first_contract": "Contingency-table geometry with stated normalization",
+      "status": "proposed; not implemented by this review"
+    },
+    {
+      "key": "laboratory-qc",
+      "priority": "P2",
+      "family": "oncopath",
+      "existing_registry_targets": [],
+      "scope": "optional extension; registry allocation pending",
+      "dependency_class": "A/B",
+      "first_contract": "Analytical precision and phase-aware monitoring",
+      "status": "proposed; not implemented by this review"
+    },
+    {
+      "key": "validation-pipeline",
+      "priority": "P2-P3",
+      "family": "meddecide",
+      "existing_registry_targets": [
+        "pylassologistic"
+      ],
+      "scope": "existing-target feature work",
+      "dependency_class": "B",
+      "first_contract": "Leakage-controlled patient-grouped evaluation contract",
+      "status": "proposed; not implemented by this review"
+    },
+    {
+      "key": "survival-regression",
+      "priority": "P2-P3",
+      "family": "jsurvival",
+      "existing_registry_targets": [
+        "pysurvival",
+        "pymultisurvival",
+        "pysurvivalcont",
+        "pylassocox"
+      ],
+      "scope": "existing-target feature work",
+      "dependency_class": "B/C",
+      "first_contract": "Cox ties/diagnostics, RMST and selection-aware cutpoints",
+      "status": "proposed; not implemented by this review"
+    },
+    {
+      "key": "survival-validation",
+      "priority": "P3",
+      "family": "jsurvival",
+      "existing_registry_targets": [],
+      "scope": "optional extension; registry allocation pending",
+      "dependency_class": "B/C",
+      "first_contract": "Censoring-aware supplied-prediction evaluation",
+      "status": "proposed; not implemented by this review"
+    },
+    {
+      "key": "evidence-synthesis",
+      "priority": "P3",
+      "family": "oncopath",
+      "existing_registry_targets": [
+        "pydiagnosticmeta"
+      ],
+      "scope": "existing-target feature work",
+      "dependency_class": "C",
+      "first_contract": "Bivariate synthesis distinct from current raw-study review",
+      "status": "proposed; not implemented by this review"
+    },
+    {
+      "key": "marker-screening",
+      "priority": "P3",
+      "family": "oncopath",
+      "existing_registry_targets": [],
+      "scope": "optional extension; registry allocation pending",
+      "dependency_class": "A/B",
+      "first_contract": "Design-aware marker effects and multiplicity",
+      "status": "proposed; not implemented by this review"
+    },
+    {
+      "key": "imported-embeddings",
+      "priority": "P3",
+      "family": "oncopath",
+      "existing_registry_targets": [],
+      "scope": "optional extension; registry allocation pending",
+      "dependency_class": "A/B; inference C",
+      "first_contract": "Exploration of externally extracted features with provenance",
+      "status": "proposed; not implemented by this review"
+    },
+    {
+      "key": "molecular-scoring",
+      "priority": "P3",
+      "family": "oncopath",
+      "existing_registry_targets": [],
+      "scope": "optional extension; registry allocation pending",
+      "dependency_class": "A/B",
+      "first_contract": "Offline versioned enrichment and sample-score contracts",
+      "status": "proposed; not implemented by this review"
+    }
+  ]
+}

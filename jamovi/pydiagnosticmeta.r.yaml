@@ -48,6 +48,35 @@
       ]
     },
     {
+      "name": "inclusion",
+      "title": "Applied Study Inclusion",
+      "type": "Table",
+      "visible": "(enable_inclusion)",
+      "rows": 0,
+      "columns": [
+        {
+          "name": "eligible",
+          "title": "Eligible Rows",
+          "type": "integer"
+        },
+        {
+          "name": "included",
+          "title": "Included Rows",
+          "type": "integer"
+        },
+        {
+          "name": "omitted",
+          "title": "Omitted Eligible Rows",
+          "type": "integer"
+        },
+        {
+          "name": "status",
+          "title": "Status",
+          "type": "text"
+        }
+      ]
+    },
+    {
       "name": "studies",
       "title": "Individual Study Results (Raw Counts)",
       "type": "Table",

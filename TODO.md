@@ -1,3 +1,31 @@
+# Research-informed queue — 2026-11-07
+
+- [x] Review JASP/jamovi catalogs, Orange/BioLab widgets, MedCalc manuals, GitHub sources and Hugging Face cards.
+- [x] Map 20 candidates to existing frozen targets or optional extensions; preserve the 61-target denominator.
+- [x] Reconcile local method-comparison, ICC, PR/AP, reference-interval, PCA, QC and survival drafts before proposing duplicate public entries.
+- [ ] Specify and implement the independent paired continuous core of `pyagreement`, then its declared balanced ICC branch.
+- [ ] Specify `pyenhancedroc` ROC/uncertainty and `pydecisioncompare` paired cores; define PR/AP and supplied-prediction calibration separately.
+- [ ] Specify independent/paired estimation cores for `pyjjbetweenstats` and `pyjjwithinstats`.
+- [ ] Specify deterministic KM/risk tables for `pysurvival` / `pysinglearm` and independently prototype advanced engines.
+- [ ] Review optional assay regression, equivalence, reference intervals, QC and PCA scopes before registry allocation.
+- [ ] Qualify offline dependency bundles before model-fitting pipelines; defer foundation-model inference and runtime network access.
+
+Source matrix and gates: [ecosystem review](docs/python-ecosystem-review-2026-11-07.md).
+Machine-readable proposal queue: [candidate backlog](docs/python-analysis-candidates-2026-11-07.json).
+
+# Applied diagnostic-study inclusion — 0.3.57
+
+- [x] Separate transient study inspection from inclusion preview and explicit Apply.
+- [x] Bind inclusion to complete source counts/labels/roles/row identities; preserve confidence changes.
+- [x] Update native inclusion audit, study results and forests without changing raw input audits.
+- [x] Support explicit empty inclusion and stale-state review/reapplication.
+- [x] Pass 58 focused Python/schema/registry/menu checks and DOM Apply/restore/empty/stale checks.
+- [x] Pass compiler, 74 native assertions and 29 packaged cases with inclusion subcases.
+- [x] Run 423 Python tests: 422 pass; one unrelated execution-alarm failure passes isolated recheck (retained as environment evidence).
+- [x] GUI Sideload, preview/Apply, confidence change, empty/stale recovery, six saved states, fresh-engine reopening and native HTML/static forest export.
+- [ ] Qualify the new inclusion checklist at 200 rows and remaining vector export formats.
+- [ ] Pooling/SROC, full method parity, wider platforms and clinical review remain open.
+
 # Linked diagnostic-study inspector — 0.3.56
 
 - [x] Add paired display-only forests using existing Python counts/intervals.
@@ -6,7 +34,10 @@
 - [x] Pass 54 focused Python/generator checks and synthetic DOM interaction harness.
 - [x] Complete compiler build, 52 native assertions, 29 packaged cases and 419 Python tests.
 - [x] GUI old-file compatibility, pointer/keyboard inspection, inspector clearing, fresh-engine save/reopen and HTML/native forest export.
-- [ ] Independently certify failure-state Image placeholder appearance, direct Save Image export and 200-row desktop interaction.
+- [x] Verify blank pending/strict Image placeholders, direct native specificity PNG export and 200-row desktop keyboard/scroll interaction.
+- [x] Preserve a reproducible 200-row synthetic fixture and independently check all exported values and intervals.
+- [x] Quit/relaunch jamovi and verify 200-row saved-file restoration in a fresh engine.
+- [ ] Qualify direct PDF/SVG/EPS export.
 - [ ] Applied filters, pooled models, broader platforms and accessibility certification remain open.
 
 # Oncology diagnostic-study review — 0.3.55

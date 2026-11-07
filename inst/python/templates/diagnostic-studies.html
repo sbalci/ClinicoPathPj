@@ -22,6 +22,17 @@
 <div class="study-list" role="group" aria-label="Study selection" aria-describedby="__ROOT__-help"></div>
 <p class="detail" role="status" aria-live="polite" aria-atomic="true"></p>
 <button class="reset" type="button">First study</button>
+<section class="inclusion-panel" hidden aria-label="Applied study inclusion">
+<h4>Study inclusion preview</h4>
+<p>Check the eligible source rows to include. Hovering or inspecting a study does not change this preview. Only Apply saves inclusion and reruns native tables and forests. Count validation still covers every supplied row. Data changes require review and reapplication.</p>
+<div class="inclusion-rows" style="max-height:180px;overflow:auto"></div>
+<p class="inclusion-preview" role="status" aria-live="polite"></p>
+<button class="include-all" type="button">Preview all eligible</button>
+<button class="include-none" type="button">Preview none</button>
+<button class="include-restore" type="button">Restore applied inclusion</button>
+<button class="include-apply" type="button">Apply study inclusion</button>
+<p class="inclusion-status" role="status" aria-live="polite"></p>
+</section>
 <div class="forest-scroll"><div class="forests"></div></div>
 <script>(function(){'use strict';
 const root=document.getElementById('__ROOT__'),payload=__PAYLOAD__,rows=payload.studies;
@@ -76,6 +87,27 @@ function svgNode(tag,attributes,parent,text){const node=document.createElementNS
   point.addEventListener('click',()=>choose(i,true));
  });
 });
+if(payload.inclusion){
+ const inclusion=payload.inclusion,panel=root.querySelector('.inclusion-panel');panel.hidden=false;
+ const applied=new Set(inclusion.included),checks=[];
+ const previewIds=()=>checks.filter(v=>v.input.checked).map(v=>v.id);
+ const refresh=()=>{root.querySelector('.inclusion-preview').textContent='Preview: '+previewIds().length+' of '+rows.length+' eligible rows. Applied: '+applied.size+'. '+(inclusion.valid?'':'Saved inclusion is stale; review and Apply again.');};
+ rows.forEach(r=>{
+  const label=document.createElement('label'),input=document.createElement('input');input.type='checkbox';input.checked=applied.has(r.sourceID);
+  label.appendChild(input);label.appendChild(document.createTextNode('Include '+r.study+' [row '+r.sourceID+']'));label.style.display='block';
+  root.querySelector('.inclusion-rows').appendChild(label);checks.push({input,id:r.sourceID});input.addEventListener('change',refresh);
+ });
+ root.querySelector('.include-all').addEventListener('click',()=>{checks.forEach(v=>{v.input.checked=true;});refresh();});
+ root.querySelector('.include-none').addEventListener('click',()=>{checks.forEach(v=>{v.input.checked=false;});refresh();});
+ root.querySelector('.include-restore').addEventListener('click',()=>{checks.forEach(v=>{v.input.checked=applied.has(v.id);});refresh();});
+ root.querySelector('.include-apply').addEventListener('click',()=>{
+  const status=root.querySelector('.inclusion-status'),ids=previewIds();
+  if(inclusion.valid&&ids.length===applied.size&&ids.every(id=>applied.has(id))){status.textContent='This inclusion is already applied.';return;}
+  if(typeof window.setOption!=='function'){status.textContent='Apply requires the native jamovi HTML option bridge.';return;}
+  window.setOption('inclusionDefinition',JSON.stringify({version:1,rows:ids,snapshot:inclusion.snapshot}));
+  status.textContent='Inclusion submitted. Native results update after the backend reruns.';
+ });refresh();
+}
 root.querySelector('.reset').addEventListener('click',()=>choose(0,true));
 display();
 })();</script>

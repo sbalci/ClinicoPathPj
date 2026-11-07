@@ -96,7 +96,7 @@ def check(path):
                 member='ClinicoPathPj/R/ClinicoPathPj/python/'+entry['source']
                 assert archive.read(member)==(ROOT/'inst/python'/entry['source']).read_bytes()
                 assert f"name: {entry['id']}\n" in manifest
-            for file in ['cpj_study_inspector.py','templates/diagnostic-studies.html','cpj_diagnostic_studies.py','cpj_identity.py','cpj_firstevent.py','cpj_censoring.py','cpj_intervals.py','cpj_datetime.py','cpj_outcomes.py','cpj_tableone.py','cpj_crosstable.py','cpj_alluvial.py','templates/alluvial.html','cpj_tree.py','cpj_outliers.py','cpj_sets.py','templates/sets.html','cpj_correlation.py','templates/correlation.html','cpj_ihc.py','templates/ihcheatmap.html','cpj_runtime.py','cpj_svg_cutoff.py','cpj_accuracy.py','cpj_registry.py','cpj_plots.py','cpj_descriptive.py','cpj_binning.py','cpj_demographics.py','cpj_quality.py','templates/quality.html','cpj_cutoff.py','cpj_single_quality.py','templates/single-quality.html','cpj_cutoff_analysis.py','templates/bridgecutoff.html','templates/d3cutoff.html','templates/observablecutoff.html','vendor/observable-plot-0.6.17.min.js','vendor/observable-inputs-0.12.0.min.js','vendor/htl-0.3.1.min.js','vendor/observable-plot-LICENSE.txt','vendor/observable-inputs-LICENSE.txt','vendor/htl-LICENSE.txt','vendor/observable-manifest.json','vendor/d3-7.9.0.min.js','vendor/d3-LICENSE.txt','registry.json','font-cache.json']:
+            for file in ['cpj_study_inclusion.py','cpj_study_inspector.py','templates/diagnostic-studies.html','cpj_diagnostic_studies.py','cpj_identity.py','cpj_firstevent.py','cpj_censoring.py','cpj_intervals.py','cpj_datetime.py','cpj_outcomes.py','cpj_tableone.py','cpj_crosstable.py','cpj_alluvial.py','templates/alluvial.html','cpj_tree.py','cpj_outliers.py','cpj_sets.py','templates/sets.html','cpj_correlation.py','templates/correlation.html','cpj_ihc.py','templates/ihcheatmap.html','cpj_runtime.py','cpj_svg_cutoff.py','cpj_accuracy.py','cpj_registry.py','cpj_plots.py','cpj_descriptive.py','cpj_binning.py','cpj_demographics.py','cpj_quality.py','templates/quality.html','cpj_cutoff.py','cpj_single_quality.py','templates/single-quality.html','cpj_cutoff_analysis.py','templates/bridgecutoff.html','templates/d3cutoff.html','templates/observablecutoff.html','vendor/observable-plot-0.6.17.min.js','vendor/observable-inputs-0.12.0.min.js','vendor/htl-0.3.1.min.js','vendor/observable-plot-LICENSE.txt','vendor/observable-inputs-LICENSE.txt','vendor/htl-LICENSE.txt','vendor/observable-manifest.json','vendor/d3-7.9.0.min.js','vendor/d3-LICENSE.txt','registry.json','font-cache.json']:
                 assert archive.read(f'ClinicoPathPj/R/ClinicoPathPj/python/{file}')==(ROOT/'inst/python'/file).read_bytes()
             assert archive.read('ClinicoPathPj/R/ClinicoPathPj/js/pysvgcutoff.js')==(ROOT/'inst/js/pysvgcutoff.js').read_bytes()
             assert archive.read('ClinicoPathPj/data/python_core_examples.omv')==(ROOT/'data/python_core_examples.omv').read_bytes()
@@ -142,6 +142,30 @@ def check(path):
                 assert 'No continuity correction' in result['texts']['summary']
                 assert 'Linked study inspector' in result['htmls']['explorer']
                 assert len(result['plots'])==2
+                inclusion_options=dict(options,enable_inclusion=True)
+                request.write_text(json.dumps(dict(analysis=name,columns=columns,options=inclusion_options)))
+                subprocess.run([sys.executable,'-B',str(runtime),str(request),str(response)],check=True,timeout=70)
+                initial=json.loads(response.read_text());assert initial['status']=='ok',initial.get('error')
+                snapshot=re.search(r'"snapshot": "([0-9a-f]{64})"',initial['htmls']['explorer'])[1]
+                inclusion_options['inclusionDefinition']=json.dumps(dict(version=1,rows=['2'],snapshot=snapshot))
+                request.write_text(json.dumps(dict(analysis=name,columns=columns,options=inclusion_options)))
+                subprocess.run([sys.executable,'-B',str(runtime),str(request),str(response)],check=True,timeout=70)
+                applied=json.loads(response.read_text());assert applied['status']=='ok',applied.get('error')
+                assert applied['tables']['inclusion']['rows'][0]['included']==1
+                assert [r['sourceID'] for r in applied['tables']['studies']['rows']]==['2']
+                assert applied['plots']['sensitivityPlot']['columns']['estimate']==[0]
+                inclusion_options['inclusionDefinition']=json.dumps(dict(version=1,rows=[],snapshot=snapshot))
+                request.write_text(json.dumps(dict(analysis=name,columns=columns,options=inclusion_options)))
+                subprocess.run([sys.executable,'-B',str(runtime),str(request),str(response)],check=True,timeout=70)
+                empty=json.loads(response.read_text());assert empty['status']=='ok',empty.get('error')
+                assert not empty['tables']['studies']['rows'] and not empty['plots']
+                assert 'explorer' in empty['htmls']
+                changed=dict(columns,tp=numeric([9,0,None]))
+                request.write_text(json.dumps(dict(analysis=name,columns=changed,options=inclusion_options)))
+                subprocess.run([sys.executable,'-B',str(runtime),str(request),str(response)],check=True,timeout=70)
+                stale=json.loads(response.read_text());assert stale['status']=='ok',stale.get('error')
+                assert 'Input changed' in stale['tables']['inclusion']['rows'][0]['status']
+                assert not stale['tables']['studies']['rows'] and not stale['plots']
             if name=='pyfirstevent':
                 assert result['outputs']['timeOut']['values']==[2,2,None]
                 assert result['outputs']['statusOut']['values']==[1,0,None]

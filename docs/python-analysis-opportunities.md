@@ -1,5 +1,10 @@
 # Python opportunities for ClinicoPath — web review, 2026-10-26
 
+> Updated priority review: [2026-11-07 ecosystem comparison](python-ecosystem-review-2026-11-07.md)
+> covers JASP, jamovi, Orange, MedCalc, GitHub and Hugging Face. Use its ranked queue
+> for current decisions. The gallery/book review below remains a historical source
+> record; several former near-term candidates are already partial implementations.
+
 This is a researched candidate backlog, not an implementation or clinical-validation claim.
 Recommendations below are our assessment of clinicopathological usefulness. They do not
 expand the frozen 61-analysis migration denominator or register new public identifiers.

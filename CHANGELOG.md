@@ -1,4 +1,14 @@
+# 0.3.57 — 2026-11-07
+
+- Add optional explicit study inclusion with a separate preview and Apply workflow.
+- Bind saved inclusion to source input snapshots and clear stale native study results.
+- Audit applied inclusion separately while retaining complete input/exclusion audits.
+- Preserve old defaults, count validation, per-study Wilson methods and ordinary hover/inspection.
+- Keep all pooling, SROC and selection-adjusted inference outside this increment.
+
 # 0.3.56 — 2026-11-07
+
+- Qualify 200-study desktop keyboard/scroll navigation, failure-state blank plots, fresh-engine reopen and direct native PNG export; add reproducible artifact/oracle checks.
 
 - Add a display-only linked study inspector to pydiagnosticmeta with raw count and paired interval readouts.
 - Preserve native study results; provide transient pointer/keyboard selection without host option changes.

@@ -4,7 +4,7 @@ SPEC = {'name': 'pydiagnosticmeta',
  'title': 'Diagnostic Meta-Analysis: Study Review (Python)',
  'menuGroup': 'OncoPath Py',
  'menuSubgroup': 'Evidence review',
- 'version': '0.3.56',
+ 'version': '0.3.57',
  'clearOnInputError': True,
  'options': [{'name': 'study',
               'title': 'Study identifier',
@@ -61,7 +61,15 @@ SPEC = {'name': 'pydiagnosticmeta',
              {'name': 'show_explorer',
               'title': 'Linked study inspector (includes native forests)',
               'type': 'Bool',
-              'default': False}],
+              'default': False},
+             {'name': 'enable_inclusion',
+              'title': 'Study inclusion (Apply in linked inspector)',
+              'type': 'Bool',
+              'default': False},
+             {'name': 'inclusionDefinition',
+              'title': 'Saved study inclusion definition',
+              'type': 'String',
+              'default': ''}],
  'results': [{'name': 'summary', 'title': 'Implemented Scope', 'type': 'Text'},
              {'name': 'cohort',
               'title': 'Study Row Audit',
@@ -74,6 +82,14 @@ SPEC = {'name': 'pydiagnosticmeta',
                           {'name': 'repeatedIDs',
                            'title': 'Repeated Input IDs',
                            'type': 'integer'}]},
+             {'name': 'inclusion',
+              'title': 'Applied Study Inclusion',
+              'type': 'Table',
+              'visible': '(enable_inclusion)',
+              'columns': [{'name': 'eligible', 'title': 'Eligible Rows', 'type': 'integer'},
+                          {'name': 'included', 'title': 'Included Rows', 'type': 'integer'},
+                          {'name': 'omitted', 'title': 'Omitted Eligible Rows', 'type': 'integer'},
+                          {'name': 'status', 'title': 'Status', 'type': 'text'}]},
              {'name': 'studies',
               'title': 'Individual Study Results (Raw Counts)',
               'type': 'Table',
@@ -171,6 +187,10 @@ SPEC = {'name': 'pydiagnosticmeta',
                                                   'maxItemCount': 1,
                                                   'isTarget': True}]}]},
                      {'type': 'CollapseBox',
+                      'label': 'Analysis and Inclusion',
+                      'collapsed': False,
+                      'children': [{'type': 'CheckBox', 'name': 'enable_inclusion'}]},
+                     {'type': 'CollapseBox',
                       'label': 'Uncertainty and Validation',
                       'collapsed': False,
                       'children': [{'type': 'TextBox',
@@ -195,7 +215,12 @@ SPEC = {'name': 'pydiagnosticmeta',
                      {'type': 'CollapseBox',
                       'label': 'Advanced Settings',
                       'collapsed': True,
-                      'children': [{'type': 'CheckBox', 'name': 'showConsole'}]}]}}
+                      'children': [{'type': 'TextBox',
+                                    'name': 'inclusionDefinition',
+                                    'format': 'string',
+                                    'enable': '(enable_inclusion)',
+                                    'stretchFactor': 1},
+                                   {'type': 'CheckBox', 'name': 'showConsole'}]}]}}
 
 def run(data, options, out):
     from cpj_diagnostic_studies import calculate
@@ -204,10 +229,23 @@ def run(data, options, out):
     if r['pending']:
         out.info(r['pending']);out.markdown('summary',md_escape(r['pending']));return
     identity=r['identity']
+    inclusion=None
+    studies=r['studies']
+    if options.get('enable_inclusion',False):
+        from cpj_study_inclusion import prepare
+        inclusion=prepare(data,options,r,out.row_ids)
+        studies=inclusion['selected']
+        state='Applied to current input' if inclusion['valid'] else 'Input changed: review and Apply again'
+        out.row('inclusion',eligible=inclusion['eligible'],included=len(studies),
+                omitted=inclusion['omitted'],status=state)
+        if not inclusion['valid']:
+            out.warn('Saved study inclusion no longer matches these inputs. No native study rows or forests are shown until you review and Apply again. The inspector shows all eligible rows for review.')
+        elif not studies:
+            out.info('No eligible studies are included. Review the inclusion preview and Apply to include studies again.')
     out.row('cohort',input=r['input'],retained=len(r['studies']),excluded=len(r['excluded']),
             zero=r['zero'],missingIDs=identity['missing'],repeatedIDs=identity['repeatedSubjects'])
     if options.get('show_studies',True):
-        for row in r['studies']:out.row('studies',**row)
+        for row in studies:out.row('studies',**row)
     if options.get('show_excluded',True):
         for row in r['excluded']:out.row('excluded',**row)
     out.markdown('summary',md_escape('Partial Python port: individual-study review only. Sensitivity and specificity use raw TP/FP/FN/TN counts with '+str(r['confidence'])+'% pointwise Wilson score intervals. No continuity correction, study weights, pooled estimate, bivariate model, SROC, heterogeneity test, meta-regression or publication-bias analysis is calculated. One row represents one supplied 2x2 table; repeated study IDs are not merged. Verify participant independence within each study and study/reader/threshold definitions before later synthesis.'))
@@ -215,12 +253,14 @@ def run(data, options, out):
     if r['excluded']:out.warn(str(len(r['excluded']))+' study row(s) excluded for missing or invalid counts; see the exclusion audit. Counts were not rounded or continuity-corrected.')
     if identity['missing'] or identity['repeatedSubjects']:out.warn('Study IDs include '+str(identity['missing'])+' unknown row(s) and '+str(identity['repeatedSubjects'])+' repeated label(s). Source rows remain separate; do not treat repeated cohorts/readers/thresholds as independent studies in later pooling.')
     if not r['studies']:out.info('No eligible 2x2 study rows remain. Review the exclusion audit; no forest plots are produced.')
-    if (options.get('forest_plot',False) or options.get('show_explorer',False)) and r['studies']:
+    if (options.get('forest_plot',False) or options.get('show_explorer',False)) and studies:
         for target,metric,low,high,title in [('sensitivityPlot','sensitivity','seLower','seUpper','Sensitivity'),('specificityPlot','specificity','spLower','spUpper','Specificity')]:
-            rows=[dict(label=v['study']+' [row '+v['sourceID']+']',estimate=v[metric],lower=v[low],upper=v[high]) for v in r['studies'][:r['limit']]]
+            rows=[dict(label=v['study']+' [row '+v['sourceID']+']',estimate=v[metric],lower=v[low],upper=v[high]) for v in studies[:r['limit']]]
             out.plot(target,rows,xlab=title+' (pointwise Wilson interval)',ylab='Study source rows')
-        if len(r['studies'])>r['limit']:out.info('Forest plots display the first '+str(r['limit'])+' retained source rows in input order; all retained rows remain in the native study table when enabled. No pooled row or weight-based marker sizing is used.')
+        if len(studies)>r['limit']:out.info('Forest plots display the first '+str(r['limit'])+' retained source rows in input order; all retained rows remain in the native study table when enabled. No pooled row or weight-based marker sizing is used.')
     if options.get('show_explorer',False) and r['studies']:
         from cpj_study_inspector import render
-        out.html('explorer',render(r['studies'],r['confidence']))
-    if options.get('show_report',False):out.markdown('report',md_escape('Reviewed '+str(len(r['studies']))+' of '+str(r['input'])+' supplied study rows; '+str(len(r['excluded']))+' excluded and '+str(r['zero'])+' retained rows contain a zero cell. Study intervals use raw counts. These results are descriptive study-level review and do not provide a pooled test-accuracy conclusion.'))
+        out.html('explorer',render(r['studies'],r['confidence'],inclusion))
+    if inclusion is not None:
+        out.note('studies','Explicit study inclusion applies to this table and native forests only. The row audit and count-exclusion audit describe all supplied input; the inspector retains all eligible rows. Inclusion changes no raw counts, data rows or per-study interval method.')
+    if options.get('show_report',False):out.markdown('report',md_escape('Native results include '+str(len(studies))+' eligible studies. Reviewed '+str(len(r['studies']))+' of '+str(r['input'])+' supplied study rows; '+str(len(r['excluded']))+' excluded and '+str(r['zero'])+' retained rows contain a zero cell. Study intervals use raw counts. These results are descriptive study-level review and do not provide a pooled test-accuracy conclusion.'))

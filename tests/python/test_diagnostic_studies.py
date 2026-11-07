@@ -36,7 +36,8 @@ class DiagnosticStudies(unittest.TestCase):
         self.assertNotIn('<',encoded);self.assertNotIn('&',encoded)
         self.assertEqual(json.loads(encoded),dict(studies=r['studies'],confidence=95))
         self.assertNotIn('<img',html)
-        self.assertNotIn('setOption',html);self.assertNotIn('fetch(',html)
+        self.assertNotIn('fetch(',html)
+        self.assertNotIn('\"inclusion\":',encoded)
 
     def test_inspector_bounds_and_all_excluded_outputs(self):
         from cpj_study_inspector import render
@@ -52,10 +53,72 @@ class DiagnosticStudies(unittest.TestCase):
         source=ROOT/'inst/python/analyses/oncopath/pydiagnosticmeta.py'
         spec=next(ast.literal_eval(n.value) for n in ast.parse(source.read_text()).body
                   if isinstance(n,ast.Assign) and any(isinstance(t,ast.Name) and t.id=='SPEC' for t in n.targets))
-        self.assertEqual([v['name'] for v in spec['options'][:-1]],list(OPTIONS)+[
+        self.assertEqual([v['name'] for v in spec['options'][:-3]],list(OPTIONS)+[
             'confidence_level','reject_invalid','show_studies','show_excluded','forest_plot','plot_limit','show_report'])
-        self.assertEqual(spec['options'][-1]['name'],'show_explorer')
-        self.assertIs(spec['options'][-1]['default'],False)
+        self.assertEqual(spec['options'][-3]['name'],'show_explorer')
+        self.assertIs(spec['options'][-3]['default'],False)
+
+    def test_inclusion_is_explicit_original_order_and_audited(self):
+        from cpj_study_inclusion import prepare
+        d=_decode(data());r=calculate(d,OPTIONS)
+        state=prepare(d,OPTIONS,r,None)
+        self.assertEqual(state['included'],[str(i) for i in range(1,9)])
+        definition=json.dumps(dict(version=1,rows=['7','1'],snapshot=state['snapshot']))
+        opts=dict(OPTIONS,enable_inclusion=True,inclusionDefinition=definition,
+                  show_explorer=True,show_report=True)
+        result=run_analysis('pydiagnosticmeta',data(),opts)
+        self.assertEqual(result['status'],'ok',result.get('error'))
+        rows=result['tables']['studies']['rows']
+        self.assertEqual([v['sourceID'] for v in rows],['1','7'])
+        self.assertEqual(rows,[r['studies'][0],r['studies'][6]])
+        self.assertEqual(result['tables']['inclusion']['rows'][0],dict(eligible=8,included=2,omitted=6,status='Applied to current input'))
+        self.assertEqual(result['tables']['cohort']['rows'][0]['retained'],8)
+        self.assertEqual(result['plots']['specificityPlot']['columns']['estimate'],[.9,.9])
+        self.assertEqual(len(result['tables']['excluded']['rows']),4)
+
+    def test_empty_stale_and_disabled_inclusion_never_fall_back_silently(self):
+        from cpj_study_inclusion import prepare
+        d=_decode(data());r=calculate(d,OPTIONS);state=prepare(d,OPTIONS,r,None)
+        definition=json.dumps(dict(version=1,rows=[],snapshot=state['snapshot']))
+        opts=dict(OPTIONS,enable_inclusion=True,inclusionDefinition=definition,show_explorer=True)
+        empty=run_analysis('pydiagnosticmeta',data(),opts)
+        self.assertFalse(empty['tables']['studies']['rows']);self.assertFalse(empty['plots'])
+        self.assertIn('explorer',empty['htmls'])
+        changed=data();changed['TP']['values'][0]=81
+        stale=run_analysis('pydiagnosticmeta',changed,opts)
+        self.assertEqual(stale['tables']['inclusion']['rows'][0]['status'],'Input changed: review and Apply again')
+        self.assertFalse(stale['tables']['studies']['rows']);self.assertFalse(stale['plots'])
+        self.assertIn('explorer',stale['htmls'])
+        disabled=run_analysis('pydiagnosticmeta',changed,dict(opts,enable_inclusion=False,inclusionDefinition='invalid'))
+        self.assertEqual(len(disabled['tables']['studies']['rows']),8)
+        self.assertNotIn('inclusion',disabled['tables'])
+
+    def test_snapshot_guards_data_ids_roles_and_order_but_not_confidence(self):
+        from cpj_study_inclusion import prepare
+        d=_decode(data());r=calculate(d,OPTIONS);state=prepare(d,OPTIONS,r,None)
+        definition=json.dumps(dict(version=1,rows=['1'],snapshot=state['snapshot']))
+        opts=dict(OPTIONS,inclusionDefinition=definition)
+        ci=dict(opts,confidence_level=99)
+        self.assertTrue(prepare(d,ci,calculate(d,ci),None)['valid'])
+        for column,index,value in [('TP',0,81),('TP',9,2),('Study',0,'renamed')]:
+            raw=data();raw[column]['values'][index]=value;changed=_decode(raw)
+            self.assertFalse(prepare(changed,opts,calculate(changed,opts),None)['valid'])
+        ids=[str(i+2) for i in range(12)]
+        self.assertFalse(prepare(d,opts,calculate(d,opts,ids),ids)['valid'])
+        raw=data();reversed_data={k:dict(v,values=v['values'][::-1]) for k,v in raw.items()};changed=_decode(reversed_data)
+        self.assertFalse(prepare(changed,opts,calculate(changed,opts),None)['valid'])
+
+    def test_inclusion_rejects_malformed_definitions_and_noneligible_rows(self):
+        from cpj_study_inclusion import prepare
+        d=_decode(data());r=calculate(d,OPTIONS);state=prepare(d,OPTIONS,r,None)
+        good=dict(version=1,rows=['1'],snapshot=state['snapshot'])
+        for value in [None,'x','x'*30001,json.dumps([]),json.dumps(dict(good,version=True)),
+                      json.dumps(dict(good,rows=['1','1'])),json.dumps(dict(good,snapshot='bad')),
+                      json.dumps(dict(good,rows=[1])),json.dumps(dict(good,extra=1))]:
+            with self.assertRaises(InputError):prepare(d,dict(OPTIONS,inclusionDefinition=value),r,None)
+        for row in ['9','unknown']:
+            self.assertFalse(prepare(d,dict(OPTIONS,inclusionDefinition=json.dumps(dict(good,rows=[row]))),r,None)['valid'])
+        with self.assertRaises(InputError):prepare(d,OPTIONS,r,['1']*12)
 
     def test_wilson_agrees_with_base_R_score_intervals(self):
         fixtures=json.loads((ROOT/'tests/fixtures/diagnostic-study-wilson.json').read_text())

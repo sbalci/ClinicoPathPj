@@ -19,6 +19,8 @@ pydiagnosticmetaOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6
             plot_limit = 20,
             show_report = FALSE,
             show_explorer = FALSE,
+            enable_inclusion = FALSE,
+            inclusionDefinition = "",
             showConsole = FALSE, ...) {
 
             super$initialize(
@@ -94,6 +96,14 @@ pydiagnosticmetaOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6
                 "show_explorer",
                 show_explorer,
                 default=FALSE)
+            private$..enable_inclusion <- jmvcore::OptionBool$new(
+                "enable_inclusion",
+                enable_inclusion,
+                default=FALSE)
+            private$..inclusionDefinition <- jmvcore::OptionString$new(
+                "inclusionDefinition",
+                inclusionDefinition,
+                default="")
             private$..showConsole <- jmvcore::OptionBool$new(
                 "showConsole",
                 showConsole,
@@ -112,6 +122,8 @@ pydiagnosticmetaOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6
             self$.addOption(private$..plot_limit)
             self$.addOption(private$..show_report)
             self$.addOption(private$..show_explorer)
+            self$.addOption(private$..enable_inclusion)
+            self$.addOption(private$..inclusionDefinition)
             self$.addOption(private$..showConsole)
         }),
     active = list(
@@ -128,6 +140,8 @@ pydiagnosticmetaOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6
         plot_limit = function() private$..plot_limit$value,
         show_report = function() private$..show_report$value,
         show_explorer = function() private$..show_explorer$value,
+        enable_inclusion = function() private$..enable_inclusion$value,
+        inclusionDefinition = function() private$..inclusionDefinition$value,
         showConsole = function() private$..showConsole$value),
     private = list(
         ..study = NA,
@@ -143,6 +157,8 @@ pydiagnosticmetaOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6
         ..plot_limit = NA,
         ..show_report = NA,
         ..show_explorer = NA,
+        ..enable_inclusion = NA,
+        ..inclusionDefinition = NA,
         ..showConsole = NA)
 )
 
@@ -152,6 +168,7 @@ pydiagnosticmetaResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6
     active = list(
         summary = function() private$.items[["summary"]],
         cohort = function() private$.items[["cohort"]],
+        inclusion = function() private$.items[["inclusion"]],
         studies = function() private$.items[["studies"]],
         excluded = function() private$.items[["excluded"]],
         sensitivityPlot = function() private$.items[["sensitivityPlot"]],
@@ -200,6 +217,29 @@ pydiagnosticmetaResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6
                         `name`="repeatedIDs", 
                         `title`="Repeated Input IDs", 
                         `type`="integer"))))
+            self$add(jmvcore::Table$new(
+                options=options,
+                name="inclusion",
+                title="Applied Study Inclusion",
+                visible="(enable_inclusion)",
+                rows=0,
+                columns=list(
+                    list(
+                        `name`="eligible", 
+                        `title`="Eligible Rows", 
+                        `type`="integer"),
+                    list(
+                        `name`="included", 
+                        `title`="Included Rows", 
+                        `type`="integer"),
+                    list(
+                        `name`="omitted", 
+                        `title`="Omitted Eligible Rows", 
+                        `type`="integer"),
+                    list(
+                        `name`="status", 
+                        `title`="Status", 
+                        `type`="text"))))
             self$add(jmvcore::Table$new(
                 options=options,
                 name="studies",
@@ -322,7 +362,7 @@ pydiagnosticmetaBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
             super$initialize(
                 package = "ClinicoPathPj",
                 name = "pydiagnosticmeta",
-                version = c(0,3,56),
+                version = c(0,3,57),
                 options = options,
                 results = pydiagnosticmetaResults$new(options=options),
                 data = data,
@@ -352,11 +392,14 @@ pydiagnosticmetaBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
 #' @param plot_limit .
 #' @param show_report .
 #' @param show_explorer .
+#' @param enable_inclusion .
+#' @param inclusionDefinition .
 #' @param showConsole .
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$summary} \tab \tab \tab \tab \tab a text \cr
 #'   \code{results$cohort} \tab \tab \tab \tab \tab a table \cr
+#'   \code{results$inclusion} \tab \tab \tab \tab \tab a table \cr
 #'   \code{results$studies} \tab \tab \tab \tab \tab a table \cr
 #'   \code{results$excluded} \tab \tab \tab \tab \tab a table \cr
 #'   \code{results$sensitivityPlot} \tab \tab \tab \tab \tab an image \cr
@@ -388,6 +431,8 @@ pydiagnosticmeta <- function(
     plot_limit = 20,
     show_report = FALSE,
     show_explorer = FALSE,
+    enable_inclusion = FALSE,
+    inclusionDefinition = "",
     showConsole = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
@@ -422,6 +467,8 @@ pydiagnosticmeta <- function(
         plot_limit = plot_limit,
         show_report = show_report,
         show_explorer = show_explorer,
+        enable_inclusion = enable_inclusion,
+        inclusionDefinition = inclusionDefinition,
         showConsole = showConsole)
 
     analysis <- pydiagnosticmetaClass$new(

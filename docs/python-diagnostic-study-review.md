@@ -65,7 +65,8 @@ inspection remains planned; static export is qualified separately below.
 | Heterogeneity, moderators, Deeks/funnel analyses | Omitted |
 | Continuity-correction sensitivity analyses | Omitted |
 | Display-only linked forest inspection | Implemented in 0.3.56 |
-| Applied study filters and SROC linking | Planned |
+| Explicit study inclusion | Implemented 0.3.57; snapshot-bound Apply with native audit |
+| SROC linking and selection-adjusted inference | Planned |
 | Full baseline parity and clinical/platform release acceptance | Pending |
 
 This review core is not a meta-analysis estimate. In particular, it does not pool
@@ -185,3 +186,109 @@ Evidence and limits: [0.3.56 checks](validation-exports/python-study-inspector-0
 This remains a partial study-review core; applied filtering and all pooling/SROC
 methods are outside the implemented scope. Inventory remains 27 partial ports,
 34 planned targets, 12 utilities and zero full-parity releases.
+
+
+## Supplemental desktop qualification — 2026-11-07
+
+The existing 0.3.56 package now passes the 200-study desktop interaction check.
+A separate synthetic copy cycles eight count patterns through 200 unique study
+labels. End selects study 200 and scrolls its button and both highlighted forest
+rows into view; Down clamps there. Home returns to study 1 and Up clamps there.
+Tab leaves the list for First study, Shift+Tab returns to the remembered study,
+and native Space/Return activation preserves the selection. The outer results
+page remains stable during endpoint selection.
+
+Removing TN clears the inspector, table values and plot marks. Strict rejection
+on the original invalid-count example likewise clears the marks. Native Image
+titles and blank reserved plot space remain visible; these are empty placeholders,
+not stale forests. Restoring TN recovers all 200 retained rows. Save only after
+backend calculation completes: the final saved fixture contains both native PNG
+resources. After quitting and relaunching jamovi, reopening this 200-row fixture restores
+both native forests, the 200/200 report and the inspector at source row 1.
+
+Direct native export was exercised through the specificity image's context menu
+and PNG format. Its 1800 × 1600 output was visually inspected and passes PNG CRC
+and decompression checks. Direct PDF/SVG/EPS exports remain unqualified.
+
+The exported native study table contains all 200 rows; static forests retain the
+separately disclosed 20-row display cap. A stdlib-only independent Wilson formula
+checks 1,200 full-precision inspector values to 1e-12 and 1,200 native displayed
+values within 0.05 percentage points (their one-decimal percentage rounding).
+This repeated-pattern fixture validates transport, alignment, bounds and display;
+it adds eight distinct count patterns, not 200 independent statistical scenarios.
+
+Reproduce the source and artifact checks with:
+
+```sh
+python3 data-raw/generate-study-inspector-maximum.py
+python3 tools/check-study-inspector-desktop.py
+```
+
+See [supplemental evidence](validation-exports/python-study-inspector-0.3.56-desktop-checks.json).
+No runtime code, defaults, statistical method, package version or inventory changed.
+Applied study inclusion remains the next feature milestone, followed by separate
+validated pooling/SROC work. This update does not establish full-parity or clinical
+release readiness.
+
+
+## Applied study inclusion — 0.3.57
+
+A separate inclusion preview now lets users check eligible source rows and press
+Apply. All/none/restore buttons affect only that preview. Hover, the existing study
+buttons and forest-point inspection never change inclusion. Apply uses the native
+HTML option bridge to save a versioned definition and rerun the Python backend.
+Without that bridge the control explains why it cannot apply; it does not pretend
+to update native results.
+
+The native Applied Study Inclusion table reports eligible, included and omitted
+eligible rows plus status. Individual study results and native forests use the
+applied set in original source order. The input audit, invalid-count exclusions
+and inspector keep the full cohort, so omitted studies remain available for review.
+An explicit empty set yields empty native study results/forests and a notice,
+while the inspector remains available to reinclude eligible studies.
+
+The definition is bound by SHA-256 to selected source roles, original row IDs,
+exact labels and every supplied raw count, including invalid rows. Input changes
+invalidate the saved inclusion: no silent all-study fallback occurs. A stale
+inspector starts with no included rows, explains the status and requires review
+and Apply. Confidence changes preserve inclusion because they do not change the
+input snapshot. Malformed definitions are rejected and may be cleared under
+Advanced Settings. Disabling inclusion restores all eligible studies without
+altering the stored definition. Enabling it with a blank definition starts with
+all eligible studies. No dataset rows, count values or interval methods change.
+Strict invalid-count rejection still applies to the complete supplied input.
+
+Initial evidence: 58 focused checks and the DOM Apply harness pass. New archive,
+native lifecycle and GUI evidence will be recorded separately. This introduces no
+pooled model, selection-adjusted inference or clinical release claim.
+
+
+0.3.57 qualification completed within the following scope:
+
+- 58 focused Python/schema/registry/menu checks and the DOM Apply harness pass.
+- 74 native R assertions pass, covering subset order, confidence preservation,
+  stale/empty/malformed clearing and recovery. Sandbox permission diagnostics remain
+  in the log; test failures/errors/warnings/skips are zero.
+- Full compiler/R build, generator/status freshness and 29 packaged runtime cases
+  pass. Packaged inclusion subcases cover all-eligible, one included row, empty and
+  stale results. Installed bridge/UI/Python assets match the reviewed archive.
+- The full Python run completed 423 tests with one unrelated correlation runtime
+  execution-alarm failure (exit -14) during concurrent building. That exact test
+  passes the isolated recheck in 0.905 seconds. The original run remains recorded
+  as 422/423, not relabelled uniformly green.
+- macOS GUI Sideload and restart, old-file default-off, preview 2/applied 8 before
+  Apply, subset source rows 1/7 after Apply, confidence 99 preservation, explicit
+  empty set, stale count change 80→81, review/reapply and fresh-engine reopening pass.
+- Six synthetic saved states preserve all source inputs except the deliberate TP
+  edit. Empty/stale saves contain no forest PNG resources; valid states contain 2.
+  Native HTML export has the 8/2/6 inclusion audit, source rows 1/7 and 99 percent
+  intervals checked independently at displayed precision; the inspector retains 8
+  eligible rows. Native static PNG counterparts are 1437×1277.
+
+Reproduce artifact checks with `python3 tools/check-study-inclusion-artifacts.py`.
+The [evidence record](validation-exports/python-study-inclusion-0.3.57-checks.json)
+links separate logs and limits. Compiler-generated header whitespace is retained;
+hand-written-file diff checks pass. New inclusion-checklist interaction at 200 rows,
+direct vector exports, broader accessibility/platform tests, full native module
+regression and clinical review remain pending. The earlier 200-row inspector
+qualification does not automatically qualify this new checkbox checklist.

@@ -79,6 +79,17 @@
     },
     {
       "type": "CollapseBox",
+      "label": "Analysis and Inclusion",
+      "collapsed": false,
+      "children": [
+        {
+          "type": "CheckBox",
+          "name": "enable_inclusion"
+        }
+      ]
+    },
+    {
+      "type": "CollapseBox",
       "label": "Uncertainty and Validation",
       "collapsed": false,
       "children": [
@@ -138,6 +149,13 @@
       "label": "Advanced Settings",
       "collapsed": true,
       "children": [
+        {
+          "type": "TextBox",
+          "name": "inclusionDefinition",
+          "format": "string",
+          "enable": "(enable_inclusion)",
+          "stretchFactor": 1
+        },
         {
           "type": "CheckBox",
           "name": "showConsole"

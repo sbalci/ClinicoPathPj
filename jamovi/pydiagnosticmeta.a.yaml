@@ -5,7 +5,7 @@
   "menuGroup": "OncoPath Py",
   "menuSubgroup": "Evidence review",
   "menuTitle": "Diagnostic study review",
-  "version": "0.3.56",
+  "version": "0.3.57",
   "jas": "1.2",
   "options": [
     {
@@ -109,6 +109,18 @@
       "title": "Linked study inspector (includes native forests)",
       "type": "Bool",
       "default": false
+    },
+    {
+      "name": "enable_inclusion",
+      "title": "Study inclusion (Apply in linked inspector)",
+      "type": "Bool",
+      "default": false
+    },
+    {
+      "name": "inclusionDefinition",
+      "title": "Saved study inclusion definition",
+      "type": "String",
+      "default": ""
     },
     {
       "name": "showConsole",
