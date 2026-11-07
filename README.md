@@ -8,7 +8,7 @@ so users install nothing.
 Current direction and implemented/pending work: [revised migration plan](docs/python-migration-plan.md).
 See also the [web-researched Python analysis candidates](docs/python-analysis-opportunities.md).
 
-Status: experimental, 0.3.53 (descriptives and data preparation; full migration remains incomplete). Verified only on jamovi 28.13 for macOS (Apple Silicon), with
+Status: experimental, 0.3.54 (descriptives and data preparation; full migration remains incomplete). Verified only on jamovi 28.13 for macOS (Apple Silicon), with
 jmvtools 28.4.
 
 Analyses now use compact family menus: **Descriptives Py**, **Stats Plots Py**,
@@ -42,7 +42,7 @@ Open **Data Library > ClinicoPathPj > Python Core Examples**, or import
 `data/python_core_examples.csv`, for the synthetic examples.
 
 Build the single standard module without installing it:
-`Rscript --vanilla tools/build.R --build-only` → `ClinicoPathPj_0.3.53.jmo`.
+`Rscript --vanilla tools/build.R --build-only` → `ClinicoPathPj_0.3.54.jmo`.
 After replacing a loaded development build, use a fresh jamovi engine to avoid stale namespaces.
 
 `pywelch` reports the mean difference as *comparison minus reference*. The reference defaults to
@@ -582,3 +582,18 @@ the strict setting blocks preparation until IDs are unique and known. The audit
 counts all supplied records and preserves existing endpoint calculations and saved
 row alignment. No patient aggregation or event-history ordering is performed.
 See [scope and qualification](docs/python-first-event.md).
+
+## Saved subject identity flags — 0.3.54
+
+In **Survival Py → Data preparation → Two-component first event**, enable the
+subject audit and select **Save and Export → Subject identity flag** to save
+Unknown ID, Unique ID or Repeated ID for every supplied source row. Endpoint
+completeness is separate. Disabling the audit clears flags; pending or strict
+failure clears all enabled outputs. Existing endpoint rules remain unchanged.
+
+All 407 Python tests, 53 focused checks, 81 focused native R assertions and 28
+packaged-runtime cases pass. macOS arm64 Sideload, older-file compatibility, six
+saved states, fresh-engine reopen/rerun and native HTML/embedded PNG export pass.
+See [scope and evidence](docs/python-first-event.md#saved-subject-identity-flag--0354).
+Patient-history reconstruction, full native inventory and additional platforms
+remain pending. The standard package is `ClinicoPathPj_0.3.54.jmo`.

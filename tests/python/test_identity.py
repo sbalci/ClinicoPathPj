@@ -13,6 +13,7 @@ class Identity(unittest.TestCase):
         self.assertEqual((r['known'],r['missing'],r['subjects'],r['repeatedSubjects'],r['repeatedRows']),(8,3,7,1,2))
         self.assertEqual(r['repeated'],[dict(subject='001',records=2)])
         self.assertEqual(r['rowCounts'],[2,2,1,1,1,None,None,None,1,1,1])
+        self.assertEqual(r['flags'],[2,2,1,1,1,0,0,0,1,1,1])
         self.assertEqual(r['values'][-3:],[' S','S','S '])
 
     def test_factor_labels_actual_na_unused_levels_and_literal_na(self):
@@ -62,7 +63,11 @@ class Identity(unittest.TestCase):
         self.assertIn('ALL supplied',r['texts']['identityPolicy'])
         original=run_analysis('pyfirstevent',data,dict(opts,audit_subject=False))
         disabled=run_analysis('pyfirstevent',data,dict(opts,audit_subject=False),row_ids=['2','9','41'])
-        self.assertEqual(r['outputs'],disabled['outputs'])
+        for key in ['timeOut','statusOut','sourceOut']:
+            self.assertEqual(r['outputs'][key],disabled['outputs'][key])
+        self.assertEqual(r['outputs']['identityOut']['values'],[2,2,0])
+        self.assertEqual(r['outputs']['identityOut']['row_ids'],['2','9','41'])
+        self.assertEqual(disabled['outputs']['identityOut']['values'],[None]*3)
         self.assertNotIn('identityAudit',original['tables'])
         pending=run_analysis('pyfirstevent',data,dict(opts,subject=None))
         self.assertFalse(pending['outputs']);self.assertIn('Select',pending['texts']['summary'])
@@ -79,5 +84,24 @@ class Identity(unittest.TestCase):
         self.assertIn('Enable',pending['pending'])
         for value in ['yes',1]:
             with self.assertRaises(InputError):calculate(_decode(data),dict(OPTIONS,audit_subject=value))
+
+    def test_flags_follow_independent_frequency_oracle_and_row_permutation(self):
+        ids=['001','001','1','01','NA',None,'','  ',' S','S','S ']
+        observed=[v for v in ids if v is not None and v.strip()]
+        expected=[0 if v is None or not v.strip() else 1 if observed.count(v)==1 else 2 for v in ids]
+        for labels,want in [(ids,expected),(ids[::-1],expected[::-1])]:
+            r=audit(_decode({'id':text(labels)}),'id',len(labels))
+            self.assertEqual(r['flags'],want)
+            self.assertEqual(sum(v==0 for v in want),r['missing'])
+            self.assertEqual(sum(v==2 for v in want),r['repeatedRows'])
+
+    def test_unknown_identity_is_an_explicit_flag_even_for_incomplete_endpoints(self):
+        data=dict(ta=number([None,1,1]),tb=number([2,2,2]),
+                  sa=factor(['Y']*3,levels=['N','Y']),sb=factor(['N']*3,levels=['N','Y']),
+                  id=text(['a',None,'b']))
+        r=run_analysis('pyfirstevent',data,dict(OPTIONS,audit_subject=True,subject='id'),row_ids=['1','4','90'])
+        self.assertEqual(r['outputs']['identityOut']['values'],[1,0,1])
+        self.assertEqual(r['outputs']['identityOut']['levels'],['Unknown ID','Unique ID','Repeated ID'])
+        self.assertEqual(r['outputs']['timeOut']['values'],[None,1,1])
 
 if __name__=='__main__':unittest.main()

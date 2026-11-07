@@ -32,4 +32,5 @@ def audit(data, name, n, require_unique=False):
     return dict(pending='',input=n,known=n-missing,missing=missing,subjects=len(counts),
                 repeatedSubjects=len(repeated),repeatedRows=sum(v['records'] for v in repeated),
                 values=values,rowCounts=[None if v is None else counts[v] for v in values],
+                flags=[0 if v is None else 1 if counts[v]==1 else 2 for v in values],
                 repeated=repeated,strict=require_unique)

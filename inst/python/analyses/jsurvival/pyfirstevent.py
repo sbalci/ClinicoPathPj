@@ -6,7 +6,7 @@ SPEC = {'name': 'pyfirstevent',
  'title': 'Two-Component First Event (Python)',
  'menuGroup': 'Survival Py',
  'menuSubgroup': 'Data preparation',
- 'version': '0.3.53',
+ 'version': '0.3.54',
  'clearOnInputError': True,
  'options': [{'name': 'statusA',
               'title': 'Component A status',
@@ -85,6 +85,9 @@ SPEC = {'name': 'pyfirstevent',
               'title': 'Require one record per subject',
               'type': 'Bool',
               'default': False},
+             {'name': 'identityOut',
+              'title': 'Subject identity flag',
+              'type': 'Output'},
              {'name': 'audit_subject',
               'title': 'Subject identity audit',
               'type': 'Bool',
@@ -183,6 +186,14 @@ SPEC = {'name': 'pyfirstevent',
               'varTitle': 'Determining component',
               'varDescription': 'Audit source only; not a cause-specific or competing-risk event '
                                 'indicator.',
+              'measureType': 'nominal'},
+             {'name': 'identityOut',
+              'title': 'Subject identity flag',
+              'type': 'Output',
+              'varTitle': 'Subject identity flag',
+              'varDescription': 'Exact-label identity audit across all supplied records: Unknown ID, '
+                                'Unique ID or Repeated ID. Missing when the audit is disabled or '
+                                'preparation is blocked. This flag does not establish endpoint eligibility.',
               'measureType': 'nominal'},
              {'name': 'adminAudit',
               'title': 'Administrative Censoring Audit',
@@ -290,7 +301,9 @@ SPEC = {'name': 'pyfirstevent',
                       'collapsed': False,
                       'children': [{'type': 'Output', 'name': 'timeOut'},
                                    {'type': 'Output', 'name': 'statusOut'},
-                                   {'type': 'Output', 'name': 'sourceOut'}]},
+                                   {'type': 'Output', 'name': 'sourceOut'},
+                                   {'type': 'Output', 'name': 'identityOut',
+                                    'enable': '(audit_subject)'}]},
                      {'type': 'CollapseBox',
                       'label': 'Advanced Settings',
                       'collapsed': True,
@@ -309,6 +322,7 @@ def run(data, options, out):
         out.markdown('identityPolicy',md_escape(
             'IDs use exact text or factor labels across ALL supplied records, including records with unusable endpoints. Missing values and wholly blank IDs are unknown; nonblank IDs retain leading/trailing spaces and leading zeros. Literal NA is a known ID. '
             'Repeated IDs are listed in first appearance order, at most 20; all repeats contribute to the audit. Endpoint preparation still operates on each supplied row. There is no patient aggregation, deduplication, history ordering or patient-level first-event inference. '
+            'The optional saved identity flag uses Unknown ID, Unique ID and Repeated ID across all supplied records, including unusable endpoints. It is not an endpoint eligibility or patient-selection flag. Disabling the audit clears this saved flag while retaining the endpoint preparation rules. '
             'Requiring one record per subject blocks preparation when an ID is missing or repeated. Unique IDs do not establish independent observations or sufficient clinical follow-up.'))
         if identity['missing'] or identity['repeatedSubjects']:
             out.warn(f"Subject audit: {identity['missing']} records have unknown IDs; {identity['repeatedSubjects']} IDs repeat across {identity['repeatedRows']} records. Prepared outputs remain record-level; resolve the intended observational unit before patient-level inference.")
@@ -325,8 +339,11 @@ def run(data, options, out):
         out.column('timeOut',r['time'],measure_type='continuous',title='Composite time',description=('Administrative cutoff '+str(r['admin']['cutoff'])+' applied after common observation horizon. ' if r['admin']['enabled'] else '')+'Minimum component event/follow-up duration. A common origin and units are required; negative or incomplete records remain missing.')
         out.column('statusOut',r['status'],levels=['Censored','Event'],measure_type='nominal',title='Composite status',description=('Administrative cutoff '+str(r['admin']['cutoff'])+'; event at cutoff retained. ' if r['admin']['enabled'] else '')+'0=Censored; 1=Event at common follow-up horizon; event wins an exact event/censor tie. Not a competing-risk code.')
         out.column('sourceOut',r['source'],levels=SOURCES+(['Administrative cutoff'] if r['admin']['enabled'] else []),measure_type='nominal',title='Determining component',description='Audit source only; not a cause-specific event indicator.')
-    if r['invalid']:out.warn(f"{r['invalid']} row(s) have a negative duration; all saved outputs remain missing.")
-    if r['missing']:out.warn(f"{r['missing']} row(s) have incomplete component status/time; all saved outputs remain missing. A known event cannot establish a first event when the other component is unknown.")
+        out.column('identityOut',r['identity']['flags'] if r['identity'] else [None]*r['n'],
+                   levels=['Unknown ID','Unique ID','Repeated ID'],measure_type='nominal',
+                   title='Subject identity flag',description='Exact-label identity audit across all supplied records: Unknown ID, Unique ID or Repeated ID. Missing when the audit is disabled or preparation is blocked. This flag does not establish endpoint eligibility.')
+    if r['invalid']:out.warn(f"{r['invalid']} row(s) have a negative duration; all three endpoint outputs remain missing.")
+    if r['missing']:out.warn(f"{r['missing']} row(s) have incomplete component status/time; all three endpoint outputs remain missing. A known event cannot establish a first event when the other component is unknown.")
     if r['late']:out.info(f"{r['late']} known event(s) occur after the other component's event-free follow-up ended. The composite is censored at the earlier common observation horizon.")
     out.markdown('summary',md_escape(
         'Policy: two-component composite with a common origin and units. Each time is time to its component event when status=1, otherwise time through which that component is known event-free. '

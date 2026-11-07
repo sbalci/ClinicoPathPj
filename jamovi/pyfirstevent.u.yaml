@@ -175,6 +175,11 @@
         {
           "type": "Output",
           "name": "sourceOut"
+        },
+        {
+          "type": "Output",
+          "name": "identityOut",
+          "enable": "(audit_subject)"
         }
       ]
     },

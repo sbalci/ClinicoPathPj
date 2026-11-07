@@ -116,24 +116,34 @@ test_that('subject identities agree with independent exact-label counts', {
 test_that('strict ID gate clears saved outputs and recovers with unique IDs', {
     d <- data.frame(ta=c(1,5,NA),tb=c(5,8,3),sa=factor(rep('Y',3),levels=c('N','Y')),sb=factor(rep('N',3),levels=c('N','Y')),id=c('001','001',NA),unique=c('a','b','c'),row.names=c('2','9','41'))
     opts <- pyfirsteventOptions$new(timeA='ta',timeB='tb',statusA='sa',statusB='sb',eventA='Y',freeA='N',eventB='Y',freeB='N',audit_subject=TRUE,subject='id',use_admin=TRUE,admin_cutoff='2')
-    for (name in c('timeOut','statusOut','sourceOut')) {opt<-opts$option(name);opt$value<-list(value=TRUE,vars=list())}
+    for (name in c('timeOut','statusOut','sourceOut','identityOut')) {opt<-opts$option(name);opt$value<-list(value=TRUE,vars=list())}
     a <- pyfirsteventClass$new(options=opts)
     a$.setReadDatasetSource(function(...) d)
     a$.setReadDatasetHeaderSource(function(...) d)
     a$init();a$run();jmvcore:::initProtoBuf()
     saved <- function() a$results$timeOut$asProtoBuf(incAsText=TRUE)$outputs$outputs[[1]]$d
+    flags <- function() a$results$identityOut$asProtoBuf(incAsText=TRUE)$outputs$outputs[[1]]$i
+    flags_missing <- function() {
+        values <- as.numeric(flags())
+        length(values) == 3 && all(is.na(values) | values == -2147483648)
+    }
     expect_equal(as.numeric(saved()),c(1,2,NA))
+    expect_equal(as.integer(flags()),c(3L,3L,1L))
     expect_equal(a$results$identityAudit$asDF$missing,1)
     strict <- opts$option('require_unique_id');strict$value<-TRUE;a$init();expect_error(a$run(),'One record')
     expect_true(all(is.na(saved())))
+    expect_true(flags_missing())
     subject <- opts$option('subject');subject$value<-'unique';a$init();a$run()
     expect_equal(as.numeric(saved()),c(1,2,NA))
     expect_equal(a$results$identityAudit$asDF$repeatedRows,0)
     expect_equal(a$results$identityAudit$asDF$subjects,3)
+    expect_equal(as.integer(flags()),rep(2L,3))
     subject$value<-NULL;a$init();a$run()
     expect_equal(a$results$identityAudit$rowCount,0)
     expect_true(all(is.na(saved())))
+    expect_true(flags_missing())
     strict$value<-FALSE;enabled<-opts$option('audit_subject');enabled$value<-FALSE;a$init();a$run()
     expect_equal(as.numeric(saved()),c(1,2,NA))
     expect_equal(a$results$identityAudit$rowCount,0)
+    expect_true(flags_missing())
 })
