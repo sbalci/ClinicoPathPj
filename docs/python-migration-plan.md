@@ -1,4 +1,4 @@
-# ClinicoPathPj implementation plan — revised 2026-10-28
+# ClinicoPathPj implementation plan — revised 2026-11-07
 
 This is the current delivery plan. It supersedes the implementation recommendations in
 `python-roadmap.md` (2026-10-18) and the initial `interactive-analysis-plan.md`.
@@ -57,30 +57,31 @@ Do not add rpy2 or replace the current bridge based on an announced future engin
 
 ## Verified current inventory
 
-There are **30 registered implementation entry points**: **20 partial baseline ports** and
-**10 utility/demonstration analyses**. Of the 61 baseline targets, **41 are planned**,
-**0 have complete supported-feature parity and all release gates**.
+Current source inventory: **39 registered implementation entry points**, comprising
+**27 partial baseline ports** and **12 retained utilities/demonstrations**. Of the
+61 baseline targets, **34 remain planned** and **zero have full supported-feature
+parity plus all release gates**. Numerical, packaged and GUI evidence is listed
+per analysis; newly implemented study review does not establish pooled-meta-analysis parity.
 
 | Family | Baseline targets | Partial ports | Planned |
 |---|---:|---:|---:|
-| ClinicoPathDescriptives | 14 | 11 | 3 |
+| ClinicoPathDescriptives | 14 | 14 | 0 |
 | jjstatsplot | 19 | 1 | 18 |
 | meddecide | 15 | 8 | 7 |
-| jsurvival | 9 | 0 | 9 |
-| OncoPath | 4 | 0 | 4 |
+| jsurvival | 9 | 3 | 6 |
+| OncoPath | 4 | 1 | 3 |
 
-Partial descriptives: `pyagepyramid`, `pybenford`, `pycategorize`, `pycheckdata`,
-`pychisqposttest`, `pydataquality`, `pyreportcat`, `pysummarydata`, `pyvenn` (exact-count core),
-`pyoutlierdetection` (univariate screening core), and `pyvartree` (categorical count-tree core).
+Partial ClinicoPathDescriptives: `pyagepyramid`, `pyalluvial`, `pybenford`, `pycategorize`, `pycheckdata`, `pychisqposttest`, `pycrosstable`, `pydataquality`, `pyoutlierdetection`, `pyreportcat`, `pysummarydata`, `pytableone`, `pyvartree`, `pyvenn`.
 
-Partial statistical plots: `pyjjcorrmat` (Pearson/Spearman core only).
+Partial jjstatsplot: `pyjjcorrmat`.
 
-Partial medical decisions: `pycotest`, `pydecision`, `pydecisioncalculator`,
-`pydecisioncurve`, `pykappaci`, `pykappafixedn`, `pykappapower`, `pysequentialtests`.
+Partial meddecide: `pycotest`, `pydecision`, `pydecisioncalculator`, `pydecisioncurve`, `pykappaci`, `pykappafixedn`, `pykappapower`, `pysequentialtests`.
 
-Utilities/demonstrations: `pydescriptives`, `pywelch`, `pyexacttests`, `pyruntime`,
-`pydotdecision`, `pyd3cutoff`, `pyobservablecutoff`, `pysvgcutoff`, `pybridgecompare`, `pyihcheatmap`.
-For example, `pywelch` does not establish full `pyjjbetweenstats` parity.
+Partial jsurvival: `pydatetimeconverter`, `pyoutcomeorganizer`, `pytimeinterval`.
+
+Partial OncoPath: `pydiagnosticmeta`.
+
+Utilities/demonstrations: `pydescriptives`, `pydotdecision`, `pyexacttests`, `pyruntime`, `pywelch`, `pyd3cutoff`, `pyobservablecutoff`, `pysvgcutoff`, `pybridgecompare`, `pyihcheatmap`, `pyintervalcensoring`, `pyfirstevent`.
 
 ## Implemented foundation
 
@@ -1088,3 +1089,72 @@ on macOS arm64 jamovi 28.13. The identity flag is implemented and qualified for
 this documented workflow. Full native inventory, direct Save Image, broader
 platforms, clinical review and patient-history policy/reconstruction remain open.
 Evidence is in python-first-event.md and the 0.3.54 qualification JSON.
+
+## Oncology study-review core — 0.3.55
+
+Pull the study-review slice of `pydiagnosticmeta` forward from Wave 5, using the
+existing frozen OncoPath 1.1.2 provenance and stable registry identifier. The
+current open R backend was inspected for context; no production R files or baseline
+hashes are changed. Implement raw 2×2 auditing, pointwise Wilson sensitivity/
+specificity intervals and native forest plots first. This is a partial baseline
+port, not an additional utility or a completed pooled meta-analysis.
+
+Retain source-row IDs, exact study labels, explicit exclusions, uncorrected zero
+cells and typed synthetic examples. Show all essential data roles and interval/
+validation settings together; keep secondary plot controls collapsed. Validate
+against base-R score intervals, numeric-factor transport and valid → pending/
+strict-invalid/all-excluded → valid transitions. Qualify packaged execution,
+fresh-engine save/reopen and native plot export separately. Linked interactive
+study/SROC inspection follows the static and numerical contracts.
+
+Reitsma/PHM models, weighting, pooled ratios, heterogeneity, meta-regression,
+publication-bias analysis and continuity corrections remain omitted. Do not infer
+model correctness from this individual-study core. See python-diagnostic-study-review.md.
+The inventory becomes 27 partial baseline targets, 34 planned, twelve utilities,
+39 executable entry points and zero full-parity releases. Patient-history policy
+work remains pending without an implicit aggregation choice.
+
+0.3.55 study-review evidence: 50 focused and all 415 full Python tests pass,
+including 100 base-R score-interval fixtures. All 43 focused native assertions,
+full compiler build, generator/status freshness and 29 final packaged cases pass.
+macOS arm64 jamovi 28.13 Sideload/Data Library, valid/pending/strict/all-excluded
+recovery, five persisted states, fresh-engine reopen/rerun and native HTML/embedded
+forest export pass. All pooled models and linked interaction remain omitted;
+clinical review, direct Save Image, full native inventory and wider platforms
+remain open. Evidence: python-diagnostic-study-review.md.
+
+## Linked diagnostic-study inspection — 0.3.56
+
+Extend the existing pydiagnosticmeta core with display-only linked sensitivity/
+specificity forests. Python computes study results; local JavaScript highlights
+those precomputed values and presents raw 2×2 counts. This follows the jamovi
+discussion's separation of numerical engines and browser interaction. No model,
+cohort, threshold or saved native option is changed by pointer/keyboard selection.
+
+Use the existing local HTML bridge, exact source-row IDs, escaped labels, bounded
+200-row payloads, keyboard navigation and transient selection. Native static
+forests accompany the inspector for saved-file/export behavior. Keep older options
+and defaults; append the new display option and default it off. Extend generator
+visibility only to a bounded OR of two declared Boolean options for the mandatory
+static counterpart. Test pointer/focus selection, empty/failure clearing, hostile
+labels, multiple instances, original-file compatibility and native persistence.
+
+The first 54 focused checks and DOM interaction harness pass. This adds no new
+analysis identifier, dependency or pooling method: inventory stays 27 partial
+ports, 34 planned targets, twelve utilities and zero full-parity releases. Applied
+study filtering, bivariate/SROC models and broader platform/accessibility evidence
+remain separate work. See python-diagnostic-study-review.md.
+
+
+0.3.56 qualification update: 419 Python tests, 52 focused native assertions,
+29 packaged runtime cases, compiler/freshness and synthetic DOM checks pass.
+The installed archive matches the reviewed package. Native macOS GUI verification
+covers compatibility, paired inspection, recovery, fresh-engine reopening and
+HTML/static forest export. Full evidence and specific visual/export limitations
+are recorded in [the study-review guide](python-diagnostic-study-review.md).
+
+Next oncology increments: first qualify 200-row desktop navigation and direct image
+export; then specify applied study inclusion as an explicit Apply/rerun workflow
+with independent native-table/cohort validation. Keep bivariate/SROC modelling as
+a separate method/dependency/independent-oracle milestone. Do not infer full
+OncoPath or diagnosticmeta parity from the linked study inspector.

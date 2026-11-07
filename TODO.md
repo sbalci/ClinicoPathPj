@@ -1,3 +1,23 @@
+# Linked diagnostic-study inspector — 0.3.56
+
+- [x] Add paired display-only forests using existing Python counts/intervals.
+- [x] Add transient hover/selection, bounded payloads, escaped labels and keyboard navigation.
+- [x] Include native static forests automatically; retain prior option defaults.
+- [x] Pass 54 focused Python/generator checks and synthetic DOM interaction harness.
+- [x] Complete compiler build, 52 native assertions, 29 packaged cases and 419 Python tests.
+- [x] GUI old-file compatibility, pointer/keyboard inspection, inspector clearing, fresh-engine save/reopen and HTML/native forest export.
+- [ ] Independently certify failure-state Image placeholder appearance, direct Save Image export and 200-row desktop interaction.
+- [ ] Applied filters, pooled models, broader platforms and accessibility certification remain open.
+
+# Oncology diagnostic-study review — 0.3.55
+
+- [x] Implement raw study-count/ID auditing and pointwise Wilson intervals without pooling.
+- [x] Add native study/exclusion tables, forests, organized UI and typed examples.
+- [x] Pass 50 focused Python/generator/registry/menu tests and 100 R score-interval fixtures.
+- [x] Pass full compiler build, 43 native assertions, 29 final package cases and all 415 Python tests.
+- [x] GUI Sideload/Data Library, valid/pending/strict/all-excluded recovery, five saved states, fresh-engine reopen/rerun and native HTML/embedded forest export.
+- [ ] Bivariate/PHM models, SROC, heterogeneity, moderators and publication bias remain omitted.
+
 # Saved identity flags — 0.3.54
 
 - [x] Add optional row-aligned Unknown ID / Unique ID / Repeated ID output.

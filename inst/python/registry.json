@@ -2345,10 +2345,10 @@
     {
       "id": "pydiagnosticmeta",
       "family": "oncopath",
-      "menu": "Oncology",
+      "menu": "Evidence review",
       "title": "Diagnostic Test Meta-Analysis for Pathology",
       "aliases": [],
-      "source": null,
+      "source": "analyses/oncopath/pydiagnosticmeta.py",
       "baseline": {
         "module": "OncoPath",
         "version": "1.1.2",
@@ -2362,23 +2362,31 @@
         }
       },
       "wave": 5,
-      "status": "planned",
+      "status": "partial",
       "coverage": {
         "full_parity": false,
-        "numerical": "pending",
-        "gui": "pending",
-        "compatibility": "existing Python identifier preserved",
-        "platforms": []
+        "numerical": "Study-level Wilson/reference and native evidence in docs/python-diagnostic-study-review.md; pooled models omitted",
+        "gui": "macOS arm64 per-feature lifecycle/export evidence tracked in docs/python-diagnostic-study-review.md",
+        "compatibility": "Stable py identifier and existing named options/defaults; inspector defaults off for older saved analyses",
+        "platforms": [
+          "macOS-arm64"
+        ],
+        "linked_inspector": "0.3.56 display-only linked inspection; evidence and separate GUI/export gates tracked in docs/python-diagnostic-study-review.md"
       },
       "methods": "DTA meta-analysis. Reitsma bivariate random-effects model (mada::reitsma REML/ML/fixed) gives summary Se/Sp, LRs, DOR and the SROC (mada::sroc); also PHM SROC (mada::phm), univariate logit Se/Sp heterogeneity (metafor::rma: tau^2, I^2, Q), moderator meta-regression, Deeks funnel test (weighted lm on 1/sqrt(ESS)), continuity corrections and Wilson study CIs",
       "oracle": "mada::reitsma, mada::sroc, mada::phm, metafor::rma (REML; tau2, I2, QE), stats::lm(weights = ESS) for the Deeks test",
       "dependencies": {
-        "bundled": [],
+        "bundled": [
+          "numpy",
+          "scipy"
+        ],
         "candidates": []
       },
       "source_name": "diagnosticmeta",
       "menu_group": "OncoPath Py",
-      "menu_title": "Diagnostic Test Meta-Analysis for Pathology"
+      "menu_title": "Diagnostic study review",
+      "supported_core": "Raw study counts, missing/invalid-row audit, exact-label identity audit, pointwise Wilson sensitivity/specificity intervals and native forest plots; display-only linked forest inspector with keyboard/hover and native export counterparts",
+      "omissions": "All pooled models and weights, Reitsma/PHM SROC, heterogeneity, meta-regression, publication bias, continuity corrections and applied cohort selection"
     },
     {
       "id": "pyihcheterogeneity",

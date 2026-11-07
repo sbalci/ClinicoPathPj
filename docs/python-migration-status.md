@@ -69,7 +69,7 @@ parity and GUI/platform acceptance remain separate gates.
 | pyagreement | agreement | meddecide | 4 | planned | pending | pending |
 | pylassologistic | lassologistic | meddecide | 4 | planned | pending | pending |
 | pynogoldstandard | nogoldstandard | meddecide | 4 | planned | pending | pending |
-| pydiagnosticmeta | diagnosticmeta | oncopath | 5 | planned | pending | pending |
+| pydiagnosticmeta | diagnosticmeta | oncopath | 5 | partial | pending | macOS arm64 per-feature lifecycle/export evidence tracked in docs/python-diagnostic-study-review.md |
 | pyihcheterogeneity | ihcheterogeneity | oncopath | 5 | planned | pending | pending |
 | pyswimmerplot | swimmerplot | oncopath | 5 | planned | pending | pending |
 | pywaterfall | waterfall | oncopath | 5 | planned | pending | pending |
@@ -95,9 +95,9 @@ These entries do not increase the 61-analysis baseline denominator.
 
 ## Menus and optional execution service
 
-Installed analyses use Descriptives Py, Stats Plots Py, MedDecide Py and Python Lab,
-with registry-owned topic subgroups and compact experiment titles. Planned Survival Py
-and OncoPath Py groups do not install placeholder entries. Existing identifiers remain stable.
+Installed analyses use Descriptives Py, Stats Plots Py, MedDecide Py, Survival Py,
+OncoPath Py and Python Lab, with registry-owned topic subgroups and compact titles.
+Planned analyses do not install placeholder entries. Existing identifiers remain stable.
 
 `pybridgecompare` is a retained utility experiment, not another baseline port. It uses
 the same cutoff engine through processx (default) or optional Pj >=1.3.0 service API 1.

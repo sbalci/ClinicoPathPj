@@ -30,9 +30,9 @@ for e in registry['analyses']:
 text+='''
 ## Menus and optional execution service
 
-Installed analyses use Descriptives Py, Stats Plots Py, MedDecide Py and Python Lab,
-with registry-owned topic subgroups and compact experiment titles. Planned Survival Py
-and OncoPath Py groups do not install placeholder entries. Existing identifiers remain stable.
+Installed analyses use Descriptives Py, Stats Plots Py, MedDecide Py, Survival Py,
+OncoPath Py and Python Lab, with registry-owned topic subgroups and compact titles.
+Planned analyses do not install placeholder entries. Existing identifiers remain stable.
 
 `pybridgecompare` is a retained utility experiment, not another baseline port. It uses
 the same cutoff engine through processx (default) or optional Pj >=1.3.0 service API 1.

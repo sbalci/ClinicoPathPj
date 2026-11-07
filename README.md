@@ -8,13 +8,12 @@ so users install nothing.
 Current direction and implemented/pending work: [revised migration plan](docs/python-migration-plan.md).
 See also the [web-researched Python analysis candidates](docs/python-analysis-opportunities.md).
 
-Status: experimental, 0.3.54 (descriptives and data preparation; full migration remains incomplete). Verified only on jamovi 28.13 for macOS (Apple Silicon), with
+Status: experimental, 0.3.56 (descriptives and data preparation; full migration remains incomplete). Verified only on jamovi 28.13 for macOS (Apple Silicon), with
 jmvtools 28.4.
 
 Analyses now use compact family menus: **Descriptives Py**, **Stats Plots Py**,
 **MedDecide Py** and **Python Lab**, with topic subgroups. The single module identity
-and existing analysis identifiers are retained. The **Survival Py** group now contains outcome, datetime and interval preparation; Oncology is reserved
-in the registry until implementations are available.
+and existing analysis identifiers are retained. **Survival Py** contains outcome, datetime and interval preparation; **OncoPath Py → Evidence review** now contains the partial diagnostic-study review port.
 
 The optional `pybridgecompare` experiment runs the same cutoff engine through processx
 or the public Pj 1.3.0 service. See [the comparison guide](docs/python-bridge-comparison.md)
@@ -42,7 +41,7 @@ Open **Data Library > ClinicoPathPj > Python Core Examples**, or import
 `data/python_core_examples.csv`, for the synthetic examples.
 
 Build the single standard module without installing it:
-`Rscript --vanilla tools/build.R --build-only` → `ClinicoPathPj_0.3.54.jmo`.
+`Rscript --vanilla tools/build.R --build-only` → `ClinicoPathPj_0.3.56.jmo`.
 After replacing a loaded development build, use a fresh jamovi engine to avoid stale namespaces.
 
 `pywelch` reports the mean difference as *comparison minus reference*. The reference defaults to
@@ -597,3 +596,35 @@ saved states, fresh-engine reopen/rerun and native HTML/embedded PNG export pass
 See [scope and evidence](docs/python-first-event.md#saved-subject-identity-flag--0354).
 Patient-history reconstruction, full native inventory and additional platforms
 remain pending. The standard package is `ClinicoPathPj_0.3.54.jmo`.
+
+## Diagnostic study review — 0.3.55
+
+**OncoPath Py → Evidence review → Diagnostic study review** starts `pydiagnosticmeta`
+with raw 2×2 count/ID auditing, individual sensitivity/specificity with pointwise
+Wilson intervals, and native forest plots. The typed Data Library example contains
+eight retained and four excluded synthetic study rows. Zero cells stay uncorrected.
+**Pooling, bivariate models and SROC are not implemented in this core.**
+
+All 415 Python tests, 43 focused native assertions and 29 packaged cases pass.
+Sideload, Data Library loading, five saved states, fresh-engine reopen/rerun and
+native HTML/embedded forest export pass on macOS arm64 jamovi 28.13. See
+[scope, omissions and evidence](docs/python-diagnostic-study-review.md).
+
+The current inventory is 27 partial baseline ports, 34 planned targets and twelve
+retained utilities: 39 executable entries, with zero full-parity releases.
+
+## Linked study inspection — 0.3.56
+
+In `pydiagnosticmeta`, enable **Plots and Interaction → Linked study inspector**
+to link sensitivity and specificity forests with raw-count readouts. Buttons,
+forest points and keyboard navigation select the same source study; hovering
+previews a row. This temporary display selection changes no analysis options,
+cohort or native results. Native static forests accompany the inspector for export.
+The option defaults off in older saved analyses.
+
+Verification: 419 Python tests, 52 focused native R assertions, 29 packaged runtime
+cases and the DOM interaction harness pass. macOS GUI checks cover old-file
+compatibility, pointer/keyboard interaction, incomplete/strict/all-excluded states,
+fresh-engine reopening and HTML export with native static forests. See the
+[evidence record](docs/validation-exports/python-study-inspector-0.3.56-checks.json)
+for limits. Pooling, SROC and applied study filtering remain unimplemented.

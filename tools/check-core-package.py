@@ -18,7 +18,7 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parent.parent
 VERSION=re.search(r'^Version: (.+)$',(ROOT/'DESCRIPTION').read_text(),re.M)[1]
 REGISTRY=json.loads((ROOT/'inst/python/registry.json').read_text())
-NAMES=['pyfirstevent','pyintervalcensoring','pytimeinterval','pydatetimeconverter','pyoutcomeorganizer','pytableone','pycrosstable','pyalluvial','pyvartree','pyoutlierdetection','pyvenn','pyjjcorrmat','pyihcheatmap','pybridgecompare','pysvgcutoff','pycheckdata','pyobservablecutoff','pyd3cutoff','pydecision','pydecisioncalculator','pysequentialtests','pychisqposttest','pybenford','pydecisioncurve','pysummarydata','pycategorize','pyagepyramid','pydataquality']
+NAMES=['pydiagnosticmeta','pyfirstevent','pyintervalcensoring','pytimeinterval','pydatetimeconverter','pyoutcomeorganizer','pytableone','pycrosstable','pyalluvial','pyvartree','pyoutlierdetection','pyvenn','pyjjcorrmat','pyihcheatmap','pybridgecompare','pysvgcutoff','pycheckdata','pyobservablecutoff','pyd3cutoff','pydecision','pydecisioncalculator','pysequentialtests','pychisqposttest','pybenford','pydecisioncurve','pysummarydata','pycategorize','pyagepyramid','pydataquality']
 
 
 def numeric(x):return dict(kind='number',values=x)
@@ -38,6 +38,8 @@ def check(path):
             assert f'version: {VERSION}' in manifest
             assert 'python_core_examples.omv' in manifest
             assert 'python_set_intersection_examples.csv' in manifest
+            assert 'python_diagnostic_study_examples.omv' in manifest
+            assert archive.read('ClinicoPathPj/data/python_diagnostic_study_examples.omv')==(ROOT/'data/python_diagnostic_study_examples.omv').read_bytes()
             assert 'python_first_event_identity.omv' in manifest
             assert archive.read('ClinicoPathPj/data/python_first_event_identity.omv')==(ROOT/'data/python_first_event_identity.omv').read_bytes()
             assert 'python_first_event_examples.omv' in manifest
@@ -94,7 +96,7 @@ def check(path):
                 member='ClinicoPathPj/R/ClinicoPathPj/python/'+entry['source']
                 assert archive.read(member)==(ROOT/'inst/python'/entry['source']).read_bytes()
                 assert f"name: {entry['id']}\n" in manifest
-            for file in ['cpj_identity.py','cpj_firstevent.py','cpj_censoring.py','cpj_intervals.py','cpj_datetime.py','cpj_outcomes.py','cpj_tableone.py','cpj_crosstable.py','cpj_alluvial.py','templates/alluvial.html','cpj_tree.py','cpj_outliers.py','cpj_sets.py','templates/sets.html','cpj_correlation.py','templates/correlation.html','cpj_ihc.py','templates/ihcheatmap.html','cpj_runtime.py','cpj_svg_cutoff.py','cpj_accuracy.py','cpj_registry.py','cpj_plots.py','cpj_descriptive.py','cpj_binning.py','cpj_demographics.py','cpj_quality.py','templates/quality.html','cpj_cutoff.py','cpj_single_quality.py','templates/single-quality.html','cpj_cutoff_analysis.py','templates/bridgecutoff.html','templates/d3cutoff.html','templates/observablecutoff.html','vendor/observable-plot-0.6.17.min.js','vendor/observable-inputs-0.12.0.min.js','vendor/htl-0.3.1.min.js','vendor/observable-plot-LICENSE.txt','vendor/observable-inputs-LICENSE.txt','vendor/htl-LICENSE.txt','vendor/observable-manifest.json','vendor/d3-7.9.0.min.js','vendor/d3-LICENSE.txt','registry.json','font-cache.json']:
+            for file in ['cpj_study_inspector.py','templates/diagnostic-studies.html','cpj_diagnostic_studies.py','cpj_identity.py','cpj_firstevent.py','cpj_censoring.py','cpj_intervals.py','cpj_datetime.py','cpj_outcomes.py','cpj_tableone.py','cpj_crosstable.py','cpj_alluvial.py','templates/alluvial.html','cpj_tree.py','cpj_outliers.py','cpj_sets.py','templates/sets.html','cpj_correlation.py','templates/correlation.html','cpj_ihc.py','templates/ihcheatmap.html','cpj_runtime.py','cpj_svg_cutoff.py','cpj_accuracy.py','cpj_registry.py','cpj_plots.py','cpj_descriptive.py','cpj_binning.py','cpj_demographics.py','cpj_quality.py','templates/quality.html','cpj_cutoff.py','cpj_single_quality.py','templates/single-quality.html','cpj_cutoff_analysis.py','templates/bridgecutoff.html','templates/d3cutoff.html','templates/observablecutoff.html','vendor/observable-plot-0.6.17.min.js','vendor/observable-inputs-0.12.0.min.js','vendor/htl-0.3.1.min.js','vendor/observable-plot-LICENSE.txt','vendor/observable-inputs-LICENSE.txt','vendor/htl-LICENSE.txt','vendor/observable-manifest.json','vendor/d3-7.9.0.min.js','vendor/d3-LICENSE.txt','registry.json','font-cache.json']:
                 assert archive.read(f'ClinicoPathPj/R/ClinicoPathPj/python/{file}')==(ROOT/'inst/python'/file).read_bytes()
             assert archive.read('ClinicoPathPj/R/ClinicoPathPj/js/pysvgcutoff.js')==(ROOT/'inst/js/pysvgcutoff.js').read_bytes()
             assert archive.read('ClinicoPathPj/data/python_core_examples.omv')==(ROOT/'data/python_core_examples.omv').read_bytes()
@@ -117,6 +119,7 @@ def check(path):
           ('pychisqposttest',{'r':factor(['a','a','b','b']),'c':factor(['x','y','x','y'])},dict(rows='r',cols='c')),
           ('pybenford',{'x':numeric([.3,1,20,333,4444,55555])},dict(measurement='x')),
           ('pydecisioncurve',{'r':factor(['N','P']),'p':numeric([.1,.9])},dict(outcome='r',positive='P',models=['p']))]
+        cases.append(('pydiagnosticmeta',dict(study=dict(kind='text',values=['S1','S2','S3']),tp=numeric([8,0,None]),fp=numeric([1,2,1]),fn=numeric([2,5,1]),tn=numeric([9,8,1])),dict(study='study',true_positives='tp',false_positives='fp',false_negatives='fn',true_negatives='tn',show_explorer=True)))
         results=[]
         for name,columns,options in cases:
             request=temp/'request.json';response=temp/'response.json'
@@ -131,6 +134,14 @@ def check(path):
             result=json.loads(response.read_text())
             assert result['status']=='ok',(name,result.get('error'))
             assert result['tables'],name
+            if name=='pydiagnosticmeta':
+                assert result['tables']['cohort']['rows'][0]['retained']==2
+                assert result['tables']['cohort']['rows'][0]['excluded']==1
+                assert [r['sensitivity'] for r in result['tables']['studies']['rows']]==[.8,0]
+                assert result['plots']['sensitivityPlot']['columns']['estimate']==[.8,0]
+                assert 'No continuity correction' in result['texts']['summary']
+                assert 'Linked study inspector' in result['htmls']['explorer']
+                assert len(result['plots'])==2
             if name=='pyfirstevent':
                 assert result['outputs']['timeOut']['values']==[2,2,None]
                 assert result['outputs']['statusOut']['values']==[1,0,None]

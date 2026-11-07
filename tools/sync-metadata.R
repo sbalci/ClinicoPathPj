@@ -23,6 +23,16 @@ sync_module_metadata <- function(root = ".") {
             "    tags: [Python, Diagnostic accuracy, Decision curves, Data quality]")
     }
     document <- yaml::yaml.load(paste(metadata, collapse = "\n"))
+    diagnostic_data <- "python_diagnostic_study_examples.omv"
+    if (file.exists(file.path(root, "data", diagnostic_data))) {
+        entry <- list(name = "Diagnostic Study Review Examples", path = diagnostic_data,
+            description = "Twelve synthetic study rows: eight retained 2x2 tables, four invalid-count exclusions, three retained zero-cell tables, one unknown ID and one repeated cohort label. Study-level Wilson intervals only; no pooled model.",
+            tags = c("Python", "Diagnostic studies", "Evidence review"))
+        index <- which(vapply(document$datasets, function(x)
+            identical(x$path, diagnostic_data), logical(1)))
+        if (length(index)) document$datasets[[index[1L]]] <- entry
+        else document$datasets[[length(document$datasets) + 1L]] <- entry
+    }
     identity_data <- "python_first_event_identity.omv"
     if (file.exists(file.path(root, "data", identity_data))) {
         entry <- list(name = "First-Event Subject Identity Examples", path = identity_data,

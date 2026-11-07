@@ -1,3 +1,18 @@
+# 0.3.56 — 2026-11-07
+
+- Add a display-only linked study inspector to pydiagnosticmeta with raw count and paired interval readouts.
+- Preserve native study results; provide transient pointer/keyboard selection without host option changes.
+- Include native forest export counterparts automatically when the inspector is enabled.
+- Add bounded Boolean OR result visibility and tests for local interaction, hostile labels and lifecycle clearing.
+- Keep all pooling/SROC methods and applied study filtering outside this increment.
+
+# 0.3.55 — 2026-11-07
+
+- Start pydiagnosticmeta as a partial diagnostic-study review port in OncoPath Py / Evidence review.
+- Add raw 2x2 input/ID auditing, study sensitivity/specificity with Wilson intervals and native forests.
+- Preserve raw zero cells and source-row identities; audit exclusions without rounding counts.
+- Keep pooling, SROC, heterogeneity, meta-regression and publication-bias methods explicitly omitted.
+
 # 0.3.54 — 2026-11-07
 
 - Add an optional saved subject identity flag to pyfirstevent using exact-label cohort counts.
