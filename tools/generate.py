@@ -241,10 +241,10 @@ def validate(spec, stem):
             for key in ("varTitle", "varDescription"):
                 if key in result: check_text(result[key], key)
             continue
-        if "visible" in result:  # one Bool or the conjunction of two Bool options
-            match = re.fullmatch(r"\(([a-z][A-Za-z0-9_]*)(?: && ([a-z][A-Za-z0-9_]*))?\)", str(result["visible"]))
+        if "visible" in result:  # one Bool, or a bounded AND/OR of two declared Bools
+            match = re.fullmatch(r"\(([a-z][A-Za-z0-9_]*)(?:(?: && | \|\| )([a-z][A-Za-z0-9_]*))?\)", str(result["visible"]))
             if not list_visibility(result['visible'],list_choices) and (not match or any(name not in bools for name in match.groups() if name is not None)):
-                fail(f"result {rname!r}: visible must be '(x)' naming a Bool option or '(x && y)' naming Bool options, or a bounded OR of declared List choices")
+                fail(f"result {rname!r}: visible must be '(x)' naming a Bool option or '(x && y)'/'(x || y)' naming Bool options, or a bounded OR of declared List choices")
         if result.get("type") in ("Preformatted", "Text", "Html", "Svg"):
             allowed = {"name", "type", "title", "visible"}
             if result["type"] == "Svg":

@@ -1,7 +1,7 @@
 ---
 title: ClinicoPathPj - Python-Backed Analyses
 name: ClinicoPathPj
-version: 0.3.54
+version: 0.3.56
 jms: '1.0'
 authors: Serdar Balci
 maintainer: Serdar Balci <serdarbalci@serdarbalci.com>
@@ -316,6 +316,14 @@ analyses:
     menuTitle: Two-component first event
     title: Two-Component First Event (Python)
     category: analyses
+  - name: pydiagnosticmeta
+    ns: ClinicoPathPj
+    hidden: false
+    menuGroup: OncoPath Py
+    menuSubgroup: Evidence review
+    menuTitle: Diagnostic study review
+    title: 'Diagnostic Meta-Analysis: Study Review (Python)'
+    category: analyses
 usesNative: 'yes'
 datasets:
   - name: Python Core Examples
@@ -501,5 +509,15 @@ datasets:
       - Python
       - Subject identity
       - Composite endpoints
+  - name: Diagnostic Study Review Examples
+    path: python_diagnostic_study_examples.omv
+    description: >-
+      Twelve synthetic study rows: eight retained 2x2 tables, four invalid-count
+      exclusions, three retained zero-cell tables, one unknown ID and one
+      repeated cohort label. Study-level Wilson intervals only; no pooled model.
+    tags:
+      - Python
+      - Diagnostic studies
+      - Evidence review
 
 ...

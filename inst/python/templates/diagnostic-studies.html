@@ -1,0 +1,82 @@
+<div id="__ROOT__" class="cpj-study-inspector">
+<style>
+#__ROOT__{font:14px system-ui;color:inherit;padding:10px;max-width:1100px}
+#__ROOT__ h3{margin:.3em 0}#__ROOT__ .instructions{line-height:1.5}
+#__ROOT__ .study-list{display:flex;flex-wrap:wrap;gap:5px;max-height:180px;overflow:auto;padding:5px}
+#__ROOT__ button{font:inherit;color:inherit;background:rgba(110,130,150,.08);border:1px solid currentColor;border-radius:4px;padding:6px;cursor:pointer;text-align:left}
+#__ROOT__ button[aria-pressed=true]{font-weight:700;border-width:2px;background:rgba(60,120,170,.15)}
+#__ROOT__ button:focus-visible{outline:3px solid currentColor;outline-offset:2px}
+#__ROOT__ .detail{white-space:pre-wrap;border-left:4px solid currentColor;padding:9px;background:rgba(110,130,150,.08);line-height:1.5;overflow-wrap:anywhere}
+#__ROOT__ .forest-scroll{max-height:480px;overflow:auto;border:1px solid rgba(110,130,150,.4)}
+#__ROOT__ .forests{display:grid;grid-template-columns:repeat(2,minmax(260px,1fr));gap:10px;min-width:540px;padding:8px}
+#__ROOT__ figure{margin:0}#__ROOT__ figcaption{font-weight:600;padding:4px}
+#__ROOT__ svg{display:block;width:100%;height:auto;color:inherit}
+#__ROOT__ .axis{stroke:currentColor;stroke-width:1}#__ROOT__ .tick{fill:currentColor;font-size:11px}
+#__ROOT__ .interval{stroke:#527fa6;stroke-width:2}#__ROOT__ .point{fill:#527fa6;cursor:pointer}
+#__ROOT__ .row-band{fill:currentColor;opacity:0}#__ROOT__ .active .row-band{opacity:.10}
+#__ROOT__ .active .interval{stroke:currentColor;stroke-width:3}#__ROOT__ .active .point{fill:currentColor;stroke:currentColor;stroke-width:2}
+</style>
+<h3>Linked study inspector</h3>
+<p class="instructions" id="__ROOT__-help">Select a study button or forest point to inspect its raw counts and highlight both intervals. Hovering previews a row; leaving the point restores the selected row. Tab enters or leaves the study buttons. Up/Down arrows move between studies; Home/End reach the endpoints. Enter/Space retain their native button activation. This local view uses the precomputed Python results. Selection is transient and changes no cohort, native table, saved option or model. Native forests accompany this inspector for export.</p>
+<p class="coverage"></p>
+<div class="study-list" role="group" aria-label="Study selection" aria-describedby="__ROOT__-help"></div>
+<p class="detail" role="status" aria-live="polite" aria-atomic="true"></p>
+<button class="reset" type="button">First study</button>
+<div class="forest-scroll"><div class="forests"></div></div>
+<script>(function(){'use strict';
+const root=document.getElementById('__ROOT__'),payload=__PAYLOAD__,rows=payload.studies;
+const list=root.querySelector('.study-list'),detail=root.querySelector('.detail'),forests=root.querySelector('.forests');
+const ns='http://www.w3.org/2000/svg',buttons=[],groups=[[],[]];let selected=0,preview=null;
+root.querySelector('.coverage').textContent='All '+rows.length+' retained source rows are shown without sampling. Intervals: '+payload.confidence+'% pointwise Wilson; percentages below are rounded to one decimal. Plot limits for the native forests are separate.';
+const pct=x=>(100*x).toFixed(1)+'%';
+function display(){
+ const index=preview===null?selected:preview,r=rows[index];
+ buttons.forEach((b,i)=>{b.tabIndex=i===selected?0:-1;b.setAttribute('aria-pressed',String(i===selected));});
+ groups.forEach(chart=>chart.forEach((g,i)=>g.classList.toggle('active',i===index)));
+ detail.textContent=(preview===null?'Selected':'Hover preview')+' — source row '+r.sourceID+': '+r.study+'\nTP = '+r.tp+'; FP = '+r.fp+'; FN = '+r.fn+'; TN = '+r.tn+'\nSensitivity = '+pct(r.sensitivity)+' ('+pct(r.seLower)+' to '+pct(r.seUpper)+')\nSpecificity = '+pct(r.specificity)+' ('+pct(r.spLower)+' to '+pct(r.spUpper)+')';
+}
+function reveal(container,element){
+ const box=element.getBoundingClientRect(),view=container.getBoundingClientRect();
+ if(box.top<view.top)container.scrollTop-=view.top-box.top+4;
+ else if(box.bottom>view.bottom)container.scrollTop+=box.bottom-view.bottom+4;
+}
+function choose(index,focus){
+ selected=index;preview=null;display();
+ if(focus)buttons[index].focus({preventScroll:true});
+ reveal(list,buttons[index]);
+ reveal(root.querySelector('.forest-scroll'),groups[0][index]);
+}
+rows.forEach((r,i)=>{
+ const button=document.createElement('button');button.type='button';button.textContent=r.study+' [row '+r.sourceID+']';
+ button.addEventListener('focus',()=>choose(i,false));button.addEventListener('click',()=>choose(i,false));
+ button.addEventListener('keydown',event=>{
+  if(event.altKey||event.shiftKey)return;let next=i;
+  switch(event.key){case 'ArrowUp':if(event.ctrlKey||event.metaKey)return;next=Math.max(0,i-1);break;
+   case 'ArrowDown':if(event.ctrlKey||event.metaKey)return;next=Math.min(rows.length-1,i+1);break;
+   case 'Home':next=0;break;case 'End':next=rows.length-1;break;default:return;}
+  event.preventDefault();event.stopPropagation();choose(next,true);
+ });buttons.push(button);list.appendChild(button);
+});
+function svgNode(tag,attributes,parent,text){const node=document.createElementNS(ns,tag);Object.entries(attributes||{}).forEach(([k,v])=>node.setAttribute(k,String(v)));if(text!==undefined)node.textContent=text;parent.appendChild(node);return node;}
+[['Sensitivity','sensitivity','seLower','seUpper'],['Specificity','specificity','spLower','spUpper']].forEach(([title,key,low,high],chart)=>{
+ const figure=document.createElement('figure'),caption=document.createElement('figcaption');caption.textContent=title;figure.appendChild(caption);forests.appendChild(figure);
+ const height=58+28*rows.length,svg=svgNode('svg',{viewBox:'0 0 440 '+height,role:'img','aria-label':title+' with pointwise Wilson intervals; use the study buttons for keyboard inspection'},figure);
+ const x=value=>62+360*value;
+ svgNode('line',{x1:x(0),x2:x(1),y1:25,y2:25,class:'axis'},svg);
+ [0,.25,.5,.75,1].forEach(value=>svgNode('text',{x:x(value),y:17,'text-anchor':'middle',class:'tick'},svg,pct(value)));
+ rows.forEach((r,i)=>{
+  const y=48+28*i,g=svgNode('g',{'data-index':i},svg);groups[chart].push(g);
+  svgNode('rect',{x:0,y:y-12,width:440,height:24,class:'row-band'},g);
+  svgNode('text',{x:4,y:y+4,class:'tick'},g,r.sourceID);
+  svgNode('line',{x1:x(r[low]),x2:x(r[high]),y1:y,y2:y,class:'interval'},g);
+  const point=svgNode('circle',{cx:x(r[key]),cy:y,r:4.5,class:'point','data-index':i},g);
+  svgNode('title',{},point,r.study+' [row '+r.sourceID+']: '+pct(r[key])+' ('+pct(r[low])+' to '+pct(r[high])+')');
+  point.addEventListener('pointerenter',()=>{preview=i;display();});
+  point.addEventListener('pointerleave',()=>{if(preview===i){preview=null;display();}});
+  point.addEventListener('click',()=>choose(i,true));
+ });
+});
+root.querySelector('.reset').addEventListener('click',()=>choose(0,true));
+display();
+})();</script>
+</div>

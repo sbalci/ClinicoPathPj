@@ -1,0 +1,13 @@
+Study,TP,FP,FN,TN
+Study 01,80,10,20,90
+Study 02,45,20,5,80
+Zero sensitivity,0,5,10,15
+Perfect specificity,12,0,3,20
+Small study,1,1,0,0
+Repeated cohort,18,4,2,16
+Repeated cohort,16,2,4,18
+,9,1,1,9
+Missing TP,,2,4,5
+Fractional count,1.5,3,2,4
+Negative count,-1,2,3,4
+Empty diseased arm,0,2,0,8
