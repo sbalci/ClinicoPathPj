@@ -23,6 +23,52 @@ sync_module_metadata <- function(root = ".") {
             "    tags: [Python, Diagnostic accuracy, Decision curves, Data quality]")
     }
     document <- yaml::yaml.load(paste(metadata, collapse = "\n"))
+    identity_data <- "python_first_event_identity.omv"
+    if (file.exists(file.path(root, "data", identity_data))) {
+        entry <- list(name = "First-Event Subject Identity Examples", path = identity_data,
+            description = "Twelve synthetic component timelines: eleven known ID records, nine distinct known IDs, two repeated IDs across four records and one missing ID. Labels 001, 01 and 1 remain distinct. Endpoints retain nine usable record-level results.",
+            tags = c("Python", "Subject identity", "Composite endpoints"))
+        index <- which(vapply(document$datasets, function(x) identical(x$path, identity_data), logical(1)))
+        if (length(index)) document$datasets[[index[1L]]] <- entry
+        else document$datasets[[length(document$datasets) + 1L]] <- entry
+    }
+    first_event_data <- "python_first_event_examples.omv"
+    if (file.exists(file.path(root, "data", first_event_data))) {
+        entry <- list(name = "Two-Component First-Event Examples", path = first_event_data,
+            description = "Twelve synthetic component timelines with nine usable records (six events and three censored), missingness, a negative duration, exact event/censor ties and known events beyond common follow-up. Literal expected outputs are provided.",
+            tags = c("Python", "Composite endpoints", "Data preparation"))
+        index <- which(vapply(document$datasets, function(x)
+            identical(x$path, first_event_data), logical(1)))
+        if (length(index)) document$datasets[[index[1L]]] <- entry
+        else document$datasets[[length(document$datasets) + 1L]] <- entry
+    }
+    interval_censor_data <- "python_interval_censoring_examples.omv"
+    if (file.exists(file.path(root, "data", interval_censor_data))) {
+        entry <- list(
+            name = "Interval Censoring Input Examples", path = interval_censor_data,
+            description = "Ten synthetic endpoint pairs with continuous numeric types: eight informative records (three exact, two left-censored, one right-censored and two interval-censored), one reversed pair and one uninformative pair. Signed times are illustrative.",
+            tags = c("Python", "Interval censoring", "Data preparation"))
+        index <- which(vapply(document$datasets, function(x)
+            x$path %in% c(interval_censor_data,"python_interval_censoring_examples.csv"), logical(1)))
+        if (length(index)) document$datasets[[index[1L]]] <- entry
+        else document$datasets[[length(document$datasets) + 1L]] <- entry
+    }
+    composite_data <- "python_composite_outcome_examples.csv"
+    if (file.exists(file.path(root, "data", composite_data)) &&
+        !any(vapply(document$datasets, function(x) identical(x$path, composite_data), logical(1)))) {
+        document$datasets[[length(document$datasets) + 1L]] <- list(
+            name = "Composite Outcome Status Examples", path = composite_data,
+            description = "Nine synthetic binary/unknown component pairs. OR status has five events, one zero and three unknowns; progression-only status has three events, three zeros and three unknowns. No event times are supplied.",
+            tags = c("Python", "Composite endpoints", "Status preparation"))
+    }
+    numeric_date_data <- "python_numeric_date_examples.csv"
+    if (file.exists(file.path(root, "data", numeric_date_data)) &&
+        !any(vapply(document$datasets, function(x) identical(x$path, numeric_date_data), logical(1)))) {
+        document$datasets[[length(document$datasets) + 1L]] <- list(
+            name = "Numeric Date Encoding Examples", path = numeric_date_data,
+            description = "Six synthetic equivalent packed, Excel1900/1904 and Unix pairs; five complete intervals total 456 days. A separate malformed packed column illustrates invalid-date handling.",
+            tags = c("Python", "Numeric dates", "Data preparation"))
+    }
     calendar_data <- "python_calendar_interval_examples.csv"
     if (file.exists(file.path(root, "data", calendar_data)) &&
         !any(vapply(document$datasets, function(x) identical(x$path, calendar_data), logical(1)))) {

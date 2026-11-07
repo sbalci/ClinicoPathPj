@@ -16,7 +16,8 @@ installation is needed.
 | Raw date-quality and source preview | Optional quality tables; bounded preview |
 | Saved interval | Continuous, full supplied-row alignment, named Calculated interval |
 | Calendar-aware months/years | Implemented in 0.3.47; corrected R feature reference below |
-| Auto parsing, numeric packed/epoch dates, two-digit years | Pending; rejected rather than guessed |
+| Excel1900/1904, Unix seconds and packed YYYYMMDD | Explicit formats implemented in 0.3.48 |
+| Automatic parsing and two-digit years | Pending; rejected rather than guessed |
 | System/named timezones, DST and R Date/POSIX input | Pending; UTC text only |
 | Baseline clinical plausibility bands and glossary | Omitted in this core |
 | Full parity, broader platforms and clinical/release review | Open |
@@ -26,7 +27,7 @@ to February 29, 2024 is 29 days, or 29/30.4375 standardized months. Both source 
 must parse at least 80% of their nonmissing values; missing and invalid pairs stay
 missing in saved output. The visible initial format is YMD in UTC, differing from
 the baseline's automatic parsing default. Review the original/parsed preview before
-using ambiguous day/month orders. Numeric encodings are not inferred.
+using ambiguous day/month orders. Numeric encodings are not inferred; explicitly selected formats are available in 0.3.48.
 
 Negative raw intervals cause an error by default. Explicit exclusion is required;
 they never subtract from summed record-time. Potential extremes use the **raw**
@@ -145,3 +146,12 @@ Final installed manifest, R database, registry and interval-engine bytes match t
 archive; fresh restart/reopen shows **Months** with **Calendar rollback anniversaries**.
 The full 0.3.47 native inventory was not rerun; other platforms and clinical review
 remain unqualified.
+
+## Numeric input formats — 0.3.48
+
+Both sources may use explicit Excel1900/1904, Unix seconds or packed YYYYMMDD.
+They must use the same encoding and origin; mixed-format roles are not inferred.
+Calendar mode operates on the converted UTC dates and keeps its anniversary rules.
+The 80% per-column parse-quality guard still applies. Early Excel values carry an
+origin warning; invalid/missing/excluded rows keep missing saved intervals.
+See [numeric date scope and qualification](python-numeric-dates.md).

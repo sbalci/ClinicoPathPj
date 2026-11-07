@@ -5,7 +5,7 @@
   "menuGroup": "Survival Py",
   "menuSubgroup": "Data preparation",
   "menuTitle": "Time intervals (UTC core)",
-  "version": "0.3.47",
+  "version": "0.3.48",
   "jas": "1.2",
   "options": [
     {
@@ -86,6 +86,22 @@
         {
           "name": "mdyhm",
           "title": "MM-DD-YYYY HH:MM"
+        },
+        {
+          "name": "excel_serial",
+          "title": "Excel serial (1899-12-30 origin)"
+        },
+        {
+          "name": "excel_serial_1904",
+          "title": "Excel serial (1904-01-01 origin)"
+        },
+        {
+          "name": "unix_epoch",
+          "title": "Unix epoch (seconds since 1970)"
+        },
+        {
+          "name": "packed_ymd",
+          "title": "Packed YYYYMMDD (eight digits)"
         }
       ],
       "default": "ymd"

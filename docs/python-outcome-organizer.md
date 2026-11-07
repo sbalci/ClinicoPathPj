@@ -156,3 +156,10 @@ zero failures, errors, warnings or skips. This includes the legacy greyed-result
 contracts and the outcome lifecycle. The earlier 3,838-pass/two-error attempt remains
 recorded. This closes the clean full-native rerun gate, while broader platforms,
 clinical/release review and omitted outcome methods remain open.
+
+## Recurrence/progression status extension — 0.3.49
+
+The RFS/PFS/DFS and TTP status choices now implement the single-event component
+rules, with a separate component mapping/missingness audit and unchanged saved
+output identity. These choices do not construct time to first event. See
+[composite status scope and qualification](python-composite-outcomes.md).

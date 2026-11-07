@@ -2008,7 +2008,7 @@
       "source_name": "datetimeconverter",
       "menu_group": "Survival Py",
       "menu_title": "Datetime converter (UTC core)",
-      "supported_core": "Explicit four-digit calendar formats in UTC, Excel 1900/1904 and Unix epochs, parse-quality accounting, preview/components and aligned saved outputs",
+      "supported_core": "Explicit four-digit calendar formats in UTC, Excel 1900/1904 and Unix epochs, parse-quality accounting, preview/components and aligned saved outputs; explicit eight-digit packed YYYYMMDD calendar validation",
       "omissions": "Auto format detection, named/system timezones and DST, two-digit-year policies, native Date/POSIX classes, locale month input, glossary and full parity"
     },
     {
@@ -2164,12 +2164,18 @@
       "source_name": "outcomeorganizer",
       "menu_group": "Survival Py",
       "menu_title": "Outcome organizer (core)",
-      "supported_core": "Explicit selected-event/numeric 0/1 coding; four-state OS/cause/competing/multistate mapping; competing factor interchange; native mapping/counts/preview and row-aligned saved status",
-      "omissions": "Recurrence composites, patient hierarchy, interval/administrative censoring, time validation, survival estimation and full parity",
+      "supported_core": "Explicit selected-event/numeric 0/1 coding; four-state OS/cause/competing/multistate mapping; competing factor interchange; native mapping/counts/preview and row-aligned saved status; explicit RFS/PFS/DFS component-OR and progression-only TTP status with missingness audit (no first-event times)",
+      "omissions": "patient hierarchy, interval/administrative censoring, first-event time construction/time validation, survival estimation and full parity",
       "recode_reference": {
         "file": "R/utils-eventindicator.R",
         "commit": "283a8275e3dd6704f6bba2164215442d3d293b8c",
         "sha256": "fb2370fdcc1a84143fd1e819e487a6e142f06f0c7fc872a8df37225626dcff40"
+      },
+      "composite_reference": {
+        "commit": "283a8275e3dd6704f6bba2164215442d3d293b8c",
+        "fixture": "tests/reference/outcome-composite-status.R",
+        "sha256": "59df0a9b65a1c36d87e9854e6dbd19fda9bdb615fc2588009b18168bed87c19b",
+        "scope": "single-event component rules; multievent and competing interchange not supported; no times"
       }
     },
     {
@@ -2323,8 +2329,8 @@
       "source_name": "timeinterval",
       "menu_group": "Survival Py",
       "menu_title": "Time intervals (UTC core)",
-      "supported_core": "Explicit UTC text pairs; standardized elapsed and calendar-anniversary days/weeks/months/years; negative/extreme exclusions, follow-up landmark selection, record-time summaries, bounded mean t CI, native audit tables and aligned saved intervals",
-      "omissions": "auto/two-digit/numeric-packed parsing, numeric epochs, system/named timezone and DST, date plausibility classifiers, glossary, repeated-patient modelling and full parity",
+      "supported_core": "Explicit UTC text, Excel1900/1904, Unix and eight-digit YYYYMMDD pairs; standardized elapsed and calendar-anniversary days/weeks/months/years; negative/extreme exclusions, follow-up landmark selection, record-time summaries, bounded mean t CI, native audit tables and aligned saved intervals",
+      "omissions": "auto/two-digit parsing, system/named timezone and DST, date plausibility classifiers, glossary, repeated-patient modelling and full parity",
       "feature_references": {
         "calendar_anniversaries": {
           "commit": "381df71e98e4fb460d44e5a6cc439a04289acfdd",
@@ -2642,6 +2648,62 @@
         "scatter_rectangle": "0.3.17: transient inclusive displayed-value rectangle row previews via numeric bounds or pointer drag. Complete pairs only; original source IDs; existing explicit Apply commits selection without refitting. Evidence: docs/python-ihc-brush-validation.md",
         "heatmap_keyboard": "0.3.18: one remembered Tab stop for matrix cells, arrow and row/matrix Home/End focus navigation. Existing focus preview, individual-row toggle and explicit Apply semantics retained. Evidence: docs/python-ihc-keyboard-validation.md",
         "scatter_keyboard": "0.3.19: one remembered complete-pair Tab stop, displayed-row-order arrows and Home/End; ties remain separately reachable. Local inspection/activation only; explicit Apply commits. DOM checks and desktop qualification recorded in docs/python-ihc-scatter-keyboard-validation.md."
+      }
+    },
+    {
+      "id": "pyintervalcensoring",
+      "family": "jsurvival",
+      "menu_group": "Survival Py",
+      "menu": "Data preparation",
+      "menu_title": "Interval-censoring inputs",
+      "title": "Interval-Censoring Inputs",
+      "aliases": [],
+      "source": "analyses/jsurvival/pyintervalcensoring.py",
+      "status": "utility",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "Evidence tracked in docs/python-interval-censoring.md",
+        "gui": "Desktop evidence tracked separately in docs/python-interval-censoring.md",
+        "platforms": []
+      },
+      "supported_core": "Numeric interval2 endpoint checking, censoring-type audit and aligned saved bounds/type; no fitted survival model",
+      "omissions": "Date parsing, model fitting, clinical event-time verification, repeated-patient inference and full outcome-organizer feature parity",
+      "oracle": "survival::Surv(left,right,type=interval2)",
+      "dependencies": {
+        "bundled": [
+          "numpy"
+        ],
+        "candidates": []
+      }
+    },
+    {
+      "id": "pyfirstevent",
+      "family": "jsurvival",
+      "menu_group": "Survival Py",
+      "menu": "Data preparation",
+      "menu_title": "Two-component first event",
+      "title": "Two-Component First Event",
+      "aliases": [],
+      "source": "analyses/jsurvival/pyfirstevent.py",
+      "status": "utility",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "Evidence tracked in docs/python-first-event.md",
+        "gui": "macOS arm64 jamovi 28.13: Sideload, valid/incomplete recovery, saved outputs, fresh-engine reopen/rerun and native HTML/embedded PNG verified; see docs/python-first-event.md for scope and open gates",
+        "platforms": [
+          "macOS-arm64"
+        ],
+        "administrative_censoring": "0.3.52 optional cutoff and unadjusted preview/audit; evidence and separate gates tracked in docs/python-first-event.md",
+        "subject_identity": "0.3.53 optional exact-label identity audit and strict one-record-per-ID gate; separate qualification tracked in docs/python-first-event.md"
+      },
+      "supported_core": "Two explicit binary components, minimum observation horizon, optional fixed administrative duration cutoff retaining events at the boundary, aligned time/status/source outputs; optional exact-label subject identity audit and explicit unique-ID requirement",
+      "omissions": "Clinical endpoint definitions, partial-record inference, recurrent events, patient hierarchy and fitted survival models",
+      "oracle": "Literal fixtures and independently enumerated component timelines",
+      "dependencies": {
+        "bundled": [
+          "numpy"
+        ],
+        "candidates": []
       }
     }
   ],

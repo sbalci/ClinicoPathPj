@@ -1,3 +1,64 @@
+# Subject identity audit — 0.3.53
+
+- [x] Add exact text/factor ID audit, bounded repeats, preview annotations and strict unique-ID gate.
+- [x] Preserve endpoint/cutoff calculations and saved-output alignment.
+- [x] Fix supplier and subject role to explicitly permit jamovi ID columns; add a regression assertion.
+- [x] Pass nine focused Python tests, 76 focused native assertions and 28 final archive cases.
+- [x] Complete a full compiler build and verify installed/archive bytes after GUI Sideload.
+- [x] Verify ID switching, pending/strict clearing, unique-ID recovery and five saved OMV states.
+- [x] Verify fresh-engine reopen/rerun and native HTML/embedded PNG export with unequal 3/6 bars.
+- [ ] Obtain a clean all-green full Python regression: completed run was 402/405; three SIGALRM timeouts passed on isolated rerun without changing limits.
+- [ ] Full native inventory, additional platforms and direct Save Image qualification remain open.
+- [ ] Patient aggregation/history policies, clinical review and full parity remain open.
+
+# Optional administrative censoring — 0.3.52
+
+- [x] Extend `pyfirstevent` without changing its disabled-default calculations or existing source codes.
+- [x] Require an explicit finite nonnegative cutoff; retain events exactly at it.
+- [x] Add native audit, unadjusted preview and aligned adjusted saved outputs.
+- [x] Pass 45 focused Python first-event/generator tests.
+- [x] Pass 396 full Python tests, 130 isolated native R assertions, compiler/freshness and 28 packaged cases.
+- [x] Sideload; verify older saved analysis, disabled/cutoff/pending/zero/recovery states, fresh-engine rerun and native HTML/embedded PNG.
+- [ ] Existing dataset-column descriptions remain stale after recalculation; the saved native cutoff audit is authoritative. Automatic refresh remains unqualified; recreating generated columns refreshes descriptions and is verified in a separate saved fixture.
+- [ ] Patient hierarchy, date-based administration, clinical adjudication and full parity remain open.
+
+# Two-component first-event utility — 0.3.51
+
+- [x] Implement explicit component status/time preparation with a common observation horizon.
+- [x] Add native mapping/audit/preview, optional count plot and aligned time/status/source outputs.
+- [x] Add literal typed examples and independent chronological enumeration tests.
+- [x] Pass 46 focused/391 full Python tests, 96 focused native R assertions, compiler and 28 packaged cases.
+- [x] Sideload and verify saved-output recovery, native HTML/embedded PNG and fresh-engine reopening/rerun.
+- [ ] Administrative censoring, hierarchy, clinical endpoint adjudication and full parity remain open.
+
+# Interval2 endpoint utility — 0.3.50
+
+- [x] Implement numeric endpoint classification and row-aligned canonical bounds/type.
+- [x] Add native audit, preview/report, optional count plot and typed example.
+- [x] Pass 39 focused endpoint/runtime/generator checks, including role-limited infinity transport.
+- [x] Pass 74 focused native assertions, compiler/freshness and 27 packaged-runtime cases.
+- [x] Review all 383 Python tests: 382 passed; correct the sole stale utility-count assertion and pass its six-test file. Full rerun after the test-only fix was not performed.
+- [x] Sideload and verify open bounds, same-column/incomplete recovery, native HTML/embedded PNG and fresh-engine reopen/rerun.
+- [ ] Interval-censored model fitting, first-event construction and full migration parity remain open.
+
+# Composite/progression status — 0.3.49
+
+- [x] Port the single-event recurrence/progression rules with an independent nine-pair truth table.
+- [x] Add explicit component roles, native audit/preview and aligned saved binary output.
+- [x] Preserve known events despite unknown components; TTP ignores outcome coding.
+- [x] Pass 48 focused checks, 376 full Python tests, 116 focused native assertions, compiler/freshness and 26 packaged cases.
+- [x] Verify Sideload, RFS/TTP switching, incomplete-level clearing/recovery, native HTML/embedded PNG and fresh-engine reopen/rerun.
+- [ ] First-event times, patient hierarchies, interval/administrative censoring and full parity remain open.
+
+# Explicit numeric interval dates — 0.3.48
+
+- [x] Reuse Excel/Unix conversion for intervals; add strict packed YYYYMMDD validation to both preparations.
+- [x] Preserve defaults, source IDs, early Excel warnings and explicit output-format metadata.
+- [x] Pass 25 focused Python datetime/interval tests.
+- [x] Pass compiler/freshness, 370 Python tests, 261 focused native R assertions and 26 packaged-runtime checks.
+- [x] Sideload and verify packed/Excel switching, malformed/rejected states, recovery, combined HTML and fresh-engine save/reopen/rerun.
+- [ ] Automatic/two-digit parsing, named timezones, time-aware outcomes and full parity remain open.
+
 # Calendar-anniversary option — 0.3.47
 
 - [x] Compare recent R calendar repair with the original frozen baseline; preserve both provenance records.

@@ -9,6 +9,7 @@ UTC = timezone.utc
 EPOCH = datetime(1970,1,1,tzinfo=UTC)
 NUMERIC = {'excel_serial':datetime(1899,12,30,tzinfo=UTC),
            'excel_serial_1904':datetime(1904,1,1,tzinfo=UTC),'unix_epoch':EPOCH}
+NUMERIC_FORMATS = set(NUMERIC) | {'packed_ymd'}
 ORDERS = {'ymd':'ymd','dmy':'dmy','mdy':'mdy','ydm':'ydm','myd':'myd','dym':'dym',
           'ymdhms':'ymd','dmyhms':'dmy','mdyhms':'mdy',
           'ymdhm':'ymd','dmyhm':'dmy','mdyhm':'mdy'}
@@ -19,6 +20,25 @@ COMPONENTS = ['year','month','monthname','day','hour','minute','second','dayname
 
 def parse_value(value, fmt):
     """Return a UTC datetime; reject invalid calendars rather than rolling them over."""
+    if fmt == 'packed_ymd':
+        if isinstance(value, str):
+            digits = value.strip()
+        elif isinstance(value, (int, float, np.integer, np.floating)) and not isinstance(value, (bool, np.bool_)):
+            try:
+                number = float(value)
+            except (ValueError, TypeError, OverflowError):
+                raise ValueError('Packed YYYYMMDD must be a finite eight-digit integer') from None
+            if not np.isfinite(number) or not number.is_integer():
+                raise ValueError('Packed YYYYMMDD must be a finite eight-digit integer')
+            digits = str(int(number))
+        else:
+            raise ValueError('Packed YYYYMMDD requires eight digits or an integer encoding')
+        if re.fullmatch(r'[0-9]{8}', digits) is None:
+            raise ValueError('Packed YYYYMMDD requires exactly eight digits; no two-digit-year inference')
+        try:
+            return datetime(int(digits[:4]), int(digits[4:6]), int(digits[6:]), tzinfo=UTC)
+        except ValueError:
+            raise ValueError('Invalid calendar date in packed YYYYMMDD') from None
     if fmt in NUMERIC:
         if isinstance(value,(bool,np.bool_)): raise ValueError('Logical values are not numeric date encodings')
         try: number=float(value)
@@ -60,7 +80,7 @@ def calculate(data, options):
     name=options.get('datetime_var')
     if name not in data: raise InputError('Select a datetime variable.')
     fmt=options.get('datetime_format','ymd')
-    if fmt not in set(ORDERS)|set(NUMERIC): raise InputError('Choose a supported explicit datetime format.')
+    if fmt not in set(ORDERS)|NUMERIC_FORMATS: raise InputError('Choose a supported explicit datetime format.')
     if options.get('timezone','UTC')!='UTC': raise InputError('This explicit-format core supports UTC only.')
     limit=options.get('preview_rows',20)
     if isinstance(limit,bool) or not isinstance(limit,int) or not 10<=limit<=100:
@@ -73,7 +93,7 @@ def calculate(data, options):
         codes,labels=categorical(column,name)
         values=[None if v<0 else labels[v] for v in codes]
     elif isinstance(column,np.ndarray) and column.ndim==1 and column.dtype.kind in 'fiu':
-        if fmt not in NUMERIC: raise InputError('For a numeric column choose Excel 1900, Excel 1904 or Unix epoch explicitly.')
+        if fmt not in NUMERIC_FORMATS: raise InputError('For a numeric column choose Excel 1900, Excel 1904, Unix epoch or packed YYYYMMDD explicitly.')
         values=[None if np.isnan(v) else float(v) for v in column]
     elif isinstance(column,list) and all(v is None or isinstance(v,str) for v in column): values=column
     else: raise InputError('Select a scalar text, nominal/ordinal or numeric datetime encoding.')

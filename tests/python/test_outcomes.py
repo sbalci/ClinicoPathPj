@@ -90,7 +90,7 @@ class Outcomes(unittest.TestCase):
         with self.assertRaisesRegex(InputError,'10,000'):calculate(data(['A']*10001),options(outcomeLevel='A'))
         d=data(['A','B']);d.metadata['y']={'classes':['Date']}
         with self.assertRaisesRegex(InputError,'scalar'):calculate(d,options(outcomeLevel='A'))
-        with self.assertRaisesRegex(InputError,'Unknown'):calculate(data(['A']),options(analysistype='pfs'))
+        with self.assertRaisesRegex(InputError,'Unknown'):calculate(data(['A']),options(analysistype='unknown'))
 
     def test_runtime_saved_alignment_preview_and_counts(self):
         r=run_analysis('pyoutcomeorganizer',{'y':factor(['N','X',None,'O','N'])},

@@ -57,7 +57,8 @@ pydatetimeconverterOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6:
                     "mdyhm",
                     "excel_serial",
                     "excel_serial_1904",
-                    "unix_epoch"),
+                    "unix_epoch",
+                    "packed_ymd"),
                 default="ymd")
             private$..preview_rows <- jmvcore::OptionInteger$new(
                 "preview_rows",
@@ -911,7 +912,7 @@ pydatetimeconverterBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6
             super$initialize(
                 package = "ClinicoPathPj",
                 name = "pydatetimeconverter",
-                version = c(0,3,45),
+                version = c(0,3,48),
                 options = options,
                 results = pydatetimeconverterResults$new(options=options),
                 data = data,

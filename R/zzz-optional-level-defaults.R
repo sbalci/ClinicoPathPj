@@ -12,7 +12,15 @@ pyvartree <- local({
 pyoutcomeorganizer <- local({
     compiled <- pyoutcomeorganizer
     defaults <- formals(compiled)
-    defaults[c("outcomeLevel", "dod", "dooc", "awd", "awod")] <- rep(list(NULL), 5L)
+    defaults[c("outcomeLevel", "dod", "dooc", "awd", "awod", "recurrenceLevel")] <- rep(list(NULL), 6L)
+    formals(compiled) <- defaults
+    compiled
+})
+
+pyfirstevent <- local({
+    compiled <- pyfirstevent
+    defaults <- formals(compiled)
+    defaults[c("eventA", "freeA", "eventB", "freeB")] <- rep(list(NULL), 4L)
     formals(compiled) <- defaults
     compiled
 })

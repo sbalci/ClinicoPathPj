@@ -59,7 +59,11 @@ pytimeintervalOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cl
                     "mdyhms",
                     "ymdhm",
                     "dmyhm",
-                    "mdyhm"),
+                    "mdyhm",
+                    "excel_serial",
+                    "excel_serial_1904",
+                    "unix_epoch",
+                    "packed_ymd"),
                 default="ymd")
             private$..output_unit <- jmvcore::OptionList$new(
                 "output_unit",
@@ -466,7 +470,7 @@ pytimeintervalBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             super$initialize(
                 package = "ClinicoPathPj",
                 name = "pytimeinterval",
-                version = c(0,3,47),
+                version = c(0,3,48),
                 options = options,
                 results = pytimeintervalResults$new(options=options),
                 data = data,

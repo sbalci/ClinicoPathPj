@@ -17,6 +17,8 @@ pyoutcomeorganizerOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::
             diagnostics = FALSE,
             visualization = FALSE,
             showNaturalSummary = FALSE,
+            recurrence = NULL,
+            recurrenceLevel = NULL,
             showConsole = FALSE, ...) {
 
             super$initialize(
@@ -44,7 +46,11 @@ pyoutcomeorganizerOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::
                     "os",
                     "cause",
                     "compete",
-                    "multistate"),
+                    "multistate",
+                    "rfs",
+                    "pfs",
+                    "dfs",
+                    "ttp"),
                 default="os")
             private$..multievent <- jmvcore::OptionBool$new(
                 "multievent",
@@ -84,6 +90,17 @@ pyoutcomeorganizerOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::
                 default=FALSE)
             private$..addOutcome <- jmvcore::OptionOutput$new(
                 "addOutcome")
+            private$..recurrence <- jmvcore::OptionVariable$new(
+                "recurrence",
+                recurrence,
+                permitted=list(
+                    "factor"),
+                default=NULL)
+            private$..recurrenceLevel <- jmvcore::OptionLevel$new(
+                "recurrenceLevel",
+                recurrenceLevel,
+                variable="(recurrence)",
+                allowNone=TRUE)
             private$..showConsole <- jmvcore::OptionBool$new(
                 "showConsole",
                 showConsole,
@@ -101,6 +118,8 @@ pyoutcomeorganizerOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::
             self$.addOption(private$..visualization)
             self$.addOption(private$..showNaturalSummary)
             self$.addOption(private$..addOutcome)
+            self$.addOption(private$..recurrence)
+            self$.addOption(private$..recurrenceLevel)
             self$.addOption(private$..showConsole)
         }),
     active = list(
@@ -116,6 +135,8 @@ pyoutcomeorganizerOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::
         visualization = function() private$..visualization$value,
         showNaturalSummary = function() private$..showNaturalSummary$value,
         addOutcome = function() private$..addOutcome$value,
+        recurrence = function() private$..recurrence$value,
+        recurrenceLevel = function() private$..recurrenceLevel$value,
         showConsole = function() private$..showConsole$value),
     private = list(
         ..outcome = NA,
@@ -130,6 +151,8 @@ pyoutcomeorganizerOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::
         ..visualization = NA,
         ..showNaturalSummary = NA,
         ..addOutcome = NA,
+        ..recurrence = NA,
+        ..recurrenceLevel = NA,
         ..showConsole = NA)
 )
 
@@ -140,6 +163,8 @@ pyoutcomeorganizerResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::
         summary = function() private$.items[["summary"]],
         cohort = function() private$.items[["cohort"]],
         mapping = function() private$.items[["mapping"]],
+        components = function() private$.items[["components"]],
+        compositeAudit = function() private$.items[["compositeAudit"]],
         frequencies = function() private$.items[["frequencies"]],
         preview = function() private$.items[["preview"]],
         report = function() private$.items[["report"]],
@@ -173,7 +198,7 @@ pyoutcomeorganizerResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::
                         `type`="integer"),
                     list(
                         `name`="missing", 
-                        `title`="Missing Outcome", 
+                        `title`="Unknown Final Status", 
                         `type`="integer"))))
             self$add(jmvcore::Table$new(
                 options=options,
@@ -196,6 +221,56 @@ pyoutcomeorganizerResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::
                     list(
                         `name`="n", 
                         `title`="Input Count", 
+                        `type`="integer"))))
+            self$add(jmvcore::Table$new(
+                options=options,
+                name="components",
+                title="Composite Component Mapping",
+                visible="(analysistype:rfs || analysistype:pfs || analysistype:dfs || analysistype:ttp)",
+                rows=0,
+                columns=list(
+                    list(
+                        `name`="component", 
+                        `title`="Component", 
+                        `type`="text"),
+                    list(
+                        `name`="variable", 
+                        `title`="Variable", 
+                        `type`="text"),
+                    list(
+                        `name`="level", 
+                        `title`="Original Level", 
+                        `type`="text"),
+                    list(
+                        `name`="category", 
+                        `title`="Meaning", 
+                        `type`="text"),
+                    list(
+                        `name`="code", 
+                        `title`="Component Code", 
+                        `type`="integer"),
+                    list(
+                        `name`="n", 
+                        `title`="Input Count", 
+                        `type`="integer"))))
+            self$add(jmvcore::Table$new(
+                options=options,
+                name="compositeAudit",
+                title="Composite Missingness Audit",
+                visible="(analysistype:rfs || analysistype:pfs || analysistype:dfs || analysistype:ttp)",
+                rows=0,
+                columns=list(
+                    list(
+                        `name`="outcomeMissing", 
+                        `title`="Unknown Outcome Component", 
+                        `type`="integer"),
+                    list(
+                        `name`="recurrenceMissing", 
+                        `title`="Unknown Recurrence Component", 
+                        `type`="integer"),
+                    list(
+                        `name`="overrides", 
+                        `title`="Known Event Despite Unknown Component", 
                         `type`="integer"))))
             self$add(jmvcore::Table$new(
                 options=options,
@@ -234,7 +309,22 @@ pyoutcomeorganizerResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::
                     list(
                         `name`="code", 
                         `title`="Status Code", 
-                        `type`="integer"))))
+                        `type`="integer"),
+                    list(
+                        `name`="outcomeComponent", 
+                        `title`="Outcome Component", 
+                        `type`="integer", 
+                        `visible`="(analysistype:rfs || analysistype:pfs || analysistype:dfs || analysistype:ttp)"),
+                    list(
+                        `name`="recurrenceComponent", 
+                        `title`="Recurrence Component", 
+                        `type`="integer", 
+                        `visible`="(analysistype:rfs || analysistype:pfs || analysistype:dfs || analysistype:ttp)"),
+                    list(
+                        `name`="reason", 
+                        `title`="Status Rule", 
+                        `type`="text", 
+                        `visible`="(analysistype:rfs || analysistype:pfs || analysistype:dfs || analysistype:ttp)"))))
             self$add(jmvcore::Text$new(
                 options=options,
                 name="report",
@@ -268,7 +358,9 @@ pyoutcomeorganizerResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::
                     "diagnostics",
                     "visualization",
                     "showNaturalSummary",
-                    "addOutcome")))
+                    "addOutcome",
+                    "recurrence",
+                    "recurrenceLevel")))
             self$add(jmvcore::Preformatted$new(
                 options=options,
                 name="console",
@@ -283,7 +375,7 @@ pyoutcomeorganizerBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6C
             super$initialize(
                 package = "ClinicoPathPj",
                 name = "pyoutcomeorganizer",
-                version = c(0,3,44),
+                version = c(0,3,49),
                 options = options,
                 results = pyoutcomeorganizerResults$new(options=options),
                 data = data,
@@ -311,12 +403,16 @@ pyoutcomeorganizerBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6C
 #' @param diagnostics .
 #' @param visualization .
 #' @param showNaturalSummary .
+#' @param recurrence .
+#' @param recurrenceLevel .
 #' @param showConsole .
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$summary} \tab \tab \tab \tab \tab a text \cr
 #'   \code{results$cohort} \tab \tab \tab \tab \tab a table \cr
 #'   \code{results$mapping} \tab \tab \tab \tab \tab a table \cr
+#'   \code{results$components} \tab \tab \tab \tab \tab a table \cr
+#'   \code{results$compositeAudit} \tab \tab \tab \tab \tab a table \cr
 #'   \code{results$frequencies} \tab \tab \tab \tab \tab a table \cr
 #'   \code{results$preview} \tab \tab \tab \tab \tab a table \cr
 #'   \code{results$report} \tab \tab \tab \tab \tab a text \cr
@@ -345,17 +441,22 @@ pyoutcomeorganizer <- function(
     diagnostics = FALSE,
     visualization = FALSE,
     showNaturalSummary = FALSE,
+    recurrence = NULL,
+    recurrenceLevel,
     showConsole = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("pyoutcomeorganizer requires jmvcore to be installed (restart may be required)")
 
     if ( ! missing(outcome)) outcome <- jmvcore::resolveQuo(jmvcore::enquo(outcome))
+    if ( ! missing(recurrence)) recurrence <- jmvcore::resolveQuo(jmvcore::enquo(recurrence))
     if (missing(data))
         data <- jmvcore::marshalData(
             parent.frame(),
-            `if`( ! missing(outcome), outcome, NULL))
+            `if`( ! missing(outcome), outcome, NULL),
+            `if`( ! missing(recurrence), recurrence, NULL))
 
+    for (v in recurrence) if (v %in% names(data)) data[[v]] <- as.factor(data[[v]])
 
     options <- pyoutcomeorganizerOptions$new(
         outcome = outcome,
@@ -369,6 +470,8 @@ pyoutcomeorganizer <- function(
         diagnostics = diagnostics,
         visualization = visualization,
         showNaturalSummary = showNaturalSummary,
+        recurrence = recurrence,
+        recurrenceLevel = recurrenceLevel,
         showConsole = showConsole)
 
     analysis <- pyoutcomeorganizerClass$new(

@@ -1,0 +1,10 @@
+Record,Outcome,Progression,Binary outcome
+Synthetic pair 1,Alive,No,0
+Synthetic pair 2,Alive,Yes,0
+Synthetic pair 3,Alive,,0
+Synthetic pair 4,Death,No,1
+Synthetic pair 5,Death,Yes,1
+Synthetic pair 6,Death,,1
+Synthetic pair 7,,No,
+Synthetic pair 8,,Yes,
+Synthetic pair 9,,,

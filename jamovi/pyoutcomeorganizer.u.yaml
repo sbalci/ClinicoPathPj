@@ -26,7 +26,25 @@
         {
           "type": "LevelSelector",
           "name": "outcomeLevel",
-          "enable": "(!multievent)"
+          "enable": "(!multievent && !(analysistype:ttp))"
+        },
+        {
+          "type": "TargetLayoutBox",
+          "label": "Recurrence/progression variable",
+          "children": [
+            {
+              "type": "VariablesListBox",
+              "name": "recurrence",
+              "maxItemCount": 1,
+              "isTarget": true,
+              "enable": "(analysistype:rfs || analysistype:pfs || analysistype:dfs || analysistype:ttp)"
+            }
+          ]
+        },
+        {
+          "type": "LevelSelector",
+          "name": "recurrenceLevel",
+          "enable": "(analysistype:rfs || analysistype:pfs || analysistype:dfs || analysistype:ttp)"
         },
         {
           "type": "LevelSelector",

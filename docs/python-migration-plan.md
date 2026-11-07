@@ -859,3 +859,204 @@ basis-specific outputs/metadata, old-file compatibility, HTML and fresh-engine
 persistence/recalculation pass. Unit labels are neutral across bases; fixed lengths
 are explained in the standardized definition. Full parity and broader qualification
 remain open.
+
+## Explicit numeric preparation formats — 0.3.48
+
+Before extending time-aware outcomes, close the contained numeric-input gap in
+`pytimeinterval`: reuse the existing explicit Excel1900/1904 and Unix converter,
+and add packed YYYYMMDD to both preparations. Keep automatic detection and
+two-digit-year rules out of scope. Eight-digit integer input or exact eight-digit
+text is supported; invalid calendars are rejected rather than rolled over.
+Both interval source columns use the same explicitly selected format and origin.
+
+Preserve the YMD/UTC and standardized defaults. Excel fractions retain whole-second
+ties-to-even rounding and explicit early-calendar notices; Unix fractions retain
+microseconds. Save the encoding with interval metadata. Validate equivalent dates
+against independent base R origins/arithmetic, packed Gregorian fixtures, missing
+rows, invalid formats and valid-invalid-valid native lifecycle. The Data Library
+example contains equivalent pairs plus a separate malformed packed variant.
+
+Inventory remains 26 partial targets, 35 planned and ten utilities; no new full
+parity claim. See `python-numeric-dates.md` for separate numerical, compiler,
+package, GUI and compatibility gates. Next: time-aware outcome preparation,
+keeping its censoring/hierarchy policy distinct from date-format implementation.
+
+0.3.48 qualification: 370 Python tests, 261 focused native assertions (33 numeric,
+163 converter, 65 interval), compiler/freshness and 26 packaged cases pass. Desktop
+Sideload/full restart, packed/Excel role and format changes, malformed/error/recovery
+states, named numeric/nominal output, native HTML and fresh-engine persistence/rerun
+pass. The independent artifact checker verifies the source CSV and five saved states.
+These are scoped preparation results; full native inventory, platform and clinical
+qualification remain separate. No additional baseline target is counted complete.
+
+## Recurrence/progression status preparation — 0.3.49
+
+Extend `pyoutcomeorganizer` with the frozen baseline's single-event RFS/PFS/DFS
+component-OR and progression-only TTP rules. Keep these explicitly labelled as
+**status preparation**; no recurrence/progression date or time-to-first-event is
+computed. A known event determines 1 despite an unknown other component; code 0
+requires both known components coded 0; remaining combinations are unknown.
+TTP reads progression only, ignoring the unused outcome level and values while
+retaining the outcome role for supplied-row alignment.
+
+Expose recurrence/progression and its event level in the first variable supplier,
+with conditional enablement. Show component mappings, missingness and known-event
+overrides in native tables, preserve original saved-row identities, and retain
+the existing distribution plot. Append new options so prior option order remains
+intact. Extend generator visibility only to bounded ORs of declared List choices.
+
+Validate all nine binary/unknown pairs, frozen R pmax/known-event rules, unused
+levels, all-unknown components, TTP's unused outcome, incomplete/recovery states,
+saved status and native visibility. Competing-factor interchange and four-state
+multievent composites are excluded until their endpoint contracts are specified.
+The original OS/cause/competing/multistate routes and defaults remain unchanged.
+
+Inventory remains 26 partial targets, 35 planned and ten utilities; no full-parity
+completion is inferred. See `python-composite-outcomes.md`. Next: time-aware outcome
+construction and explicit censoring/hierarchy policies, independently of status recoding.
+
+0.3.49 qualification: 48 focused Python checks, 376 full Python tests, 116 focused
+native assertions, compiler/freshness and 26 packaged cases pass. Native Sideload,
+RFS/TTP counts and conditional controls, incomplete-level clearing/recovery, native
+HTML/embedded PNG and fresh-engine TTP reopen → RFS rerun pass. Four OMV states
+and both exports agree with the independent truth-table artifact checker. Full
+native inventory, full parity, first-event times and broader qualification remain open.
+
+## Numeric interval-censoring preparation utility — 0.3.50
+
+Add `pyintervalcensoring` under Survival Py → Data preparation. A standalone helper
+avoids requiring an unrelated binary outcome: `Surv(type="interval2")` takes two
+endpoints and no event argument. This utility supports the outcome-preparation
+roadmap without claiming a fitted interval-censored model or completion of the
+original outcome organizer's interval features.
+
+Accept scalar numeric endpoints in a common scale, preserve supplied source IDs
+and classify exact/left/right/interval records. Match the reference's order: check
+raw left > right before nonfinite bounds become open. Reversed or both-open pairs
+remain missing in saved bounds/type, so they cannot be mistaken for usable one-sided
+records. Explain that ordinary complete-case deletion would wrongly discard valid
+open endpoints. Signed finite scales remain possible, with explicit disclosure.
+
+Provide native accounting/type/preview tables, optional static count plot, saved
+left/right/type and a typed synthetic example. Validate the finite/infinite/NA grid
+against `survival::Surv`, independently enumerated cases, canonical-bound roundtrip,
+same-column use, sparse source IDs and incomplete/recovery lifecycle. Numerical,
+compiler/package and desktop gates are tracked in `python-interval-censoring.md`.
+
+Inventory: 26 partial baseline targets, 35 planned, eleven utilities, 37 executable
+entry points and zero full-parity releases. This adds a utility, not another baseline
+completion. Next: first-event time construction and explicit censoring/hierarchy
+policies; interval-censored model estimation remains separate.
+
+0.3.50 evidence: 39 focused Python checks, 74 focused native R assertions and 27
+packaged cases pass. Desktop Sideload, lifecycle recovery, saved columns, HTML/
+embedded PNG and fresh-engine reopening/recalculation pass on macOS arm64.
+The 383-test Python run had one stale utility-count assertion; its corrected
+six-test file passes. A clean full rerun after that test-only correction remains
+unperformed. See the interval-censoring qualification record for separate gates.
+
+## Two-component first-event utility — 0.3.51
+
+Implement `pyfirstevent` separately from existing status-only contracts. Require
+explicit event/event-free levels and two finite nonnegative numeric durations on
+a common origin/scale. Prepare minimum observation time and Event only when a
+component event occurs at that minimum, with Event winning exact censor ties.
+Earlier component follow-up loss censors the composite even if another component
+has a later known event. Missing component records never trigger the status-only
+OR override. Display and audit this conservative policy prominently.
+
+Use native mapping/accounting/preview, optional static counts, and three aligned
+saved outputs. Validate against chronological enumeration, literal timelines,
+component-swap/scale identities and native lifecycle; qualify compiler, packaged
+runtime and desktop persistence separately. Track evidence in `python-first-event.md`.
+
+Inventory: 26 partial baseline targets, 35 planned, twelve utilities, 38 executable
+entry points, zero full-parity releases. This utility does not close the original
+outcome organizer's complete first-event/hierarchy/censoring feature set. Next:
+explicit administrative censoring and patient-level history contracts, followed
+by appropriate estimators; clinical endpoint definitions remain user-specified.
+
+0.3.51 qualification: 46 focused and 391 full Python tests, 96 focused native R
+assertions, compiler and 28 packaged runtime cases pass. macOS arm64 Sideload,
+explicit level controls, missing-role clearing/recovery, saved outputs, native
+HTML/embedded PNG and fresh-engine reopen/rerun pass. Artifact checks compare
+all source and saved columns against literal expected timeline values. Presentation
+label and registry evidence updates were compiled after numerical qualification;
+final archive integrity and installation are checked separately. Full native
+inventory, other platforms, clinical review and full baseline parity remain open.
+
+## Optional fixed administrative censoring — 0.3.52
+
+Extend the existing `pyfirstevent` entry point rather than adding another utility.
+Append initially disabled censoring and an empty explicit-cutoff field. Construct
+the existing composite first, then shorten only records beyond the cutoff and
+code them censored. Retain events at the exact cutoff and all unknown/invalid
+records as missing. Preserve original source codes; append the cutoff source
+only on the enabled route. Expose unadjusted values and adjustment accounting.
+
+Validate against independently ordered event/censor/cutoff timepoints, literal
+cutoff-2/zero fixtures, disabled-route identity, sparse outputs and missing-cutoff
+lifecycle. Reopen an existing 0.3.51 OMV in the new module before adjustment;
+qualify native export and fresh-engine persistence separately. Numeric duration
+cutoffs are not calendar administration or clinical endpoint adjudication.
+
+Inventory remains 26 partial baseline targets, 35 planned, twelve utilities,
+38 executable entry points and zero full-parity releases. Next: patient identity
+and history contracts; date-based administrative censoring requires its own
+origin and conversion rules. Evidence is tracked in `python-first-event.md`.
+
+0.3.52 evidence: 45 focused and 396 full Python tests, 130 isolated native R
+assertions, compiler/freshness and 28 packaged cases pass. Desktop compatibility
+with an existing 0.3.51 analysis, disabled/cutoff-2/pending/zero/recovery saved states,
+fresh-engine rerun and native HTML/embedded PNG pass. An interrupted native run
+used a build directory during recompilation; final evidence comes from an isolated
+copy. Existing dataset descriptions retain old text in jamovi after recalculation;
+the saved analysis cutoff audit is authoritative. Automatic metadata refresh and
+self-describing standalone dataset export remain open; do not infer release-ready
+clinical use from the passing numerical and lifecycle gates.
+
+Persisted metadata follow-up: a sixth OMV fixture recreates all three generated
+columns after setting cutoff 2. Its values and all source columns match the fixture,
+and time/status descriptions now include cutoff 2. The recreation workaround is
+verified; automatic refresh of existing dataset descriptions remains unqualified.
+
+## Subject identity contract — 0.3.53
+
+Extend `pyfirstevent` with an initially disabled exact-label subject-ID audit.
+Keep the optional ID role in the first variable supplier, and expose an explicit
+unique-ID requirement. Audit all supplied records, including unusable endpoints;
+preserve source row identities and all existing first-event/cutoff outputs.
+Missing/blank IDs are unknown; nonblank spelling, whitespace and leading zeros
+remain exact. Numeric IDs need an explicit text/factor conversion. Native summaries,
+a bounded repeated-ID table and preview annotations explain record-vs-subject counts.
+
+The strict requirement blocks preparation for missing/repeated IDs and must pass
+valid → strict failure/pending → valid lifecycle checks. Repeated IDs do not trigger
+an automatic earliest/last-record selection. Validate label/NA handling, independent
+frequency/position fixtures, disabled-route identity and sparse saved alignment.
+Compile and inspect the package, then verify GUI ID switching, strict recovery,
+export and fresh-engine persistence. Evidence: `python-first-event.md`.
+
+Inventory stays at 26 partial baseline targets, 35 planned, twelve utilities,
+38 executable entry points and zero full-parity releases. Next: explicit patient
+history and aggregation policies; this audit does not implement those policies.
+
+0.3.53 status on 2026-11-07: implemented and GUI-qualified for the documented
+synthetic record-level workflow on macOS arm64 jamovi 28.13. Final compiler,
+generator/status freshness, nine focused Python tests, 76 focused native assertions
+and 28 packaged-runtime cases pass. The 405-test regression completed with 402
+passes and three runtime alarm failures; all three passed in isolation without
+relaxing resource limits. A clean all-green full-suite run is still open.
+
+The subject role and supplier explicitly accept jamovi ID columns. Sideload,
+ID switching, strict output clearing/recovery, five persisted OMV states,
+fresh-engine reopen/rerun and native HTML/embedded PNG export pass. Source columns
+and aligned endpoint values match independent literal fixtures. The installed
+module matches the final 0.3.53 archive. Earlier interrupted dependency/build and
+harness failures remain separate evidence. See python-first-event.md and the
+identity qualification JSON for exact limits.
+
+Next: define explicit patient-history/aggregation policies before implementing
+patient-level reconstruction. Keep the full native inventory, broader platform
+qualification, clinical review and migration parity open. Unique labels alone do
+not establish an independent-observation design or sufficient follow-up.

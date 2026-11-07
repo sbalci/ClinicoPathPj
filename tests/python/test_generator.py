@@ -38,8 +38,9 @@ class GeneratedFiles(unittest.TestCase):
         column['visible']='(display:mean)';generate.validate(spec,'probe')
         generated=generate.r_yaml(spec)
         self.assertEqual(generated['items'][0]['columns'][0]['visible'],'(display:mean)')
+        column['visible']='(display:mean || display:median)';generate.validate(spec,'probe')
         for invalid in ['(display:absent)','(missing:mean)','(ci:mean)',
-                        '(display:mean || display:median)','(display:mean); print(1)']:
+                        '(display:mean || display:absent)','(display:mean); print(1)']:
             column['visible']=invalid
             with self.assertRaises(generate.SpecError):generate.validate(spec,'probe')
 

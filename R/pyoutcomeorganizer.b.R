@@ -7,7 +7,7 @@ pyoutcomeorganizerClass <- R6::R6Class(
         .run = function() {
             .cpjRun(self, "pyoutcomeorganizer",
                 clearOnInputError = TRUE,
-                options = c("outcome", "outcomeLevel", "analysistype", "multievent", "dod", "dooc", "awd", "awod", "diagnostics", "visualization", "showNaturalSummary", "addOutcome"),
+                options = c("outcome", "outcomeLevel", "analysistype", "multievent", "dod", "dooc", "awd", "awod", "diagnostics", "visualization", "showNaturalSummary", "addOutcome", "recurrence", "recurrenceLevel"),
                 arrays = character(0),
                 terms = character(0),
                 numeric = character(0),

@@ -1,11 +1,11 @@
 ---
 title: ClinicoPathPj - Python-Backed Analyses
 name: ClinicoPathPj
-version: 0.3.47
+version: 0.3.53
 jms: '1.0'
 authors: Serdar Balci
 maintainer: Serdar Balci <serdarbalci@serdarbalci.com>
-date: '2026-10-29'
+date: '2026-11-07'
 type: R
 description: >-
   Experimental analyses generated from Python specifications and computed in the
@@ -300,6 +300,22 @@ analyses:
     menuTitle: Time intervals (UTC core)
     title: Time Intervals (Python UTC Core)
     category: analyses
+  - name: pyintervalcensoring
+    ns: ClinicoPathPj
+    hidden: false
+    menuGroup: Survival Py
+    menuSubgroup: Data preparation
+    menuTitle: Interval-censoring inputs
+    title: Interval-Censoring Inputs (Python)
+    category: analyses
+  - name: pyfirstevent
+    ns: ClinicoPathPj
+    hidden: false
+    menuGroup: Survival Py
+    menuSubgroup: Data preparation
+    menuTitle: Two-component first event
+    title: Two-Component First Event (Python)
+    category: analyses
 usesNative: 'yes'
 datasets:
   - name: Python Core Examples
@@ -432,5 +448,58 @@ datasets:
       - Python
       - Calendar intervals
       - Data preparation
+  - name: Numeric Date Encoding Examples
+    path: python_numeric_date_examples.csv
+    description: >-
+      Six synthetic equivalent packed, Excel1900/1904 and Unix pairs; five
+      complete intervals total 456 days. A separate malformed packed column
+      illustrates invalid-date handling.
+    tags:
+      - Python
+      - Numeric dates
+      - Data preparation
+  - name: Composite Outcome Status Examples
+    path: python_composite_outcome_examples.csv
+    description: >-
+      Nine synthetic binary/unknown component pairs. OR status has five events,
+      one zero and three unknowns; progression-only status has three events,
+      three zeros and three unknowns. No event times are supplied.
+    tags:
+      - Python
+      - Composite endpoints
+      - Status preparation
+  - name: Interval Censoring Input Examples
+    path: python_interval_censoring_examples.omv
+    description: >-
+      Ten synthetic endpoint pairs with continuous numeric types: eight
+      informative records (three exact, two left-censored, one right-censored
+      and two interval-censored), one reversed pair and one uninformative pair.
+      Signed times are illustrative.
+    tags:
+      - Python
+      - Interval censoring
+      - Data preparation
+  - name: Two-Component First-Event Examples
+    path: python_first_event_examples.omv
+    description: >-
+      Twelve synthetic component timelines with nine usable records (six events
+      and three censored), missingness, a negative duration, exact event/censor
+      ties and known events beyond common follow-up. Literal expected outputs
+      are provided.
+    tags:
+      - Python
+      - Composite endpoints
+      - Data preparation
+  - name: First-Event Subject Identity Examples
+    path: python_first_event_identity.omv
+    description: >-
+      Twelve synthetic component timelines: eleven known ID records, nine
+      distinct known IDs, two repeated IDs across four records and one missing
+      ID. Labels 001, 01 and 1 remain distinct. Endpoints retain nine usable
+      record-level results.
+    tags:
+      - Python
+      - Subject identity
+      - Composite endpoints
 
 ...
