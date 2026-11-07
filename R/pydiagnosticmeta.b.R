@@ -7,7 +7,7 @@ pydiagnosticmetaClass <- R6::R6Class(
         .run = function() {
             .cpjRun(self, "pydiagnosticmeta",
                 clearOnInputError = TRUE,
-                options = c("study", "true_positives", "false_positives", "false_negatives", "true_negatives", "confidence_level", "reject_invalid", "show_studies", "show_excluded", "forest_plot", "plot_limit", "show_report", "show_explorer"),
+                options = c("study", "true_positives", "false_positives", "false_negatives", "true_negatives", "confidence_level", "reject_invalid", "show_studies", "show_excluded", "forest_plot", "plot_limit", "show_report", "show_explorer", "enable_inclusion", "inclusionDefinition"),
                 arrays = character(0),
                 terms = character(0),
                 numeric = c("true_positives", "false_positives", "false_negatives", "true_negatives"),

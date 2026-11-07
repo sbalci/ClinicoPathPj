@@ -84,7 +84,7 @@
       "source_name": "alluvial",
       "menu_group": "Descriptives Py",
       "menu_title": "Categorical alluvial flows (core)",
-      "supported_core": "Counts for 2\u20134 categorical axes, retain missing categories by default or complete-case exclusion, collision-free missing labels, native flow/marginal tables, shared count-scaled static/local geometry and local highlighting; 10,000 rows/60 paths/20 categories per axis without sampling",
+      "supported_core": "Counts for 2–4 categorical axes, retain missing categories by default or complete-case exclusion, collision-free missing labels, native flow/marginal tables, shared count-scaled static/local geometry and local highlighting; 10,000 rows/60 paths/20 categories per axis without sampling",
       "omissions": "Weights, condensation, numeric binning, marginal plot panels, alternative fill rules/orientations and baseline styling; no full parity"
     },
     {
@@ -301,7 +301,7 @@
       "source_name": "crosstable",
       "menu_group": "Descriptives Py",
       "menu_title": "Cross tables (core)",
-      "supported_core": "Grouped/overall native summaries; baseline numeric \u22646-level typing or explicit numeric override; per-variable or complete-case missingness; type-7 quartiles/sample SD; exact/normal Wilcoxon, Kruskal\u2013Wallis, uncorrected Pearson with sparse 2\u00d72 Fisher switch; five p-adjust methods",
+      "supported_core": "Grouped/overall native summaries; baseline numeric ≤6-level typing or explicit numeric override; per-variable or complete-case missingness; type-7 quartiles/sample SD; exact/normal Wilcoxon, Kruskal–Wallis, uncorrected Pearson with sparse 2×2 Fisher switch; five p-adjust methods",
       "omissions": "Larger exact RxC tests, alternate R table engines/styles, SMDs, copy-ready summaries and full baseline parity; unused group columns omitted"
     },
     {
@@ -556,7 +556,7 @@
       "source_name": "vartree",
       "menu_group": "Descriptives Py",
       "menu_title": "Categorical variable tree (core)",
-      "supported_core": "Observed prefix counts for 1\u20134 factors; common complete cohort; parent/cohort percentages; native node table; local expandable tree; optional top-30 leaf bar plot; maximum 200 non-root nodes and 10,000 input rows; optional continuous node mean/sample SD with valid/missing counts, leaf-only or all-node locations (0.3.39); explicit reference-level matches/valid-reference percentages, missing counts and combined numeric annotations (0.3.40)",
+      "supported_core": "Observed prefix counts for 1–4 factors; common complete cohort; parent/cohort percentages; native node table; local expandable tree; optional top-30 leaf bar plot; maximum 200 non-root nodes and 10,000 input rows; optional continuous node mean/sample SD with valid/missing counts, leaf-only or all-node locations (0.3.39); explicit reference-level matches/valid-reference percentages, missing counts and combined numeric annotations (0.3.40)",
       "omissions": "Pruning/follow rules, missing-category branches, baseline styling and full vtree parity; numeric and reference summaries supported in retained complete-cohort core"
     },
     {
@@ -2371,7 +2371,8 @@
         "platforms": [
           "macOS-arm64"
         ],
-        "linked_inspector": "0.3.56 display-only linked inspection; evidence and separate GUI/export gates tracked in docs/python-diagnostic-study-review.md"
+        "linked_inspector": "0.3.56 display-only linked inspection; evidence and separate GUI/export gates tracked in docs/python-diagnostic-study-review.md",
+        "applied_inclusion": "0.3.57 explicit snapshot-bound Apply; numerical and lifecycle gates tracked separately in docs/python-diagnostic-study-review.md"
       },
       "methods": "DTA meta-analysis. Reitsma bivariate random-effects model (mada::reitsma REML/ML/fixed) gives summary Se/Sp, LRs, DOR and the SROC (mada::sroc); also PHM SROC (mada::phm), univariate logit Se/Sp heterogeneity (metafor::rma: tau^2, I^2, Q), moderator meta-regression, Deeks funnel test (weighted lm on 1/sqrt(ESS)), continuity corrections and Wilson study CIs",
       "oracle": "mada::reitsma, mada::sroc, mada::phm, metafor::rma (REML; tau2, I2, QE), stats::lm(weights = ESS) for the Deeks test",
@@ -2385,8 +2386,8 @@
       "source_name": "diagnosticmeta",
       "menu_group": "OncoPath Py",
       "menu_title": "Diagnostic study review",
-      "supported_core": "Raw study counts, missing/invalid-row audit, exact-label identity audit, pointwise Wilson sensitivity/specificity intervals and native forest plots; display-only linked forest inspector with keyboard/hover and native export counterparts",
-      "omissions": "All pooled models and weights, Reitsma/PHM SROC, heterogeneity, meta-regression, publication bias, continuity corrections and applied cohort selection"
+      "supported_core": "Raw study counts, missing/invalid-row audit, exact-label identity audit, pointwise Wilson sensitivity/specificity intervals and native forest plots; display-only linked forest inspector with keyboard/hover and native export counterparts; optional snapshot-bound applied source-row inclusion with native audit",
+      "omissions": "All pooled models and weights, Reitsma/PHM SROC, heterogeneity, meta-regression, publication bias, continuity corrections; no pooled or selection-adjusted inference"
     },
     {
       "id": "pyihcheterogeneity",

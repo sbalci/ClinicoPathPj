@@ -5,6 +5,80 @@ This is the current delivery plan. It supersedes the implementation recommendati
 The original 61-analysis inventory remains the target; a menu entry does not establish parity.
 Detailed per-analysis evidence remains in the [generated status matrix](python-migration-status.md).
 
+
+## Current researched priorities — 2026-11-07
+
+The [ecosystem review](python-ecosystem-review-2026-11-07.md) now compares JASP,
+jamovi, Orange/BioLab, MedCalc, public GitHub sources and Hugging Face cards.
+Its [20-candidate backlog](python-analysis-candidates-2026-11-07.json) is planning
+metadata, separate from the public analysis registry. It adds no implemented ports,
+dependencies or clinical claims: the current inventory remains **27 partial / 34
+planned / 12 utilities / zero full-parity releases**.
+
+Read this queue and Verified current inventory as operative priorities. Later
+versioned entries preserve historical decisions/counts; they are not current
+completion totals. Existing wave numbers remain provenance/delivery groupings,
+not a requirement to postpone every high-value agreement/KM core until all plots
+are ported. Advance narrow classical cores while retaining all frozen omissions.
+
+| Next order | Work | Scope and exit gate |
+|---|---|---|
+| 0 | Close outstanding lifecycle/platform gates for existing ports | Keep 0.3.57 inclusion qualification distinct from earlier 200-row inspector evidence; do not enlarge the catalog to avoid acceptance debt. |
+| 1 | `pyagreement` continuous agreement core | Independent paired bias/LoA/CCC, then explicitly selected balanced ICC; independent R/hand fixtures and native lifecycle before repeated/unbalanced models. |
+| 2 | `pyenhancedroc` and `pydecisioncompare` | Empirical ROC and uncertainty, paired test comparison; PR/AP and supplied-prediction calibration have explicit additional feature contracts. |
+| 3 | `pyjjbetweenstats` and `pyjjwithinstats` | Independent/paired estimation cores; subject identity and visit matching; robust/Bayesian/general repeated branches remain separate gates. |
+| 4 | `pysurvival` / `pysinglearm` KM core | Deterministic ties, risk tables and censoring tests; prototype Cox/competing-risk dependencies separately. |
+| 5 | Optional lab/PCA extensions | Reconcile umbrella drafts for method comparison, reference intervals, QC, equivalence and PCA before adding any stable `py…` identifier through the registry. |
+
+This is our clinicopathological prioritization, not a finding that any external
+implementation is ready to bundle. The existing NumPy/SciPy/Matplotlib stack is the
+first choice for narrow cores. Pingouin/statsmodels/lifelines/scikit-learn need
+reviewed offline dependency bundles; compiled scikit-survival and large foundation
+models require additional feasibility gates. The review documents balanced ICC,
+tied-time jitter, AP-versus-PR-area conventions and held-out calibration pitfalls.
+
+Hugging Face adds candidate data/provenance and externally extracted feature
+workflows. Analyze imported embeddings or out-of-sample predictions first; defer
+runtime model downloads/inference. Model weights, source code and data rights are
+separate checks. Preserve the no-network/no-user-install analysis requirement.
+
+The detailed review supplies family mappings, organized UI sections, interaction
+semantics, independent oracles, edge cases, dependency gates and deferred work.
+No new analysis identifier or baseline method is silently accepted by this plan.
+
+## Roadmap review — 2026-11-07, 0.3.57 increment
+
+The source inventory remains 27 partial baseline ports, 34 planned targets and
+12 utilities. Full method parity, broad platform qualification and clinical review
+remain separate gates. The 0.3.56 study inspector and its 200-row/native PNG
+qualification are complete within their documented scope; they are not new
+analyses or pooled diagnostic synthesis. Prior-session changes are preserved.
+
+The next implemented increment is explicit applied study inclusion in
+`pydiagnosticmeta`. Its independent checkbox preview does not change ordinary
+study inspection. Apply saves a snapshot-bound set of eligible source rows;
+Python then updates the native study table, inclusion audit and forests. The raw
+input/exclusion audits and inspector retain the complete supplied/eligible cohort.
+An empty applied set produces no study estimates/forests. Changes to source rows,
+labels, selected variables or counts invalidate the saved set and clear native
+study results until reviewed and reapplied. Changing confidence level alone keeps
+the inclusion and recomputes intervals. Default inclusion is disabled, preserving
+older saved analyses. Clearing the advanced definition restores all eligible rows.
+
+Qualification: 58 focused checks, the DOM Apply harness, 74 native R assertions,
+29 packaged cases (plus applied/empty/stale inclusion subcases), compiler and
+freshness checks pass. macOS GUI Sideload, older-file defaults, explicit Apply,
+empty/stale recovery, confidence changes, fresh-engine reopening and native
+HTML/static forest export pass. The 423-test full Python run had one unrelated
+correlation execution-alarm failure during concurrent building; that exact test
+passed its isolated rerun. Keep this environment interruption visible rather than
+calling the original full run uniformly green. Evidence:
+[0.3.57 checks](validation-exports/python-study-inclusion-0.3.57-checks.json). No pooled or selection-adjusted inference is
+introduced. Subsequent work remains advanced-method prototypes and independent
+oracles, remaining baseline ports, direct vector export qualification and broader
+platform/accessibility evidence. Avoid expanding the interactive preview into a
+hidden model-fitting route.
+
 ## Reassessment after parallel-session changes — 2026-10-27
 
 Reviewed clean starting HEAD `5b46301` (0.3.18), source/registry, TODO and dated IHC
@@ -96,7 +170,7 @@ Utilities/demonstrations: `pydescriptives`, `pydotdecision`, `pyexacttests`, `py
 - Default isolated processx execution, checkpoints and cleanup. Reviewed bundled resources
   are local; the qualified scientific environment is currently macOS arm64 CPython 3.11.
 - Compact registry-driven groups: **Descriptives Py**, **Stats Plots Py**, **MedDecide Py**,
-  **Python Lab**, with topic subgroups. Survival Py/OncoPath Py remain reserved until ports exist.
+  **Python Lab**, with topic subgroups. **Survival Py** and **OncoPath Py** now contain the partial preparation/study-review ports listed above.
 - Separate local D3, Observable and Svg experiments, each clearly distinguishing preview
   from persisted analysis options. No silent refit from hover, highlighting or initial render.
 
@@ -155,14 +229,14 @@ saved-analysis/export qualification. No renderer is selected universally for all
 
 ### 3. Close gaps in existing ports before enlarging the catalog
 
-Prioritize GUI/saved-output/export gaps for the 20 partial ports, then remaining frozen-baseline
+Prioritize GUI/saved-output/export gaps for the current partial ports, then remaining frozen-baseline
 features and independent numerical agreement. Record implemented, independently validated,
 GUI-verified and release-ready status separately. Core accuracy or Benford calculations do not
 establish full umbrella feature parity. Keep statistical defaults and clinical rules unchanged.
 
 ## Web-informed candidates and revised implementation priorities
 
-Reviewed the four requested galleries/book repository and primary Python-library documentation.
+The original review covered the four requested galleries/book repository and primary Python-library documentation. The current cross-ecosystem priorities are at the top of this plan and in the dated 2026-11-07 review.
 See [the researched candidate matrix](python-analysis-opportunities.md) for clinicopathological
 use cases, source links, engine choices, target mappings, interaction and validation gates.
 These are proposed additions/views, not newly implemented analyses; the 61-target denominator
@@ -283,11 +357,11 @@ Robust, Bayesian, partial/grouped correlations, Spearman CIs, additional p-adjus
 and full plot styling remain omitted. This is not full baseline parity or clinical validation.
 See [correlation methods and qualification](python-correlation-matrix.md).
 
-Current inventory: 61 baseline targets, **17 partial**, **44 planned**, **0 full-parity**;
+Inventory at 0.3.20: 61 baseline targets, **17 partial**, **44 planned**, **0 full-parity**;
 27 implementation entries including the 10 retained utilities. Existing IHC and diagnostic
 identifiers, defaults and production R analyses are unchanged.
 
-## Next delivery sequence — planned, not currently implemented
+## Original delivery waves — retained scope, partially implemented
 
 | Stage | Deliverables | Exit condition |
 |---|---|---|
@@ -1153,8 +1227,10 @@ covers compatibility, paired inspection, recovery, fresh-engine reopening and
 HTML/static forest export. Full evidence and specific visual/export limitations
 are recorded in [the study-review guide](python-diagnostic-study-review.md).
 
-Next oncology increments: first qualify 200-row desktop navigation and direct image
-export; then specify applied study inclusion as an explicit Apply/rerun workflow
-with independent native-table/cohort validation. Keep bivariate/SROC modelling as
+Next oncology increments: 200-row desktop navigation and direct native PNG export
+and 200-row fresh-engine reopening are now verified (supplemental evidence in
+the study-review guide). The explicit Apply/rerun study-inclusion increment is
+implemented in 0.3.57 with native cohort auditing and lifecycle evidence above.
+Next qualify its inclusion checklist at 200 rows and remaining export formats. Keep bivariate/SROC modelling as
 a separate method/dependency/independent-oracle milestone. Do not infer full
 OncoPath or diagnosticmeta parity from the linked study inspector.

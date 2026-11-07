@@ -45,3 +45,18 @@ for(const [name,count] of [['single',1],['maximum',200],['hostile',1]]){
 const combined=open(fixture('main')+fixture('single')),roots=[...combined.d.querySelectorAll('.cpj-study-inspector')];assert.equal(roots.length,2);assert.notEqual(roots[0].id,roots[1].id);
 roots[0].querySelectorAll('.study-list button')[6].click();assert.match(roots[0].querySelector('.detail').textContent,/source row 15/);assert.match(roots[1].querySelector('.detail').textContent,/source row 3/);assert.deepEqual(combined.errors,[]);assert.deepEqual(combined.calls,[]);combined.dom.window.close();
 console.log('Linked study inspector: geometry, paired hover/selection, keyboard boundaries, native activation, 1/200-row limits, hostile labels, instance isolation and no host/network writes PASS');
+for(const name of ['included','empty','stale']){
+ const b=open(fixture(name)),inputs=[...b.d.querySelectorAll('.inclusion-rows input')];
+ assert.equal(inputs.length,8);assert.equal(b.d.querySelector('.inclusion-panel').hidden,false);
+ const count=()=>inputs.filter(v=>v.checked).length;
+ assert.equal(count(),name==='included'?2:0);
+ b.d.querySelectorAll('.study-list button')[5].click();assert.deepEqual(b.calls,[]);
+ b.d.querySelector('.include-all').click();assert.equal(count(),8);assert.deepEqual(b.calls,[]);
+ b.d.querySelector('.include-restore').click();assert.equal(count(),name==='included'?2:0);
+ b.d.querySelector('.include-none').click();assert.equal(count(),0);assert.deepEqual(b.calls,[]);
+ b.d.querySelector('.include-apply').click();
+ if(name==='empty'){assert.deepEqual(b.calls,[]);assert.match(b.d.querySelector('.inclusion-status').textContent,/already applied/);}
+ else{assert.equal(b.calls.length,1);assert.equal(b.calls[0][0],'inclusionDefinition');assert.deepEqual(JSON.parse(b.calls[0][1]),{version:1,rows:[],snapshot:'a'.repeat(64)});}
+ b.calls.length=0;b.w.setOption=undefined;b.d.querySelector('.include-all').click();b.d.querySelector('.include-apply').click();assert.match(b.d.querySelector('.inclusion-status').textContent,/requires/);assert.deepEqual(b.errors,[]);b.dom.window.close();
+}
+console.log('Study inclusion preview, restore, explicit Apply, empty/stale states and missing bridge PASS');

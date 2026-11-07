@@ -1,7 +1,7 @@
 # Python roadmap for ClinicoPathPj
 
 > Historical planning snapshot. For current architecture, implemented scope and next steps,
-> see [the revised migration plan](python-migration-plan.md), updated 2026-10-26.
+> see [the revised migration plan](python-migration-plan.md), updated 2026-11-07; see also the [current ecosystem review](python-ecosystem-review-2026-11-07.md).
 
 
 Generated 2026-10-18 from a classification of all 391 ClinicoPath (umbrella) analyses by eight review

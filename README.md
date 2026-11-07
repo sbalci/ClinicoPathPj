@@ -7,8 +7,9 @@ so users install nothing.
 
 Current direction and implemented/pending work: [revised migration plan](docs/python-migration-plan.md).
 See also the [web-researched Python analysis candidates](docs/python-analysis-opportunities.md).
+The [2026-11-07 ecosystem review](docs/python-ecosystem-review-2026-11-07.md) compares JASP, jamovi, Orange, MedCalc, GitHub and Hugging Face and prioritizes 20 candidates without expanding the frozen migration inventory.
 
-Status: experimental, 0.3.56 (descriptives and data preparation; full migration remains incomplete). Verified only on jamovi 28.13 for macOS (Apple Silicon), with
+Status: experimental, 0.3.57 (descriptives and data preparation; full migration remains incomplete). Verified only on jamovi 28.13 for macOS (Apple Silicon), with
 jmvtools 28.4.
 
 Analyses now use compact family menus: **Descriptives Py**, **Stats Plots Py**,
@@ -41,7 +42,7 @@ Open **Data Library > ClinicoPathPj > Python Core Examples**, or import
 `data/python_core_examples.csv`, for the synthetic examples.
 
 Build the single standard module without installing it:
-`Rscript --vanilla tools/build.R --build-only` → `ClinicoPathPj_0.3.56.jmo`.
+`Rscript --vanilla tools/build.R --build-only` → `ClinicoPathPj_0.3.57.jmo`.
 After replacing a loaded development build, use a fresh jamovi engine to avoid stale namespaces.
 
 `pywelch` reports the mean difference as *comparison minus reference*. The reference defaults to
@@ -628,3 +629,24 @@ compatibility, pointer/keyboard interaction, incomplete/strict/all-excluded stat
 fresh-engine reopening and HTML export with native static forests. See the
 [evidence record](docs/validation-exports/python-study-inspector-0.3.56-checks.json)
 for limits. Pooling, SROC and applied study filtering remain unimplemented.
+
+
+Supplemental 0.3.56 desktop checks cover 200-study keyboard navigation, internal
+scrolling, blank failure-state plot placeholders and direct native PNG export.
+All 200 exported study rows and their intervals pass independent artifact checks;
+see the [supplemental evidence](docs/validation-exports/python-study-inspector-0.3.56-desktop-checks.json).
+
+
+## Applied diagnostic-study inclusion — 0.3.57
+
+Enable **Study inclusion** and the **Linked study inspector** in `pydiagnosticmeta`.
+Use the separate inclusion checkboxes, then **Apply study inclusion** to rerun the
+native study table and forests for those eligible source rows. Ordinary study
+inspection stays local. The inclusion audit reports included/omitted eligible
+rows; the input audit and inspector continue to show all supplied/eligible rows.
+Source data changes invalidate the saved inclusion until reviewed and reapplied.
+An empty applied set stays empty. Inclusion defaults off for older saved analyses.
+This is a partial study-review feature; pooling/SROC remain omitted. The compiler, 58 focused tests, 74 native assertions, 29 packaged cases and macOS
+GUI Apply/save/reopen/export checks pass. The full 423-test Python run had one
+unrelated execution-alarm failure; its isolated rerun passed. See the
+[separate evidence and limits](docs/validation-exports/python-study-inclusion-0.3.57-checks.json).

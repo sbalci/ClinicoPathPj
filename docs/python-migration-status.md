@@ -2,6 +2,8 @@
 
 Generated from `inst/python/registry.json`; never infer full parity from a menu entry.
 See the [revised migration plan](python-migration-plan.md) for current priorities and architecture.
+The [2026-11-07 ecosystem review](python-ecosystem-review-2026-11-07.md) lists proposed candidates;
+those suggestions do not add implemented analyses or change this registry-derived matrix.
 The frozen baseline contains 61 analyses across five families. Existing utility and
 example analyses are retained separately. Every public identifier starts with `py`;
 the original R identifier is provenance, not a second menu entry.

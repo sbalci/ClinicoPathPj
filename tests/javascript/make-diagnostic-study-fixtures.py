@@ -12,3 +12,6 @@ studies=calculate(_decode(data()),OPTIONS,[str(2*i+3) for i in range(12)])['stud
 variants=dict(main=studies,single=studies[:1],maximum=[dict(studies[i%8],sourceID=str(i+1),study='Bounded study '+str(i+1)) for i in range(200)],hostile=[dict(studies[0],study='</script><img src=x onerror="window.pwned=1"> & label')])
 for name,rows in variants.items():(target/(name+'.html')).write_text(render(rows,95))
 print('Created four bounded synthetic inspector fixtures')
+
+for name,included,valid in [('included',['3','7'],True),('empty',[],True),('stale',[],False)]:
+    (target/(name+'.html')).write_text(render(studies,95,dict(snapshot='a'*64,valid=valid,included=included)))
