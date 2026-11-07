@@ -1060,3 +1060,31 @@ Next: define explicit patient-history/aggregation policies before implementing
 patient-level reconstruction. Keep the full native inventory, broader platform
 qualification, clinical review and migration parity open. Unique labels alone do
 not establish an independent-observation design or sufficient follow-up.
+
+## Row-aligned identity inspection — 0.3.54
+
+Continue the Orange-inspired inspect/select workflow with an optional native saved
+identity flag in pyfirstevent, under its existing Save and Export section. Keep
+the same identifier and menu. Unknown/unique/repeated labels cover all supplied
+records and preserve original row identities. Backend-only recalculation follows
+source/cohort changes; no JavaScript computation or automatic filtering is needed.
+
+Disabled audit clears this flag without changing endpoint preparation. Pending or
+strict-invalid configurations clear all enabled outputs. Verify sparse rows,
+missing/blank/literal-NA and exact-label cases, factor encoding, audit disable/enable,
+strict failure/recovery, backward compatibility, persistence and native export.
+The flag reflects the current supplied cohort and may change with filtering.
+
+This is implemented without choosing a patient-history aggregation policy. Full
+native regression, broader platforms and clinical review remain separate gates.
+The baseline inventory remains 26 partial targets, 35 planned and twelve utilities.
+
+0.3.54 evidence: 53 focused and all 407 full Python tests pass; the latter closes
+the clean-regression follow-up from 0.3.53 without relaxing runtime limits. All
+81 focused native assertions, full compiler build, generator/status freshness and
+28 packaged cases pass. GUI Sideload, 0.3.53 compatibility, six persisted output
+states, fresh-engine reopen/recalculation and native HTML/embedded PNG export pass
+on macOS arm64 jamovi 28.13. The identity flag is implemented and qualified for
+this documented workflow. Full native inventory, direct Save Image, broader
+platforms, clinical review and patient-history policy/reconstruction remain open.
+Evidence is in python-first-event.md and the 0.3.54 qualification JSON.

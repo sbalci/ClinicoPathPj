@@ -248,3 +248,59 @@ See the [qualification record](validation-exports/python-identity-0.3.53-checks.
 Recheck saved artifacts with `python3 tools/check-identity-artifacts.py`.
 Patient aggregation, repeated-event histories, clinical review, broader platforms,
 accessibility certification and full migration parity remain unqualified.
+
+## Saved subject identity flag — 0.3.54
+
+**Save and Export → Subject identity flag** optionally creates a nominal column
+while the subject audit is enabled. The existing three endpoint outputs and
+statistical rules are unchanged. The flag is computed in Python and aligned to
+the original supplied row identities:
+
+| Logical code | Label | Meaning within the supplied analysis cohort |
+|---|---|---|
+| 0 | Unknown ID | ID missing or wholly blank |
+| 1 | Unique ID | Exact nonblank ID occurs once |
+| 2 | Repeated ID | Exact nonblank ID occurs more than once |
+
+Literal NA is a known ID. Leading zeros and nonblank spaces are retained. The
+flag covers records with missing/invalid endpoint components too: Unique ID does
+not mean the endpoint is usable. It is an identity audit, not a clinical inclusion
+rule, deduplication instruction or proof of independent observations.
+
+With the audit disabled, the flag is all missing while ordinary endpoint
+preparation continues. A pending or strict-failed preparation clears all enabled
+outputs, including this flag. Restoring a valid configuration recalculates them.
+The option defaults to off and existing 0.3.53 saved analyses remain compatible.
+
+Counts and flags describe the **current supplied cohort**. Filters and source edits
+can change which IDs repeat; review or export a snapshot when a stable audit record
+is needed. No filter is automatically applied and no patient histories are merged.
+Patient-level reconstruction still requires explicit episode, time-origin and
+aggregation policies. This extension supports row inspection without choosing them.
+
+### 0.3.54 qualification — 2026-11-07
+
+- All 53 focused Python/generator checks and all 407 full Python tests pass. The full
+  run took 297.531 seconds with bounded numerical-library threads and unchanged
+  runtime limits. It closes the clean-full-regression follow-up from 0.3.53; the
+  earlier three timeout failures remain recorded in that version's evidence.
+- All 81 focused native R assertions pass against the completed build, including
+  nominal encodings, sparse-row transport, strict failure/recovery, pending clearing
+  and audit disablement. Testthat records no failures, warnings or skips; sandbox
+  Operation not permitted diagnostics remain in the log. Full native inventory
+  was not run. Reproduce with tools/check-first-event-native.R.
+- Full compiler/R installation, generator/status freshness and 28 extracted archive
+  runtime cases pass. The installed manifest, UI, R database, identity helper,
+  Python analysis/registry and typed example match the archive byte-for-byte.
+- macOS arm64 jamovi 28.13 Sideload and fresh-engine reopening pass. An existing
+  0.3.53 analysis retains its endpoint options and defaults the new output to off.
+  Six independently checked saved states preserve all nine source columns and
+  expected four output columns, including disablement and strict/pending clearing.
+- The recovered state was reopened in a fresh engine, audit off/on forced a backend
+  recalculation, and it was saved again. Native HTML includes the current identity
+  policy/audit and original endpoint counts. Its embedded 1437 × 798 PNG was visually
+  inspected with bars of 3 and 6. Direct Save Image export remains unqualified.
+
+Evidence: [qualification record](validation-exports/python-identity-flags-0.3.54-checks.json).
+Recheck persisted values and HTML using `python3 tools/check-identity-flag-artifacts.py`.
+No patient aggregation, clinical readiness or additional-platform acceptance is inferred.

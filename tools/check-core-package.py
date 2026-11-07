@@ -149,6 +149,10 @@ def check(path):
                 identified=json.loads(response.read_text());assert identified['status']=='ok'
                 assert identified['tables']['identityAudit']['rows'][0]['repeatedRows']==2
                 assert identified['outputs']['timeOut']['values']==result['outputs']['timeOut']['values']
+                assert identified['outputs']['identityOut']['values']==[2,2,0]
+                assert identified['outputs']['identityOut']['row_ids']==['2','8','20']
+                assert identified['outputs']['identityOut']['levels']==['Unknown ID','Unique ID','Repeated ID']
+                assert result['outputs']['identityOut']['values']==[None]*3
 
 
             if name=='pyintervalcensoring':

@@ -7,7 +7,7 @@ pyfirsteventClass <- R6::R6Class(
         .run = function() {
             .cpjRun(self, "pyfirstevent",
                 clearOnInputError = TRUE,
-                options = c("statusA", "eventA", "freeA", "timeA", "statusB", "eventB", "freeB", "timeB", "preview_rows", "showPreview", "showPlot", "showReport", "timeOut", "statusOut", "sourceOut", "use_admin", "admin_cutoff", "subject", "require_unique_id", "audit_subject"),
+                options = c("statusA", "eventA", "freeA", "timeA", "statusB", "eventB", "freeB", "timeB", "preview_rows", "showPreview", "showPlot", "showReport", "timeOut", "statusOut", "sourceOut", "use_admin", "admin_cutoff", "subject", "require_unique_id", "identityOut", "audit_subject"),
                 arrays = character(0),
                 terms = character(0),
                 numeric = c("timeA", "timeB"),

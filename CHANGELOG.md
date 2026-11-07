@@ -1,3 +1,10 @@
+# 0.3.54 — 2026-11-07
+
+- Add an optional saved subject identity flag to pyfirstevent using exact-label cohort counts.
+- Preserve source-row alignment and classify unknown IDs even when endpoint components are unusable.
+- Clear the flag when auditing is disabled or preparation is blocked; retain existing endpoint rules.
+- Keep patient aggregation and automatic filtering outside this increment.
+
 # 0.3.53 — 2026-11-07
 
 - Stage dependency extraction before replacing the live bundle, preserving it if preparation fails.

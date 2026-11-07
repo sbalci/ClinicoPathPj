@@ -2694,9 +2694,10 @@
           "macOS-arm64"
         ],
         "administrative_censoring": "0.3.52 optional cutoff and unadjusted preview/audit; evidence and separate gates tracked in docs/python-first-event.md",
-        "subject_identity": "0.3.53 optional exact-label identity audit and strict one-record-per-ID gate; separate qualification tracked in docs/python-first-event.md"
+        "subject_identity": "0.3.53 optional exact-label identity audit and strict one-record-per-ID gate; separate qualification tracked in docs/python-first-event.md",
+        "saved_identity": "0.3.54 optional aligned nominal identity flag; qualification tracked separately in docs/python-first-event.md"
       },
-      "supported_core": "Two explicit binary components, minimum observation horizon, optional fixed administrative duration cutoff retaining events at the boundary, aligned time/status/source outputs; optional exact-label subject identity audit and explicit unique-ID requirement",
+      "supported_core": "Two explicit binary components, minimum observation horizon, optional fixed administrative duration cutoff retaining events at the boundary, aligned time/status/source outputs; optional exact-label subject identity audit and explicit unique-ID requirement and optional row-aligned identity flag",
       "omissions": "Clinical endpoint definitions, partial-record inference, recurrent events, patient hierarchy and fitted survival models",
       "oracle": "Literal fixtures and independently enumerated component timelines",
       "dependencies": {

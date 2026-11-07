@@ -1,3 +1,13 @@
+# Saved identity flags — 0.3.54
+
+- [x] Add optional row-aligned Unknown ID / Unique ID / Repeated ID output.
+- [x] Preserve endpoint values and make flags independent of endpoint completeness.
+- [x] Clear flags with audit disabled or pending/strict failure; add lifecycle checks.
+- [x] Pass 53 focused Python/generator tests.
+- [x] Pass full compiler, 81 native assertions, 28 packaged cases and all 407 Python tests.
+- [x] GUI: old-file compatibility, six saved states, output switching/clearing/recovery, fresh-engine reopen/rerun and native HTML/embedded PNG export.
+- [ ] Patient-history policies, broader platforms and clinical review remain open.
+
 # Subject identity audit — 0.3.53
 
 - [x] Add exact text/factor ID audit, bounded repeats, preview annotations and strict unique-ID gate.
@@ -7,7 +17,7 @@
 - [x] Complete a full compiler build and verify installed/archive bytes after GUI Sideload.
 - [x] Verify ID switching, pending/strict clearing, unique-ID recovery and five saved OMV states.
 - [x] Verify fresh-engine reopen/rerun and native HTML/embedded PNG export with unequal 3/6 bars.
-- [ ] Obtain a clean all-green full Python regression: completed run was 402/405; three SIGALRM timeouts passed on isolated rerun without changing limits.
+- [x] Clean full Python follow-up: 0.3.54 passes all 407 tests. Earlier 0.3.53 run remains recorded as 402/405 with three isolated reruns passing.
 - [ ] Full native inventory, additional platforms and direct Save Image qualification remain open.
 - [ ] Patient aggregation/history policies, clinical review and full parity remain open.
 

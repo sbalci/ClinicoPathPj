@@ -118,6 +118,8 @@ pyfirsteventOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Clas
                 "require_unique_id",
                 require_unique_id,
                 default=FALSE)
+            private$..identityOut <- jmvcore::OptionOutput$new(
+                "identityOut")
             private$..audit_subject <- jmvcore::OptionBool$new(
                 "audit_subject",
                 audit_subject,
@@ -146,6 +148,7 @@ pyfirsteventOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Clas
             self$.addOption(private$..admin_cutoff)
             self$.addOption(private$..subject)
             self$.addOption(private$..require_unique_id)
+            self$.addOption(private$..identityOut)
             self$.addOption(private$..audit_subject)
             self$.addOption(private$..showConsole)
         }),
@@ -169,6 +172,7 @@ pyfirsteventOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Clas
         admin_cutoff = function() private$..admin_cutoff$value,
         subject = function() private$..subject$value,
         require_unique_id = function() private$..require_unique_id$value,
+        identityOut = function() private$..identityOut$value,
         audit_subject = function() private$..audit_subject$value,
         showConsole = function() private$..showConsole$value),
     private = list(
@@ -191,6 +195,7 @@ pyfirsteventOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Clas
         ..admin_cutoff = NA,
         ..subject = NA,
         ..require_unique_id = NA,
+        ..identityOut = NA,
         ..audit_subject = NA,
         ..showConsole = NA)
 )
@@ -209,6 +214,7 @@ pyfirsteventResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Clas
         timeOut = function() private$.items[["timeOut"]],
         statusOut = function() private$.items[["statusOut"]],
         sourceOut = function() private$.items[["sourceOut"]],
+        identityOut = function() private$.items[["identityOut"]],
         adminAudit = function() private$.items[["adminAudit"]],
         identityAudit = function() private$.items[["identityAudit"]],
         repeatedSubjects = function() private$.items[["repeatedSubjects"]],
@@ -413,6 +419,7 @@ pyfirsteventResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Clas
                     "admin_cutoff",
                     "subject",
                     "require_unique_id",
+                    "identityOut",
                     "audit_subject")))
             self$add(jmvcore::Output$new(
                 options=options,
@@ -441,6 +448,7 @@ pyfirsteventResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Clas
                     "admin_cutoff",
                     "subject",
                     "require_unique_id",
+                    "identityOut",
                     "audit_subject")))
             self$add(jmvcore::Output$new(
                 options=options,
@@ -469,6 +477,36 @@ pyfirsteventResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Clas
                     "admin_cutoff",
                     "subject",
                     "require_unique_id",
+                    "identityOut",
+                    "audit_subject")))
+            self$add(jmvcore::Output$new(
+                options=options,
+                name="identityOut",
+                title="Subject identity flag",
+                varTitle="Subject identity flag",
+                varDescription="Exact-label identity audit across all supplied records: Unknown ID, Unique ID or Repeated ID. Missing when the audit is disabled or preparation is blocked. This flag does not establish endpoint eligibility.",
+                measureType="nominal",
+                clearWith=list(
+                    "statusA",
+                    "eventA",
+                    "freeA",
+                    "timeA",
+                    "statusB",
+                    "eventB",
+                    "freeB",
+                    "timeB",
+                    "preview_rows",
+                    "showPreview",
+                    "showPlot",
+                    "showReport",
+                    "timeOut",
+                    "statusOut",
+                    "sourceOut",
+                    "use_admin",
+                    "admin_cutoff",
+                    "subject",
+                    "require_unique_id",
+                    "identityOut",
                     "audit_subject")))
             self$add(jmvcore::Table$new(
                 options=options,
@@ -562,7 +600,7 @@ pyfirsteventBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             super$initialize(
                 package = "ClinicoPathPj",
                 name = "pyfirstevent",
-                version = c(0,3,53),
+                version = c(0,3,54),
                 options = options,
                 results = pyfirsteventResults$new(options=options),
                 data = data,
@@ -609,6 +647,7 @@ pyfirsteventBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'   \code{results$timeOut} \tab \tab \tab \tab \tab an output \cr
 #'   \code{results$statusOut} \tab \tab \tab \tab \tab an output \cr
 #'   \code{results$sourceOut} \tab \tab \tab \tab \tab an output \cr
+#'   \code{results$identityOut} \tab \tab \tab \tab \tab an output \cr
 #'   \code{results$adminAudit} \tab \tab \tab \tab \tab a table \cr
 #'   \code{results$identityAudit} \tab \tab \tab \tab \tab a table \cr
 #'   \code{results$repeatedSubjects} \tab \tab \tab \tab \tab a table \cr
