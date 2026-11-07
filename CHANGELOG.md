@@ -1,3 +1,55 @@
+# 0.3.53 — 2026-11-07
+
+- Stage dependency extraction before replacing the live bundle, preserving it if preparation fails.
+- Add optional text/factor subject-ID auditing to `pyfirstevent` with exact label preservation.
+- Explicitly permit jamovi ID columns in the role/supplier; verify strict recovery, saved outputs and fresh-engine desktop export.
+- Count missing IDs and repeated IDs across all supplied records; bound the repeated-ID table to 20.
+- Add subject ID and record counts to the conditional preview.
+- Add an explicit unique-ID requirement with clearing/recovery checks.
+- Preserve endpoint preparation and administrative censoring; keep patient aggregation and clinical history inference pending.
+
+# 0.3.52 — 2026-10-30
+
+- Extend `pyfirstevent` with optional, explicitly entered administrative censoring.
+- Preserve disabled defaults and events exactly at the cutoff; shorten only later records.
+- Add cutoff audit and unadjusted preview columns; preserve missing/invalid component records.
+- Append an Administrative cutoff audit source only when enabled; retain original source codes.
+- Keep patient hierarchy, clinical endpoint adjudication and survival estimation pending.
+
+# 0.3.51 — 2026-10-30
+
+- Add `pyfirstevent` with explicit component event/event-free levels and numeric times.
+- Use the minimum component observation horizon; event wins an exact event/censor tie.
+- Preserve missing/invalid records and source alignment in saved time/status/audit columns.
+- Add native mapping, accounting, preview, optional count plot and typed synthetic examples.
+- Keep clinical endpoint definitions, patient hierarchy and survival estimation pending.
+
+# 0.3.50 — 2026-10-30
+
+- Add `pyintervalcensoring`, a standalone interval2 endpoint preparation utility.
+- Check original bound order before converting nonfinite endpoints to open bounds.
+- Add native audit/type/preview tables, optional count plot and three aligned saved outputs.
+- Save invalid/uninformative endpoint pairs as missing; preserve legitimate one-sided open bounds.
+- Add independent survival::Surv and literal-fixture checks and a typed Data Library example.
+- Keep interval-censored model fitting and full baseline parity pending.
+
+# 0.3.49 — 2026-10-30
+
+- Add explicit RFS/PFS/DFS component-OR and progression-only TTP status preparation.
+- Preserve known events over missing components; never turn unknown status into censoring.
+- Add native component mapping/missingness audit, preview reasons and aligned saved binary status.
+- Append new options without changing existing option order or defaults.
+- Add bounded declared-List visibility expressions for conditional native results.
+- Keep first-event time construction, censoring/hierarchy operations and survival inference pending.
+
+# 0.3.48 — 2026-10-30
+
+- Add explicit eight-digit packed YYYYMMDD input to the datetime converter and interval calculator.
+- Enable existing Excel1900/1904 and Unix parsing for interval pairs without origin guessing.
+- Carry selected encoding into interval scope/saved metadata and warn about early Excel conventions.
+- Preserve defaults, row alignment, calendar-anniversary arithmetic and strict parse-quality guards.
+- Add equivalent synthetic encoding examples, native numerical/lifecycle checks and packaged cases.
+
 # 0.3.47 — 2026-10-29
 
 - Add an explicit calendar-anniversary time basis to `pytimeinterval`; keep standardized defaults.

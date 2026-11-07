@@ -6,7 +6,7 @@ SPEC = {'name': 'pydatetimeconverter',
  'title': 'DateTime Converter (Python UTC Core)',
  'menuGroup': 'Survival Py',
  'menuSubgroup': 'Data preparation',
- 'version': '0.3.45',
+ 'version': '0.3.48',
  'clearOnInputError': True,
  'options': [{'name': 'datetime_var',
               'title': 'Datetime variable',
@@ -30,7 +30,8 @@ SPEC = {'name': 'pydatetimeconverter',
                           {'name': 'mdyhm', 'title': 'MM-DD-YYYY HH:MM'},
                           {'name': 'excel_serial', 'title': 'Excel serial (1899-12-30 origin)'},
                           {'name': 'excel_serial_1904', 'title': 'Excel serial (1904-01-01 origin)'},
-                          {'name': 'unix_epoch', 'title': 'Unix epoch (seconds since 1970)'}],
+                          {'name': 'unix_epoch', 'title': 'Unix epoch (seconds since 1970)'},
+                          {'name': 'packed_ymd', 'title': 'Packed YYYYMMDD (eight digits)'}],
               'default': 'ymd'},
              {'name': 'preview_rows',
               'title': 'Preview rows',
@@ -325,7 +326,7 @@ def run(data, options, out):
             else:out.column(name+'_out',values,measure_type='continuous',title=titles[name]+' (UTC)',description='Calendar component in UTC; week uses Jan-1 blocks, not ISO; failed/missing input remains missing')
     scope=(f"Input rows: {r['total']}; parsed: {r['parsed']}; invalid: {r['invalid']}; missing or blank: {r['missing']}. Explicit format: {r['fmt']}; timezone: UTC. "
         'Success percentages use nonmissing input; invalid and missing rows remain distinct and retain their source positions. '
-        'This strict core requires four-digit years and explicit formats. It does not guess day/month order, infer an Excel epoch or use the system timezone. '
+        'Packed YYYYMMDD requires eight digits and validates the calendar without inferring a century. Numeric values cannot retain leading zeros; use eight-digit text for years below 1000. This strict core requires four-digit years and explicit formats. It does not guess day/month order, infer an Excel epoch or use the system timezone. '
         'Auto-detection, named timezones/DST, two-digit-year policies and native Date/POSIX input classes are pending. '
         'Date-only values mean midnight UTC. Excel day fractions round to whole seconds using ties-to-even, as in the frozen R baseline; Unix/text times support microseconds. '
         'Week numbers are Jan-1 seven-day blocks, not ISO or epidemiological weeks. Month/day names use fixed English labels. '

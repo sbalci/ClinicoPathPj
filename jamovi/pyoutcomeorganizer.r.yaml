@@ -27,7 +27,7 @@
         },
         {
           "name": "missing",
-          "title": "Missing Outcome",
+          "title": "Unknown Final Status",
           "type": "integer"
         }
       ]
@@ -56,6 +56,69 @@
         {
           "name": "n",
           "title": "Input Count",
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "name": "components",
+      "title": "Composite Component Mapping",
+      "type": "Table",
+      "visible": "(analysistype:rfs || analysistype:pfs || analysistype:dfs || analysistype:ttp)",
+      "rows": 0,
+      "columns": [
+        {
+          "name": "component",
+          "title": "Component",
+          "type": "text"
+        },
+        {
+          "name": "variable",
+          "title": "Variable",
+          "type": "text"
+        },
+        {
+          "name": "level",
+          "title": "Original Level",
+          "type": "text"
+        },
+        {
+          "name": "category",
+          "title": "Meaning",
+          "type": "text"
+        },
+        {
+          "name": "code",
+          "title": "Component Code",
+          "type": "integer"
+        },
+        {
+          "name": "n",
+          "title": "Input Count",
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "name": "compositeAudit",
+      "title": "Composite Missingness Audit",
+      "type": "Table",
+      "visible": "(analysistype:rfs || analysistype:pfs || analysistype:dfs || analysistype:ttp)",
+      "rows": 0,
+      "columns": [
+        {
+          "name": "outcomeMissing",
+          "title": "Unknown Outcome Component",
+          "type": "integer"
+        },
+        {
+          "name": "recurrenceMissing",
+          "title": "Unknown Recurrence Component",
+          "type": "integer"
+        },
+        {
+          "name": "overrides",
+          "title": "Known Event Despite Unknown Component",
           "type": "integer"
         }
       ]
@@ -105,6 +168,24 @@
           "name": "code",
           "title": "Status Code",
           "type": "integer"
+        },
+        {
+          "name": "outcomeComponent",
+          "title": "Outcome Component",
+          "type": "integer",
+          "visible": "(analysistype:rfs || analysistype:pfs || analysistype:dfs || analysistype:ttp)"
+        },
+        {
+          "name": "recurrenceComponent",
+          "title": "Recurrence Component",
+          "type": "integer",
+          "visible": "(analysistype:rfs || analysistype:pfs || analysistype:dfs || analysistype:ttp)"
+        },
+        {
+          "name": "reason",
+          "title": "Status Rule",
+          "type": "text",
+          "visible": "(analysistype:rfs || analysistype:pfs || analysistype:dfs || analysistype:ttp)"
         }
       ]
     },
@@ -143,7 +224,9 @@
         "diagnostics",
         "visualization",
         "showNaturalSummary",
-        "addOutcome"
+        "addOutcome",
+        "recurrence",
+        "recurrenceLevel"
       ]
     },
     {

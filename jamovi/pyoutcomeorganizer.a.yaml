@@ -5,7 +5,7 @@
   "menuGroup": "Survival Py",
   "menuSubgroup": "Data preparation",
   "menuTitle": "Outcome organizer (core)",
-  "version": "0.3.44",
+  "version": "0.3.49",
   "jas": "1.2",
   "options": [
     {
@@ -49,6 +49,22 @@
         {
           "name": "multistate",
           "title": "Multistate status"
+        },
+        {
+          "name": "rfs",
+          "title": "RFS status: event or recurrence"
+        },
+        {
+          "name": "pfs",
+          "title": "PFS status: event or progression"
+        },
+        {
+          "name": "dfs",
+          "title": "DFS status: event or recurrence"
+        },
+        {
+          "name": "ttp",
+          "title": "TTP status: progression only"
         }
       ],
       "default": "os"
@@ -109,6 +125,22 @@
       "name": "addOutcome",
       "title": "Recoded outcome",
       "type": "Output"
+    },
+    {
+      "name": "recurrence",
+      "title": "Recurrence/progression variable",
+      "type": "Variable",
+      "permitted": [
+        "factor"
+      ],
+      "default": null
+    },
+    {
+      "name": "recurrenceLevel",
+      "title": "Recurrence/progression event level",
+      "type": "Level",
+      "variable": "(recurrence)",
+      "allowNone": true
     },
     {
       "name": "showConsole",

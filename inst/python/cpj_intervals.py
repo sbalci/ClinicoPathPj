@@ -4,7 +4,7 @@ import calendar
 import numpy as np
 from scipy.stats import t
 from cpj_runtime import InputError
-from cpj_datetime import calculate as prepare_dates, ORDERS
+from cpj_datetime import calculate as prepare_dates, ORDERS, NUMERIC_FORMATS
 from cpj_tree import _mean_sd
 from cpj_crosstable import quantiles
 
@@ -64,7 +64,7 @@ def calculate(data,options,row_ids=None):
     start=options.get('dx_date');end=options.get('fu_date')
     if start not in data or end not in data:raise InputError('Select both start and end date variables.')
     fmt=options.get('time_format','ymd');unit=options.get('output_unit','months')
-    if fmt not in ORDERS:raise InputError('Choose a supported explicit text date format; numeric encodings and automatic detection are not available in this core.')
+    if fmt not in set(ORDERS)|NUMERIC_FORMATS:raise InputError('Choose a supported explicit text or numeric date format; automatic detection is not available in this core.')
     if unit not in DAYS_PER_UNIT:raise InputError('Unknown elapsed-time unit.')
     basis=options.get('time_basis','standardized')
     if basis not in ('standardized','calendar'):raise InputError('Choose standardized or calendar-anniversary time basis.')
@@ -123,6 +123,9 @@ def calculate(data,options,row_ids=None):
     rows=[dict(start=x['original'],end=y['original'],unit=unit,raw=float(v) if np.isfinite(v) else None,value=final,status=reason)
           for x,y,v,final,reason in zip(a['rows'],b['rows'],raw,values,reasons)]
     warnings=[]
+    for role, parsed in [('Start',a),('End',b)]:
+        if parsed['early_excel']:
+            warnings.append(f"{role}: {parsed['early_excel']} early Excel 1900 value(s) use origin 1899-12-30, not Excel's fictitious pre-March-1900 calendar; verify the source convention.")
     if basis=='calendar' and unit in ('months','years'):
         warnings.append('Calendar units follow rollback anniversaries and vary in elapsed length. Use standardized durations for constant-unit record-time denominators. Calendar fractions are directional and need not reverse sign exactly when start/end are swapped.')
     if invalid.any():warnings.append(f'{int(invalid.sum())} pair(s) contain an invalid date; saved intervals remain missing.')

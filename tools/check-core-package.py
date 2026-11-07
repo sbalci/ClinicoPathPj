@@ -18,7 +18,7 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parent.parent
 VERSION=re.search(r'^Version: (.+)$',(ROOT/'DESCRIPTION').read_text(),re.M)[1]
 REGISTRY=json.loads((ROOT/'inst/python/registry.json').read_text())
-NAMES=['pytimeinterval','pydatetimeconverter','pyoutcomeorganizer','pytableone','pycrosstable','pyalluvial','pyvartree','pyoutlierdetection','pyvenn','pyjjcorrmat','pyihcheatmap','pybridgecompare','pysvgcutoff','pycheckdata','pyobservablecutoff','pyd3cutoff','pydecision','pydecisioncalculator','pysequentialtests','pychisqposttest','pybenford','pydecisioncurve','pysummarydata','pycategorize','pyagepyramid','pydataquality']
+NAMES=['pyfirstevent','pyintervalcensoring','pytimeinterval','pydatetimeconverter','pyoutcomeorganizer','pytableone','pycrosstable','pyalluvial','pyvartree','pyoutlierdetection','pyvenn','pyjjcorrmat','pyihcheatmap','pybridgecompare','pysvgcutoff','pycheckdata','pyobservablecutoff','pyd3cutoff','pydecision','pydecisioncalculator','pysequentialtests','pychisqposttest','pybenford','pydecisioncurve','pysummarydata','pycategorize','pyagepyramid','pydataquality']
 
 
 def numeric(x):return dict(kind='number',values=x)
@@ -38,6 +38,16 @@ def check(path):
             assert f'version: {VERSION}' in manifest
             assert 'python_core_examples.omv' in manifest
             assert 'python_set_intersection_examples.csv' in manifest
+            assert 'python_first_event_identity.omv' in manifest
+            assert archive.read('ClinicoPathPj/data/python_first_event_identity.omv')==(ROOT/'data/python_first_event_identity.omv').read_bytes()
+            assert 'python_first_event_examples.omv' in manifest
+            assert archive.read('ClinicoPathPj/data/python_first_event_examples.omv')==(ROOT/'data/python_first_event_examples.omv').read_bytes()
+            assert 'python_interval_censoring_examples.omv' in manifest
+            assert archive.read('ClinicoPathPj/data/python_interval_censoring_examples.omv')==(ROOT/'data/python_interval_censoring_examples.omv').read_bytes()
+            assert 'python_composite_outcome_examples.csv' in manifest
+            assert archive.read('ClinicoPathPj/data/python_composite_outcome_examples.csv')==(ROOT/'data/python_composite_outcome_examples.csv').read_bytes()
+            assert 'python_numeric_date_examples.csv' in manifest
+            assert archive.read('ClinicoPathPj/data/python_numeric_date_examples.csv')==(ROOT/'data/python_numeric_date_examples.csv').read_bytes()
             assert 'python_calendar_interval_examples.csv' in manifest
             assert archive.read('ClinicoPathPj/data/python_calendar_interval_examples.csv')==(ROOT/'data/python_calendar_interval_examples.csv').read_bytes()
             assert 'python_interval_examples.csv' in manifest
@@ -84,13 +94,13 @@ def check(path):
                 member='ClinicoPathPj/R/ClinicoPathPj/python/'+entry['source']
                 assert archive.read(member)==(ROOT/'inst/python'/entry['source']).read_bytes()
                 assert f"name: {entry['id']}\n" in manifest
-            for file in ['cpj_intervals.py','cpj_datetime.py','cpj_outcomes.py','cpj_tableone.py','cpj_crosstable.py','cpj_alluvial.py','templates/alluvial.html','cpj_tree.py','cpj_outliers.py','cpj_sets.py','templates/sets.html','cpj_correlation.py','templates/correlation.html','cpj_ihc.py','templates/ihcheatmap.html','cpj_runtime.py','cpj_svg_cutoff.py','cpj_accuracy.py','cpj_registry.py','cpj_plots.py','cpj_descriptive.py','cpj_binning.py','cpj_demographics.py','cpj_quality.py','templates/quality.html','cpj_cutoff.py','cpj_single_quality.py','templates/single-quality.html','cpj_cutoff_analysis.py','templates/bridgecutoff.html','templates/d3cutoff.html','templates/observablecutoff.html','vendor/observable-plot-0.6.17.min.js','vendor/observable-inputs-0.12.0.min.js','vendor/htl-0.3.1.min.js','vendor/observable-plot-LICENSE.txt','vendor/observable-inputs-LICENSE.txt','vendor/htl-LICENSE.txt','vendor/observable-manifest.json','vendor/d3-7.9.0.min.js','vendor/d3-LICENSE.txt','registry.json','font-cache.json']:
+            for file in ['cpj_identity.py','cpj_firstevent.py','cpj_censoring.py','cpj_intervals.py','cpj_datetime.py','cpj_outcomes.py','cpj_tableone.py','cpj_crosstable.py','cpj_alluvial.py','templates/alluvial.html','cpj_tree.py','cpj_outliers.py','cpj_sets.py','templates/sets.html','cpj_correlation.py','templates/correlation.html','cpj_ihc.py','templates/ihcheatmap.html','cpj_runtime.py','cpj_svg_cutoff.py','cpj_accuracy.py','cpj_registry.py','cpj_plots.py','cpj_descriptive.py','cpj_binning.py','cpj_demographics.py','cpj_quality.py','templates/quality.html','cpj_cutoff.py','cpj_single_quality.py','templates/single-quality.html','cpj_cutoff_analysis.py','templates/bridgecutoff.html','templates/d3cutoff.html','templates/observablecutoff.html','vendor/observable-plot-0.6.17.min.js','vendor/observable-inputs-0.12.0.min.js','vendor/htl-0.3.1.min.js','vendor/observable-plot-LICENSE.txt','vendor/observable-inputs-LICENSE.txt','vendor/htl-LICENSE.txt','vendor/observable-manifest.json','vendor/d3-7.9.0.min.js','vendor/d3-LICENSE.txt','registry.json','font-cache.json']:
                 assert archive.read(f'ClinicoPathPj/R/ClinicoPathPj/python/{file}')==(ROOT/'inst/python'/file).read_bytes()
             assert archive.read('ClinicoPathPj/R/ClinicoPathPj/js/pysvgcutoff.js')==(ROOT/'inst/js/pysvgcutoff.js').read_bytes()
             assert archive.read('ClinicoPathPj/data/python_core_examples.omv')==(ROOT/'data/python_core_examples.omv').read_bytes()
             archive.extractall(temp)
         runtime=temp/'ClinicoPathPj/R/ClinicoPathPj/python/cpj_runtime.py'
-        cases=[('pytimeinterval',{'a':factor(['2024-01-01']*4),'b':factor(['2024-01-01','2024-01-07','2024-01-11',None])},dict(dx_date='a',fu_date='b',output_unit='days',use_landmark=True,landmark_time=6)),('pydatetimeconverter',{'x':factor(['2024-02-29','2023-02-29',None,'2021-01-01'])},dict(datetime_var='x',show_quality_metrics=True,extract_year=True)),('pyoutcomeorganizer',{'y':factor(['N','N','X','O',None])},dict(outcome='y',multievent=True,analysistype='compete',awod='N',dod='X',dooc='O',visualization=True,diagnostics=True)),('pytableone',{'x':numeric([1,2,None,4]),'g':factor(['A','B',None,'B']),'empty':numeric([None]*4)},dict(vars=['x','g','empty'],showSummary=True,showReportSentence=True)),('pycrosstable',{'g':factor(['A']*5+['B']*5),'x':numeric(list(range(1,11)))},dict(vars=['x'],group='g',cont='median',p_adjust='holm')),('pyalluvial',{'a':factor(['A']*9+['B']),'b':factor(['X']*10)},dict(vars=['a','b'],showFlowTable=True,showCategories=True)),('pyvartree',{'a':dict(kind='factor',levels=['X','Y'],codes=[0,0,1,None]),'b':factor(['P','Q','P','Q'])},dict(vars=['a','b'],showPlot=True)),('pyoutlierdetection',{'x':numeric([0,1,2,3,4,20,None])},dict(vars=['x'],method='iqr',showRows=True,showPlot=True,showFlaggedValues=True,showDistribution=True)),('pyvenn',{'a':{'kind':'factor','levels':['N','Y'],'codes':[0,1,0,1,None]},'b':{'kind':'factor','levels':['N','Y'],'codes':[0,0,1,1,1]}},dict(var1='a',var2='b',var1true='Y',var2true='Y',showMembershipTable=True)),
+        cases=[('pyfirstevent',{'ta':numeric([2,8,None]),'tb':numeric([8,2,4]),'sa':dict(kind='factor',levels=['N','Y'],codes=[1,1,1]),'sb':dict(kind='factor',levels=['N','Y'],codes=[0,0,0])},dict(timeA='ta',timeB='tb',statusA='sa',statusB='sb',eventA='Y',freeA='N',eventB='Y',freeB='N',showReport=True,showPlot=True)),('pyintervalcensoring',{'a':numeric([1,None,1,5,None]),'b':numeric([1,3,None,2,None])},dict(left='a',right='b',showReport=True,showPlot=True)),('pytimeinterval',{'a':factor(['2024-01-01']*4),'b':factor(['2024-01-01','2024-01-07','2024-01-11',None])},dict(dx_date='a',fu_date='b',output_unit='days',use_landmark=True,landmark_time=6)),('pydatetimeconverter',{'x':factor(['2024-02-29','2023-02-29',None,'2021-01-01'])},dict(datetime_var='x',show_quality_metrics=True,extract_year=True)),('pyoutcomeorganizer',{'y':factor(['N','N','X','O',None])},dict(outcome='y',multievent=True,analysistype='compete',awod='N',dod='X',dooc='O',visualization=True,diagnostics=True)),('pytableone',{'x':numeric([1,2,None,4]),'g':factor(['A','B',None,'B']),'empty':numeric([None]*4)},dict(vars=['x','g','empty'],showSummary=True,showReportSentence=True)),('pycrosstable',{'g':factor(['A']*5+['B']*5),'x':numeric(list(range(1,11)))},dict(vars=['x'],group='g',cont='median',p_adjust='holm')),('pyalluvial',{'a':factor(['A']*9+['B']),'b':factor(['X']*10)},dict(vars=['a','b'],showFlowTable=True,showCategories=True)),('pyvartree',{'a':dict(kind='factor',levels=['X','Y'],codes=[0,0,1,None]),'b':factor(['P','Q','P','Q'])},dict(vars=['a','b'],showPlot=True)),('pyoutlierdetection',{'x':numeric([0,1,2,3,4,20,None])},dict(vars=['x'],method='iqr',showRows=True,showPlot=True,showFlaggedValues=True,showDistribution=True)),('pyvenn',{'a':{'kind':'factor','levels':['N','Y'],'codes':[0,1,0,1,None]},'b':{'kind':'factor','levels':['N','Y'],'codes':[0,0,1,1,1]}},dict(var1='a',var2='b',var1true='Y',var2true='Y',showMembershipTable=True)),
           ('pyjjcorrmat',{'a':numeric([1,2,3,4]),'b':numeric([1,2,4,3])},dict(dep=['a','b'])),
           ('pyihcheatmap',{'a':numeric([1,2,3]),'b':numeric([2,4,6])},dict(markers=['a','b'],scaling='zscore',showScatter=True,clusterRows=True,clusterColumns=True,showDendrograms=True,enableSelection=True)),
           ('pybridgecompare',{'x':numeric([1,2,2,4,5,6]),'g':factor(['N','N','P','N','P','P'])},dict(marker='x',reference='g',positive='P',cutoff='2')),
@@ -111,6 +121,8 @@ def check(path):
         for name,columns,options in cases:
             request=temp/'request.json';response=temp/'response.json'
             payload=dict(analysis=name,columns=columns,options=options)
+            if name=='pyfirstevent':payload['row_ids']=['2','8','20']
+            if name=='pyintervalcensoring':payload['row_ids']=['2','8','20','40','51']
             if name=='pyoutcomeorganizer':payload['row_ids']=['1','3','8','12','20']
             if name=='pytimeinterval':payload['row_ids']=['2','5','9','20']
             if name=='pydatetimeconverter':payload['row_ids']=['2','5','9','20']
@@ -119,6 +131,38 @@ def check(path):
             result=json.loads(response.read_text())
             assert result['status']=='ok',(name,result.get('error'))
             assert result['tables'],name
+            if name=='pyfirstevent':
+                assert result['outputs']['timeOut']['values']==[2,2,None]
+                assert result['outputs']['statusOut']['values']==[1,0,None]
+                assert result['outputs']['sourceOut']['values']==[1,0,None]
+                assert result['outputs']['timeOut']['row_ids']==['2','8','20']
+                request.write_text(json.dumps(dict(analysis=name,columns=columns,options=dict(options,use_admin=True,admin_cutoff='1'),row_ids=['2','8','20'])))
+                subprocess.run([sys.executable,'-B',str(runtime),str(request),str(response)],check=True,timeout=70)
+                adjusted=json.loads(response.read_text());assert adjusted['status']=='ok'
+                assert adjusted['outputs']['timeOut']['values']==[1,1,None]
+                assert adjusted['outputs']['statusOut']['values']==[0,0,None]
+                assert adjusted['outputs']['sourceOut']['values']==[4,4,None]
+                assert adjusted['tables']['adminAudit']['rows'][0]['shortened']==2
+                id_columns=dict(columns,subject=dict(kind='text',values=['001','001',None]))
+                request.write_text(json.dumps(dict(analysis=name,columns=id_columns,options=dict(options,audit_subject=True,subject='subject'),row_ids=['2','8','20'])))
+                subprocess.run([sys.executable,'-B',str(runtime),str(request),str(response)],check=True,timeout=70)
+                identified=json.loads(response.read_text());assert identified['status']=='ok'
+                assert identified['tables']['identityAudit']['rows'][0]['repeatedRows']==2
+                assert identified['outputs']['timeOut']['values']==result['outputs']['timeOut']['values']
+
+
+            if name=='pyintervalcensoring':
+                assert result['outputs']['leftOut']['values']==[1,None,1,None,None]
+                assert result['outputs']['rightOut']['values']==[1,3,None,None,None]
+                assert result['outputs']['kindOut']['values']==[1,2,0,None,None]
+                assert result['outputs']['leftOut']['row_ids']==['2','8','20','40','51']
+                assert result['tables']['cohort']['rows'][0]['retained']==3
+                request.write_text(json.dumps(dict(analysis=name,columns={'a':numeric(['-Infinity',1]),'b':numeric([3,'Infinity'])},options=dict(left='a',right='b'),row_ids=['2','8'])))
+                subprocess.run([sys.executable,'-B',str(runtime),str(request),str(response)],check=True,timeout=70)
+                opened=json.loads(response.read_text());assert opened['status']=='ok'
+                assert opened['outputs']['leftOut']['values']==[None,1]
+                assert opened['outputs']['rightOut']['values']==[3,None]
+                assert opened['outputs']['kindOut']['values']==[2,0]
             if name=='pytimeinterval':
                 assert result['outputs']['calculated_time']['values']==[None,0,4,None]
                 assert result['outputs']['calculated_time']['title']=='Calculated interval'
@@ -131,6 +175,11 @@ def check(path):
                 assert calendar_result['status']=='ok'
                 assert calendar_result['outputs']['calculated_time']['values']==[1,1]
                 assert 'basis: calendar' in calendar_result['outputs']['calculated_time']['description']
+                request.write_text(json.dumps(dict(analysis=name,columns={'a':numeric([20240131,20240229,None]),'b':numeric([20240229,20240301,20240301])},options=dict(dx_date='a',fu_date='b',time_format='packed_ymd',output_unit='days'),row_ids=['2','8','20'])))
+                subprocess.run([sys.executable,'-B',str(runtime),str(request),str(response)],check=True,timeout=70)
+                packed=json.loads(response.read_text());assert packed['status']=='ok'
+                assert packed['outputs']['calculated_time']['values']==[29,1,None]
+                assert 'Format: packed_ymd' in packed['outputs']['calculated_time']['description']
             if name=='pydatetimeconverter':
                 assert result['outputs']['corrected_datetime_numeric']['values']==[1709164800.,None,None,1609459200.]
                 assert result['outputs']['year_out']['values']==[2024,None,None,2021]
@@ -138,10 +187,20 @@ def check(path):
                 assert all(v.get('title','').strip() for v in result['outputs'].values())
                 q=result['tables']['quality']['rows'][0]
                 assert (q['parsed'],q['invalid'],q['missing'])==(2,1,1)
+                request.write_text(json.dumps(dict(analysis=name,columns={'x':numeric([20240229,20230229,None,20000229])},options=dict(datetime_var='x',datetime_format='packed_ymd'),row_ids=['2','5','9','20'])))
+                subprocess.run([sys.executable,'-B',str(runtime),str(request),str(response)],check=True,timeout=70)
+                packed=json.loads(response.read_text());assert packed['status']=='ok'
+                assert packed['outputs']['corrected_datetime_numeric']['values']==[1709164800.,None,None,951782400.]
             if name=='pyoutcomeorganizer':
                 assert [v['n'] for v in result['tables']['frequencies']['rows']]==[2,1,1]
                 assert result['outputs']['addOutcome']['values']==[0,0,1,2,None]
                 assert result['outputs']['addOutcome']['levels']==['Censored','Event','Competing']
+                request.write_text(json.dumps(dict(analysis=name,columns={'y':numeric([0,1,None]),'r':factor(['N',None,'Y'])},options=dict(outcome='y',recurrence='r',recurrenceLevel='Y',analysistype='rfs',diagnostics=True),row_ids=['2','8','20'])))
+                subprocess.run([sys.executable,'-B',str(runtime),str(request),str(response)],check=True,timeout=70)
+                composite=json.loads(response.read_text());assert composite['status']=='ok'
+                assert composite['outputs']['addOutcome']['values']==[0,1,1]
+                assert composite['outputs']['addOutcome']['row_ids']==['2','8','20']
+                assert composite['tables']['compositeAudit']['rows'][0]['overrides']==2
             if name=='pytableone':
                 assert result['tables']['cohort']['rows'][0]['retained']==4
                 assert result['tables']['cohort']['rows'][0]['omitted']==1

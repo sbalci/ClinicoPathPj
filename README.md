@@ -8,7 +8,7 @@ so users install nothing.
 Current direction and implemented/pending work: [revised migration plan](docs/python-migration-plan.md).
 See also the [web-researched Python analysis candidates](docs/python-analysis-opportunities.md).
 
-Status: experimental, 0.3.47 (descriptives and data preparation; full migration remains incomplete). Verified only on jamovi 28.13 for macOS (Apple Silicon), with
+Status: experimental, 0.3.53 (descriptives and data preparation; full migration remains incomplete). Verified only on jamovi 28.13 for macOS (Apple Silicon), with
 jmvtools 28.4.
 
 Analyses now use compact family menus: **Descriptives Py**, **Stats Plots Py**,
@@ -42,7 +42,7 @@ Open **Data Library > ClinicoPathPj > Python Core Examples**, or import
 `data/python_core_examples.csv`, for the synthetic examples.
 
 Build the single standard module without installing it:
-`Rscript --vanilla tools/build.R --build-only` → `ClinicoPathPj_0.3.47.jmo`.
+`Rscript --vanilla tools/build.R --build-only` → `ClinicoPathPj_0.3.53.jmo`.
 After replacing a loaded development build, use a fresh jamovi engine to avoid stale namespaces.
 
 `pywelch` reports the mean difference as *comparison minus reference*. The reference defaults to
@@ -532,3 +532,53 @@ full baseline parity remain pending; desktop qualification is tracked separately
 The standardized default is unchanged. Calendar fractions follow the corrected recent
 R method; [scope, provenance and qualification](docs/python-time-intervals.md#calendar-anniversaries--0347)
 are tracked separately from the original frozen baseline.
+
+## Explicit numeric interval dates — 0.3.48
+
+`pytimeinterval` now accepts explicitly selected Excel1900/1904, Unix seconds and
+eight-digit packed YYYYMMDD pairs. `pydatetimeconverter` also gains packed YYYYMMDD.
+No origin or century is inferred. See [numeric format scope and qualification](docs/python-numeric-dates.md).
+
+## Recurrence/progression status — 0.3.49
+
+`pyoutcomeorganizer` now prepares RFS/PFS/DFS component-OR status and progression-only
+TTP status, with explicit component levels, missingness audit and saved binary status.
+It does not compute event times. See [status rules and qualification](docs/python-composite-outcomes.md).
+
+## Interval-censoring input preparation — 0.3.50
+
+`pyintervalcensoring` checks numeric left/right endpoints, classifies censoring type
+and saves aligned endpoint pairs. It prepares inputs without fitting a survival model.
+See [scope and qualification](docs/python-interval-censoring.md).
+
+## Two-component first-event preparation — 0.3.51
+
+`pyfirstevent` combines two explicitly coded component status/time pairs at their
+common observation horizon. Native mapping, row audit, preview, optional count
+plot and saved time/status/source columns expose the policy. Event/censor ties
+favor the event; a later event cannot override earlier loss of component follow-up.
+See [scope and evidence](docs/python-first-event.md). Clinical endpoint definitions,
+patient hierarchy and fitted survival models remain outside this utility.
+
+## Optional administrative censoring — 0.3.52
+
+`pyfirstevent` now offers an initially disabled administrative cutoff, supplied
+explicitly in the component durations' common units and origin. Only later records
+are shortened and coded censored; events exactly at the cutoff remain events.
+Native audit and preview columns show the unadjusted result and the adjustment.
+Missing component records remain missing. See [policy and qualification](docs/python-first-event.md).
+
+## Subject identity audit — 0.3.53
+
+The 0.3.53 package is built and installed through Sideload. Text-ID selection, strict
+failure/recovery, fresh-engine reopen/rerun and native HTML/embedded PNG export pass
+on macOS arm64. Nine focused Python tests, 76 native R assertions and 28 packaged
+cases pass. The full 405-test run had three runtime timeouts; all three passed on
+isolated rerun. This is not a clean all-green full-suite run.
+
+`pyfirstevent` now provides an optional exact-label subject-ID audit and a strict
+one-record-per-ID requirement. Repeated/missing IDs are exposed in native tables;
+the strict setting blocks preparation until IDs are unique and known. The audit
+counts all supplied records and preserves existing endpoint calculations and saved
+row alignment. No patient aggregation or event-history ordering is performed.
+See [scope and qualification](docs/python-first-event.md).

@@ -38,7 +38,7 @@ RESULT_MEMBERS = {"add", "analysis", "asDF", "asProtoBuf", "asString", "clear", 
                   "itemNames", "items", "key", "name", "options", "parent", "path", "print", "remove",
                   "requiresData", "resetVisible", "root", "saveAs", "setError", "setRefs", "setState",
                   "setStatus", "setTitle", "setVisible", "state", "status", "title", "visible"}
-SPEC_KEYS = {"name", "title", "menuGroup", "menuSubgroup", "version", "options", "results", "ui", "executionOption", "timingResult", "clearOnInputError"}
+SPEC_KEYS = {"name", "title", "menuGroup", "menuSubgroup", "version", "options", "results", "ui", "executionOption", "timingResult", "clearOnInputError", "allowInfinite"}
 OPTION_KEYS = {  # keys an option may carry besides name/type/title
     "Variable": {"permitted", "suggested", "required", "coerceNumeric"},
     "Variables": {"permitted", "suggested", "required", "coerceNumeric"},
@@ -85,6 +85,14 @@ def read_spec(path):
         raise SpecError(f"{path.name}: SPEC must be a plain literal ({error})") from None
 
 
+def list_visibility(value, choices):
+    """Bounded OR of declared List choices, using jamovi's native option:value syntax."""
+    if not isinstance(value,str) or not re.fullmatch(r"\([a-z][A-Za-z0-9_]*:[A-Za-z0-9_]+(?: \|\| [a-z][A-Za-z0-9_]*:[A-Za-z0-9_]+)*\)",value):
+        return False
+    terms=value[1:-1].split(' || ')
+    return len(terms)<=16 and all(v in choices.get(k,set()) for k,v in (term.split(':') for term in terms))
+
+
 def validate(spec, stem):
     where = f"{stem}.py"
 
@@ -115,7 +123,7 @@ def validate(spec, stem):
     if not isinstance(spec, dict):
         fail("SPEC must be a dict")
     unknown = set(spec) - SPEC_KEYS
-    missing = SPEC_KEYS - {"menuSubgroup", "ui", "executionOption", "timingResult", "clearOnInputError"} - set(spec)
+    missing = SPEC_KEYS - {"menuSubgroup", "ui", "executionOption", "timingResult", "clearOnInputError", "allowInfinite"} - set(spec)
     if unknown or missing:
         fail(f"SPEC keys: unknown {sorted(unknown)}, missing {sorted(missing)}")
     check_name(spec["name"], "analysis name", ANALYSIS_NAME)
@@ -235,8 +243,8 @@ def validate(spec, stem):
             continue
         if "visible" in result:  # one Bool or the conjunction of two Bool options
             match = re.fullmatch(r"\(([a-z][A-Za-z0-9_]*)(?: && ([a-z][A-Za-z0-9_]*))?\)", str(result["visible"]))
-            if not match or any(name not in bools for name in match.groups() if name is not None):
-                fail(f"result {rname!r}: visible must be '(x)' naming a Bool option or '(x && y)' naming Bool options")
+            if not list_visibility(result['visible'],list_choices) and (not match or any(name not in bools for name in match.groups() if name is not None)):
+                fail(f"result {rname!r}: visible must be '(x)' naming a Bool option or '(x && y)' naming Bool options, or a bounded OR of declared List choices")
         if result.get("type") in ("Preformatted", "Text", "Html", "Svg"):
             allowed = {"name", "type", "title", "visible"}
             if result["type"] == "Svg":
@@ -292,10 +300,15 @@ def validate(spec, stem):
                 match = re.fullmatch(r"\(([a-z][A-Za-z0-9_]*)\)", shown) if isinstance(shown, str) else None
                 selected = re.fullmatch(r"\(([a-z][A-Za-z0-9_]*):([A-Za-z0-9_]+)\)", shown) if isinstance(shown, str) else None
                 if not (isinstance(shown, bool) or (match and match.group(1) in bools) or
-                        (selected and selected.group(2) in list_choices.get(selected.group(1), set()))):
+                        (selected and selected.group(2) in list_choices.get(selected.group(1), set())) or list_visibility(shown,list_choices)):
                     fail(f"column {rname}.{cname}: visible must be True, False, '(x)' naming a Bool option or '(x:value)' naming a declared List choice")
 
 
+    if "allowInfinite" in spec:
+        roles = spec['allowInfinite']
+        numeric_roles = {o['name'] for o in spec['options'] if o['type']=='Variable' and o.get('permitted')==['numeric']}
+        if not isinstance(roles,list) or any(not isinstance(r,str) for r in roles) or len(set(roles))!=len(roles) or not set(roles)<=numeric_roles:
+            fail('allowInfinite must be a unique list of declared numeric Variable roles')
     if "clearOnInputError" in spec and not isinstance(spec["clearOnInputError"], bool):
         fail("clearOnInputError must be True or False")
     if "executionOption" in spec:
@@ -428,6 +441,7 @@ def b_r(spec, header):
     execution = (f"                backend = self$options${spec['executionOption']},\n" if "executionOption" in spec else "")
     timing = (f"                timing = {r_string(spec['timingResult'])},\n" if "timingResult" in spec else "")
     failure_policy = ("                clearOnInputError = TRUE,\n" if spec.get("clearOnInputError", False) else "")
+    infinity_policy = (f"                allowInfinite = {vector(r_string(o) for o in spec['allowInfinite'])},\n" if spec.get("allowInfinite") else "")
     plot_method = (",\n        .plot = function(image, ggtheme, theme, ...) .cpjPlot(image, ggtheme, theme)"
                    if plots else "")
     scripts = "".join(
@@ -443,7 +457,7 @@ def b_r(spec, header):
         + f"        .run = function() {{\n"
         f"{scripts}"
         f"            .cpjRun(self, \"{name}\",\n"
-        f"{execution}{timing}{failure_policy}"
+        f"{execution}{timing}{failure_policy}{infinity_policy}"
         f"                options = {vector(r_string(o) for o in options)},\n"
         f"                arrays = {vector(r_string(o) for o in arrays)},\n"
         f"                terms = {vector(r_string(o) for o in terms)},\n"

@@ -1,0 +1,11 @@
+Record,Left endpoint,Right endpoint
+Synthetic interval 1,1,1
+Synthetic interval 2,,3
+Synthetic interval 3,1,
+Synthetic interval 4,1,4
+Synthetic interval 5,,
+Synthetic interval 6,5,2
+Synthetic interval 7,-3,-1
+Synthetic interval 8,0,0
+Synthetic interval 9,4,4
+Synthetic interval 10,,0

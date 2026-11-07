@@ -25,7 +25,7 @@
     list(path = path, env = c(PYTHONHOME = home, PYTHONPATH = ""))
 }
 
-.cpjColumn <- function(x, name) {
+.cpjColumn <- function(x, name, allowInfinite = FALSE) {
     units <- attr(x, "units", exact = TRUE)
     label <- attr(x, "label", exact = TRUE)
     storage <- list(classes = I(class(x)),
@@ -40,9 +40,14 @@
         return(list(kind = "factor", levels = I(levels(x)), codes = I(codes), ordered = is.ordered(x), storage = storage))
     }
     if (is.numeric(x)) {
-        if (any(is.infinite(x)))
+        if (any(is.infinite(x)) && !isTRUE(allowInfinite))
             jmvcore::reject("{}", msg = paste0("'", name, "' contains infinite values; recode them as missing first."))
-        return(list(kind = "number", values = I(as.double(x)), storage = storage))
+        # JSON numbers cannot represent infinity. Only explicitly opted-in roles carry
+        # signed string tokens inside a numeric column; Python decodes them as floats.
+        values <- if (isTRUE(allowInfinite)) lapply(as.double(x), function(value) {
+            if (is.infinite(value)) if (value > 0) "Infinity" else "-Infinity" else value
+        }) else as.double(x)
+        return(list(kind = "number", values = I(values), storage = storage))
     }
     list(kind = "text", values = I(as.character(x)), storage = storage)
 }
@@ -151,7 +156,8 @@
 
 .cpjRun <- function(self, name, options, arrays = character(0), numeric = character(0),
                     required = character(0), events = character(0), terms = character(0), checkpoint = NULL,
-                    backend = "processx", timing = NULL, clearOnInputError = FALSE) {
+                    backend = "processx", timing = NULL, clearOnInputError = FALSE,
+                    allowInfinite = character(0)) {
     # jmvcore restores Preformatted and Text content from the saved state, so clear it first:
     # otherwise an earlier run's traceback or interpretation would still show under this run's results.
     for (item in self$results$items)
@@ -204,10 +210,11 @@
 
     # Integer Nominal/Ordinal columns reach numeric-only boxes as factors carrying their values.
     numericColumns <- unlist(values[numeric], use.names = FALSE)
+    infiniteColumns <- unlist(values[intersect(allowInfinite, names(values))], use.names = FALSE)
     columns <- lapply(stats::setNames(names(self$data), names(self$data)), function(column) {
         x <- self$data[[column]]
         if (column %in% numericColumns) x <- jmvcore::toNumeric(x)
-        .cpjColumn(x, column)
+        .cpjColumn(x, column, allowInfinite = column %in% infiniteColumns)
     })
     runtime <- system.file("python", "cpj_runtime.py", package = "ClinicoPathPj", mustWork = TRUE)
     dir <- tempfile("cpj")

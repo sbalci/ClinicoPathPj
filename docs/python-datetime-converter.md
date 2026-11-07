@@ -12,6 +12,7 @@ All conversion and component calculations run in bundled Python without new pack
 | Explicit YMD, DMY, MDY, YDM, MYD, DYM dates | Implemented, four-digit years |
 | YMD/DMY/MDY hours-minutes or hours-minutes-seconds | Implemented; seconds may have up to six decimal places |
 | Excel 1900 / Excel 1904 / Unix numeric encodings | Implemented, selected explicitly |
+| Eight-digit packed YYYYMMDD | Implemented in 0.3.48; no century inference |
 | Quality accounting and original/converted preview | Native tables; failed and missing rows remain distinct |
 | Calendar components and numeric/text saved outputs | Implemented with original row identities |
 | Automatic format/epoch detection | Pending |
@@ -132,3 +133,13 @@ assertions** before the new converter was added. That result is not a claim that
 entire 0.3.45 native inventory was rerun; the new converter has the independent
 163-assertion native evidence above. See the
 [machine-readable evidence](validation-exports/python-datetime-0.3.45-checks.json).
+
+## Packed dates — 0.3.48
+
+The explicit Packed YYYYMMDD choice accepts finite integer numeric values or exact
+eight-digit ASCII text (outer whitespace is trimmed). Text retains leading zeros
+for years 0001–0999; numeric inputs cannot retain them, so short numbers are rejected.
+Fractions, six-digit dates, scientific-notation text, decimal text, malformed calendars
+and year 0000 are invalid. Numeric `20240229.0` is an integer and is accepted, while
+text `20240229.0` is not eight digits and is rejected. No format is inferred.
+See [numeric preparation qualification](python-numeric-dates.md).
