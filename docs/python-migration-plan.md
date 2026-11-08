@@ -12,8 +12,9 @@ The [ecosystem review](python-ecosystem-review-2026-11-07.md) now compares JASP,
 jamovi, Orange/BioLab, MedCalc, public GitHub sources and Hugging Face cards.
 Its [20-candidate backlog](python-analysis-candidates-2026-11-07.json) is planning
 metadata, separate from the public analysis registry. It adds no implemented ports,
-dependencies or clinical claims: the current inventory remains **27 partial / 34
-planned / 12 utilities / zero full-parity releases**.
+dependencies or clinical claims: the inventory at that review was **27 partial / 34
+planned / 12 utilities / zero full-parity releases**; the 0.3.58 core below advances
+`pyagreement` to partial, giving **28 partial / 33 planned**.
 
 Read this queue and Verified current inventory as operative priorities. Later
 versioned entries preserve historical decisions/counts; they are not current
@@ -131,9 +132,9 @@ Do not add rpy2 or replace the current bridge based on an announced future engin
 
 ## Verified current inventory
 
-Current source inventory: **39 registered implementation entry points**, comprising
-**27 partial baseline ports** and **12 retained utilities/demonstrations**. Of the
-61 baseline targets, **34 remain planned** and **zero have full supported-feature
+Current source inventory: **40 registered implementation entry points**, comprising
+**28 partial baseline ports** and **12 retained utilities/demonstrations**. Of the
+61 baseline targets, **33 remain planned** and **zero have full supported-feature
 parity plus all release gates**. Numerical, packaged and GUI evidence is listed
 per analysis; newly implemented study review does not establish pooled-meta-analysis parity.
 
@@ -141,7 +142,7 @@ per analysis; newly implemented study review does not establish pooled-meta-anal
 |---|---:|---:|---:|
 | ClinicoPathDescriptives | 14 | 14 | 0 |
 | jjstatsplot | 19 | 1 | 18 |
-| meddecide | 15 | 8 | 7 |
+| meddecide | 15 | 9 | 6 |
 | jsurvival | 9 | 3 | 6 |
 | OncoPath | 4 | 1 | 3 |
 
@@ -149,7 +150,7 @@ Partial ClinicoPathDescriptives: `pyagepyramid`, `pyalluvial`, `pybenford`, `pyc
 
 Partial jjstatsplot: `pyjjcorrmat`.
 
-Partial meddecide: `pycotest`, `pydecision`, `pydecisioncalculator`, `pydecisioncurve`, `pykappaci`, `pykappafixedn`, `pykappapower`, `pysequentialtests`.
+Partial meddecide: `pyagreement`, `pycotest`, `pydecision`, `pydecisioncalculator`, `pydecisioncurve`, `pykappaci`, `pykappafixedn`, `pykappapower`, `pysequentialtests`.
 
 Partial jsurvival: `pydatetimeconverter`, `pyoutcomeorganizer`, `pytimeinterval`.
 
@@ -221,6 +222,31 @@ Do not infer a processx-versus-system2 speed advantage from whole-route timings.
 | Observable Plot/Inputs | Local linked exploration and teaching comparison | Gather user feedback and larger-payload/platform checks |
 | Native Svg | Numeric/drag/keyboard/ROC and current-view SVG/PNG export | Resolve saved-analysis lifecycle before promoting it |
 | New service comparison | Same engine via either route, explicit native Apply; 0.3.8 fresh-engine reopen/recalculation and native ROC PNG export verified | Live option-panel synchronization, long-running lifecycle and additional platforms |
+
+**2026-11-07 Svg follow-up:** issue #1907 is closed, but no corrected release or
+fix commit was identified; both installed jamovi 28.13 and the upstream main
+`Analysis.set_svg()` source checked still use `self.dataset.instance_path`.
+The new read-only `tools/check-svg-host.py` detects this known host signature
+without modifying the application. A clean preflight is not a save/export pass.
+Issue #1902 remains open. Keep native Svg experimental until the separate
+Save/Save As, fresh-engine reopen, snapshot, DOCX/PDF/ODT and LaTeX gates in the
+[updated validation record](python-svg-cutoff-validation.md) pass on a recorded
+host build. Retain HTML interaction and static Image counterparts meanwhile.
+`tools/check-svg-artifacts.py` provides structural OMV/source-data/snapshot and
+DOCX embedded-media checks for that qualification. Its historical mode rejects
+the earlier data-only controls as saved SVG analyses. Four host-preflight and
+ten artifact tests pass in bundled Python; synthetic archive tests do not
+constitute new desktop save/reopen or rendered document-export evidence.
+
+The subsequent **macOS arm64 jamovi 28.17** desktop run now confirms native
+Save As fails with `DataSetModel.instance_path`. Native DOCX export succeeds:
+the embedded explorer PNG visibly captures preview 3 while native tables retain
+cutoff 2. See the [28.17 run record](python-svg-cutoff-validation.md).
+Word page rendering subsequently passed inspection of all three pages in Word
+16.114.4 on this Mac. Native LaTeX export stalled on Saving with a zero-byte ZIP;
+completion, compilation/rendering, PDF/ODT and successful native save/reopen remain
+separate open gates. Structural LaTeX checks now reject empty bundles and missing
+or commented figure references. Do not infer a corrected host from issue closure.
 
 Use local pinned assets, keyboard controls, accessible colors and bounded payloads.
 Display filtering must disclose aggregation/sampling and must not alter inference silently.
@@ -1234,3 +1260,66 @@ implemented in 0.3.57 with native cohort auditing and lifecycle evidence above.
 Next qualify its inclusion checklist at 200 rows and remaining export formats. Keep bivariate/SROC modelling as
 a separate method/dependency/independent-oracle milestone. Do not infer full
 OncoPath or diagnosticmeta parity from the linked study inspector.
+
+
+## Independent-pair agreement core — 0.3.58
+
+Start the existing `pyagreement` baseline target with conventional raw-scale
+Bland–Altman analysis: independent complete pairs, explicit first-minus-second
+direction, separate LoA coverage/CI confidence, native audit and pointwise
+approximate uncertainty. Optional case IDs enforce independent-case structure;
+no automatic clinical verdict, outlier deletion or repeated-patient inference.
+ICC/CCC, categorical agreement and advanced variants remain omitted. See
+[the method/omission contract](python-agreement.md) for validation gates.
+The source inventory is now 28 partial targets, 33 planned, twelve utilities and
+40 executable entry points, with zero full-parity releases. Candidate-priority
+research files remain historical snapshots of the 0.3.57 inventory.
+The [0.3.58 evidence record](validation-exports/python-agreement-0.3.58-checks.json)
+separates independent numerical agreement, all 430 passing Python tests, native
+assertions, package execution and scoped desktop persistence/export from the
+remaining clinical, platform, full-GUI and baseline-parity gates.
+
+## Balanced ICC numerical foundation — 2026-11-07
+
+The [shared ICC prototype](python-icc-prototype.md) now implements the six
+baseline ANOVA estimators for balanced independent cases. Ninety configurations
+agree on point estimates with installed irr and psych; 52 focused tests cover
+the new engine, existing Bland–Altman behavior and generator/registry contracts.
+This is a numerical foundation milestone, not public `pyagreement` ICC support.
+The 61-target inventory, registry supported-core declaration, existing options,
+installed package and partial/full-parity counts remain unchanged.
+
+ICC(2,k) interval formulas disagree in 12 of 15 reference configurations; three
+small-sample configurations yield inverted reference bounds. Both named candidate
+formulas are retained for review, but no public interval is chosen. Resolve the
+method specification/coverage evidence before UI integration, then qualify native
+lifecycle, compatibility, packaged execution and fresh-engine exports. Existing
+R agreement methods and defaults are not changed by this prototype.
+
+The [ICC interval coverage follow-up](python-icc-coverage-study.md) now records
+48,000 common-matrix comparisons across 24 Gaussian crossed-effects scenarios,
+with separate interval availability and conditional/unconditional measures.
+Independent R checks of 24 exact simulated matrices pass. The parameterization
+explains the formula discrepancy, but neither candidate dominates every scenario;
+ICC(2,k) public uncertainty stays withheld. Fifty-six focused tests pass. The next
+gate is explicit parameter-domain/nonreturn handling, followed by bounded native
+integration; simulation evidence does not close clinical or platform acceptance.
+
+## Balanced ICC native integration — 0.3.59
+
+The [native ICC subset](python-icc-integration.md) is now implemented under
+`pyagreement`: method/model controls, six point estimators, five interval forms,
+complete-case/unique-ID validation and native audit, estimate, rater and retained
+case tables. Bland–Altman remains the default and its old option/result contract
+is retained. ICC(2,k) limits stay blank with an explicit notice; numerical review
+candidates are not exposed as results.
+
+The compiler, 60 focused Python tests, all 465 Python tests, 91 native assertions
+and 30 packaged runtime cases with six ICC model subcases pass. Scoped macOS
+28.17 GUI checks cover Sideload, legacy 0.3.58 restoration/recalculation, ICC(2,1),
+ICC(2,k), ICC(3,1), pending recovery, confidence changes, save/reopen in a fresh
+engine and native HTML export. Six saved states pass independent artifact checks.
+The module is still partial, with 40 executable entries, 28 partial targets,
+33 planned targets and zero full-parity releases. Broader GUI, platform,
+clinical and interval-policy acceptance remain pending; the registry's broad
+pending GUI flag is not a claim that these scoped observations were absent.

@@ -1,7 +1,7 @@
 ---
 title: ClinicoPathPj - Python-Backed Analyses
 name: ClinicoPathPj
-version: 0.3.57
+version: 0.3.59
 jms: '1.0'
 authors: Serdar Balci
 maintainer: Serdar Balci <serdarbalci@serdarbalci.com>
@@ -324,6 +324,14 @@ analyses:
     menuTitle: Diagnostic study review
     title: 'Diagnostic Meta-Analysis: Study Review (Python)'
     category: analyses
+  - name: pyagreement
+    ns: ClinicoPathPj
+    hidden: false
+    menuGroup: MedDecide Py
+    menuSubgroup: Agreement
+    menuTitle: Continuous measurement agreement
+    title: 'Agreement: Continuous Measurements (Python)'
+    category: analyses
 usesNative: 'yes'
 datasets:
   - name: Python Core Examples
@@ -519,5 +527,25 @@ datasets:
       - Python
       - Diagnostic studies
       - Evidence review
+  - name: Independent Measurement Pair Examples
+    path: python_agreement_examples.omv
+    description: >-
+      Twelve synthetic paired measurement rows with eight complete independent
+      cases and four pairwise missing exclusions; conventional raw-scale
+      Bland-Altman review only.
+    tags:
+      - Python
+      - Agreement
+      - Bland-Altman
+  - name: Balanced ICC Examples
+    path: python_icc_examples.omv
+    description: >-
+      Eight synthetic cases and three raters; six complete independent cases and
+      two excluded rows. Balanced ICC examples without clinical interpretation
+      bands.
+    tags:
+      - Python
+      - Agreement
+      - ICC
 
 ...

@@ -1,0 +1,12 @@
+args <- commandArgs(TRUE)
+lib <- if(length(args)) args[[1]] else 'build/R4.6.0-arm64-macos'
+.libPaths(c(normalizePath(lib,mustWork=TRUE),.libPaths()))
+library(ClinicoPathPj);library(testthat)
+env <- new.env(parent=globalenv())
+for(name in c('pyagreement','pyagreementOptions','pyagreementClass'))
+    assign(name,get(name,asNamespace('ClinicoPathPj')),env)
+result <- testthat::test_file('tests/testthat/test-agreement-pairs-python.R',env=env)
+d <- as.data.frame(result)
+s <- list(passed=sum(d$passed),failed=sum(d$failed),errors=sum(d$error),warnings=sum(d$warning),skipped=sum(d$skipped))
+cat(jsonlite::toJSON(s,auto_unbox=TRUE,pretty=TRUE),'\n')
+stopifnot(s$failed==0,s$errors==0,s$warnings==0,s$skipped==0)
