@@ -201,12 +201,15 @@
     if (!backend %in% c("processx", "pj", "pjSystem"))
         jmvcore::reject("Unknown Python execution route.")
     started <- proc.time()[["elapsed"]]
+    executionNote <- if (identical(backend, "processx"))
+        "ClinicoPathPj processx runner; cooperative checkpoint and execution timeout." else
+        "Pj service did not complete; execution capabilities are not confirmed."
     if (!is.null(timing)) on.exit(self$results$get(timing)$setContent(paste0(
         "Route: ", backend, "; backend elapsed: ",
         sprintf("%.3f", proc.time()[["elapsed"]] - started), " s.\n",
         "Includes selected-data encoding, startup/imports, calculations, HTML and native mapping.\n",
         "Excludes native image rendering and browser drawing. Pj resource preparation is included.\n",
-        "Pj API v1 is synchronous, has no checkpoint callback, and its timeout is per subprocess.")), add = TRUE)
+        executionNote)), add = TRUE)
 
     # Integer Nominal/Ordinal columns reach numeric-only boxes as factors carrying their values.
     numericColumns <- unlist(values[numeric], use.names = FALSE)
@@ -244,12 +247,15 @@
     } else {
         if (!is.null(checkpoint)) checkpoint()
         # Narrow catch: only the optional service call, never jamovi rejection paths.
-        run <- tryCatch(.cpjPjExecute(json, if (backend == "pjSystem") "system" else "jamovi"),
+        run <- tryCatch(.cpjPjExecute(json, if (backend == "pjSystem") "system" else "jamovi",
+                                    checkpoint = checkpoint),
             error = function(e) {
+                if (identical(e$code, "restart")) stop(e)
                 detail <- if (!is.null(e$details)) e$details else conditionMessage(e)
                 self$results$console$setContent(.cpjTail(detail))
                 stop(conditionMessage(e), call. = FALSE)
             })
+        executionNote <- .cpjPjExecutionNote(run$service)
         result <- run$result
     }
     if (!is.null(checkpoint)) checkpoint()  # an option change while reading still wins

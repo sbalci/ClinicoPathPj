@@ -1,3 +1,9 @@
+# Unreleased — 2026-11-08
+
+- Support Pj 1.5.0 service checkpoints while retaining older API v1 signatures.
+- Preserve jamovi restart conditions and report returned service execution capabilities.
+- Update the service comparison roadmap; keep packaging and native lifecycle gates explicit.
+
 # 0.3.59 — 2026-11-07
 
 - Add balanced ICC as a method in the existing pyagreement analysis; Bland–Altman remains the default.

@@ -1,6 +1,6 @@
 # Python execution comparison
 
-Install the single `ClinicoPathPj_0.3.9.jmo` module. Open **Python Lab → Execution services →
+Install the current single ClinicoPathPj module. Open **Python Lab → Execution services →
 Python bridge comparison**. Pj >=1.3.0 is optional and needed only for its service routes.
 Use a fresh jamovi engine after replacing loaded modules.
 
@@ -17,7 +17,9 @@ silently rerun a model. Existing D3 and Observable analyses retain local-only Ap
 
 The timing reports calculation/transport work, including service preparation, and excludes
 static image rendering. It does not measure pure process-launch overhead. Pj is synchronous;
-see the [review and limitations](pj-service-review.md).
+see the [review and limitations](pj-service-review.md). The updated source adapter supports
+Pj 1.5.0 checkpoints/shared timeout metadata and older signatures. This change is not yet
+included in the installed 0.3.59 package; fresh-engine GUI qualification remains pending.
 
 ## Menus
 

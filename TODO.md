@@ -1,3 +1,13 @@
+# Pj 1.5.0 integration — 2026-11-08 (source increment)
+
+- [x] Review tagged public API, release and connector; keep Pj optional and the default CPJ bridge.
+- [x] Forward supported checkpoints, preserve restart conditions and support older runner signatures.
+- [x] Replace API-wide timing assumptions with returned runner/checkpoint/timeout metadata.
+- [x] Pass 17 source-adapter assertions, four Python regressions and scoped packaged-Pj service probes; retain sandbox diagnostics.
+- [ ] Build a new CPJ package and qualify Pj 1.5.0 through Sideload, fresh engine and saved-file/export lifecycle.
+- [ ] Check descendant cleanup, complete deadline accounting and optional System Python on each claimed platform.
+- [ ] Evaluate bundled Plotly/Chart.js and preparation/effect-size helpers as separate validated experiments.
+
 # Balanced ICC native integration — 0.3.59
 
 - [x] Add method/model controls under the existing `pyagreement` identifier; preserve the Bland–Altman default and saved contracts.

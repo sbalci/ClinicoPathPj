@@ -24,7 +24,15 @@
     list(info = info, run = getExportedValue("Pj", "mzPjRunPython"))
 }
 
-.cpjPjExecute <- function(request, python = "jamovi", service = NULL) {
+.cpjPjExecutionNote <- function(service) {
+    paste0("Pj ", service$module_version, "; runner: ",
+        if (is.null(service$runner)) "not reported" else service$runner, "; ",
+        if (isTRUE(service$checkpoint_enabled)) "checkpoint enabled" else "no running checkpoint",
+        "; ", if (identical(service$capabilities$timeout_scope, "call"))
+            "shared call timeout" else "per-subprocess timeout (legacy service)", ".")
+}
+
+.cpjPjExecute <- function(request, python = "jamovi", service = NULL, checkpoint = NULL) {
     if (is.null(service)) service <- .cpjPjService()
     root <- system.file("python", package = "ClinicoPathPj", mustWork = TRUE)
     # Only a trusted package path is embedded as a JSON literal. User values stay data.
@@ -34,9 +42,15 @@
         "request = json.loads(data['request'][0])\n",
         "response = execute(request)\n",
         "mzpjShowText(json.dumps(response, ensure_ascii=True, allow_nan=False), name='cpjEnvelope')\n")
-    response <- service$run(code = code,
+    args <- list(code = code,
         data = data.frame(request = as.character(request), stringsAsFactors = FALSE),
         python = python, timeout = as.integer(.cpjTimeout), return_columns = FALSE)
+    # API v1 predates checkpoint support. Do not send new arguments to old runners.
+    # An explicit FALSE capability overrides the signature; ... alone is insufficient.
+    if ("checkpoint" %in% names(formals(service$run)) &&
+        !identical(service$info$capabilities$checkpoint, FALSE))
+        args$checkpoint <- checkpoint
+    response <- do.call(service$run, args)
     matches <- Filter(function(item) identical(item$name, "cpjEnvelope") &&
         identical(item$type, "Text"), response$items)
     if (length(matches) != 1L || !is.character(matches[[1]]$content) ||

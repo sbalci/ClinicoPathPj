@@ -121,7 +121,7 @@ scoring/enrichment and model-evaluation pipelines remain outside this keyboard m
 | Jonathon: dragging and linked plots run in client JavaScript; Python is not required for interaction | Evaluate statistical engines separately from presentation. Use JavaScript for display interaction; justify Python by numerical capability, reuse or teaching | Shared Python cutoff engine already feeds separate HTML/D3, Observable and native Svg experiments |
 | Jonathon: consider the native Svg result element | Prefer testing native export/snapshot behavior before choosing a production interactive renderer | `pysvgcutoff` interaction and current-view SVG/PNG export verified; saved-analysis `.omv` lifecycle remains unresolved on jamovi 28.13 |
 | Maurizio: Pj 1.3.0 provides a public service without an editor | Add an optional adapter behind the existing result contract and compare identical computation workloads | `pybridgecompare` implemented; default processx retained; optional public Pj API v1 routes |
-| Maurizio: processx gives finer lifecycle control than current Pj `system2()` | Retain checkpoints, cancellation and cleanup as acceptance requirements; document route differences | Processx regression checks pass; Pj call is synchronous with no checkpoint callback while running |
+| Maurizio: Pj 1.5.0 adopts processx and a caller checkpoint | Forward supported callbacks, preserve restart conditions and retain lifecycle gates | Source adapter supports the new callback and older API v1 signatures; installed-package/desktop acceptance remains separate |
 | Jonathon: a Python engine calling R through rpy2 is planned | Isolate transport behind adapters, preserving registry identities and numerical oracles | Future integration is a watch item based on the supplied discussion, not an available API, release promise or implemented dependency |
 
 The original all-Python statistical migration remains the research target. It does not
@@ -178,6 +178,17 @@ Utilities/demonstrations: `pydescriptives`, `pydotdecision`, `pyexacttests`, `py
 ## Work currently under way
 
 ### 1. Finish the execution-service comparison acceptance
+
+**2026-11-08 update:** [Pj 1.5.0 review](pj-service-review.md) supersedes the old
+system2/no-checkpoint description. The source adapter forwards a supported caller
+checkpoint, rethrows jamovi restart conditions intact and reports actual service metadata.
+Pj remains optional; 1.3/1.4 signatures remain supported without running cancellation.
+Require >=1.5.0 for features whose acceptance requires cancellation/shared timeouts.
+Retain our default bridge until matched workload, descendant cleanup, deadline, recovery,
+fresh-engine save/reopen and exports pass on each claimed platform. Plotly/Chart.js and
+Pj data-preparation/effect-size helpers are optional follow-ups requiring independent
+numerical or lifecycle checks. Bundled libraries do not establish baseline feature parity.
+Native Svg save/export blockers are independent of the runner update.
 
 Implemented in 0.3.8: public Pj adapter; processx/bundled-Pj/System-Pj route selector;
 identical cutoff calculations; native results and elapsed time; explicit native cutoff Apply.
