@@ -47,7 +47,7 @@ def figure(state, width=600, height=400, palette=None, background='white', foreg
     palette = palette or DEFAULT_PALETTE
     columns = state['columns']; kind = state['kind']
     n = len(next(iter(columns.values()), []))
-    if n > {'alluvial':1, 'interval':200, 'line':20000, 'box':20000, 'bar':2000, 'scatter':5000, 'points':5000, 'histogram':2000, 'pyramid':200, 'qualitymap':4000, 'ihcheatmap':4000, 'dendrogram':199, 'setmatrix':16, 'screeningquantiles':2020}.get(kind, 0):
+    if n > {'agreement':5000, 'alluvial':1, 'interval':200, 'line':20000, 'box':20000, 'bar':2000, 'scatter':5000, 'points':5000, 'histogram':2000, 'pyramid':200, 'qualitymap':4000, 'ihcheatmap':4000, 'dendrogram':199, 'setmatrix':16, 'screeningquantiles':2020}.get(kind, 0):
         raise ValueError('Unsupported plot kind or excessive plot rows')
     if any(len(c) != n for c in columns.values()): raise ValueError('Plot columns have unequal lengths')
     if kind == 'alluvial':
@@ -221,6 +221,19 @@ def figure(state, width=600, height=400, palette=None, background='white', foreg
                     drawstyle='steps-post' if state.get('step') else 'default',
                     label=key if key is not None else '(missing group)')
         if any(g is not None for g in group): ax.legend()
+    elif kind == 'agreement':
+        if n<3:raise ValueError('Agreement plots require at least three complete points')
+        for key in ['x','y','bias','lower','upper']:
+            if any(v is None or not np.isfinite(v) for v in columns[key]):
+                raise ValueError('Agreement coordinates must be finite')
+        for key in ['bias','lower','upper']:
+            if len(set(columns[key]))!=1:raise ValueError('Agreement reference lines must be constant')
+        if not columns['lower'][0]<=columns['bias'][0]<=columns['upper'][0]:
+            raise ValueError('Agreement lines must be ordered')
+        ax.scatter(columns['x'],columns['y'],s=22,color=palette[0],alpha=.8)
+        for key,label,style in [('bias','Bias','-'),('lower','Lower LoA','--'),('upper','Upper LoA','--')]:
+            ax.axhline(columns[key][0],label=label,color=palette[1%len(palette)],linestyle=style)
+        ax.legend()
     elif kind == 'points':
         groups = list(dict.fromkeys(columns['group']))
         for i,key in enumerate(groups):

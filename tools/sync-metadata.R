@@ -23,6 +23,26 @@ sync_module_metadata <- function(root = ".") {
             "    tags: [Python, Diagnostic accuracy, Decision curves, Data quality]")
     }
     document <- yaml::yaml.load(paste(metadata, collapse = "\n"))
+    agreement_data <- "python_agreement_examples.omv"
+    if (file.exists(file.path(root, "data", agreement_data))) {
+        entry <- list(name = "Independent Measurement Pair Examples", path = agreement_data,
+            description = "Twelve synthetic paired measurement rows with eight complete independent cases and four pairwise missing exclusions; conventional raw-scale Bland-Altman review only.",
+            tags = c("Python", "Agreement", "Bland-Altman"))
+        index <- which(vapply(document$datasets, function(x) identical(x$path, agreement_data), logical(1)))
+        if (length(index)) document$datasets[[index[1L]]] <- entry
+        else document$datasets[[length(document$datasets) + 1L]] <- entry
+    }
+
+    icc_data <- "python_icc_examples.omv"
+    if (file.exists(file.path(root, "data", icc_data))) {
+        entry <- list(name = "Balanced ICC Examples", path = icc_data,
+            description = "Eight synthetic cases and three raters; six complete independent cases and two excluded rows. Balanced ICC examples without clinical interpretation bands.",
+            tags = c("Python", "Agreement", "ICC"))
+        index <- which(vapply(document$datasets, function(x) identical(x$path, icc_data), logical(1)))
+        if (length(index)) document$datasets[[index[1L]]] <- entry
+        else document$datasets[[length(document$datasets) + 1L]] <- entry
+    }
+
     diagnostic_data <- "python_diagnostic_study_examples.omv"
     if (file.exists(file.path(root, "data", diagnostic_data))) {
         entry <- list(name = "Diagnostic Study Review Examples", path = diagnostic_data,

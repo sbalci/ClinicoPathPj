@@ -4,6 +4,195 @@ Recorded 2026-10-26 with jamovi 28.13 on macOS arm64. The prototype's interactio
 current-view exports pass the checks below. **Native OMV saving with the Svg result
 remains unresolved, so save/reopen and release acceptance are not complete.**
 
+## Word page rendering and LaTeX follow-up — 2026-11-07
+
+**Later session-close observation:** during the 0.3.59 ICC tests, the disposable
+SVG session was closed normally and its unsaved synthetic changes discarded.
+Closing finalized the stalled export as a 22-byte ZIP with no members. The
+original zero-byte/Saving observations below remain valid for the open session;
+the finalized empty archive still contains no TeX source or figures and does not
+qualify as successful export. The regression now rejects both states. See the
+post-session-close field in the follow-up evidence JSON.
+
+Opened the recorded `python-svg-28.17-confirmed-preview3.docx` in Microsoft Word
+**16.114.4** on macOS arm64. All three pages were visually inspected in whole-page
+view: the explorer image, preview/native labels, classification and accuracy
+tables, static dotplot, static ROC and references are present. No JavaScript
+source or clipped figures were observed. The file was not edited or saved, and
+its bytes still pass the recorded artifact check. This closes the previously
+untested Word page-rendering gate for this synthetic example and this local
+Word build only. It is not a cross-platform Word qualification.
+
+Native jamovi **28.17** File → Export → LaTeX bundle was attempted with the same
+open analysis. The UI continued to display `Saving` across repeated observations
+over several minutes; `python-svg-28.17-latex.zip` remained zero bytes. Escape
+dismissed the file panel but the Saving indicator remained. No successful export
+notification was observed. The pending export and unsaved synthetic analysis
+were left in jamovi; the application was not force-quit.
+
+The [LaTeX check result](validation-exports/python-svg-28.17-latex-artifacts.json)
+correctly rejects this empty destination. There are no bundle members, TeX source
+or figures to compile; `pdflatex` is installed, but compilation was not attempted
+against an invalid bundle. The cause of the stalled export was not established.
+This is separate from the already reproduced native `.omv` Save As exception.
+
+For future three-figure exports, run:
+
+```sh
+python3 tools/check-svg-artifacts.py --latex /path/export.zip
+```
+
+The tool checks ordinary, active `includegraphics` references and at least three
+distinct nonempty figure files (the explorer plus two static counterparts). It
+rejects empty ZIPs, missing figures, duplicate references to one image, commented
+references and unsupported dynamic/external paths. It does not evaluate TeX
+macros, compile the document or establish figure identity/visual correctness.
+Five additional regression tests cover these cases; all twenty focused artifact
+and host-preflight tests pass in bundled Python.
+
+See the [follow-up evidence](validation-exports/python-svg-28.17-export-followup.json).
+PDF/ODT, native SVG save/reopen, LaTeX completion/compilation and additional
+platforms remain open gates. Keep native Svg experimental.
+
+## Native macOS follow-up — jamovi 28.17, 2026-11-07
+
+The application changed between sessions: the new GUI run and bundle metadata
+both identify **28.17.0.0** on macOS arm64. The earlier 28.13 record below remains
+historical evidence. ClinicoPathPj's existing `pysvgcutoff` was tested with the
+six-row data-only control, Measurement/Reference, event level Positive,
+rule ≥ and native cutoff 2. Native counts were TP 3, FP 2, FN 0, TN 1.
+
+**Save As failed**, displaying the exact message
+`'DataSetModel' object has no attribute 'instance_path'`.
+The separate destination `python-svg-28.17-preview3.omv` was not created.
+No existing OMV was overwritten. The read-only
+[28.17 preflight](validation-exports/python-svg-host-28.17-2026-11-07.json)
+also identifies the same installed snapshot-path signature at line 428.
+This is now a direct local reproduction of the reported exception, rather than
+only an observation that saving did not update a file. The synthetic analysis is
+left open and unsaved; neither fresh-engine reopening nor snapshot persistence
+can pass from this run.
+
+**Native Word export completed.** After explicitly confirming numeric preview 3
+in the rendered SVG, File → Export → Word Document produced
+[the DOCX](validation-exports/python-svg-28.17-confirmed-preview3.docx).
+Its three image relationships resolve to embedded PNGs. The
+[extracted explorer image](validation-exports/python-svg-28.17-preview3-embedded.png)
+was decoded and visually inspected: dotplot, linked ROC, axes, numeric field and
+count labels are present, with native rule 2, preview 3 and local snapshot 2.
+The preview counts are TP 2, FP 1, FN 1, TN 2. The DOCX's native classification
+table retains TP 3, FP 2, FN 0, TN 1, and its applied-rule text remains cutoff 2.
+This confirms that the transient preview and native calculation are distinct.
+
+`python3 tools/check-svg-artifacts.py --word-example` checks that table and rule
+text, resolves the inspected PNG by its recorded hash, and compares its bytes
+with the extracted image. A limited scan found none of the listed JavaScript
+markers in document text; it is not a general detector for arbitrary code.
+The initial export before explicit preview confirmation is retained separately
+as `python-svg-28.17-initial.docx` and is not used for preview-3 qualification.
+
+At this stage the run verified native DOCX export and the embedded plot's appearance,
+but had not yet opened the document in Word; see the later page-rendering follow-up above. PDF/ODT and
+LaTeX exports were not tested in this run. See the
+[separate evidence record](validation-exports/python-svg-28.17-desktop-checks.json)
+and [reproducible artifact checks](validation-exports/python-svg-28.17-word-artifacts.json).
+
+Continue to retain HTML interaction and native Image alternatives while the
+host's Svg save path fails; native SVG remains experimental.
+
+## Follow-up — 2026-11-07: host source preflight
+
+In the earlier source-preflight check, the installed application was jamovi
+**28.13.0.0**. The read-only
+`python3 tools/check-svg-host.py` preflight identifies the known snapshot-path
+mismatch at `Analysis.set_svg()` line 428: `self.dataset.instance_path`.
+The installed `Analysis.dataset` returns `project.get_dataset()`, and the
+installed `DataSetModel` declares neither `instance_path` nor a dynamic accessor;
+`Project` provides that property. The app was not modified.
+The evidence is [machine-readable](validation-exports/python-svg-host-2026-11-07.json).
+Exit 2 means this known source signature is present; exit 0 only means the
+signature is absent, **not** that saving or export has passed. Four focused
+preflight tests cover the mismatch, changed path, compatible accessor/inheritance
+and unrecognized source. This is a source check, not a fresh desktop reproduction
+or an execution of jamovi's full save path.
+
+Upstream was checked through GitHub on 2026-11-07:
+
+- [#1907](https://github.com/jamovi/jamovi/issues/1907) is closed as completed.
+  Its [timeline](https://api.github.com/repos/jamovi/jamovi/issues/1907/timeline)
+  records closure by the reporter without a linked commit. The
+  [main analysis source](https://github.com/jamovi/jamovi/blob/main/server/jamovi/server/analyses/analysis.py)
+  retrieved during this check still uses `self.dataset.instance_path`. No fix
+  commit or released build containing a correction was identified. Closure alone
+  must not be interpreted as a verified fix. This qualifies the earlier reply's
+  suggestion of testing a build containing the fix: such a build is not yet established.
+- [#1902](https://github.com/jamovi/jamovi/issues/1902) remains open. Its reporter
+  describes successful DOCX/PDF/ODT export and failing LaTeX export on their
+  Windows/Linux installations. These are external observations, not our macOS
+  qualification evidence.
+
+Keep `pysvgcutoff` experimental and retain the HTML alternatives plus native
+static Images. Those alternatives do not repair saving an existing document
+that still contains an affected Svg result. There is no verified workaround for
+that document here. No host monkey patch or automatic renderer conversion is shipped.
+
+When a candidate corrected host is available, record its version/build and source
+preflight, then use disposable synthetic data to qualify these gates separately:
+
+1. Data-only Save, then populated Svg Save and Save As to distinct paths; verify
+   ZIP integrity, analysis presence and nonempty SVG snapshot resources.
+2. Quit/restart, reopen both files in a fresh engine, recalculate and verify
+   native results, interactive reconstruction and option changes.
+3. Distinguish saved native cutoff, transient preview and displayed snapshot in
+   all persistence assertions; `Apply to SVG snapshot` remains local.
+4. Export current-view SVG/PNG and verify dimensions, visible labels and contents.
+5. Export DOCX/PDF/ODT; inspect embedded media and rendered documents for a plot
+   rather than JavaScript source. Verify source counts remain unchanged.
+6. Export LaTeX bundle separately; check nonempty figure files, active references,
+   compilation and rendered figures, with bounded completion/failure reporting.
+7. Qualify missing-module snapshot viewing separately on an isolated profile;
+   record each OS/architecture rather than extrapolating across platforms.
+
+The previous 0.3.7 GUI evidence below is preserved as historical evidence.
+
+## Executable artifact checks — 2026-11-07
+
+`tools/check-svg-artifacts.py` now implements read-only structural checks for
+saved OMV snapshots and DOCX media. It neither launches jamovi/Word nor executes
+JavaScript, LaTeX or archive content. It reads bounded archive members without
+extracting them. Run the existing evidence check:
+
+```sh
+python3 tools/check-svg-artifacts.py --historical
+```
+
+The [recorded result](validation-exports/python-svg-artifacts-2026-11-07.json)
+confirms the historical SVG/PNG dimensions and the distinct native rule 2,
+preview 3 and local snapshot 3 labels. Both historical data-only OMVs are rejected
+as saved SVG analyses, including the misleadingly named `validation.omv`.
+No new desktop save success is asserted.
+
+For a future GUI session, save the data-only baseline before adding the analysis,
+then Save/Save As and fresh-engine-reopen copies of exactly that synthetic data:
+
+```sh
+python3 tools/check-svg-artifacts.py --baseline /path/data-only.omv \
+  --omv /path/saved.omv --omv /path/save-as.omv --omv /path/reopened.omv
+python3 tools/check-svg-artifacts.py --docx /path/export.docx
+```
+
+OMV checks require unchanged data bytes, field metadata and labels, exactly one
+`pysvgcutoff` analysis, and a nonempty SVG snapshot referenced by its saved record.
+They do not decode analysis options/statistics or establish a fresh engine rerun.
+DOCX checks resolve embedded drawing relationships to nonempty PNG/SVG media;
+they reject external/missing media. They do not establish which plot was embedded,
+whether JavaScript text leaked elsewhere, or how Word rendered the document.
+PNG checks cover its header/dimensions, not pixel decoding. These remaining checks
+must be recorded independently, alongside native results and visual inspection.
+PDF/ODT and LaTeX qualification remain pending; no structural tool result closes
+those gates. Ten focused artifact tests use explicitly synthetic archives for
+positive and malformed cases; those archives are not native GUI evidence.
+
 ## Numerical, compiler and integration evidence
 
 - Full bundled-Python suite: **217 tests passed**.

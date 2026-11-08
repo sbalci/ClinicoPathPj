@@ -68,7 +68,7 @@ parity and GUI/platform acceptance remain separate gates.
 | pysinglearm | singlearm | jsurvival | 4 | planned | pending | pending |
 | pysurvival | survival | jsurvival | 4 | planned | pending | pending |
 | pysurvivalcont | survivalcont | jsurvival | 4 | planned | pending | pending |
-| pyagreement | agreement | meddecide | 4 | planned | pending | pending |
+| pyagreement | agreement | meddecide | 4 | partial | pending | 0.3.58 Bland-Altman save/reopen/export observed; new ICC branch pending |
 | pylassologistic | lassologistic | meddecide | 4 | planned | pending | pending |
 | pynogoldstandard | nogoldstandard | meddecide | 4 | planned | pending | pending |
 | pydiagnosticmeta | diagnosticmeta | oncopath | 5 | partial | pending | macOS arm64 per-feature lifecycle/export evidence tracked in docs/python-diagnostic-study-review.md |

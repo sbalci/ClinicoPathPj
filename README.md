@@ -9,7 +9,7 @@ Current direction and implemented/pending work: [revised migration plan](docs/py
 See also the [web-researched Python analysis candidates](docs/python-analysis-opportunities.md).
 The [2026-11-07 ecosystem review](docs/python-ecosystem-review-2026-11-07.md) compares JASP, jamovi, Orange, MedCalc, GitHub and Hugging Face and prioritizes 20 candidates without expanding the frozen migration inventory.
 
-Status: experimental, 0.3.57 (descriptives and data preparation; full migration remains incomplete). Verified only on jamovi 28.13 for macOS (Apple Silicon), with
+Status: experimental, 0.3.59 (descriptives and data preparation; full migration remains incomplete). Local validation uses jamovi 28.13 and 28.17 on macOS (Apple Silicon), with
 jmvtools 28.4.
 
 Analyses now use compact family menus: **Descriptives Py**, **Stats Plots Py**,
@@ -42,7 +42,7 @@ Open **Data Library > ClinicoPathPj > Python Core Examples**, or import
 `data/python_core_examples.csv`, for the synthetic examples.
 
 Build the single standard module without installing it:
-`Rscript --vanilla tools/build.R --build-only` → `ClinicoPathPj_0.3.57.jmo`.
+`Rscript --vanilla tools/build.R --build-only` → `ClinicoPathPj_0.3.59.jmo`.
 After replacing a loaded development build, use a fresh jamovi engine to avoid stale namespaces.
 
 `pywelch` reports the mean difference as *comparison minus reference*. The reference defaults to
@@ -650,3 +650,18 @@ This is a partial study-review feature; pooling/SROC remain omitted. The compile
 GUI Apply/save/reopen/export checks pass. The full 423-test Python run had one
 unrelated execution-alarm failure; its isolated rerun passed. See the
 [separate evidence and limits](docs/validation-exports/python-study-inclusion-0.3.57-checks.json).
+
+
+The partial `pyagreement` core adds [independent measurement-pair Bland–Altman
+analysis](docs/python-agreement.md), with separate LoA coverage/CI confidence,
+paired audit, optional unique case IDs and a native static plot. Full interrater,
+CCC, repeated-measurement methods and full interrater parity remain pending.
+
+
+Balanced ICC is now a method in **MedDecide Py → Agreement → Continuous measurement agreement**.
+Bland–Altman remains the default for existing saved analyses. Choose ICC, select
+2–20 numeric rater columns and the explicit model/inferential unit; optional
+case IDs must be known and unique among complete cases. The six coefficient
+forms use native tables and whole-row missingness. ICC(2,k) confidence limits
+remain unavailable; no clinical interpretation bands are assigned. See the
+[ICC integration and qualification contract](docs/python-icc-integration.md).

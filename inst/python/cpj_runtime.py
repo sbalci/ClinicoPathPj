@@ -58,6 +58,8 @@ PLOT_COLUMNS = {  # column -> (type, required); drawn by R/utils-plots.R
     "pyramid": {"label": ("text", True), "left": ("number", True), "right": ("number", True), "leftLabel": ("text", True), "rightLabel": ("text", True), "title": ("text", True)},
     "histogram": {"group": ("text", True), "lower": ("number", True), "upper": ("number", True), "count": ("integer", True)},
 }
+MAX_PLOT_ROWS['agreement'] = 5000
+PLOT_COLUMNS['agreement'] = {key: ('number', True) for key in ['x','y','bias','lower','upper']}
 MAX_PLOT_ROWS['screeningquantiles'] = 2020
 PLOT_COLUMNS['screeningquantiles'] = {key: (kind, True) for key,kind in [('variable','text'),('percentile','number'),('value','number'),('lower','number'),('upper','number')]}
 MAX_PLOT_ROWS['dendrogram'] = 199

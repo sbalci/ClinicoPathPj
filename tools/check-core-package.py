@@ -18,7 +18,7 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parent.parent
 VERSION=re.search(r'^Version: (.+)$',(ROOT/'DESCRIPTION').read_text(),re.M)[1]
 REGISTRY=json.loads((ROOT/'inst/python/registry.json').read_text())
-NAMES=['pydiagnosticmeta','pyfirstevent','pyintervalcensoring','pytimeinterval','pydatetimeconverter','pyoutcomeorganizer','pytableone','pycrosstable','pyalluvial','pyvartree','pyoutlierdetection','pyvenn','pyjjcorrmat','pyihcheatmap','pybridgecompare','pysvgcutoff','pycheckdata','pyobservablecutoff','pyd3cutoff','pydecision','pydecisioncalculator','pysequentialtests','pychisqposttest','pybenford','pydecisioncurve','pysummarydata','pycategorize','pyagepyramid','pydataquality']
+NAMES=['pyagreement','pydiagnosticmeta','pyfirstevent','pyintervalcensoring','pytimeinterval','pydatetimeconverter','pyoutcomeorganizer','pytableone','pycrosstable','pyalluvial','pyvartree','pyoutlierdetection','pyvenn','pyjjcorrmat','pyihcheatmap','pybridgecompare','pysvgcutoff','pycheckdata','pyobservablecutoff','pyd3cutoff','pydecision','pydecisioncalculator','pysequentialtests','pychisqposttest','pybenford','pydecisioncurve','pysummarydata','pycategorize','pyagepyramid','pydataquality']
 
 
 def numeric(x):return dict(kind='number',values=x)
@@ -96,7 +96,7 @@ def check(path):
                 member='ClinicoPathPj/R/ClinicoPathPj/python/'+entry['source']
                 assert archive.read(member)==(ROOT/'inst/python'/entry['source']).read_bytes()
                 assert f"name: {entry['id']}\n" in manifest
-            for file in ['cpj_study_inclusion.py','cpj_study_inspector.py','templates/diagnostic-studies.html','cpj_diagnostic_studies.py','cpj_identity.py','cpj_firstevent.py','cpj_censoring.py','cpj_intervals.py','cpj_datetime.py','cpj_outcomes.py','cpj_tableone.py','cpj_crosstable.py','cpj_alluvial.py','templates/alluvial.html','cpj_tree.py','cpj_outliers.py','cpj_sets.py','templates/sets.html','cpj_correlation.py','templates/correlation.html','cpj_ihc.py','templates/ihcheatmap.html','cpj_runtime.py','cpj_svg_cutoff.py','cpj_accuracy.py','cpj_registry.py','cpj_plots.py','cpj_descriptive.py','cpj_binning.py','cpj_demographics.py','cpj_quality.py','templates/quality.html','cpj_cutoff.py','cpj_single_quality.py','templates/single-quality.html','cpj_cutoff_analysis.py','templates/bridgecutoff.html','templates/d3cutoff.html','templates/observablecutoff.html','vendor/observable-plot-0.6.17.min.js','vendor/observable-inputs-0.12.0.min.js','vendor/htl-0.3.1.min.js','vendor/observable-plot-LICENSE.txt','vendor/observable-inputs-LICENSE.txt','vendor/htl-LICENSE.txt','vendor/observable-manifest.json','vendor/d3-7.9.0.min.js','vendor/d3-LICENSE.txt','registry.json','font-cache.json']:
+            for file in ['cpj_icc.py','cpj_icc_analysis.py','cpj_agreement.py','cpj_study_inclusion.py','cpj_study_inspector.py','templates/diagnostic-studies.html','cpj_diagnostic_studies.py','cpj_identity.py','cpj_firstevent.py','cpj_censoring.py','cpj_intervals.py','cpj_datetime.py','cpj_outcomes.py','cpj_tableone.py','cpj_crosstable.py','cpj_alluvial.py','templates/alluvial.html','cpj_tree.py','cpj_outliers.py','cpj_sets.py','templates/sets.html','cpj_correlation.py','templates/correlation.html','cpj_ihc.py','templates/ihcheatmap.html','cpj_runtime.py','cpj_svg_cutoff.py','cpj_accuracy.py','cpj_registry.py','cpj_plots.py','cpj_descriptive.py','cpj_binning.py','cpj_demographics.py','cpj_quality.py','templates/quality.html','cpj_cutoff.py','cpj_single_quality.py','templates/single-quality.html','cpj_cutoff_analysis.py','templates/bridgecutoff.html','templates/d3cutoff.html','templates/observablecutoff.html','vendor/observable-plot-0.6.17.min.js','vendor/observable-inputs-0.12.0.min.js','vendor/htl-0.3.1.min.js','vendor/observable-plot-LICENSE.txt','vendor/observable-inputs-LICENSE.txt','vendor/htl-LICENSE.txt','vendor/observable-manifest.json','vendor/d3-7.9.0.min.js','vendor/d3-LICENSE.txt','registry.json','font-cache.json']:
                 assert archive.read(f'ClinicoPathPj/R/ClinicoPathPj/python/{file}')==(ROOT/'inst/python'/file).read_bytes()
             assert archive.read('ClinicoPathPj/R/ClinicoPathPj/js/pysvgcutoff.js')==(ROOT/'inst/js/pysvgcutoff.js').read_bytes()
             assert archive.read('ClinicoPathPj/data/python_core_examples.omv')==(ROOT/'data/python_core_examples.omv').read_bytes()
@@ -120,6 +120,7 @@ def check(path):
           ('pybenford',{'x':numeric([.3,1,20,333,4444,55555])},dict(measurement='x')),
           ('pydecisioncurve',{'r':factor(['N','P']),'p':numeric([.1,.9])},dict(outcome='r',positive='P',models=['p']))]
         cases.append(('pydiagnosticmeta',dict(study=dict(kind='text',values=['S1','S2','S3']),tp=numeric([8,0,None]),fp=numeric([1,2,1]),fn=numeric([2,5,1]),tn=numeric([9,8,1])),dict(study='study',true_positives='tp',false_positives='fp',false_negatives='fn',true_negatives='tn',show_explorer=True)))
+        cases.append(('pyagreement',dict(a=numeric([1,2,4,7]),b=numeric([0,3,2,4])),dict(vars=['a','b'],showPairs=True,blandAltmanPlot=True)))
         results=[]
         for name,columns,options in cases:
             request=temp/'request.json';response=temp/'response.json'
@@ -134,6 +135,24 @@ def check(path):
             result=json.loads(response.read_text())
             assert result['status']=='ok',(name,result.get('error'))
             assert result['tables'],name
+            if name=='pyagreement':
+                assert result['tables']['cohort']['rows'][0]['retained']==4
+                assert result['plots']['plot']['columns']['y']==[1,-1,2,3]
+                assert result['plots']['plot']['kind']=='agreement'
+                refs=json.loads((ROOT/'tests/fixtures/icc-balanced.json').read_text())['cases']
+                for ref in [r for r in refs if r['name']=='three_raters' and r['confidence']==.95]:
+                    columns={v:numeric([row[j] for row in ref['x']]) for j,v in enumerate(['a','b','c'])}
+                    request.write_text(json.dumps(dict(analysis='pyagreement',columns=columns,
+                        options=dict(method='icc',iccType=ref['model'],vars=['a','b','c'],showICCCases=True))))
+                    subprocess.run([sys.executable,'-B',str(runtime),str(request),str(response)],check=True,timeout=70)
+                    icc=json.loads(response.read_text());assert icc['status']=='ok',icc.get('error')
+                    row=icc['tables']['iccStatistics']['rows'][0]
+                    assert abs(row['estimate']-ref['estimate'])<1e-10
+                    assert icc['tables']['iccAudit']['rows'][0]['retained']==6
+                    assert not icc['plots'] and 'statistics' not in icc['tables']
+                    if ref['model']=='icc2k':assert row['lower'] is None and row['upper'] is None
+                    else:assert abs(row['lower']-ref['irr_interval'][0])<1e-10
+
             if name=='pydiagnosticmeta':
                 assert result['tables']['cohort']['rows'][0]['retained']==2
                 assert result['tables']['cohort']['rows'][0]['excluded']==1

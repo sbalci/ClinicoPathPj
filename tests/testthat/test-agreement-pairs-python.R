@@ -1,0 +1,108 @@
+test_that('independent-pair core matches separate base-R calculations', {
+    d <- read.csv(testthat::test_path('..','..','data','python_agreement_examples.csv'))
+    got <- pyagreement(d,vars=c('Method_A','Method_B'),subject='Case',showPairs=TRUE,blandAltmanPlot=TRUE)
+    expect_equal(unname(as.numeric(got$cohort$asDF[1,])),c(12,8,4,1,2,1))
+    diff <- d$Method_A[1:8]-d$Method_B[1:8]
+    bias <- mean(diff);s <- sd(diff);z <- qnorm(.975);tc <- qt(.975,7)
+    half <- tc*s*sqrt(1/8+z^2/14)
+    expect_equal(got$statistics$asDF$estimate,c(bias,s,bias-z*s,bias+z*s),tolerance=1e-12)
+    expect_equal(got$statistics$asDF$lower[c(1,3,4)],c(bias-tc*s/sqrt(8),bias-z*s-half,bias+z*s-half),tolerance=1e-12)
+    expect_equal(got$pairs$asDF$sourceID,as.character(1:8))
+    expect_equal(got$pairs$asDF$case,d$Case[1:8])
+    expect_equal(got$plot$state$data$y,diff)
+    expect_equal(got$plot$state$data$bias,rep(bias,8))
+    expect_match(got$summary$content,'not implemented')
+})
+
+test_that('balanced ICC native tables agree with independent irr references', {
+    d <- read.csv(testthat::test_path('..','..','data','python_icc_examples.csv'))
+    x <- as.matrix(d[1:6,c('Rater_A','Rater_B','Rater_C')])
+    for(code in c('icc11','icc21','icc31','icc1k','icc2k','icc3k')) {
+        got <- pyagreement(d,vars=c('Rater_A','Rater_B','Rater_C'),subject='Case',
+                           method='icc',iccType=code,showICCCases=TRUE)
+        expected <- irr::icc(x,model=if(substr(code,4,4)=='1') 'oneway' else 'twoway',
+                             type=if(substr(code,4,4)=='2') 'agreement' else 'consistency',
+                             unit=if(endsWith(code,'k')) 'average' else 'single')
+        expect_equal(got$iccStatistics$asDF$estimate,expected$value,tolerance=1e-10)
+        expect_equal(unname(as.numeric(got$iccAudit$asDF[1,])),c(8,6,2,3))
+        expect_equal(got$iccCases$asDF$sourceID,as.character(1:6))
+        expect_equal(got$iccCases$asDF$case,d$Case[1:6])
+        expect_equal(got$cohort$rowCount,0)
+        expect_equal(got$statistics$rowCount,0)
+        expect_null(got$plot$state)
+        if(code=='icc2k') {
+            expect_true(is.na(got$iccStatistics$asDF$lower))
+            expect_true(is.na(got$iccStatistics$asDF$upper))
+        } else {
+            expect_equal(c(got$iccStatistics$asDF$lower,got$iccStatistics$asDF$upper),
+                         c(expected$lbound,expected$ubound),tolerance=1e-10)
+        }
+    }
+})
+
+test_that('ICC and Bland-Altman switching clears every inactive or invalid output', {
+    d <- data.frame(a=c(1,2,4,7),b=c(0,3,2,4),c=c(2,2,5,6),id=letters[1:4])
+    opts <- pyagreementOptions$new(vars=c('a','b'),subject='id',showPairs=TRUE,
+                                  blandAltmanPlot=TRUE,showICCCases=TRUE)
+    analysis <- pyagreementClass$new(options=opts)
+    analysis$.setReadDatasetSource(function(...) d);analysis$.setReadDatasetHeaderSource(function(...) d)
+    analysis$init();analysis$run()
+    expect_equal(analysis$results$statistics$rowCount,4)
+    method <- opts$option('method');method$value <- 'icc'
+    vars <- opts$option('vars');vars$value <- c('a','b','c')
+    analysis$init();analysis$run()
+    expect_equal(analysis$results$iccStatistics$rowCount,1)
+    expect_equal(analysis$results$iccCases$rowCount,4)
+    expect_equal(analysis$results$statistics$rowCount,0)
+    expect_equal(analysis$results$pairs$rowCount,0)
+    expect_null(analysis$results$plot$state)
+    vars$value <- 'a';analysis$init();analysis$run()
+    expect_equal(analysis$results$iccAudit$rowCount,0)
+    expect_equal(analysis$results$iccStatistics$rowCount,0)
+    expect_equal(analysis$results$iccRaters$rowCount,0)
+    expect_equal(analysis$results$iccCases$rowCount,0)
+    vars$value <- c('a','b','c');d$id[2] <- 'a';analysis$init()
+    expect_error(analysis$run(),'unique case IDs')
+    expect_equal(analysis$results$iccStatistics$rowCount,0)
+    d$id <- letters[1:4];analysis$init();analysis$run()
+    expect_equal(analysis$results$iccStatistics$rowCount,1)
+    method$value <- 'blandaltman';vars$value <- c('a','b');analysis$init();analysis$run()
+    expect_equal(analysis$results$iccStatistics$rowCount,0)
+    expect_equal(analysis$results$iccCases$rowCount,0)
+    expect_equal(analysis$results$statistics$rowCount,4)
+    expect_equal(analysis$results$pairs$rowCount,4)
+    expect_false(is.null(analysis$results$plot$state))
+})
+
+test_that('agreement results clear and recover without changing coverage semantics', {
+    d <- data.frame(a=c(1,2,4,7),b=c(0,3,2,4),id=letters[1:4]);rownames(d) <- c('2','5','9','20')
+    opts <- pyagreementOptions$new(vars=c('a','b'),subject='id',showPairs=TRUE,blandAltmanPlot=TRUE)
+    a <- pyagreementClass$new(options=opts)
+    a$.setReadDatasetSource(function(...) d);a$.setReadDatasetHeaderSource(function(...) d)
+    a$init();a$run()
+    initial <- a$results$statistics$asDF
+    expect_equal(a$results$pairs$asDF$sourceID,rownames(d))
+    ci <- opts$option('confLevel');ci$value <- .99;a$init();a$run()
+    expect_equal(a$results$statistics$asDF$estimate,initial$estimate)
+    expect_lt(a$results$statistics$asDF$lower[3],initial$lower[3])
+    coverage <- opts$option('baConfidenceLevel');coverage$value <- .99;a$init();a$run()
+    expect_lt(a$results$statistics$asDF$estimate[3],initial$estimate[3])
+    vars <- opts$option('vars');vars$value <- 'a';a$init();a$run()
+    expect_equal(a$results$cohort$rowCount,0)
+    expect_equal(a$results$statistics$rowCount,0)
+    expect_equal(a$results$pairs$rowCount,0)
+    expect_null(a$results$plot$state)
+    vars$value <- c('a','b');d$id[2] <- 'a';a$init()
+    expect_error(a$run(),'unique case IDs')
+    expect_null(a$results$plot$state)
+    d$id <- letters[1:4];a$init();a$run()
+    expect_equal(a$results$statistics$rowCount,4)
+    d$a[] <- NA_real_;a$init()
+    expect_error(a$run(),'at least three')
+    expect_equal(a$results$statistics$rowCount,0)
+    expect_null(a$results$plot$state)
+    d$a <- c(1,2,4,7);a$init();a$run()
+    expect_equal(a$results$pairs$rowCount,4)
+    plot <- opts$option('blandAltmanPlot');plot$value <- FALSE;a$init();a$run()
+    expect_null(a$results$plot$state)
+})

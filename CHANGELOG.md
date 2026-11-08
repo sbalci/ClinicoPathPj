@@ -1,3 +1,27 @@
+# 0.3.59 — 2026-11-07
+
+- Add balanced ICC as a method in the existing pyagreement analysis; Bland–Altman remains the default.
+- Add six ICC estimates, five interval forms, complete-case/ID auditing and native estimate/rater/case tables.
+- Keep ICC(2,k) confidence limits explicitly unavailable; preserve the original saved-analysis identifier and Bland–Altman output contract.
+- Add a typed three-rater Data Library example and native method-switching regressions.
+
+- Add a 48,000-matrix paired interval coverage study, exact draw ledgers and independent R spot-checks; retain the unresolved public interval gate.
+- Add six balanced ANOVA ICC estimators with 90 independent R reference configurations.
+- Withhold the public ICC(2,k) interval while preserving both discrepant formulas for review.
+- Reject inverted uncertainty and inadmissible coefficients; preserve existing Bland–Altman behavior.
+- Integrate the shared engine under the existing analysis; qualification is reported separately from numerical evidence.
+
+# 0.3.58 — 2026-11-07
+
+- Add a read-only jamovi Svg host preflight and explicit save/export qualification gates; keep the Svg experiment unqualified.
+- Add structural OMV snapshot and DOCX media checks; prevent historical data-only files from passing as saved SVG analyses.
+
+- Start pyagreement with an independent-pair raw-scale Bland–Altman core.
+- Keep limits-of-agreement coverage separate from pointwise CI confidence.
+- Audit missing pairs and source identities; reject repeated complete case IDs.
+- Add native tables, a bounded Python static plot, synthetic examples and independent R fixtures.
+- Keep ICC/CCC, categorical agreement and repeated-subject methods explicitly omitted.
+
 # 0.3.57 — 2026-11-07
 
 - Add optional explicit study inclusion with a separate preview and Apply workflow.

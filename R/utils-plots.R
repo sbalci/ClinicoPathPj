@@ -1,5 +1,6 @@
 # R only displays a completed Python image. Both new and saved legacy states are supported.
 .cpjPlotColumns <- list(
+    agreement = c(x = "number", y = "number", bias = "number", lower = "number", upper = "number"),
     alluvial = c(payload = "text"),
     screeningquantiles = c(variable = "text", percentile = "number", value = "number",
                           lower = "number", upper = "number"),

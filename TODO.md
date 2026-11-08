@@ -1,9 +1,53 @@
+# Balanced ICC native integration — 0.3.59
+
+- [x] Add method/model controls under the existing `pyagreement` identifier; preserve the Bland–Altman default and saved contracts.
+- [x] Add six estimates, five interval forms, complete-case/ID validation and native audit/estimate/rater/case tables.
+- [x] Keep ICC(2,k) limits blank with an explicit notice; expose no candidate-formula intervals.
+- [x] Pass full compiler, 60 focused and 465 full Python tests, 91 native assertions and 30 packaged cases with six ICC subcases.
+- [x] GUI Sideload, old-file compatibility, three model choices, pending recovery, confidence change, fresh-engine save/reopen/recalculate and native HTML export.
+- [x] Verify six saved states and preserve 0.3.58 package in the archive.
+- [ ] Complete broader platform, pathological-data desktop and clinical qualification; resolve ICC(2,k) uncertainty separately.
+
+# Balanced ICC numerical foundation — 2026-11-07
+
+- [x] Implement six balanced ICC estimators and guarded uncertainty in a shared Python prototype.
+- [x] Compare 90 configurations against irr and psych; preserve the ICC(2,k) interval discrepancy explicitly.
+- [x] Pass 52 focused ICC/Bland–Altman/generator/registry tests; preserve existing public behavior.
+- [x] Derive the average/single parameter relation; run 48,000 paired Gaussian matrices and independent R spot-checks; pass 56 focused tests.
+- [ ] Resolve ICC(2,k) interval policy and small-sample coverage before native UI integration.
+- [x] Add case/rater-role validation and scoped native/package/desktop evidence in 0.3.59; full acceptance remains separate.
+
+# Native Svg host qualification — 2026-11-07
+
+- [x] Recheck upstream issues/source and installed jamovi 28.13 snapshot path.
+- [x] Add a read-only host preflight with four tests; preserve earlier GUI evidence.
+- [x] Add OMV snapshot/source-data and DOCX embedded-media checks with ten tests; reject the historical data-only false positives.
+- [x] Run native jamovi 28.17 macOS checks: reproduce the exact Save As exception; export DOCX, inspect its embedded preview-3 image and verify native cutoff-2 counts.
+- [x] Inspect all three exported pages in Word 16.114.4; confirm explorer/tables/static plots render on macOS.
+- [x] Attempt native LaTeX export on 28.17; record stalled Saving/zero-byte ZIP and add rejection regressions.
+- [ ] Qualify successful LaTeX completion, compilation and rendering; native PDF/ODT remain untested separately.
+- [ ] Identify and test a corrected host build; issue closure alone is insufficient.
+- [ ] Qualify Save/Save As, fresh-engine reopen, snapshot and each document export format separately.
+
+# Independent-pair agreement core — 0.3.58
+
+- [x] Implement raw-scale bias/sample SD/LoA and separately controlled pointwise approximate CIs.
+- [x] Add paired missingness/source-row audit and optional known/unique case IDs.
+- [x] Generate organized native interfaces, estimate/pair tables and bounded static plot.
+- [x] Add 45 independent base-R configurations and synthetic typed examples.
+- [x] Pass all 430 Python tests, 49 focused tests, 24 native assertions and 30 packaged runtime cases.
+- [x] Sideload; check separate coverage/CI controls, native tables/plot, fresh-engine save/reopen and HTML/PNG export.
+- [ ] Complete broader invalid-state desktop, platform and full-release qualification; see method guide and raw suite logs.
+- [ ] CCC, categorical, repeated-subject and advanced agreement branches remain omitted; balanced ICC is now integrated in 0.3.59.
+
 # Research-informed queue — 2026-11-07
 
 - [x] Review JASP/jamovi catalogs, Orange/BioLab widgets, MedCalc manuals, GitHub sources and Hugging Face cards.
 - [x] Map 20 candidates to existing frozen targets or optional extensions; preserve the 61-target denominator.
 - [x] Reconcile local method-comparison, ICC, PR/AP, reference-interval, PCA, QC and survival drafts before proposing duplicate public entries.
-- [ ] Specify and implement the independent paired continuous core of `pyagreement`, then its declared balanced ICC branch.
+- [x] Implement the independent paired continuous core of `pyagreement` and a separate validated numerical ICC prototype.
+- [x] Integrate the balanced ICC native subset under the same identifier, explicitly withholding ICC(2,k) limits.
+- [ ] Resolve ICC(2,k) interval policy before adding that uncertainty output.
 - [ ] Specify `pyenhancedroc` ROC/uncertainty and `pydecisioncompare` paired cores; define PR/AP and supplied-prediction calibration separately.
 - [ ] Specify independent/paired estimation cores for `pyjjbetweenstats` and `pyjjwithinstats`.
 - [ ] Specify deterministic KM/risk tables for `pysurvival` / `pysinglearm` and independently prototype advanced engines.

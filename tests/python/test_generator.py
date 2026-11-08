@@ -30,6 +30,20 @@ def parse_generated(text):
 
 
 class GeneratedFiles(unittest.TestCase):
+    def test_list_choice_and_bool_result_visibility(self):
+        spec=copy.deepcopy(VALID)
+        spec['options'].extend([dict(name='display',title='Display',type='List',
+            options=[dict(name='mean',title='Mean'),dict(name='median',title='Median')],default='mean'),
+            dict(name='show',title='Show',type='Bool',default=False)])
+        spec['results'][0]['visible']='(display:mean && show)'
+        generate.validate(spec,'probe')
+        self.assertEqual(generate.r_yaml(spec)['items'][0]['visible'],'(display:mean && show)')
+        for invalid in ['(display:absent && show)','(ci:mean && show)',
+                        '(display:mean && ci)','(display:mean && show && show)',
+                        '(display:mean && show); print(1)']:
+            spec['results'][0]['visible']=invalid
+            with self.assertRaises(generate.SpecError):generate.validate(spec,'probe')
+
     def test_column_visibility_accepts_only_declared_list_choices(self):
         spec=copy.deepcopy(VALID)
         spec['options'].append(dict(name='display',title='Display',type='List',
