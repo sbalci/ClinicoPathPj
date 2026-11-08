@@ -17,7 +17,9 @@ Analyses now use compact family menus: **Descriptives Py**, **Stats Plots Py**,
 and existing analysis identifiers are retained. **Survival Py** contains outcome, datetime and interval preparation; **OncoPath Py → Evidence review** now contains the partial diagnostic-study review port.
 
 The optional `pybridgecompare` experiment runs the same cutoff engine through processx
-or the public Pj 1.3.0 service. See [the comparison guide](docs/python-bridge-comparison.md)
+or the public Pj API v1 service (Pj >=1.3.0). The source adapter also supports Pj 1.5.0
+cooperative checkpoints; packaging and desktop qualification remain pending.
+See [the comparison guide](docs/python-bridge-comparison.md)
 and [source review](docs/pj-service-review.md).
 
 | Analysis | What it does | Checked against |
