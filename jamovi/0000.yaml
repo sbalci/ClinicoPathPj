@@ -1,11 +1,11 @@
 ---
 title: ClinicoPathPj - Python-Backed Analyses
 name: ClinicoPathPj
-version: 0.3.59
+version: 0.3.62
 jms: '1.0'
 authors: Serdar Balci
 maintainer: Serdar Balci <serdarbalci@serdarbalci.com>
-date: '2026-11-07'
+date: '2026-11-10'
 type: R
 description: >-
   Experimental analyses generated from Python specifications and computed in the
@@ -332,6 +332,30 @@ analyses:
     menuTitle: Continuous measurement agreement
     title: 'Agreement: Continuous Measurements (Python)'
     category: analyses
+  - name: pyservicedirect
+    ns: ClinicoPathPj
+    hidden: false
+    menuGroup: Python Lab
+    menuSubgroup: Execution services
+    menuTitle: Own Python Summary Example
+    title: Own Python Summary Example
+    category: analyses
+  - name: pyservicepj
+    ns: ClinicoPathPj
+    hidden: false
+    menuGroup: Python Lab
+    menuSubgroup: Execution services
+    menuTitle: Pj Service Summary Example
+    title: Pj Service Summary Example
+    category: analyses
+  - name: pyagepyramidpj
+    ns: ClinicoPathPj
+    hidden: false
+    menuGroup: Python Lab
+    menuSubgroup: Execution services
+    menuTitle: Age Pyramid via Pj
+    title: Age Pyramid via Pj
+    category: analyses
 usesNative: 'yes'
 datasets:
   - name: Python Core Examples
@@ -547,5 +571,24 @@ datasets:
       - Python
       - Agreement
       - ICC
+  - name: Python Execution Service Examples
+    path: python_service_examples.omv
+    description: >-
+      Six synthetic measurements, including one missing cell; matched own-Python
+      and Pj service summary examples.
+    tags:
+      - Python
+      - Pj
+      - Execution services
+  - name: Age Pyramid Service Examples
+    path: python_age_pyramid_service_examples.omv
+    description: >-
+      22 synthetic rows with 18 retained observations, unequal age-band counts,
+      missing pairs, a negative age and an unselected gender level; compare Age
+      Pyramid with Age Pyramid via Pj.
+    tags:
+      - Python
+      - Pj
+      - Age pyramid
 
 ...

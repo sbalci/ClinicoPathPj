@@ -15,8 +15,14 @@ Sys.setenv(PYTHONHOME = "/Applications/jamovi.app/Contents/Resources",
 setwd("/Applications/jamovi.app/Contents/MacOS")
 library(ClinicoPathPj)
 jmvcore:::initProtoBuf()
-env <- new.env(parent = asNamespace("ClinicoPathPj"))
-sys.source(file.path(root, "R/utils-pj-service.R"), env)
+if (identical(Sys.getenv("CPJ_USE_PACKAGED_BRIDGE"), "1")) {
+    env <- asNamespace("ClinicoPathPj")
+    cat("Using compiled ClinicoPathPj", as.character(packageVersion("ClinicoPathPj")), "bridge\n")
+} else {
+    env <- new.env(parent = asNamespace("ClinicoPathPj"))
+    sys.source(file.path(root, "R/utils-pj-service.R"), env)
+    cat("Using source ClinicoPathPj adapter\n")
+}
 service <- env$.cpjPjService()
 stopifnot(utils::compareVersion(service$info$module_version, "1.5.0") >= 0L,
     "checkpoint" %in% names(formals(service$run)),

@@ -1,8 +1,27 @@
-# Unreleased — 2026-11-08
+# 0.3.62 — 2026-11-10
+
+- Validate the three execution-service utilities with 58 focused Python tests, native R/Pj comparisons and 33 packaged smoke cases.
+- Verify age-pyramid Sideload, fresh-engine save/reopen/recalculation and native HTML/PNG export on the current macOS arm64 setup; retain separate platform and full-suite gates.
+
+- Add `pyagepyramidpj`, a Pj-service execution example sharing the existing age-pyramid calculation; include unequal-count data and comparison checks.
+
+- Add two matched summary teaching analyses: own Python execution and the Pj public service.
+- Add fixed-route SPEC generation, synthetic data and a developer integration guide.
+- Track focused numerical, real-service and desktop evidence separately.
+
+# 0.3.61 — 2026-11-09
+
+- Isolate System Python calls from jamovi's PYTHONHOME/PYTHONPATH; restore populated, empty and unset values after success, error and cancellation.
+- Report when macOS System discovery resolves to the bundled executable, preserving the chosen execution route rather than silently substituting an interpreter.
+- Add System Python diagnostic controls and verified new-session child cleanup probes; retain the default bridge and existing analysis identifiers.
+
+# 0.3.60 — 2026-11-08
 
 - Support Pj 1.5.0 service checkpoints while retaining older API v1 signatures.
 - Preserve jamovi restart conditions and report returned service execution capabilities.
 - Update the service comparison roadmap; keep packaging and native lifecycle gates explicit.
+- Correct the comparison summary's older cancellation description; qualify scoped Sideload, save/reopen/recalculation and native HTML export with Pj 1.5.0.
+- Record the 2026-11-09 full Python/R suite passes and direct macOS Pj child-cleanup probes, preserving earlier interrupted and failed attempts.
 
 # 0.3.59 — 2026-11-07
 

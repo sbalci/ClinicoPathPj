@@ -1,7 +1,10 @@
 # Same calculation/UI workload, two transports. Run against stable installed libraries.
 args <- commandArgs(TRUE)
-if (length(args) < 2L) stop("Supply ClinicoPathPj and Pj R-library directories")
-root <- normalizePath(dirname(dirname(sub("^--file=", "", grep("^--file=", commandArgs(), value=TRUE)))))
+if (length(args) < 2L) stop("Supply ClinicoPathPj and Pj R-library directories; optional third argument is the timing CSV")
+command <- commandArgs()
+script <- sub("^--file=", "", grep("^--file=", command, value=TRUE))
+if (!length(script) && "-f" %in% command) script <- command[match("-f", command) + 1L]
+root <- dirname(dirname(normalizePath(script)))
 .libPaths(c(normalizePath(args[1]), normalizePath(args[2]),
  "/Applications/jamovi.app/Contents/Resources/modules/base/R", .libPaths()))
 Sys.setenv(PYTHONHOME="/Applications/jamovi.app/Contents/Resources", PYTHONPATH="/Applications/jamovi.app/Contents/Resources/jamovi/server")
@@ -10,6 +13,8 @@ suppressPackageStartupMessages(library(ClinicoPathPj))
 jmvcore:::initProtoBuf()
 service <- ClinicoPathPj:::.cpjPjService()
 stopifnot(service$info$api_version==1L, utils::compareVersion(service$info$module_version,"1.3.0")>=0)
+cat("ClinicoPathPj",as.character(packageVersion("ClinicoPathPj")),
+    "; Pj",service$info$module_version,"; API",service$info$api_version,"\n")
 before <- .libPaths()
 d <- read.csv(file.path(root,"data/python_d3_cutoff_examples.csv"))
 d$Reference <- factor(d$Reference,levels=c("Negative","Positive"))
@@ -46,7 +51,7 @@ failed<-try(pybridgecompare(e,"x","g","P",cutoff="nan",execution="pj"),silent=TR
 stopifnot(inherits(failed,"try-error"))
 recovered<-pybridgecompare(e,"x","g","P",cutoff="3",execution="pj")
 stopifnot(identical(recovered$counts$asDF$n,c(2L,1L,1L,2L)))
-output<-file.path(root,"docs/validation-exports/pj-matched-route-timings.csv")
+output<-if(length(args)>=3L) args[[3]] else file.path(root,"docs/validation-exports/pj-matched-route-timings.csv")
 write.csv(do.call(rbind,records),output,row.names=FALSE)
 cat("12 matched configurations, independent counts/intervals, original-row transport, error recovery and unchanged library paths PASSED\n")
 cat("Timing CSV:",output,"\n")

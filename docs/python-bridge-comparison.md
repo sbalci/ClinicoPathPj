@@ -18,8 +18,9 @@ silently rerun a model. Existing D3 and Observable analyses retain local-only Ap
 The timing reports calculation/transport work, including service preparation, and excludes
 static image rendering. It does not measure pure process-launch overhead. Pj is synchronous;
 see the [review and limitations](pj-service-review.md). The updated source adapter supports
-Pj 1.5.0 checkpoints/shared timeout metadata and older signatures. This change is not yet
-included in the installed 0.3.59 package; fresh-engine GUI qualification remains pending.
+Pj 1.5.0 checkpoints/shared timeout metadata and older signatures in version 0.3.60.
+See the [dated service qualification](pj-service-review.md) for build, native lifecycle
+and remaining platform gates.
 
 ## Menus
 

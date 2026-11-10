@@ -1,10 +1,32 @@
-# ClinicoPathPj implementation plan — revised 2026-11-07
+# ClinicoPathPj implementation plan — revised 2026-11-10
 
 This is the current delivery plan. It supersedes the implementation recommendations in
 `python-roadmap.md` (2026-10-18) and the initial `interactive-analysis-plan.md`.
 The original 61-analysis inventory remains the target; a menu entry does not establish parity.
 Detailed per-analysis evidence remains in the [generated status matrix](python-migration-status.md).
 
+
+## Execution-service examples — 2026-11-10 / 0.3.62
+
+Three additional utilities demonstrate transport choices without changing the 61-analysis
+baseline: `pyservicedirect`, `pyservicepj`, and `pyagepyramidpj`. The first pair shares one
+summary engine; the age-pyramid service entry delegates to the existing `pyagepyramid`
+calculation. Existing analyses and defaults remain unchanged. All entries retain the
+single ClinicoPathPj namespace and stable `py…` identifiers.
+
+Completed on the current macOS arm64 setup: 58 focused Python tests; four real Pj API
+age-pyramid configurations against independent base R; four native own/Pj age-pyramid
+comparisons; four summary fixtures; 11 same-instance native lifecycle assertions; 33
+packaged-runtime smoke cases; GUI Sideload of 0.3.62 with Pj 1.5.0; fresh-engine age-pyramid
+execution, unequal bars, save/reopen/recalculation and native HTML/PNG export. Installed
+Python assets and R databases match the archive, excluding mutable bytecode caches.
+
+These are execution experiments, not additional baseline ports or clinical validation.
+Keep the own bridge as the normal default; Pj remains optional. Summary-example desktop
+acceptance, other platforms/clean machines, GUI long-job cancellation, new-example System
+Python, Word/LaTeX export and full 0.3.62 regression suites remain separate gates.
+See [age-pyramid comparison](python-age-pyramid-service.md), [summary examples](python-service-examples.md)
+and the [dated qualification record](validation-exports/python-0.3.62-qualification-20261110.json).
 
 ## Current researched priorities — 2026-11-07
 
@@ -121,7 +143,7 @@ scoring/enrichment and model-evaluation pipelines remain outside this keyboard m
 | Jonathon: dragging and linked plots run in client JavaScript; Python is not required for interaction | Evaluate statistical engines separately from presentation. Use JavaScript for display interaction; justify Python by numerical capability, reuse or teaching | Shared Python cutoff engine already feeds separate HTML/D3, Observable and native Svg experiments |
 | Jonathon: consider the native Svg result element | Prefer testing native export/snapshot behavior before choosing a production interactive renderer | `pysvgcutoff` interaction and current-view SVG/PNG export verified; saved-analysis `.omv` lifecycle remains unresolved on jamovi 28.13 |
 | Maurizio: Pj 1.3.0 provides a public service without an editor | Add an optional adapter behind the existing result contract and compare identical computation workloads | `pybridgecompare` implemented; default processx retained; optional public Pj API v1 routes |
-| Maurizio: Pj 1.5.0 adopts processx and a caller checkpoint | Forward supported callbacks, preserve restart conditions and retain lifecycle gates | Source adapter supports the new callback and older API v1 signatures; installed-package/desktop acceptance remains separate |
+| Maurizio: Pj 1.5.0 adopts processx and a caller checkpoint | Forward supported callbacks, preserve restart conditions and retain lifecycle gates | 0.3.60 supports new/legacy signatures; full Python/R suites, direct macOS child cleanup and scoped native persistence/export checks pass; detached-process, deadline, System Python and other-platform gates remain |
 | Jonathon: a Python engine calling R through rpy2 is planned | Isolate transport behind adapters, preserving registry identities and numerical oracles | Future integration is a watch item based on the supplied discussion, not an available API, release promise or implemented dependency |
 
 The original all-Python statistical migration remains the research target. It does not
@@ -132,8 +154,8 @@ Do not add rpy2 or replace the current bridge based on an announced future engin
 
 ## Verified current inventory
 
-Current source inventory: **40 registered implementation entry points**, comprising
-**28 partial baseline ports** and **12 retained utilities/demonstrations**. Of the
+Current source inventory: **43 registered implementation entry points**, comprising
+**28 partial baseline ports** and **15 retained utilities/demonstrations**. Of the
 61 baseline targets, **33 remain planned** and **zero have full supported-feature
 parity plus all release gates**. Numerical, packaged and GUI evidence is listed
 per analysis; newly implemented study review does not establish pooled-meta-analysis parity.
@@ -179,6 +201,13 @@ Utilities/demonstrations: `pydescriptives`, `pydotdecision`, `pyexacttests`, `py
 
 ### 1. Finish the execution-service comparison acceptance
 
+**0.3.61 System-route repair:** [environment isolation](python-system-bridge.md) removes
+jamovi's Python paths only during external System calls and restores them on all exits.
+It also identifies macOS System discovery that aliases the bundled executable. The default
+bridge and analysis registry are unchanged. Separate-session bundled-child cleanup passes;
+positive native System calculations still require an external interpreter discoverable by
+that GUI session. Keep API, native, version-specific regression and platform evidence separate.
+
 **2026-11-08 update:** [Pj 1.5.0 review](pj-service-review.md) supersedes the old
 system2/no-checkpoint description. The source adapter forwards a supported caller
 checkpoint, rethrows jamovi restart conditions intact and reports actual service metadata.
@@ -189,6 +218,25 @@ fresh-engine save/reopen and exports pass on each claimed platform. Plotly/Chart
 Pj data-preparation/effect-size helpers are optional follow-ups requiring independent
 numerical or lifecycle checks. Bundled libraries do not establish baseline feature parity.
 Native Svg save/export blockers are independent of the runner update.
+
+**0.3.60 evidence:** final compiler, 30 packaged runtime cases, 44 focused Python tests
+and 17 R bridge assertions pass. Native Sideload of Pj 1.5.0/CPJ 0.3.60, legacy fixture
+restoration, separate-window save/reopen/recalculation and native HTML export pass on
+jamovi 28.17 macOS arm64. Archive/installed R bytecode and analysis-source bytes agree.
+The interrupted broad suite, runtime alarms and corrected Markdown assertion remain
+documented in the [service qualification](pj-service-review.md). Do not promote these
+scoped checks into full-suite, cleanup, cross-platform or clinical approval.
+
+**2026-11-09 follow-up:** the complete Python suite passes 465 tests and the full R
+retry passes 4,450 assertions with no failures, warnings or skips. Direct macOS
+bundled-Python probes also verify that Pj 1.5.0 removes its parent and child processes
+after successful completion, cancellation and timeout, with a subsequent valid call
+succeeding. These process checks ran outside the inspection sandbox. The interrupted
+R attempt and remaining detached-process/System-Python/platform/deadline gates are tracked in the
+[service qualification](pj-service-review.md); the default bridge remains unchanged.
+All 12 native route configurations also pass against installed Pj 1.5.0, including
+independent R threshold counts/exact intervals, ties, missingness, row identities and
+recovery. Dated results preserve the older comparison; timing remains whole-analysis work.
 
 Implemented in 0.3.8: public Pj adapter; processx/bundled-Pj/System-Pj route selector;
 identical cutoff calculations; native results and elapsed time; explicit native cutoff Apply.

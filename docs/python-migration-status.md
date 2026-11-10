@@ -94,6 +94,9 @@ These entries do not increase the 61-analysis baseline denominator.
 | pyihcheatmap | Descriptives Py / Biomarker panels | 24 independent base-R raw/z-score and missingness fixtures; 104 native assertions; seven Python fixtures including identity, missing cells, clustering grouping and geometry passed | macOS arm64 jamovi 28.13 / 0.3.10: installed fresh engine; raw/z-score tables/heatmap and annotations; missing-cell inspection; OMV save/fresh-engine reopen; complete-row clustering recalculation; native PNG export verified. Other platforms and large-payload GUI pending. |
 | pyintervalcensoring | Survival Py / Data preparation | Evidence tracked in docs/python-interval-censoring.md | Desktop evidence tracked separately in docs/python-interval-censoring.md |
 | pyfirstevent | Survival Py / Data preparation | Evidence tracked in docs/python-first-event.md | macOS arm64 jamovi 28.13: Sideload, valid/incomplete recovery, saved outputs, fresh-engine reopen/rerun and native HTML/embedded PNG verified; see docs/python-first-event.md for scope and open gates |
+| pyservicedirect | Python Lab / Execution services | Standard-library fixtures, native base R and matched-route evidence tracked in docs/python-service-examples.md | Version-specific desktop acceptance tracked in docs/python-service-examples.md |
+| pyservicepj | Python Lab / Execution services | Standard-library fixtures, native base R and matched-route evidence tracked in docs/python-service-examples.md | Version-specific desktop acceptance tracked in docs/python-service-examples.md |
+| pyagepyramidpj | Python Lab / Execution services | Shared engine, frozen R fixtures, exclusions and unequal-bar geometry; dated evidence in docs/python-age-pyramid-service.md | Version-specific installation, save/reopen and export evidence tracked separately in docs/python-age-pyramid-service.md |
 
 ## Menus and optional execution service
 

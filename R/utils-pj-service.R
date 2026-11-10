@@ -34,6 +34,26 @@
 
 .cpjPjExecute <- function(request, python = "jamovi", service = NULL, checkpoint = NULL) {
     if (is.null(service)) service <- .cpjPjService()
+    if (identical(python, "system")) {
+        # jamovi's Python paths cannot be reused by a different interpreter.
+        keys <- c("PYTHONHOME", "PYTHONPATH")
+        saved <- Sys.getenv(keys, unset = NA_character_)
+        if (identical(Sys.info()[["sysname"]], "Darwin") &&
+            !is.na(saved[["PYTHONHOME"]]) && nzchar(saved[["PYTHONHOME"]])) {
+            bundled <- file.path(dirname(saved[["PYTHONHOME"]]), "MacOS", "python")
+            candidates <- unname(Sys.which(c("python3", "python")))
+            candidates <- candidates[nzchar(candidates)]
+            if (file.exists(bundled) && length(candidates) &&
+                identical(normalizePath(candidates[[1]]), normalizePath(bundled)))
+                stop("System Python currently resolves to jamovi's bundled interpreter. Choose jamovi Python, or configure an external Python on PATH before starting jamovi.", call. = FALSE)
+        }
+        on.exit({
+            Sys.unsetenv(keys)
+            present <- saved[!is.na(saved)]
+            if (length(present)) do.call(Sys.setenv, as.list(present))
+        }, add = TRUE)
+        Sys.unsetenv(keys)
+    }
     root <- system.file("python", package = "ClinicoPathPj", mustWork = TRUE)
     # Only a trusted package path is embedded as a JSON literal. User values stay data.
     root <- as.character(jsonlite::toJSON(root, auto_unbox = TRUE))

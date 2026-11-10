@@ -11,6 +11,56 @@ pjAnswer <- function() list(items = list(list(name = "cpjEnvelope", type = "Text
     service = list(module_version = "1.5.0", runner = "processx",
         checkpoint_enabled = TRUE, capabilities = list(timeout_scope = "call")))
 
+test_that("System calls isolate and restore Python environment on every exit", {
+    env <- pjBridge()
+    keys <- c("PYTHONHOME", "PYTHONPATH")
+    cases <- list(c(PYTHONHOME = "bundled-home", PYTHONPATH = "bundled-path"),
+        c(PYTHONHOME = "", PYTHONPATH = ""),
+        c(PYTHONHOME = NA_character_, PYTHONPATH = NA_character_))
+    for (values in cases) withr::with_envvar(values, {
+        original <- Sys.getenv(keys, unset = NA_character_)
+        for (mode in c("ok", "error", "restart")) {
+            problem <- structure(list(message = mode, call = NULL,
+                code = if (mode == "restart") "restart" else NULL),
+                class = c("simpleError", "error", "condition"))
+            service <- list(run = function(...) {
+                expect_true(all(is.na(Sys.getenv(keys, unset = NA_character_))))
+                if (mode != "ok") stop(problem)
+                pjAnswer()
+            })
+            result <- tryCatch(env$.cpjPjExecute("{}", python = "system", service = service),
+                error = identity)
+            expect_identical(Sys.getenv(keys, unset = NA_character_), original)
+            if (mode == "ok") expect_identical(result$result$status, "ok")
+            else expect_identical(result, problem)
+        }
+        service <- list(run = function(...) {
+            expect_identical(Sys.getenv(keys, unset = NA_character_), original)
+            pjAnswer()
+        })
+        expect_identical(env$.cpjPjExecute("{}", python = "jamovi", service = service)$result$status, "ok")
+    })
+})
+
+test_that("a bundled executable on System PATH is rejected without changing the environment", {
+    skip_if_not(identical(Sys.info()[["sysname"]], "Darwin"))
+    binary <- "/Applications/jamovi.app/Contents/MacOS/python"
+    skip_if_not(file.exists(binary))
+    folder <- withr::local_tempdir()
+    expect_true(file.symlink(binary, file.path(folder, "python3")))
+    env <- pjBridge()
+    called <- FALSE
+    service <- list(run = function(...) { called <<- TRUE; pjAnswer() })
+    withr::with_envvar(c(PATH = folder, PYTHONHOME = "/Applications/jamovi.app/Contents/Resources",
+        PYTHONPATH = "bundled-server"), {
+        before <- Sys.getenv(c("PYTHONHOME", "PYTHONPATH"))
+        expect_error(env$.cpjPjExecute("{}", python = "system", service = service),
+            "System Python currently resolves to jamovi's bundled interpreter", fixed = TRUE)
+        expect_identical(Sys.getenv(c("PYTHONHOME", "PYTHONPATH")), before)
+        expect_false(called)
+    })
+})
+
 test_that("new services receive the caller checkpoint and old signatures do not", {
     env <- pjBridge()
     calls <- 0L
