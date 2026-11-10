@@ -1,11 +1,26 @@
-# Pj 1.5.0 integration — 2026-11-08 (source increment)
+# System Python isolation — 0.3.61
+
+- [x] Reproduce System Python startup failure from inherited jamovi Python paths; preserve raw failure and diagnostic controls.
+- [x] Isolate PYTHONHOME/PYTHONPATH only for System calls and restore populated, empty and unset values after every exit; pass 54 focused R assertions including bundled-alias rejection.
+- [x] Qualify bundled-Python new-session child cleanup for success, cancellation and timeout, with readiness and session-ID checks.
+- [x] Build and Sideload 0.3.61; match installed/archive bytecode, pass 30 packaged cases and compare the compiled external System API route with bundled diagnostic results and error recovery.
+- [x] Restart jamovi, verify the actionable bundled-alias error, recover through Pj bundled Python and save/export separate synthetic artifacts with unchanged input data.
+- [ ] Qualify native System Python discovery, recalculation and saved-file/export lifecycle separately from API probes.
+- [ ] Complete full-suite 0.3.61 qualification; previous 465 Python/4,450 R passes remain explicitly 0.3.60 evidence.
+
+# Pj 1.5.0 integration — 0.3.60
 
 - [x] Review tagged public API, release and connector; keep Pj optional and the default CPJ bridge.
 - [x] Forward supported checkpoints, preserve restart conditions and support older runner signatures.
 - [x] Replace API-wide timing assumptions with returned runner/checkpoint/timeout metadata.
 - [x] Pass 17 source-adapter assertions, four Python regressions and scoped packaged-Pj service probes; retain sandbox diagnostics.
-- [ ] Build a new CPJ package and qualify Pj 1.5.0 through Sideload, fresh engine and saved-file/export lifecycle.
-- [ ] Check descendant cleanup, complete deadline accounting and optional System Python on each claimed platform.
+- [x] Build 0.3.60; Sideload both modules; reopen a saved comparison in a separate engine window, recalculate and export native HTML.
+- [x] Verify final archive/installed source and R-bytecode identity, 30 packaged cases, 44 focused Python tests, 17 R assertions and saved data/PNG artifacts.
+- [x] Complete a fresh full Python suite: 465 tests pass on 2026-11-09; retain earlier interrupted/alarm-failure logs.
+- [x] Complete the fresh full R suite against installed 0.3.60: 4,450 assertions, zero failures/warnings/skips on 2026-11-09; retain the interrupted first attempt.
+- [x] Verify direct bundled-Python parent/child cleanup after success, cancellation and timeout, followed by recovery, outside the process-inspection sandbox on this Mac.
+- [x] Recheck 12 matched native route configurations with installed Pj 1.5.0, independent R counts/exact intervals, ties, missingness, row IDs and recovery; save a dated timing CSV without replacing older evidence.
+- [ ] Check detached descendants, complete deadline accounting, System Python and other claimed platforms separately.
 - [ ] Evaluate bundled Plotly/Chart.js and preparation/effect-size helpers as separate validated experiments.
 
 # Balanced ICC native integration — 0.3.59
@@ -751,3 +766,8 @@ Acceptance criteria:
   pydescriptives matches base R, including `quantile(type = 7)`.
 - How verified: `tools/check.sh` (exit 0; after the review fixes, 33 Python tests and 82 R expectations),
   the release gate (advisory), and both probes in an `env -i` engine-like environment.
+
+- [ ] Qualify the matched `pyservicedirect`/`pyservicepj` teaching examples on all supported platforms; see docs/python-service-examples.md.
+
+- [x] Qualify `pyagepyramidpj` real-service/native execution and macOS arm64 GUI Sideload/save/reopen/recalculation/HTML export (0.3.62, 2026-11-10); see docs/python-age-pyramid-service.md.
+- [ ] Extend the new examples to clean machines/other platforms, GUI long-job cancellation and Word/LaTeX export; summary examples still need their own desktop qualification.

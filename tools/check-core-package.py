@@ -18,7 +18,7 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parent.parent
 VERSION=re.search(r'^Version: (.+)$',(ROOT/'DESCRIPTION').read_text(),re.M)[1]
 REGISTRY=json.loads((ROOT/'inst/python/registry.json').read_text())
-NAMES=['pyagreement','pydiagnosticmeta','pyfirstevent','pyintervalcensoring','pytimeinterval','pydatetimeconverter','pyoutcomeorganizer','pytableone','pycrosstable','pyalluvial','pyvartree','pyoutlierdetection','pyvenn','pyjjcorrmat','pyihcheatmap','pybridgecompare','pysvgcutoff','pycheckdata','pyobservablecutoff','pyd3cutoff','pydecision','pydecisioncalculator','pysequentialtests','pychisqposttest','pybenford','pydecisioncurve','pysummarydata','pycategorize','pyagepyramid','pydataquality']
+NAMES=['pyagreement','pydiagnosticmeta','pyfirstevent','pyintervalcensoring','pytimeinterval','pydatetimeconverter','pyoutcomeorganizer','pytableone','pycrosstable','pyalluvial','pyvartree','pyoutlierdetection','pyvenn','pyjjcorrmat','pyihcheatmap','pybridgecompare','pysvgcutoff','pycheckdata','pyobservablecutoff','pyd3cutoff','pydecision','pydecisioncalculator','pysequentialtests','pychisqposttest','pybenford','pydecisioncurve','pysummarydata','pycategorize','pyagepyramid','pydataquality','pyservicedirect','pyservicepj','pyagepyramidpj']
 
 
 def numeric(x):return dict(kind='number',values=x)
@@ -90,13 +90,16 @@ def check(path):
             assert archive.read('ClinicoPathPj/data/python_set_intersection_unequal_examples.csv')==(ROOT/'data/python_set_intersection_unequal_examples.csv').read_bytes()
             assert archive.read('ClinicoPathPj/data/python_set_intersection_examples.csv')==(ROOT/'data/python_set_intersection_examples.csv').read_bytes()
             assert all(n.startswith('py') for n in re.findall(r'^    name: (\w+)$',manifest,re.M))
+            for asset in ('python_service_examples.omv', 'python_age_pyramid_service_examples.omv'):
+                assert archive.read('ClinicoPathPj/data/'+asset)==(ROOT/'data'/asset).read_bytes()
+                if asset.endswith('.omv'): assert asset in manifest
             for name in NAMES:
                 assert f'name: {name}\n' in manifest
                 entry=next(e for e in REGISTRY['analyses'] if name==e['id'] or name in e.get('aliases',[]))
                 member='ClinicoPathPj/R/ClinicoPathPj/python/'+entry['source']
                 assert archive.read(member)==(ROOT/'inst/python'/entry['source']).read_bytes()
                 assert f"name: {entry['id']}\n" in manifest
-            for file in ['cpj_icc.py','cpj_icc_analysis.py','cpj_agreement.py','cpj_study_inclusion.py','cpj_study_inspector.py','templates/diagnostic-studies.html','cpj_diagnostic_studies.py','cpj_identity.py','cpj_firstevent.py','cpj_censoring.py','cpj_intervals.py','cpj_datetime.py','cpj_outcomes.py','cpj_tableone.py','cpj_crosstable.py','cpj_alluvial.py','templates/alluvial.html','cpj_tree.py','cpj_outliers.py','cpj_sets.py','templates/sets.html','cpj_correlation.py','templates/correlation.html','cpj_ihc.py','templates/ihcheatmap.html','cpj_runtime.py','cpj_svg_cutoff.py','cpj_accuracy.py','cpj_registry.py','cpj_plots.py','cpj_descriptive.py','cpj_binning.py','cpj_demographics.py','cpj_quality.py','templates/quality.html','cpj_cutoff.py','cpj_single_quality.py','templates/single-quality.html','cpj_cutoff_analysis.py','templates/bridgecutoff.html','templates/d3cutoff.html','templates/observablecutoff.html','vendor/observable-plot-0.6.17.min.js','vendor/observable-inputs-0.12.0.min.js','vendor/htl-0.3.1.min.js','vendor/observable-plot-LICENSE.txt','vendor/observable-inputs-LICENSE.txt','vendor/htl-LICENSE.txt','vendor/observable-manifest.json','vendor/d3-7.9.0.min.js','vendor/d3-LICENSE.txt','registry.json','font-cache.json']:
+            for file in ['cpj_service_examples.py','cpj_icc.py','cpj_icc_analysis.py','cpj_agreement.py','cpj_study_inclusion.py','cpj_study_inspector.py','templates/diagnostic-studies.html','cpj_diagnostic_studies.py','cpj_identity.py','cpj_firstevent.py','cpj_censoring.py','cpj_intervals.py','cpj_datetime.py','cpj_outcomes.py','cpj_tableone.py','cpj_crosstable.py','cpj_alluvial.py','templates/alluvial.html','cpj_tree.py','cpj_outliers.py','cpj_sets.py','templates/sets.html','cpj_correlation.py','templates/correlation.html','cpj_ihc.py','templates/ihcheatmap.html','cpj_runtime.py','cpj_svg_cutoff.py','cpj_accuracy.py','cpj_registry.py','cpj_plots.py','cpj_descriptive.py','cpj_binning.py','cpj_demographics.py','cpj_quality.py','templates/quality.html','cpj_cutoff.py','cpj_single_quality.py','templates/single-quality.html','cpj_cutoff_analysis.py','templates/bridgecutoff.html','templates/d3cutoff.html','templates/observablecutoff.html','vendor/observable-plot-0.6.17.min.js','vendor/observable-inputs-0.12.0.min.js','vendor/htl-0.3.1.min.js','vendor/observable-plot-LICENSE.txt','vendor/observable-inputs-LICENSE.txt','vendor/htl-LICENSE.txt','vendor/observable-manifest.json','vendor/d3-7.9.0.min.js','vendor/d3-LICENSE.txt','registry.json','font-cache.json']:
                 assert archive.read(f'ClinicoPathPj/R/ClinicoPathPj/python/{file}')==(ROOT/'inst/python'/file).read_bytes()
             assert archive.read('ClinicoPathPj/R/ClinicoPathPj/js/pysvgcutoff.js')==(ROOT/'inst/js/pysvgcutoff.js').read_bytes()
             assert archive.read('ClinicoPathPj/data/python_core_examples.omv')==(ROOT/'data/python_core_examples.omv').read_bytes()
@@ -121,6 +124,13 @@ def check(path):
           ('pydecisioncurve',{'r':factor(['N','P']),'p':numeric([.1,.9])},dict(outcome='r',positive='P',models=['p']))]
         cases.append(('pydiagnosticmeta',dict(study=dict(kind='text',values=['S1','S2','S3']),tp=numeric([8,0,None]),fp=numeric([1,2,1]),fn=numeric([2,5,1]),tn=numeric([9,8,1])),dict(study='study',true_positives='tp',false_positives='fp',false_negatives='fn',true_negatives='tn',show_explorer=True)))
         cases.append(('pyagreement',dict(a=numeric([1,2,4,7]),b=numeric([0,3,2,4])),dict(vars=['a','b'],showPairs=True,blandAltmanPlot=True)))
+        for name in ('pyservicedirect','pyservicepj'):
+            cases.append((name,{'x':numeric([1,2,3,4,None,10])},dict(measurement='x')))
+        fixture=list(csv.DictReader((ROOT/'data/python_age_pyramid_service_examples.csv').open()))
+        cases.append(('pyagepyramidpj',
+            {'a':numeric([None if r['Age']=='NA' else float(r['Age']) for r in fixture]),
+             'g':factor([None if r['Gender']=='NA' else r['Gender'] for r in fixture])},
+            dict(age='a',gender='g',female='Female',male='Male',age_groups='who')))
         results=[]
         for name,columns,options in cases:
             request=temp/'request.json';response=temp/'response.json'
@@ -481,6 +491,14 @@ def check(path):
                 assert 'Native applied rule: x >= 2' in summary
                 assert 'Complete rows: 6; excluded: 0' in summary
                 assert 'reselect the analysis heading' in summary
+            if name in ('pyservicedirect','pyservicepj'):
+                row=result['tables']['summary']['rows'][0]
+                assert (row['input'],row['n'],row['missing'],row['mean'],row['median'])==(6,5,1,4,3)
+                assert abs(row['sd']-12.5**.5)<1e-12
+            if name=='pyagepyramidpj':
+                assert [r['n'] for r in result['tables']['dataSummary']['rows']]==[22,2,1,1,0,18]
+                assert [r['female'] for r in result['tables']['population']['rows']]==[2,1,1,1,2,0,1,8]
+                assert [r['male'] for r in result['tables']['population']['rows']]==[1,2,3,0,2,1,1,10]
             if name=='pydecision':
                 assert [r['n'] for r in result['tables']['counts']['rows']]==[1,0,0,1]
             if name=='pydecisioncalculator':

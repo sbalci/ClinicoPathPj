@@ -190,4 +190,5 @@ def run(data, options, out):
         "close the options panel and reselect the analysis heading to refresh it. "
         "Change direction, optimization and uncertainty in native options. "
         "Both routes use the identical ClinicoPathPj Python engine. "
-        "Pj is optional and has no checkpoint callback."))
+        "Pj is optional. Running cancellation requires Pj 1.5.0 or newer; "
+        "the execution report shows whether a checkpoint was enabled."))

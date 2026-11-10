@@ -35,6 +35,8 @@ class ServiceMenus(unittest.TestCase):
             for field in ['tables','plots','notices']:self.assertEqual(got[field],base[field])
             self.assertIn('"hostApply": true',got['htmls']['explorer'])
             self.assertIn('"hostManual": true',got['htmls']['explorer'])
+            self.assertIn('Running cancellation requires Pj 1.5.0',got['texts']['summary'].replace(chr(92), ''))
+            self.assertNotIn('no checkpoint callback',got['texts']['summary'])
 
     def test_native_summary_reports_the_actual_applied_rule(self):
         d={'x':number([1,2,2,4,5,6,None,8]),'g':factor(['N','N','P','N','P','P','P',None])}

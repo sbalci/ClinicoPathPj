@@ -2720,6 +2720,64 @@
         ],
         "candidates": []
       }
+    },
+    {
+      "id": "pyservicedirect",
+      "family": "utilities",
+      "menu": "Execution services",
+      "title": "Own Python Summary Example",
+      "aliases": [],
+      "source": "analyses/utilities/pyservicedirect.py",
+      "status": "utility",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "Standard-library fixtures, native base R and matched-route evidence tracked in docs/python-service-examples.md",
+        "gui": "Version-specific desktop acceptance tracked in docs/python-service-examples.md"
+      },
+      "menu_group": "Python Lab",
+      "menu_title": "Own Python Summary Example"
+    },
+    {
+      "id": "pyservicepj",
+      "family": "utilities",
+      "menu": "Execution services",
+      "title": "Pj Service Summary Example",
+      "aliases": [],
+      "source": "analyses/utilities/pyservicepj.py",
+      "status": "utility",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "Standard-library fixtures, native base R and matched-route evidence tracked in docs/python-service-examples.md",
+        "gui": "Version-specific desktop acceptance tracked in docs/python-service-examples.md"
+      },
+      "menu_group": "Python Lab",
+      "menu_title": "Pj Service Summary Example"
+    },
+    {
+      "id": "pyagepyramidpj",
+      "family": "utilities",
+      "menu": "Execution services",
+      "title": "Age Pyramid via Pj",
+      "aliases": [],
+      "source": "analyses/utilities/pyagepyramidpj.py",
+      "status": "utility",
+      "coverage": {
+        "full_parity": false,
+        "numerical": "Shared engine, frozen R fixtures, exclusions and unequal-bar geometry; dated evidence in docs/python-age-pyramid-service.md",
+        "gui": "Version-specific installation, save/reopen and export evidence tracked separately in docs/python-age-pyramid-service.md"
+      },
+      "menu_group": "Python Lab",
+      "menu_title": "Age Pyramid via Pj",
+      "supported_core": "Existing pyagepyramid calculation, options and native outputs through the Pj public service; shared static renderer",
+      "omissions": "Interactive display, System Python selection and full R baseline parity",
+      "dependencies": {
+        "bundled": [
+          "numpy"
+        ],
+        "optional_service": [
+          "Pj >= 1.5.0 recommended for checkpoints"
+        ]
+      }
     }
   ],
   "menu_groups": {

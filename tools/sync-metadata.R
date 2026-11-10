@@ -23,6 +23,26 @@ sync_module_metadata <- function(root = ".") {
             "    tags: [Python, Diagnostic accuracy, Decision curves, Data quality]")
     }
     document <- yaml::yaml.load(paste(metadata, collapse = "\n"))
+    pyramid_service_data <- "python_age_pyramid_service_examples.omv"
+    if (file.exists(file.path(root, "data", pyramid_service_data))) {
+        entry <- list(name = "Age Pyramid Service Examples", path = pyramid_service_data,
+            description = "22 synthetic rows with 18 retained observations, unequal age-band counts, missing pairs, a negative age and an unselected gender level; compare Age Pyramid with Age Pyramid via Pj.",
+            tags = c("Python", "Pj", "Age pyramid"))
+        index <- which(vapply(document$datasets, function(x) identical(x$path, pyramid_service_data), logical(1)))
+        if (length(index)) document$datasets[[index[1L]]] <- entry
+        else document$datasets[[length(document$datasets) + 1L]] <- entry
+    }
+
+    service_data <- "python_service_examples.omv"
+    if (file.exists(file.path(root, "data", service_data))) {
+        entry <- list(name = "Python Execution Service Examples", path = service_data,
+            description = "Six synthetic measurements, including one missing cell; matched own-Python and Pj service summary examples.",
+            tags = c("Python", "Pj", "Execution services"))
+        index <- which(vapply(document$datasets, function(x) identical(x$path, service_data), logical(1)))
+        if (length(index)) document$datasets[[index[1L]]] <- entry
+        else document$datasets[[length(document$datasets) + 1L]] <- entry
+    }
+
     agreement_data <- "python_agreement_examples.omv"
     if (file.exists(file.path(root, "data", agreement_data))) {
         entry <- list(name = "Independent Measurement Pair Examples", path = agreement_data,
@@ -239,7 +259,8 @@ sync_module_metadata <- function(root = ".") {
         }
     }
     # js-yaml uses YAML 1.2: R yaml's default yes/no would become strings.
-    writeLines(yaml::as.yaml(document, handlers = list(logical = function(x)
-        structure(tolower(as.character(x)), class = "verbatim"))), path)
+    serialized <- yaml::as.yaml(document, handlers = list(logical = function(x)
+        structure(tolower(as.character(x)), class = "verbatim")))
+    writeLines(sub("\n+$", "", serialized), path)
     invisible(NULL)
 }

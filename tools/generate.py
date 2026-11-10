@@ -38,7 +38,7 @@ RESULT_MEMBERS = {"add", "analysis", "asDF", "asProtoBuf", "asString", "clear", 
                   "itemNames", "items", "key", "name", "options", "parent", "path", "print", "remove",
                   "requiresData", "resetVisible", "root", "saveAs", "setError", "setRefs", "setState",
                   "setStatus", "setTitle", "setVisible", "state", "status", "title", "visible"}
-SPEC_KEYS = {"name", "title", "menuGroup", "menuSubgroup", "version", "options", "results", "ui", "executionOption", "timingResult", "clearOnInputError", "allowInfinite"}
+SPEC_KEYS = {"name", "title", "menuGroup", "menuSubgroup", "version", "options", "results", "ui", "executionOption", "executionBackend", "timingResult", "clearOnInputError", "allowInfinite"}
 OPTION_KEYS = {  # keys an option may carry besides name/type/title
     "Variable": {"permitted", "suggested", "required", "coerceNumeric"},
     "Variables": {"permitted", "suggested", "required", "coerceNumeric"},
@@ -131,7 +131,7 @@ def validate(spec, stem):
     if not isinstance(spec, dict):
         fail("SPEC must be a dict")
     unknown = set(spec) - SPEC_KEYS
-    missing = SPEC_KEYS - {"menuSubgroup", "ui", "executionOption", "timingResult", "clearOnInputError", "allowInfinite"} - set(spec)
+    missing = SPEC_KEYS - {"menuSubgroup", "ui", "executionOption", "executionBackend", "timingResult", "clearOnInputError", "allowInfinite"} - set(spec)
     if unknown or missing:
         fail(f"SPEC keys: unknown {sorted(unknown)}, missing {sorted(missing)}")
     check_name(spec["name"], "analysis name", ANALYSIS_NAME)
@@ -319,6 +319,11 @@ def validate(spec, stem):
             fail('allowInfinite must be a unique list of declared numeric Variable roles')
     if "clearOnInputError" in spec and not isinstance(spec["clearOnInputError"], bool):
         fail("clearOnInputError must be True or False")
+    if "executionBackend" in spec:
+        if spec["executionBackend"] not in ("processx", "pj", "pjSystem"):
+            fail("executionBackend must be processx, pj or pjSystem")
+        if "executionOption" in spec:
+            fail("executionBackend and executionOption are mutually exclusive")
     if "executionOption" in spec:
         route = next((o for o in spec["options"] if o["name"] == spec["executionOption"]), {})
         if route.get("type") != "List" or {o["name"] for o in route.get("options", [])} != {"processx", "pj", "pjSystem"}:
@@ -447,6 +452,8 @@ def b_r(spec, header):
         return "c(" + ", ".join(items) + ")" if items else "character(0)"
 
     execution = (f"                backend = self$options${spec['executionOption']},\n" if "executionOption" in spec else "")
+    if "executionBackend" in spec:
+        execution = f"                backend = {r_string(spec['executionBackend'])},\n"
     timing = (f"                timing = {r_string(spec['timingResult'])},\n" if "timingResult" in spec else "")
     failure_policy = ("                clearOnInputError = TRUE,\n" if spec.get("clearOnInputError", False) else "")
     infinity_policy = (f"                allowInfinite = {vector(r_string(o) for o in spec['allowInfinite'])},\n" if spec.get("allowInfinite") else "")

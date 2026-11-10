@@ -9,7 +9,7 @@ Current direction and implemented/pending work: [revised migration plan](docs/py
 See also the [web-researched Python analysis candidates](docs/python-analysis-opportunities.md).
 The [2026-11-07 ecosystem review](docs/python-ecosystem-review-2026-11-07.md) compares JASP, jamovi, Orange, MedCalc, GitHub and Hugging Face and prioritizes 20 candidates without expanding the frozen migration inventory.
 
-Status: experimental, 0.3.59 (descriptives and data preparation; full migration remains incomplete). Local validation uses jamovi 28.13 and 28.17 on macOS (Apple Silicon), with
+Status: experimental, 0.3.61 (descriptives and data preparation; full migration remains incomplete). Local validation uses jamovi 28.13 and 28.17 on macOS (Apple Silicon), with
 jmvtools 28.4.
 
 Analyses now use compact family menus: **Descriptives Py**, **Stats Plots Py**,
@@ -18,7 +18,11 @@ and existing analysis identifiers are retained. **Survival Py** contains outcome
 
 The optional `pybridgecompare` experiment runs the same cutoff engine through processx
 or the public Pj API v1 service (Pj >=1.3.0). The source adapter also supports Pj 1.5.0
-cooperative checkpoints; packaging and desktop qualification remain pending.
+cooperative checkpoints in 0.3.60; qualification and remaining gates are recorded in the
+[service review](docs/pj-service-review.md).
+Version 0.3.61 adds [System Python environment isolation](docs/python-system-bridge.md)
+and clear diagnostics when System discovery selects the bundled executable; positive GUI
+System calculations still require a discoverable external interpreter.
 See [the comparison guide](docs/python-bridge-comparison.md)
 and [source review](docs/pj-service-review.md).
 
@@ -44,7 +48,7 @@ Open **Data Library > ClinicoPathPj > Python Core Examples**, or import
 `data/python_core_examples.csv`, for the synthetic examples.
 
 Build the single standard module without installing it:
-`Rscript --vanilla tools/build.R --build-only` → `ClinicoPathPj_0.3.59.jmo`.
+`Rscript --vanilla tools/build.R --build-only` → `ClinicoPathPj_0.3.61.jmo`.
 After replacing a loaded development build, use a fresh jamovi engine to avoid stale namespaces.
 
 `pywelch` reports the mean difference as *comparison minus reference*. The reference defaults to
@@ -667,3 +671,15 @@ case IDs must be known and unique among complete cases. The six coefficient
 forms use native tables and whole-row missingness. ICC(2,k) confidence limits
 remain unavailable; no clinical interpretation bands are assigned. See the
 [ICC integration and qualification contract](docs/python-icc-integration.md).
+
+### Matched execution-service teaching examples
+
+`pyservicedirect` runs a summary through our own bridge; `pyservicepj` runs the same
+Python calculation through the installed Pj public API. Both produce native tables.
+See [examples, setup and backend code](docs/python-service-examples.md).
+
+### Age pyramid through Pj
+
+The experimental `pyagepyramidpj` entry executes the existing age-pyramid engine
+through Pj, with the same options, native tables and static plot data.
+See [matched age-pyramid examples and expected counts](docs/python-age-pyramid-service.md).
