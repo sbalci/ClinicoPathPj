@@ -12,3 +12,7 @@ __pycache__/
 
 inst/python/_vendor/
 docs/python-ecosystem-review-2026-11-07.md
+
+# Generated local validation evidence (keep runtime/fixture JSON tracked).
+*.log
+/docs/validation-exports/**/*.json
