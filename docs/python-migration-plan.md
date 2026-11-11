@@ -5,7 +5,16 @@ This is the current delivery plan. It supersedes the implementation recommendati
 The original 61-analysis inventory remains the target; a menu entry does not establish parity.
 Detailed per-analysis evidence remains in the [generated status matrix](python-migration-status.md).
 
-## Current implementation increment — native CCC point estimates
+## Current implementation increment — CCC uncertainty prototype
+
+The new source-only `cpj_concordance_uncertainty.py` implements explicit Lin
+transformed and normal intervals. Independent R/DescTools/MPFR checks pass, including
+higher-precision boundary arithmetic. A 30,000-dataset coverage study exposes
+small-sample and nonnormal coverage limitations, so **no interval controls or
+native CCC inference have been added**. See the [updated uncertainty plan](python-concordance-uncertainty-plan.md).
+Public-domain/assumption policy remains a gate; mathematical agreement alone is
+not calibration or clinical validation. The final source suite passes 499 Python
+tests, and the coverage study reproduces byte-identically.
 
 The 0.3.63 `pyagreement` build now offers Lin CCC point estimates, Pearson
 precision and direct bias correction through its existing method selector. It
