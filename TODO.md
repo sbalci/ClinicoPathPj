@@ -785,9 +785,35 @@ Acceptance criteria:
 - [ ] Extend export/platform qualification and validate CCC CIs separately before exposing inference. Retain partial status.
 
 - [x] Finish 0.3.63 regression follow-up: 489 Python tests and 4,573 installed R assertions pass; preserve regenerated CCC GUI artifacts and separate mutable bytecode caches in post-runtime integrity checks (2026-11-11).
-- [ ] For the next package, omit transient Python bytecode caches from distributable assets; preserve the qualified 0.3.63 archive and its recorded hash.
+- [x] Remove 15 regenerable module bytecode caches from 0.3.64 and add guarded cleanup to the build-only path; preserve 0.3.63 with its original hash under packages/archive (2026-11-11).
 
 - [x] Implement source-only Lin CCC transformed/normal interval prototype; independently verify R/DescTools/MPFR fixtures, explicit undefined policies and high-precision boundary arithmetic (2026-11-11).
 - [x] Study interval coverage using 30,000 fixed-input synthetic datasets shared across methods, with known population CCC, input hashes and Monte Carlo uncertainty (2026-11-11).
 - [ ] Resolve small-sample and nonnormal coverage limitations before exposing CCC inference; keep the installed 0.3.63 analysis point-only and label any future alternative method separately.
 - [x] Pass 499 Python regressions and deterministic coverage replay for the source interval prototype; retain installed 0.3.63 point-only behavior (2026-11-11).
+
+- [x] Implement a separately labelled source-only empirical-moment CCC delta engine; pass 1,895 independent R/MPFR checks, including zero Pearson correlation with positive variance (2026-11-11).
+- [x] Compare Lin and empirical intervals on 38,000 identical paired datasets with input hashes and paired Monte Carlo uncertainty; record persistent undercoverage instead of exposing inference (2026-11-11).
+- [x] Freeze and implement the paired-percentile CCC bootstrap contract and coverage screen; pass 10,071 independent R checks and evaluate 34,000 matched observed datasets. Only 2/17 coverage scenarios pass; keep inference source-only (2026-11-11).
+
+- [x] Pass 508 source Python regressions, generator/status freshness and byte-identical empirical coverage replay; retain unchanged 0.3.63 archive and point/Lin engine hashes (2026-11-11).
+
+- [ ] Keep generic CCC inference deferred; any BCa/studentized candidate requires a separately frozen contract, independent references and coverage evidence. Continue unrelated migration work independently.
+
+- [x] Pass 517 source Python tests, generator/status freshness and byte-identical paired-bootstrap coverage replay; preserve the qualified 0.3.63 archive (2026-11-11).
+
+- [x] Verify frozen enhancedROC baseline hashes and implement a source-only fixed-direction/common-cohort ROC and paired DeLong engine; pass 16,689 independent R/pROC/kernel checks and run 12,000 known-truth binormal simulations (2026-11-11).
+- [x] Add the narrow generator-owned native `pyenhancedroc` SPEC, explicit direction/event roles, common-cohort tables, approximate CI/multiplicity disclosures and static ROC; validate the runtime adapter against all frozen fixtures (2026-11-11).
+- [x] Package/Sideload 0.3.64 and verify fresh-engine ROC edits, `.omv` save/reopen/recalculation and native HTML/PNG export on macOS arm64. Interactive local inspection remains omitted (2026-11-11).
+- [ ] Specify binary `pydecisioncompare` separately; paired AUC testing does not implement McNemar or paired diagnostic proportions.
+
+- [x] Pass 527 source Python tests, generator/status freshness and deterministic final-source ROC simulation replay; keep installed 0.3.63 unchanged (2026-11-11).
+
+- [x] Pass 531 source Python tests and 320 focused isolated-source native R assertions; verify genuine missing-factor levels, literal NA labels, native PNG export and visual geometry. Keep host/sandbox evidence separate and installed archive unchanged (2026-11-11).
+
+- [x] Build 0.3.64 and pass exact-archive ROC fixtures plus 320 built-library native assertions; preserve rollback package (2026-11-11).
+- [x] Complete 0.3.64 GUI Sideload/fresh-engine/save/reopen/recalculation/clearing/recovery and HTML/PNG export on macOS arm64; retain earlier desktop timeouts as history (2026-11-11).
+
+- [x] Verify 1,438 installed files against 0.3.64, pass 320 installed-native assertions, preserve dataset bytes/metadata through GUI lifecycle and reject four saved/exported artifact corruptions (2026-11-11).
+
+- [ ] Investigate generated conditional enablement for unused ROC direction controls; empty Score 3 direction appeared enabled in the inspected GUI. Inactive slots do not enter numerical results.

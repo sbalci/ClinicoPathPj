@@ -1388,7 +1388,7 @@
       "status": "partial",
       "coverage": {
         "full_parity": false,
-        "numerical": "90 ICC R configurations, paired coverage study and Bland-Altman references; CCC engine passes 436 R/DescTools comparisons and native/runtime adapters match 20 frozen public-minimum fixtures; see docs/python-concordance-integration.md; source-only Lin interval prototype passes 3,410 checks with MPFR boundary adjudication, but coverage limitations keep inference unexposed",
+        "numerical": "90 ICC R configurations, paired coverage study and Bland-Altman references; CCC engine passes 436 R/DescTools comparisons and native/runtime adapters match 20 frozen public-minimum fixtures; see docs/python-concordance-integration.md; source-only Lin interval prototype passes 3,410 checks with MPFR boundary adjudication; separate empirical-moment delta prototype passes 1,895 checks; paired percentile bootstrap passes 10,071 independent R checks, but prespecified matched-input coverage screens keep all CCC inference source-only; see docs/python-concordance-bootstrap.md",
         "gui": "0.3.58 Bland-Altman observed; 0.3.63 CCC Sideload, fresh-engine save/reopen and HTML plot export observed on macOS arm64; live method switching, incomplete-role clearing and recovery after reopen pass with single-click selection; ICC GUI pending",
         "compatibility": "First executable Python core under the preallocated stable identifier; frozen R baseline unchanged",
         "platforms": []
@@ -1653,10 +1653,10 @@
     {
       "id": "pyenhancedroc",
       "family": "meddecide",
-      "menu": "Medical Decisions",
+      "menu": "ROC and comparison",
       "title": "Clinical ROC Analysis",
       "aliases": [],
-      "source": null,
+      "source": "analyses/meddecide/pyenhancedroc.py",
       "baseline": {
         "module": "meddecide",
         "version": "1.1.2",
@@ -1670,23 +1670,31 @@
         }
       },
       "wave": 2,
-      "status": "planned",
+      "status": "partial",
       "coverage": {
         "full_parity": false,
-        "numerical": "pending",
-        "gui": "pending",
+        "numerical": "Source engine passes 16,689 independent R/pROC/kernel checks; native adapter matches all 17 fixtures and passes 320 focused R assertions, compiler preparation and serialized PNG rendering in an isolated source library. Full source Python suite passes 531 tests; see docs/python-roc-native.md",
+        "gui": "0.3.64 macOS arm64 jamovi 28.17.0: GUI Sideload, fresh-engine run/reopen, live direction reversal, required-role clearing/recovery, Save As and HTML/PNG exports verified; artifact hashes/row alignment checked",
         "compatibility": "existing Python identifier preserved",
-        "platforms": []
+        "platforms": [
+          "macOS arm64: bounded local native/GUI core acceptance only"
+        ]
       },
       "methods": "Clinical ROC: pROC AUC with DeLong or bootstrap CIs, Youden and constrained cut-points, partial AUC, smoothing, CROC, convex hull, DeLong comparisons, multiclass (Hand-Till), calibration (logistic recalibration, Hosmer-Lemeshow, Brier, ns() spline calibration, E:O), NNT/decision impact, internal validation.",
       "oracle": "pROC::roc, pROC::ci.auc (DeLong), pROC::coords, pROC::roc.test, pROC::smooth, pROC::multiclass.roc, boot::boot.ci, stats::glm",
       "dependencies": {
-        "bundled": [],
+        "bundled": [
+          "numpy",
+          "scipy",
+          "matplotlib"
+        ],
         "candidates": []
       },
       "source_name": "enhancedROC",
       "menu_group": "MedDecide Py",
-      "menu_title": "Clinical ROC Analysis"
+      "menu_title": "Clinical ROC Analysis",
+      "supported_core": "Fixed-direction binary empirical ROC, common complete-case cohort, tie-aware AUC, approximate DeLong AUC intervals and unadjusted paired AUC differences, native cohort/threshold/source tables and static ROC",
+      "omissions": "Bootstrap, partial/smoothed/multiclass ROC, automatic direction, cut-point optimization inference, calibration, model training/validation and interactive exploration omitted"
     },
     {
       "id": "pykappaci",

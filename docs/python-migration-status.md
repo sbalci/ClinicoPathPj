@@ -37,7 +37,7 @@ parity and GUI/platform acceptance remain separate gates.
 | pydecisioncombine | decisioncombine | meddecide | 2 | planned | pending | pending |
 | pydecisioncompare | decisioncompare | meddecide | 2 | planned | pending | pending |
 | pydecisioncurve | decisioncurve | meddecide | 2 | partial | pending | pending |
-| pyenhancedroc | enhancedROC | meddecide | 2 | planned | pending | pending |
+| pyenhancedroc | enhancedROC | meddecide | 2 | partial | pending | 0.3.64 macOS arm64 jamovi 28.17.0: GUI Sideload, fresh-engine run/reopen, live direction reversal, required-role clearing/recovery, Save As and HTML/PNG exports verified; artifact hashes/row alignment checked |
 | pykappaci | kappaSizeCI | meddecide | 2 | partial | pending | pending |
 | pykappafixedn | kappaSizeFixedN | meddecide | 2 | partial | pending | pending |
 | pykappapower | kappaSizePower | meddecide | 2 | partial | pending | legacy .omv reopen and power 0.8 -> 0.9 -> 0.8 rerun verified |

@@ -1,0 +1,13 @@
+Case,Reference,Measurement_A,Measurement_B
+C01,Negative,1,1
+C02,Negative,2,4
+C03,Negative,3,2
+C04,Negative,4,3
+C05,Positive,2,2
+C06,Positive,3,3
+C07,Positive,3,5
+C08,Positive,5,4
+C09,Negative,,8
+C10,Positive,9,
+C11,,9,9
+C12,Positive,,

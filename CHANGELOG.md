@@ -1,5 +1,31 @@
-# Unreleased — CCC uncertainty numerical prototype
+# 0.3.64 — 2026-11-11
 
+- Build/archive-check the native empirical ROC/paired DeLong partial core; pass 17 exact-archive ROC fixtures and 320 built-library native assertions under the single ClinicoPathPj identity.
+- Remove 15 regenerable bytecode caches, add build-only cleanup and regression checks, and preserve the qualified 0.3.63 rollback archive.
+- Complete GUI Sideload, fresh-engine reopening and live ROC recalculation, incomplete-role clearing/recovery, Save As and native HTML/PNG export on macOS arm64 after normal jamovi restart.
+- Verify 1,438 installed files, pass 320 installed-native assertions, preserve dataset bytes/metadata and reject four artifact corruptions. Retain earlier desktop/file-picker failures as history. Other platforms and full parity remain open.
+
+# Unreleased — native ROC partial core
+
+- Pass 531 source Python tests and 320 focused native R assertions; export and inspect the synthetic native ROC image. Keep package/desktop acceptance separate.
+
+- Add organized generator-owned controls, native ROC/AUC/paired DeLong tables, threshold/source-row details and a static ROC plot under pyenhancedroc. Keep the installed 0.3.63 package unchanged.
+- Validate adapter results against all 17 independent fixtures, compiler preparation and isolated-source native lifecycle/rendering checks. Registry now has 29 partial targets and 32 planned targets; full parity and desktop/package acceptance remain pending.
+
+# Unreleased — empirical ROC source core
+
+- Pass 527 source Python regressions and byte-identical final-source ROC simulation replay; generator/status checks pass.
+
+- Add a source-only fixed-direction/common-cohort ROC engine with tie-aware AUC, DeLong covariance, normal AUC limits and paired AUC differences/tests.
+- Pass 16,689 independent R/pROC/kernel checks and record 12,000 known-truth simulation datasets, including small-class AUC undercoverage. Keep pyenhancedroc planned until native integration; installed 0.3.63 is unchanged.
+
+# Unreleased — CCC uncertainty numerical prototypes
+
+- Pass 517 source Python regressions and deterministic paired-bootstrap coverage replay; leave the installed package unchanged.
+- Add a source-only paired-percentile bootstrap with bounded batches, seed/index provenance and cooperative checkpoints; pass 10,071 independent R reference checks. Its prespecified coverage screen passes only 2/17 scenarios, so CCC inference remains unexposed.
+
+- Pass 508 source Python tests, generator/status freshness and byte-identical empirical coverage replay.
+- Add a separate empirical-moment delta helper and independent R/MPFR oracle: 1,895 numerical/domain checks pass. A matched-input 38,000-dataset coverage study retains undercoverage and keeps both inference routes source-only.
 - Implement explicit Lin transformed/normal intervals in a source-only helper; preserve point estimates, existing public defaults and the installed 0.3.63 package.
 - Verify 3,410 reference/domain checks using independent R/DescTools and MPFR256 fixtures. Stabilize near-boundary arithmetic with standard-library Decimal, retaining initial mismatches and unchanged reference files.
 - Pass the final 499-test source Python suite and repeat the coverage study with byte-identical output; leave native/package acceptance unclaimed for the interval helper.
