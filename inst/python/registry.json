@@ -1388,7 +1388,7 @@
       "status": "partial",
       "coverage": {
         "full_parity": false,
-        "numerical": "90 ICC R configurations, paired coverage study and Bland-Altman references; CCC engine passes 436 R/DescTools comparisons and native/runtime adapters match 20 frozen public-minimum fixtures; see docs/python-concordance-integration.md",
+        "numerical": "90 ICC R configurations, paired coverage study and Bland-Altman references; CCC engine passes 436 R/DescTools comparisons and native/runtime adapters match 20 frozen public-minimum fixtures; see docs/python-concordance-integration.md; source-only Lin interval prototype passes 3,410 checks with MPFR boundary adjudication, but coverage limitations keep inference unexposed",
         "gui": "0.3.58 Bland-Altman observed; 0.3.63 CCC Sideload, fresh-engine save/reopen and HTML plot export observed on macOS arm64; live method switching, incomplete-role clearing and recovery after reopen pass with single-click selection; ICC GUI pending",
         "compatibility": "First executable Python core under the preallocated stable identifier; frozen R baseline unchanged",
         "platforms": []

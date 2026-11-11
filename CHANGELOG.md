@@ -1,3 +1,10 @@
+# Unreleased — CCC uncertainty numerical prototype
+
+- Implement explicit Lin transformed/normal intervals in a source-only helper; preserve point estimates, existing public defaults and the installed 0.3.63 package.
+- Verify 3,410 reference/domain checks using independent R/DescTools and MPFR256 fixtures. Stabilize near-boundary arithmetic with standard-library Decimal, retaining initial mismatches and unchanged reference files.
+- Pass the final 499-test source Python suite and repeat the coverage study with byte-identical output; leave native/package acceptance unclaimed for the interval helper.
+- Record small-sample and nonnormal undercoverage in a fixed-input 30,000-dataset simulation study. Defer public interval controls until method/domain policy is resolved.
+
 # 0.3.63 — 2026-11-11
 
 - Pass the full current 489-test Python suite and 4,573 installed-module R assertions, with no R failures, warnings or skips. Verify post-reopen live method switching, incomplete-input clearing/recovery and regenerated saved/exported artifacts without changing statistical code.

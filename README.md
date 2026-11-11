@@ -10,7 +10,9 @@ See also the [web-researched Python analysis candidates](docs/python-analysis-op
 The 0.3.63 build adds a [CCC point-estimate integration](docs/python-concordance-integration.md)
 with independent references, native tables and a static plot. Sideload, fresh-engine
 save/reopen, live method switching, incomplete-input recovery and HTML export pass
-on the tested Mac. CCC confidence intervals and broader platform checks remain pending.
+on the tested Mac. Public CCC confidence intervals and broader platform checks remain pending. A
+[source-only uncertainty prototype](docs/python-concordance-uncertainty-plan.md)
+now has independent numerical checks; coverage limitations defer its UI integration.
 The [2026-11-07 ecosystem review](docs/python-ecosystem-review-2026-11-07.md) compares JASP, jamovi, Orange, MedCalc, GitHub and Hugging Face and prioritizes 20 candidates without expanding the frozen migration inventory.
 
 Status: experimental, 0.3.63 (descriptives and data preparation; full migration remains incomplete). Local validation uses jamovi 28.13 and 28.17 on macOS (Apple Silicon), with

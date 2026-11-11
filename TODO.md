@@ -786,3 +786,8 @@ Acceptance criteria:
 
 - [x] Finish 0.3.63 regression follow-up: 489 Python tests and 4,573 installed R assertions pass; preserve regenerated CCC GUI artifacts and separate mutable bytecode caches in post-runtime integrity checks (2026-11-11).
 - [ ] For the next package, omit transient Python bytecode caches from distributable assets; preserve the qualified 0.3.63 archive and its recorded hash.
+
+- [x] Implement source-only Lin CCC transformed/normal interval prototype; independently verify R/DescTools/MPFR fixtures, explicit undefined policies and high-precision boundary arithmetic (2026-11-11).
+- [x] Study interval coverage using 30,000 fixed-input synthetic datasets shared across methods, with known population CCC, input hashes and Monte Carlo uncertainty (2026-11-11).
+- [ ] Resolve small-sample and nonnormal coverage limitations before exposing CCC inference; keep the installed 0.3.63 analysis point-only and label any future alternative method separately.
+- [x] Pass 499 Python regressions and deterministic coverage replay for the source interval prototype; retain installed 0.3.63 point-only behavior (2026-11-11).
