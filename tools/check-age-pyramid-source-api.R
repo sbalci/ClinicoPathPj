@@ -1,13 +1,15 @@
 # Compare source calculations through own/Pj execution without rebuilding the host.
 # Usage: Rscript --vanilla this-file.R <source-root> <Pj-library> [--system] [--service-smoke]
 # Optional: --python=/path/to/python --site-packages=/existing/path --all --timeout=60
+# --summaries compares the matched summary utilities using the same source/API transport.
 # Use an isolated source copy during local file-access problems; install nothing.
 args <- commandArgs(TRUE)
 if (length(args) < 2L) stop("Supply source root and installed Pj R library")
 root <- normalizePath(args[1L], mustWork = TRUE)
 pj_library <- normalizePath(args[2L], mustWork = TRUE)
 flags <- args[-c(1L, 2L)]
-if (any(!grepl("^(--system|--all|--service-smoke|--timeout=[0-9]+|--python=.+|--site-packages=.+)$", flags))) stop("Unknown flag")
+if (any(!grepl("^(--system|--all|--summaries|--service-smoke|--timeout=[0-9]+|--python=.+|--site-packages=.+)$", flags))) stop("Unknown flag")
+if (all(c("--summaries", "--service-smoke") %in% flags)) stop("Choose one probe type")
 value <- function(prefix, default = "") {
     x <- flags[startsWith(flags, prefix)]
     if (length(x) > 1L) stop("Repeated flag: ", prefix)
@@ -43,8 +45,8 @@ entry <- paste0("import sys, json\nsys.path.insert(0, ",
     "from cpj_runtime import execute\n",
     "def calculate(request):\n",
     "    result = execute(request)\n",
-    "    import numpy\n",
-    "    return {'result': result, 'python': sys.executable, 'numpy': numpy.__version__}\n")
+    "    import numpy, platform\n",
+    "    return {'result': result, 'python': sys.executable, 'version': platform.python_version(), 'numpy': numpy.__version__, 'numpy_file': numpy.__file__}\n")
 if ("--service-smoke" %in% flags) {
     cat("Public Pj service smoke; version", info$module_version, "mode", mode,
         "timeout", deadline, "seconds\n"); flush.console()
@@ -61,6 +63,75 @@ if ("--service-smoke" %in% flags) {
     stopifnot(length(items) == 1L, identical(items[[1L]]$content, "6"),
         identical(response$service$runner, "processx"), isTRUE(response$service$checkpoint_enabled))
     cat("Public service simple sum PASSED; no ClinicoPathPj calculation or NumPy required\n")
+    quit(status = 0L)
+}
+run_pair <- function(request, service_name, folder) {
+    path <- file.path(folder, "request.json")
+    writeLines(jsonlite::toJSON(request, auto_unbox = TRUE, na = "null", null = "null"), path)
+    own_code <- paste0(entry, "request = json.load(open(sys.argv[1]))\n",
+                       "print(json.dumps(calculate(request), allow_nan=False))\n")
+    script <- file.path(folder, "own.py"); writeLines(own_code, script)
+    own <- processx::run(python, c("-S", "-B", script, path), timeout = deadline,
+                         error_on_status = TRUE, cleanup_tree = TRUE)
+    own <- jsonlite::fromJSON(own$stdout, simplifyVector = FALSE)
+    stopifnot(identical(own$result$status, "ok"))
+    cat("Own source calculation PASSED;", own$python, "Python", own$version,
+        "NumPy", own$numpy, "\n"); flush.console()
+    request$analysis <- service_name
+    json <- as.character(jsonlite::toJSON(request, auto_unbox = TRUE, na = "null", null = "null"))
+    response <- tryCatch(run_service(code = paste0(entry,
+        "mzpjShowText(json.dumps(calculate(json.loads(data['request'][0])), allow_nan=False), name='sourceEnvelope')\n"),
+        data = data.frame(request = json), python = mode, timeout = deadline,
+        checkpoint = function() invisible(NULL)), error = function(error) {
+            if (identical(error$code, "restart")) stop(error)
+            if (!is.null(error$kind)) cat("Pj error kind:", error$kind, "\n")
+            if (!is.null(error$details)) cat("Pj error details:\n", error$details, "\n")
+            stop(error)
+        })
+    stopifnot(identical(response$service$runner, "processx"),
+              isTRUE(response$service$checkpoint_enabled))
+    items <- Filter(function(x) identical(x$type, "Text") && identical(x$name, "sourceEnvelope"), response$items)
+    stopifnot(length(items) == 1L, is.character(items[[1]]$content), length(items[[1]]$content) == 1L)
+    pj <- jsonlite::fromJSON(items[[1]]$content, simplifyVector = FALSE)
+    stopifnot(identical(pj$result$status, "ok"),
+        identical(normalizePath(own$python), normalizePath(pj$python)),
+        identical(own$version, pj$version), identical(own$numpy, pj$numpy),
+        identical(normalizePath(own$numpy_file), normalizePath(pj$numpy_file)))
+    for (field in c("tables", "plots", "notices"))
+        stopifnot(identical(own$result[[field]], pj$result[[field]]))
+    cat("Matched interpreter/dependency provenance;", pj$python, "Python", pj$version,
+        "NumPy", pj$numpy, "from", pj$numpy_file, "\n"); flush.console()
+    pj$result
+}
+
+if ("--summaries" %in% flags) {
+    fixtures <- list(c(1, 2, 3, 4, NA, 10), c(7, NA), c(NA_real_, NA_real_),
+                     c(-2, 0, 0, 4, 1e4))
+    if (!"--all" %in% flags) fixtures <- fixtures[1L]
+    cat("Summary source API probe; Pj", info$module_version, "; requested", mode,
+        "; own interpreter", python, "; timeout", deadline, "seconds\n"); flush.console()
+    folder <- tempfile("cpj-summary-source-api-"); dir.create(folder)
+    tryCatch({
+        for (x in fixtures) {
+            request <- list(schema_version = 1L, analysis = "pyservicedirect",
+                options = list(measurement = "x"),
+                columns = list(x = list(kind = "number", values = as.list(x))))
+            result <- run_pair(request, "pyservicepj", folder)
+            rows <- result$tables$summary$rows
+            stopifnot(length(rows) == 1L)
+            kept <- x[!is.na(x)]
+            expected <- c(input = length(x), n = length(kept), missing = sum(is.na(x)),
+                mean = if (length(kept)) mean(kept) else NA_real_, sd = sd(kept),
+                median = if (length(kept)) median(kept) else NA_real_,
+                minimum = if (length(kept)) min(kept) else NA_real_,
+                maximum = if (length(kept)) max(kept) else NA_real_)
+            actual <- vapply(names(expected), function(key)
+                if (is.null(rows[[1L]][[key]])) NA_real_ else as.numeric(rows[[1L]][[key]]), numeric(1))
+            stopifnot(isTRUE(all.equal(actual, expected, tolerance = 1e-12)))
+            cat("Summary actual own/Pj payloads and independent base R oracle PASSED; input",
+                length(x), "retained", length(kept), "\n"); flush.console()
+        }
+    }, finally = unlink(folder, recursive = TRUE))
     quit(status = 0L)
 }
 d <- read.csv(file.path(root, "data/python_age_pyramid_service_examples.csv"))
@@ -84,38 +155,8 @@ tryCatch({
             age_groups = "who", pct_base = configurations$base[i],
             plot_values = configurations$display[i], showInterpretation = TRUE)
         request <- list(schema_version = 1L, analysis = "pyagepyramid", options = option, columns = columns)
-        path <- file.path(folder, "request.json")
-        writeLines(jsonlite::toJSON(request, auto_unbox = TRUE, na = "null", null = "null"), path)
-        own_code <- paste0(entry, "request = json.load(open(sys.argv[1]))\n",
-                           "print(json.dumps(calculate(request), allow_nan=False))\n")
-        script <- file.path(folder, "own.py"); writeLines(own_code, script)
-        own <- processx::run(python, c("-S", "-B", script, path), timeout = deadline,
-                             error_on_status = TRUE, cleanup_tree = TRUE)
-        own <- jsonlite::fromJSON(own$stdout, simplifyVector = FALSE)
-        stopifnot(identical(own$result$status, "ok"))
-        cat("Own source calculation PASSED;", own$python, "NumPy", own$numpy, "\n"); flush.console()
-        request$analysis <- "pyagepyramidpj"
-        json <- as.character(jsonlite::toJSON(request, auto_unbox = TRUE, na = "null", null = "null"))
-        response <- tryCatch(run_service(code = paste0(entry,
-            "mzpjShowText(json.dumps(calculate(json.loads(data['request'][0])), allow_nan=False), name='ageEnvelope')\n"),
-            data = data.frame(request = json), python = mode, timeout = deadline,
-            checkpoint = function() invisible(NULL)), error = function(error) {
-                if (identical(error$code, "restart")) stop(error)
-                if (!is.null(error$kind)) cat("Pj error kind:", error$kind, "\n")
-                if (!is.null(error$details)) cat("Pj error details:\n", error$details, "\n")
-                stop(error)
-            })
-        stopifnot(identical(response$service$runner, "processx"),
-                  isTRUE(response$service$checkpoint_enabled))
-        items <- Filter(function(x) identical(x$type, "Text") && identical(x$name, "ageEnvelope"), response$items)
-        stopifnot(length(items) == 1L, is.character(items[[1]]$content), length(items[[1]]$content) == 1L)
-        pj <- jsonlite::fromJSON(items[[1]]$content, simplifyVector = FALSE)
-        stopifnot(identical(own$result$status, "ok"), identical(pj$result$status, "ok"),
-            identical(normalizePath(own$python), normalizePath(pj$python)),
-            identical(own$numpy, pj$numpy))
-        for (field in c("tables", "plots", "notices"))
-            stopifnot(identical(own$result[[field]], pj$result[[field]]))
-        rows <- pj$result$tables$population$rows
+        result <- run_pair(request, "pyagepyramidpj", folder)
+        rows <- result$tables$population$rows
         number <- function(key) vapply(rows[-length(rows)], function(x) as.numeric(x[[key]]), numeric(1))
         stopifnot(identical(number("female"), as.numeric(expected[, 1L])),
                   identical(number("male"), as.numeric(expected[, 2L])))
@@ -124,7 +165,6 @@ tryCatch({
         stopifnot(isTRUE(all.equal(number("femalePercent"), as.numeric(pct[, 1L]), tolerance = 1e-12)),
                   isTRUE(all.equal(number("malePercent"), as.numeric(pct[, 2L]), tolerance = 1e-12)))
         cat(configurations$base[i], configurations$display[i],
-            "actual own/Pj payloads and independent base R oracle PASSED;", pj$python,
-            "NumPy", pj$numpy, "\n"); flush.console()
+            "actual own/Pj payloads and independent base R oracle PASSED\n"); flush.console()
     }
 }, finally = unlink(folder, recursive = TRUE))

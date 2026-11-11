@@ -63,7 +63,7 @@
 - [x] Pass all 430 Python tests, 49 focused tests, 24 native assertions and 30 packaged runtime cases.
 - [x] Sideload; check separate coverage/CI controls, native tables/plot, fresh-engine save/reopen and HTML/PNG export.
 - [ ] Complete broader invalid-state desktop, platform and full-release qualification; see method guide and raw suite logs.
-- [ ] CCC, categorical, repeated-subject and advanced agreement branches remain omitted; balanced ICC is now integrated in 0.3.59.
+- [ ] Complete CCC uncertainty and GUI qualification, categorical, repeated-subject and advanced agreement branches; balanced ICC is integrated in 0.3.59 and CCC point estimates in 0.3.63.
 
 # Research-informed queue — 2026-11-07
 
@@ -770,4 +770,19 @@ Acceptance criteria:
 - [ ] Qualify the matched `pyservicedirect`/`pyservicepj` teaching examples on all supported platforms; see docs/python-service-examples.md.
 
 - [x] Qualify `pyagepyramidpj` real-service/native execution and macOS arm64 GUI Sideload/save/reopen/recalculation/HTML export (0.3.62, 2026-11-10); see docs/python-age-pyramid-service.md.
-- [ ] Extend the new examples to clean machines/other platforms, GUI long-job cancellation and Word/LaTeX export; summary examples still need their own desktop qualification.
+- [ ] Extend the new examples to clean machines/other platforms, System GUI/renderer integration and GUI long-job cancellation; fixed teaching entries remain bundled-Python only.
+- [x] Extend the shared source/API harness to summaries; pass 16 matched own/Pj pairs over summary fixtures and age-pyramid configurations in bundled/external Python, verifying executable/dependency provenance and independent R calculations (2026-11-10).
+- [x] Verify both comparisons' Word exports, native table/media relationships and LibreOffice page renderings; inspect LaTeX tables and render both age-pyramid figure PDFs (2026-11-10).
+- [ ] Complete full LaTeX document compilation when `apa7.cls` is available; resolve repeated-title label collisions for manuscript cross references. Keep exported sources unchanged as evidence.
+- [x] Run the 0.3.62 full bundled-Python suite (473 tests) and generator freshness; extend both summary routes' same-instance native clearing/change/row-limit/recovery checks (2026-11-10).
+- [x] Correct the test runner to use bundled R and initialize protobuf; full installed-module suite passes 4,498 assertions with no failures, warnings or skips (2026-11-10).
+- [x] Recover jamovi navigation via native Quit/relaunch; qualify both summary examples' fresh-session run, restart/reopen, incomplete-selection clearing, live recalculation, Save As and HTML export on macOS arm64 (2026-11-10). Retain the earlier stalled attempt as history.
+- [x] Implement source-only CCC point/decomposition engine with complete-pair/source-position audit; verify independent R/DescTools fixtures, hand cases, constants, zero Pearson correlation and numeric bounds (2026-11-10).
+- [x] Integrate CCC point estimates through existing `pyagreement`, preserving the frozen public ten-pair minimum and existing defaults; add native role/ID validation, audit/decomposition tables, optional source pairs and static plot (unreleased source, 2026-11-11).
+- [x] Pass 489 source Python tests, six registry/UI checks and 166 native R assertions including original positional calls, method switching/recovery and serialized static rendering (2026-11-11).
+- [x] Build/Sideload 0.3.63, verify archive/installed integrity, pass 166 packaged native assertions, and verify fresh-engine CCC save/reopen/Save As plus HTML tables/plot export on macOS arm64 (2026-11-11).
+- [x] Retest live CCC editing after fresh reopen using single-click analysis selection: method switching, incomplete-role clearing, recovery, Save As and HTML export pass; retain the earlier unsuccessful interaction attempt separately (2026-11-11).
+- [ ] Extend export/platform qualification and validate CCC CIs separately before exposing inference. Retain partial status.
+
+- [x] Finish 0.3.63 regression follow-up: 489 Python tests and 4,573 installed R assertions pass; preserve regenerated CCC GUI artifacts and separate mutable bytecode caches in post-runtime integrity checks (2026-11-11).
+- [ ] For the next package, omit transient Python bytecode caches from distributable assets; preserve the qualified 0.3.63 archive and its recorded hash.

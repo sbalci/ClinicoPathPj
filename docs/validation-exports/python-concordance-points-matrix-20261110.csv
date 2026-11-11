@@ -1,0 +1,437 @@
+case,claim,observed,expected,absolute_difference,passed
+tiny_hand_calculation,ccc,0.5,0.5,0.0,True
+tiny_hand_calculation,precision,0.5,0.5,0.0,True
+tiny_hand_calculation,bias_correction,1.0,1,0.0,True
+tiny_hand_calculation,n_input,3,3,,True
+tiny_hand_calculation,n_complete,3,3,,True
+tiny_hand_calculation,missing_x,0,0,,True
+tiny_hand_calculation,missing_y,0,0,,True
+tiny_hand_calculation,missing_either,0,0,,True
+tiny_hand_calculation,missing_both,0,0,,True
+tiny_hand_calculation,retained_indices,"[0, 1, 2]","[0, 1, 2]",,True
+identity,ccc,1.0,1,0.0,True
+identity,precision,1.0,1,0.0,True
+identity,bias_correction,1.0,1,0.0,True
+identity,n_input,5,5,,True
+identity,n_complete,5,5,,True
+identity,missing_x,0,0,,True
+identity,missing_y,0,0,,True
+identity,missing_either,0,0,,True
+identity,missing_both,0,0,,True
+identity,retained_indices,"[0, 1, 2, 3, 4]","[0, 1, 2, 3, 4]",,True
+offset_positive,ccc,0.7241379310344829,0.724137931034483,1.1102230246251565e-16,True
+offset_positive,precision,0.9999999999999998,1,2.220446049250313e-16,True
+offset_positive,bias_correction,0.724137931034483,0.724137931034483,0.0,True
+offset_positive,n_input,8,8,,True
+offset_positive,n_complete,8,8,,True
+offset_positive,missing_x,0,0,,True
+offset_positive,missing_y,0,0,,True
+offset_positive,missing_either,0,0,,True
+offset_positive,missing_both,0,0,,True
+offset_positive,retained_indices,"[0, 1, 2, 3, 4, 5, 6, 7]","[0, 1, 2, 3, 4, 5, 6, 7]",,True
+offset_negative,ccc,0.39622641509433965,0.39622641509434,3.3306690738754696e-16,True
+offset_negative,precision,1.0,1,0.0,True
+offset_negative,bias_correction,0.3962264150943396,0.39622641509434,3.885780586188048e-16,True
+offset_negative,n_input,8,8,,True
+offset_negative,n_complete,8,8,,True
+offset_negative,missing_x,0,0,,True
+offset_negative,missing_y,0,0,,True
+offset_negative,missing_either,0,0,,True
+offset_negative,missing_both,0,0,,True
+offset_negative,retained_indices,"[0, 1, 2, 3, 4, 5, 6, 7]","[0, 1, 2, 3, 4, 5, 6, 7]",,True
+scale_positive,ccc,0.7999999999999999,0.8,1.1102230246251565e-16,True
+scale_positive,precision,1.0,1,0.0,True
+scale_positive,bias_correction,0.7999999999999999,0.8,1.1102230246251565e-16,True
+scale_positive,n_input,9,9,,True
+scale_positive,n_complete,9,9,,True
+scale_positive,missing_x,0,0,,True
+scale_positive,missing_y,0,0,,True
+scale_positive,missing_either,0,0,,True
+scale_positive,missing_both,0,0,,True
+scale_positive,retained_indices,"[0, 1, 2, 3, 4, 5, 6, 7, 8]","[0, 1, 2, 3, 4, 5, 6, 7, 8]",,True
+scale_and_offset,ccc,0.6488549618320612,0.648854961832061,1.1102230246251565e-16,True
+scale_and_offset,precision,1.0,1,0.0,True
+scale_and_offset,bias_correction,0.6488549618320612,0.648854961832061,1.1102230246251565e-16,True
+scale_and_offset,n_input,9,9,,True
+scale_and_offset,n_complete,9,9,,True
+scale_and_offset,missing_x,0,0,,True
+scale_and_offset,missing_y,0,0,,True
+scale_and_offset,missing_either,0,0,,True
+scale_and_offset,missing_both,0,0,,True
+scale_and_offset,retained_indices,"[0, 1, 2, 3, 4, 5, 6, 7, 8]","[0, 1, 2, 3, 4, 5, 6, 7, 8]",,True
+reversed_centered,ccc,-1.0,-1,0.0,True
+reversed_centered,precision,-1.0,-1,0.0,True
+reversed_centered,bias_correction,0.9999999999999999,1,1.1102230246251565e-16,True
+reversed_centered,n_input,9,9,,True
+reversed_centered,n_complete,9,9,,True
+reversed_centered,missing_x,0,0,,True
+reversed_centered,missing_y,0,0,,True
+reversed_centered,missing_either,0,0,,True
+reversed_centered,missing_both,0,0,,True
+reversed_centered,retained_indices,"[0, 1, 2, 3, 4, 5, 6, 7, 8]","[0, 1, 2, 3, 4, 5, 6, 7, 8]",,True
+reversed_shifted,ccc,-0.5384615384615384,-0.538461538461538,4.440892098500626e-16,True
+reversed_shifted,precision,-1.0,-1,0.0,True
+reversed_shifted,bias_correction,0.5384615384615384,0.538461538461538,4.440892098500626e-16,True
+reversed_shifted,n_input,8,8,,True
+reversed_shifted,n_complete,8,8,,True
+reversed_shifted,missing_x,0,0,,True
+reversed_shifted,missing_y,0,0,,True
+reversed_shifted,missing_either,0,0,,True
+reversed_shifted,missing_both,0,0,,True
+reversed_shifted,retained_indices,"[0, 1, 2, 3, 4, 5, 6, 7]","[0, 1, 2, 3, 4, 5, 6, 7]",,True
+ties_both,ccc,0.8,0.8,0.0,True
+ties_both,precision,0.8660254037844386,0.866025403784439,4.440892098500626e-16,True
+ties_both,bias_correction,0.9237604307034013,0.923760430703401,3.3306690738754696e-16,True
+ties_both,n_input,6,6,,True
+ties_both,n_complete,6,6,,True
+ties_both,missing_x,0,0,,True
+ties_both,missing_y,0,0,,True
+ties_both,missing_either,0,0,,True
+ties_both,missing_both,0,0,,True
+ties_both,retained_indices,"[0, 1, 2, 3, 4, 5]","[0, 1, 2, 3, 4, 5]",,True
+ties_asymmetric,ccc,0.8040712468193383,0.804071246819338,3.3306690738754696e-16,True
+ties_asymmetric,precision,0.871983801734487,0.871983801734487,0.0,True
+ties_asymmetric,bias_correction,0.922117182933832,0.922117182933832,0.0,True
+ties_asymmetric,n_input,7,7,,True
+ties_asymmetric,n_complete,7,7,,True
+ties_asymmetric,missing_x,0,0,,True
+ties_asymmetric,missing_y,0,0,,True
+ties_asymmetric,missing_either,0,0,,True
+ties_asymmetric,missing_both,0,0,,True
+ties_asymmetric,retained_indices,"[0, 1, 2, 3, 4, 5, 6]","[0, 1, 2, 3, 4, 5, 6]",,True
+mixed_signs,ccc,0.9335302806499263,0.933530280649926,2.220446049250313e-16,True
+mixed_signs,precision,0.939797991871168,0.939797991871168,0.0,True
+mixed_signs,bias_correction,0.9933307888764876,0.993330788876488,3.3306690738754696e-16,True
+mixed_signs,n_input,6,6,,True
+mixed_signs,n_complete,6,6,,True
+mixed_signs,missing_x,0,0,,True
+mixed_signs,missing_y,0,0,,True
+mixed_signs,missing_either,0,0,,True
+mixed_signs,missing_both,0,0,,True
+mixed_signs,retained_indices,"[0, 1, 2, 3, 4, 5]","[0, 1, 2, 3, 4, 5]",,True
+fractional,ccc,0.9573490813648294,0.957349081364829,4.440892098500626e-16,True
+fractional,precision,0.9764548480109589,0.976454848010959,1.1102230246251565e-16,True
+fractional,bias_correction,0.980433538032969,0.980433538032969,0.0,True
+fractional,n_input,5,5,,True
+fractional,n_complete,5,5,,True
+fractional,missing_x,0,0,,True
+fractional,missing_y,0,0,,True
+fractional,missing_either,0,0,,True
+fractional,missing_both,0,0,,True
+fractional,retained_indices,"[0, 1, 2, 3, 4]","[0, 1, 2, 3, 4]",,True
+two_pairs_positive,minimum_pairs,InputError,InputError,,True
+two_pairs_negative,minimum_pairs,InputError,InputError,,True
+zero_pearson_equal_scale,ccc,0.0,0,0.0,True
+zero_pearson_equal_scale,precision,0.0,0,0.0,True
+zero_pearson_equal_scale,bias_correction,1.0,1,0.0,True
+zero_pearson_equal_scale,n_input,4,4,,True
+zero_pearson_equal_scale,n_complete,4,4,,True
+zero_pearson_equal_scale,missing_x,0,0,,True
+zero_pearson_equal_scale,missing_y,0,0,,True
+zero_pearson_equal_scale,missing_either,0,0,,True
+zero_pearson_equal_scale,missing_both,0,0,,True
+zero_pearson_equal_scale,retained_indices,"[0, 1, 2, 3]","[0, 1, 2, 3]",,True
+zero_pearson_shifted_scaled,ccc,0.0,0,0.0,True
+zero_pearson_shifted_scaled,precision,0.0,0,0.0,True
+zero_pearson_shifted_scaled,bias_correction,0.28571428571428575,0.285714285714286,2.220446049250313e-16,True
+zero_pearson_shifted_scaled,n_input,4,4,,True
+zero_pearson_shifted_scaled,n_complete,4,4,,True
+zero_pearson_shifted_scaled,missing_x,0,0,,True
+zero_pearson_shifted_scaled,missing_y,0,0,,True
+zero_pearson_shifted_scaled,missing_either,0,0,,True
+zero_pearson_shifted_scaled,missing_both,0,0,,True
+zero_pearson_shifted_scaled,retained_indices,"[0, 1, 2, 3]","[0, 1, 2, 3]",,True
+missing_alternating,ccc,0.8541666666666666,0.854166666666667,3.3306690738754696e-16,True
+missing_alternating,precision,0.899200649778351,0.899200649778351,0.0,True
+missing_alternating,bias_correction,0.9499177595981664,0.949917759598166,3.3306690738754696e-16,True
+missing_alternating,n_input,7,7,,True
+missing_alternating,n_complete,4,4,,True
+missing_alternating,missing_x,2,2,,True
+missing_alternating,missing_y,2,2,,True
+missing_alternating,missing_either,3,3,,True
+missing_alternating,missing_both,1,1,,True
+missing_alternating,retained_indices,"[0, 3, 5, 6]","[0, 3, 5, 6]",,True
+missing_x_only,ccc,0.9014084507042254,0.901408450704225,3.3306690738754696e-16,True
+missing_x_only,precision,0.9124255176195215,0.912425517619522,4.440892098500626e-16,True
+missing_x_only,bias_correction,0.9879255164366302,0.98792551643663,2.220446049250313e-16,True
+missing_x_only,n_input,6,6,,True
+missing_x_only,n_complete,4,4,,True
+missing_x_only,missing_x,2,2,,True
+missing_x_only,missing_y,0,0,,True
+missing_x_only,missing_either,2,2,,True
+missing_x_only,missing_both,0,0,,True
+missing_x_only,retained_indices,"[1, 2, 4, 5]","[1, 2, 4, 5]",,True
+missing_y_only,ccc,0.9014084507042254,0.901408450704225,3.3306690738754696e-16,True
+missing_y_only,precision,0.9124255176195215,0.912425517619522,4.440892098500626e-16,True
+missing_y_only,bias_correction,0.9879255164366302,0.98792551643663,2.220446049250313e-16,True
+missing_y_only,n_input,6,6,,True
+missing_y_only,n_complete,4,4,,True
+missing_y_only,missing_x,0,0,,True
+missing_y_only,missing_y,2,2,,True
+missing_y_only,missing_either,2,2,,True
+missing_y_only,missing_both,0,0,,True
+missing_y_only,retained_indices,"[1, 2, 4, 5]","[1, 2, 4, 5]",,True
+missing_both,ccc,0.8985507246376813,0.898550724637681,2.220446049250313e-16,True
+missing_both,precision,0.9298372927094184,0.929837292709418,4.440892098500626e-16,True
+missing_both,bias_correction,0.9663526422127334,0.966352642212733,4.440892098500626e-16,True
+missing_both,n_input,6,6,,True
+missing_both,n_complete,4,4,,True
+missing_both,missing_x,2,2,,True
+missing_both,missing_y,2,2,,True
+missing_both,missing_either,2,2,,True
+missing_both,missing_both,2,2,,True
+missing_both,retained_indices,"[0, 2, 3, 5]","[0, 2, 3, 5]",,True
+desctools_public_pefr,ccc,0.9427424314274846,0.942742431427485,4.440892098500626e-16,True
+desctools_public_pefr,precision,0.9432794468909461,0.943279446890946,1.1102230246251565e-16,True
+desctools_public_pefr,bias_correction,0.9994306931363431,0.999430693136343,1.1102230246251565e-16,True
+desctools_public_pefr,n_input,17,17,,True
+desctools_public_pefr,n_complete,17,17,,True
+desctools_public_pefr,missing_x,0,0,,True
+desctools_public_pefr,missing_y,0,0,,True
+desctools_public_pefr,missing_either,0,0,,True
+desctools_public_pefr,missing_both,0,0,,True
+desctools_public_pefr,retained_indices,"[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]","[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]",,True
+seeded_moderate_01,ccc,-0.0797955843092162,-0.0797955843092162,0.0,True
+seeded_moderate_01,precision,-0.1487512461560819,-0.148751246156082,1.1102230246251565e-16,True
+seeded_moderate_01,bias_correction,0.5364364089124214,0.536436408912421,4.440892098500626e-16,True
+seeded_moderate_01,n_input,8,8,,True
+seeded_moderate_01,n_complete,8,8,,True
+seeded_moderate_01,missing_x,0,0,,True
+seeded_moderate_01,missing_y,0,0,,True
+seeded_moderate_01,missing_either,0,0,,True
+seeded_moderate_01,missing_both,0,0,,True
+seeded_moderate_01,retained_indices,"[0, 1, 2, 3, 4, 5, 6, 7]","[0, 1, 2, 3, 4, 5, 6, 7]",,True
+seeded_moderate_02,ccc,0.4841784004051962,0.484178400405196,2.220446049250313e-16,True
+seeded_moderate_02,precision,0.8713243481275219,0.871324348127522,1.1102230246251565e-16,True
+seeded_moderate_02,bias_correction,0.5556810175747949,0.555681017574795,1.1102230246251565e-16,True
+seeded_moderate_02,n_input,11,11,,True
+seeded_moderate_02,n_complete,11,11,,True
+seeded_moderate_02,missing_x,0,0,,True
+seeded_moderate_02,missing_y,0,0,,True
+seeded_moderate_02,missing_either,0,0,,True
+seeded_moderate_02,missing_both,0,0,,True
+seeded_moderate_02,retained_indices,"[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]","[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]",,True
+seeded_moderate_03,ccc,0.3318938801552454,0.331893880155245,3.885780586188048e-16,True
+seeded_moderate_03,precision,0.9442301078777632,0.944230107877763,2.220446049250313e-16,True
+seeded_moderate_03,bias_correction,0.3514968198813368,0.351496819881337,2.220446049250313e-16,True
+seeded_moderate_03,n_input,14,14,,True
+seeded_moderate_03,n_complete,14,14,,True
+seeded_moderate_03,missing_x,0,0,,True
+seeded_moderate_03,missing_y,0,0,,True
+seeded_moderate_03,missing_either,0,0,,True
+seeded_moderate_03,missing_both,0,0,,True
+seeded_moderate_03,retained_indices,"[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]","[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]",,True
+seeded_moderate_04,ccc,0.8210432831636597,0.82104328316366,3.3306690738754696e-16,True
+seeded_moderate_04,precision,0.9883238272094982,0.988323827209498,2.220446049250313e-16,True
+seeded_moderate_04,bias_correction,0.8307431841260471,0.830743184126048,8.881784197001252e-16,True
+seeded_moderate_04,n_input,17,17,,True
+seeded_moderate_04,n_complete,14,14,,True
+seeded_moderate_04,missing_x,2,2,,True
+seeded_moderate_04,missing_y,2,2,,True
+seeded_moderate_04,missing_either,3,3,,True
+seeded_moderate_04,missing_both,1,1,,True
+seeded_moderate_04,retained_indices,"[0, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16]","[0, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16]",,True
+seeded_moderate_05,ccc,-0.3494177453759724,-0.349417745375972,4.440892098500626e-16,True
+seeded_moderate_05,precision,-0.9300947528280656,-0.930094752828066,3.3306690738754696e-16,True
+seeded_moderate_05,bias_correction,0.3756797297410027,0.375679729741003,2.7755575615628914e-16,True
+seeded_moderate_05,n_input,20,20,,True
+seeded_moderate_05,n_complete,20,20,,True
+seeded_moderate_05,missing_x,0,0,,True
+seeded_moderate_05,missing_y,0,0,,True
+seeded_moderate_05,missing_either,0,0,,True
+seeded_moderate_05,missing_both,0,0,,True
+seeded_moderate_05,retained_indices,"[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]","[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]",,True
+seeded_moderate_06,ccc,0.2886966826490395,0.288696682649039,4.996003610813204e-16,True
+seeded_moderate_06,precision,0.6764694661074512,0.676469466107451,2.220446049250313e-16,True
+seeded_moderate_06,bias_correction,0.42676971705797967,0.42676971705798,3.3306690738754696e-16,True
+seeded_moderate_06,n_input,23,23,,True
+seeded_moderate_06,n_complete,23,23,,True
+seeded_moderate_06,missing_x,0,0,,True
+seeded_moderate_06,missing_y,0,0,,True
+seeded_moderate_06,missing_either,0,0,,True
+seeded_moderate_06,missing_both,0,0,,True
+seeded_moderate_06,retained_indices,"[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22]","[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22]",,True
+seeded_moderate_07,ccc,0.4866475321811541,0.486647532181154,1.1102230246251565e-16,True
+seeded_moderate_07,precision,0.9180939292298811,0.918093929229881,1.1102230246251565e-16,True
+seeded_moderate_07,bias_correction,0.5300629017222297,0.53006290172223,3.3306690738754696e-16,True
+seeded_moderate_07,n_input,26,26,,True
+seeded_moderate_07,n_complete,26,26,,True
+seeded_moderate_07,missing_x,0,0,,True
+seeded_moderate_07,missing_y,0,0,,True
+seeded_moderate_07,missing_either,0,0,,True
+seeded_moderate_07,missing_both,0,0,,True
+seeded_moderate_07,retained_indices,"[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]","[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]",,True
+seeded_moderate_08,ccc,0.6438018286592817,0.643801828659282,3.3306690738754696e-16,True
+seeded_moderate_08,precision,0.9125968167863993,0.912596816786399,2.220446049250313e-16,True
+seeded_moderate_08,bias_correction,0.7054614007162034,0.705461400716204,5.551115123125783e-16,True
+seeded_moderate_08,n_input,29,29,,True
+seeded_moderate_08,n_complete,26,26,,True
+seeded_moderate_08,missing_x,2,2,,True
+seeded_moderate_08,missing_y,2,2,,True
+seeded_moderate_08,missing_either,3,3,,True
+seeded_moderate_08,missing_both,1,1,,True
+seeded_moderate_08,retained_indices,"[0, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 28]","[0, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 28]",,True
+seeded_moderate_09,ccc,0.9171393179386714,0.917139317938671,4.440892098500626e-16,True
+seeded_moderate_09,precision,0.9792882669443963,0.979288266944396,3.3306690738754696e-16,True
+seeded_moderate_09,bias_correction,0.9365366142906585,0.936536614290658,4.440892098500626e-16,True
+seeded_moderate_09,n_input,32,32,,True
+seeded_moderate_09,n_complete,32,32,,True
+seeded_moderate_09,missing_x,0,0,,True
+seeded_moderate_09,missing_y,0,0,,True
+seeded_moderate_09,missing_either,0,0,,True
+seeded_moderate_09,missing_both,0,0,,True
+seeded_moderate_09,retained_indices,"[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]","[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]",,True
+seeded_moderate_10,ccc,-0.3202710786188739,-0.320271078618874,1.1102230246251565e-16,True
+seeded_moderate_10,precision,-0.8993221831128809,-0.899322183112881,1.1102230246251565e-16,True
+seeded_moderate_10,bias_correction,0.35612496236921376,0.356124962369214,2.220446049250313e-16,True
+seeded_moderate_10,n_input,35,35,,True
+seeded_moderate_10,n_complete,35,35,,True
+seeded_moderate_10,missing_x,0,0,,True
+seeded_moderate_10,missing_y,0,0,,True
+seeded_moderate_10,missing_either,0,0,,True
+seeded_moderate_10,missing_both,0,0,,True
+seeded_moderate_10,retained_indices,"[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34]","[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34]",,True
+seeded_moderate_11,ccc,0.27346937147891065,0.273469371478911,3.3306690738754696e-16,True
+seeded_moderate_11,precision,0.7016556715945068,0.701655671594507,2.220446049250313e-16,True
+seeded_moderate_11,bias_correction,0.38974867951605624,0.389748679516056,2.220446049250313e-16,True
+seeded_moderate_11,n_input,38,38,,True
+seeded_moderate_11,n_complete,38,38,,True
+seeded_moderate_11,missing_x,0,0,,True
+seeded_moderate_11,missing_y,0,0,,True
+seeded_moderate_11,missing_either,0,0,,True
+seeded_moderate_11,missing_both,0,0,,True
+seeded_moderate_11,retained_indices,"[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37]","[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37]",,True
+seeded_moderate_12,ccc,0.6694492566472948,0.669449256647295,2.220446049250313e-16,True
+seeded_moderate_12,precision,0.861421049487086,0.861421049487086,0.0,True
+seeded_moderate_12,bias_correction,0.7771452265368991,0.777145226536899,1.1102230246251565e-16,True
+seeded_moderate_12,n_input,41,41,,True
+seeded_moderate_12,n_complete,38,38,,True
+seeded_moderate_12,missing_x,2,2,,True
+seeded_moderate_12,missing_y,2,2,,True
+seeded_moderate_12,missing_either,3,3,,True
+seeded_moderate_12,missing_both,1,1,,True
+seeded_moderate_12,retained_indices,"[0, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 40]","[0, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 40]",,True
+seeded_moderate_13,ccc,0.9246652751035838,0.924665275103584,2.220446049250313e-16,True
+seeded_moderate_13,precision,0.9498515858482128,0.949851585848213,2.220446049250313e-16,True
+seeded_moderate_13,bias_correction,0.9734839514721263,0.973483951472126,3.3306690738754696e-16,True
+seeded_moderate_13,n_input,44,44,,True
+seeded_moderate_13,n_complete,44,44,,True
+seeded_moderate_13,missing_x,0,0,,True
+seeded_moderate_13,missing_y,0,0,,True
+seeded_moderate_13,missing_either,0,0,,True
+seeded_moderate_13,missing_both,0,0,,True
+seeded_moderate_13,retained_indices,"[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43]","[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43]",,True
+seeded_moderate_14,ccc,0.8040324951453726,0.804032495145373,4.440892098500626e-16,True
+seeded_moderate_14,precision,0.97096957590989,0.97096957590989,0.0,True
+seeded_moderate_14,bias_correction,0.8280717697997059,0.828071769799706,1.1102230246251565e-16,True
+seeded_moderate_14,n_input,47,47,,True
+seeded_moderate_14,n_complete,47,47,,True
+seeded_moderate_14,missing_x,0,0,,True
+seeded_moderate_14,missing_y,0,0,,True
+seeded_moderate_14,missing_either,0,0,,True
+seeded_moderate_14,missing_both,0,0,,True
+seeded_moderate_14,retained_indices,"[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46]","[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46]",,True
+seeded_moderate_15,ccc,-0.17002476870512978,-0.17002476870513,2.220446049250313e-16,True
+seeded_moderate_15,precision,-0.7698036568224609,-0.769803656822461,1.1102230246251565e-16,True
+seeded_moderate_15,bias_correction,0.22086770723712276,0.220867707237123,2.498001805406602e-16,True
+seeded_moderate_15,n_input,50,50,,True
+seeded_moderate_15,n_complete,50,50,,True
+seeded_moderate_15,missing_x,0,0,,True
+seeded_moderate_15,missing_y,0,0,,True
+seeded_moderate_15,missing_either,0,0,,True
+seeded_moderate_15,missing_both,0,0,,True
+seeded_moderate_15,retained_indices,"[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49]","[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49]",,True
+seeded_moderate_16,ccc,0.49097565416575034,0.49097565416575,3.3306690738754696e-16,True
+seeded_moderate_16,precision,0.6626406839739905,0.66264068397399,4.440892098500626e-16,True
+seeded_moderate_16,bias_correction,0.7409379865137014,0.740937986513701,3.3306690738754696e-16,True
+seeded_moderate_16,n_input,53,53,,True
+seeded_moderate_16,n_complete,50,50,,True
+seeded_moderate_16,missing_x,2,2,,True
+seeded_moderate_16,missing_y,2,2,,True
+seeded_moderate_16,missing_either,3,3,,True
+seeded_moderate_16,missing_both,1,1,,True
+seeded_moderate_16,retained_indices,"[0, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 52]","[0, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 52]",,True
+seeded_moderate_17,ccc,0.857190505566219,0.857190505566219,0.0,True
+seeded_moderate_17,precision,0.8749251063469053,0.874925106346905,3.3306690738754696e-16,True
+seeded_moderate_17,bias_correction,0.9797301498699311,0.979730149869931,1.1102230246251565e-16,True
+seeded_moderate_17,n_input,56,56,,True
+seeded_moderate_17,n_complete,56,56,,True
+seeded_moderate_17,missing_x,0,0,,True
+seeded_moderate_17,missing_y,0,0,,True
+seeded_moderate_17,missing_either,0,0,,True
+seeded_moderate_17,missing_both,0,0,,True
+seeded_moderate_17,retained_indices,"[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55]","[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55]",,True
+seeded_moderate_18,ccc,0.8714283051465241,0.871428305146524,1.1102230246251565e-16,True
+seeded_moderate_18,precision,0.9152467127175672,0.915246712717567,2.220446049250313e-16,True
+seeded_moderate_18,bias_correction,0.9521239388656895,0.952123938865689,4.440892098500626e-16,True
+seeded_moderate_18,n_input,59,59,,True
+seeded_moderate_18,n_complete,59,59,,True
+seeded_moderate_18,missing_x,0,0,,True
+seeded_moderate_18,missing_y,0,0,,True
+seeded_moderate_18,missing_either,0,0,,True
+seeded_moderate_18,missing_both,0,0,,True
+seeded_moderate_18,retained_indices,"[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58]","[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58]",,True
+seeded_moderate_19,ccc,0.7191831433522157,0.719183143352216,3.3306690738754696e-16,True
+seeded_moderate_19,precision,0.9580029818158521,0.958002981815852,1.1102230246251565e-16,True
+seeded_moderate_19,bias_correction,0.7507107566502935,0.750710756650294,4.440892098500626e-16,True
+seeded_moderate_19,n_input,62,62,,True
+seeded_moderate_19,n_complete,62,62,,True
+seeded_moderate_19,missing_x,0,0,,True
+seeded_moderate_19,missing_y,0,0,,True
+seeded_moderate_19,missing_either,0,0,,True
+seeded_moderate_19,missing_both,0,0,,True
+seeded_moderate_19,retained_indices,"[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61]","[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61]",,True
+seeded_moderate_20,ccc,-0.580351512815689,-0.580351512815689,0.0,True
+seeded_moderate_20,precision,-0.8742474566156281,-0.874247456615628,1.1102230246251565e-16,True
+seeded_moderate_20,bias_correction,0.6638297983300243,0.663829798330024,3.3306690738754696e-16,True
+seeded_moderate_20,n_input,65,65,,True
+seeded_moderate_20,n_complete,62,62,,True
+seeded_moderate_20,missing_x,2,2,,True
+seeded_moderate_20,missing_y,2,2,,True
+seeded_moderate_20,missing_either,3,3,,True
+seeded_moderate_20,missing_both,1,1,,True
+seeded_moderate_20,retained_indices,"[0, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 64]","[0, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 64]",,True
+empty,minimum_pairs,InputError,InputError,,True
+single_equal,minimum_pairs,InputError,InputError,,True
+single_unequal,minimum_pairs,InputError,InputError,,True
+constant_equal,ccc,,,,True
+constant_equal,precision,,,,True
+constant_equal,bias_correction,,,,True
+constant_equal,n_input,4,4,,True
+constant_equal,n_complete,4,4,,True
+constant_equal,missing_x,0,0,,True
+constant_equal,missing_y,0,0,,True
+constant_equal,missing_either,0,0,,True
+constant_equal,missing_both,0,0,,True
+constant_equal,retained_indices,"[0, 1, 2, 3]","[0, 1, 2, 3]",,True
+constant_unequal,ccc,0.0,0,0.0,True
+constant_unequal,precision,,,,True
+constant_unequal,bias_correction,0.0,0,0.0,True
+constant_unequal,n_input,4,4,,True
+constant_unequal,n_complete,4,4,,True
+constant_unequal,missing_x,0,0,,True
+constant_unequal,missing_y,0,0,,True
+constant_unequal,missing_either,0,0,,True
+constant_unequal,missing_both,0,0,,True
+constant_unequal,retained_indices,"[0, 1, 2, 3]","[0, 1, 2, 3]",,True
+constant_x,ccc,0.0,0,0.0,True
+constant_x,precision,,,,True
+constant_x,bias_correction,0.0,0,0.0,True
+constant_x,n_input,4,4,,True
+constant_x,n_complete,4,4,,True
+constant_x,missing_x,0,0,,True
+constant_x,missing_y,0,0,,True
+constant_x,missing_either,0,0,,True
+constant_x,missing_both,0,0,,True
+constant_x,retained_indices,"[0, 1, 2, 3]","[0, 1, 2, 3]",,True
+constant_y,ccc,0.0,0,0.0,True
+constant_y,precision,,,,True
+constant_y,bias_correction,0.0,0,0.0,True
+constant_y,n_input,4,4,,True
+constant_y,n_complete,4,4,,True
+constant_y,missing_x,0,0,,True
+constant_y,missing_y,0,0,,True
+constant_y,missing_either,0,0,,True
+constant_y,missing_both,0,0,,True
+constant_y,retained_indices,"[0, 1, 2, 3]","[0, 1, 2, 3]",,True
+all_pairs_missing,minimum_pairs,InputError,InputError,,True

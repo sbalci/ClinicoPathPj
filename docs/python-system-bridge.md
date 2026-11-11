@@ -66,3 +66,14 @@ The 0.3.61 focused, packaged and native evidence is recorded separately under
 is `tools/check-pj-comparison-artifacts.py`. Full-suite 0.3.61 qualification remains pending.
 The full 61-analysis
 migration, other platforms, detailed deadline accounting and clinical qualification remain open.
+
+## 0.3.62 source/API follow-up — 2026-11-10
+
+The [source/API comparison](python-service-source-api.md) checks both execution
+examples with bundled and existing external interpreters. Sixteen matched pairs
+pass independent R summaries/counts/percentages and executable/dependency identity.
+The external environment is Python 3.9.12/NumPy 1.24.3. Its existing dependency path
+is explicitly supplied to this developer probe; no package is installed.
+The fixed teaching entries still select bundled Python. This follow-up does not
+qualify a System GUI route, external rendering or saved System-computed analyses,
+and does not supersede the GUI discovery limitations recorded above.

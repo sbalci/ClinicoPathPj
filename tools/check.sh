@@ -6,7 +6,10 @@
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 APP=/Applications/jamovi.app/Contents
-RSCRIPT=/Library/Frameworks/R.framework/Versions/4.6/Resources/bin/Rscript
+R_HOME="$APP/Frameworks/R.framework/Resources"
+R_EXEC="$R_HOME/bin/exec/R"
+# Optional local oracle/test dependencies; these are not bundled-module qualification.
+CPJ_TEST_LIBRARY="${CPJ_TEST_LIBRARY:-/Library/Frameworks/R.framework/Versions/4.6/Resources/library}"
 CPJ_LIBRARY="${CPJ_LIBRARY:-$HOME/Library/Application Support/jamovi/modules/ClinicoPathPj/R}"
 if [[ ! -f "$CPJ_LIBRARY/ClinicoPathPj/DESCRIPTION" ]]; then
     echo "No installed ClinicoPathPj package in CPJ_LIBRARY=$CPJ_LIBRARY" >&2
@@ -27,15 +30,23 @@ cd "$APP/MacOS"
 # R cannot remove its temp directory with an empty PATH ("sh: rm: ..."); jamovi's engine
 # behaves the same, so that one line is filtered out.
 env -i HOME="$HOME" LC_CTYPE=C.UTF-8 PATH= \
+    R_HOME="$R_HOME" DYLD_LIBRARY_PATH="$R_HOME/lib" \
     PYTHONHOME="$APP/Resources" PYTHONPATH="$APP/Resources/jamovi/server" PYTHONIOENCODING=utf-8 \
     CPJ_ROOT="$ROOT" \
+    CPJ_TEST_LIBRARY="$CPJ_TEST_LIBRARY" \
+    CPJ_TEST_FILTER="${CPJ_TEST_FILTER:-.*}" \
     CPJ_LIBRARY="$CPJ_LIBRARY" \
-    "$RSCRIPT" --vanilla -e '
+    "$R_EXEC" --vanilla --slave -e '
         .libPaths(c(Sys.getenv("CPJ_LIBRARY"),
-                    "/Applications/jamovi.app/Contents/Resources/modules/base/R", .libPaths()))
+                    "/Applications/jamovi.app/Contents/Resources/modules/base/R", .libPaths(),
+                    Sys.getenv("CPJ_TEST_LIBRARY")))
         suppressPackageStartupMessages({ library(testthat); library(ClinicoPathPj) })
+        cat("R home:", R.home(), "\n")
+        jmvcore:::initProtoBuf()
         expected <- read.dcf(file.path(Sys.getenv("CPJ_ROOT"), "DESCRIPTION"))[1, "Version"]
         if (as.character(packageVersion("ClinicoPathPj")) != expected)
             stop("The test package version does not match the source DESCRIPTION")
-        testthat::test_dir(file.path(Sys.getenv("CPJ_ROOT"), "tests", "testthat"), stop_on_failure = TRUE)
+        testthat::test_dir(file.path(Sys.getenv("CPJ_ROOT"), "tests", "testthat"),
+                          filter = Sys.getenv("CPJ_TEST_FILTER", unset = ".*"),
+                          stop_on_failure = TRUE)
     ' 2>&1 | grep -v "^sh: rm: No such file or directory$"

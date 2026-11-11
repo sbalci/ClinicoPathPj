@@ -7,7 +7,7 @@ pyagreementClass <- R6::R6Class(
         .run = function() {
             .cpjRun(self, "pyagreement",
                 clearOnInputError = TRUE,
-                options = c("vars", "subject", "baConfidenceLevel", "confLevel", "showPairs", "blandAltmanPlot", "method", "iccType", "showICCCases"),
+                options = c("vars", "subject", "baConfidenceLevel", "confLevel", "showPairs", "blandAltmanPlot", "method", "iccType", "showICCCases", "showCCCPairs", "cccPlot"),
                 arrays = c("vars"),
                 terms = character(0),
                 numeric = c("vars"),

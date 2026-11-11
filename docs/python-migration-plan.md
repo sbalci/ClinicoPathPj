@@ -1,10 +1,37 @@
-# ClinicoPathPj implementation plan — revised 2026-11-10
+# ClinicoPathPj implementation plan — revised 2026-11-11
 
 This is the current delivery plan. It supersedes the implementation recommendations in
 `python-roadmap.md` (2026-10-18) and the initial `interactive-analysis-plan.md`.
 The original 61-analysis inventory remains the target; a menu entry does not establish parity.
 Detailed per-analysis evidence remains in the [generated status matrix](python-migration-status.md).
 
+## Current implementation increment — native CCC point estimates
+
+The 0.3.63 `pyagreement` build now offers Lin CCC point estimates, Pearson
+precision and direct bias correction through its existing method selector. It
+preserves the Bland–Altman default and frozen public minimum of **10 complete
+pairs**, with native cohort/coefficient tables, optional source pairs and a static
+measurement plot. Confidence controls are disabled for CCC; no CCC intervals,
+p-values or clinical interpretation bands are offered. ID and scalar-numeric role
+checks supplement the numerical engine's missing-pair audit.
+
+The engine's 436 independent R/DescTools comparisons remain recorded separately.
+See [native integration and acceptance evidence](python-concordance-integration.md)
+for the 489-test source Python suite, six registry/UI checks, compiler preparation
+and 166 native R assertions against both isolated source and the built package.
+The package is GUI-sideloaded and all 1,446 installed files match the archive.
+Fresh-engine save/reopen, Save As and native HTML tables/plot export pass on the
+tested Mac. A fresh-session single-click retest also passes live method switching,
+incomplete-role clearing and recovery after reopen, followed by Save As and HTML
+export. The earlier double-click/input-stall attempt remains recorded without a
+proven root cause. CCC inference, additional export formats and broader platforms
+remain open.
+See the [0.3.63 qualification record](validation-exports/python-0.3.63-qualification-20261111.json).
+The final 0.3.63 follow-up passes **489 Python tests** and **4,573 R assertions**
+with no R failures, warnings or skips. The 61-analysis completion totals remain
+unchanged. The [next CCC uncertainty
+plan](python-concordance-uncertainty-plan.md) records the frozen transformed/Wald
+reference distinction and the validation gates required before adding inference.
 
 ## Execution-service examples — 2026-11-10 / 0.3.62
 
@@ -20,11 +47,32 @@ comparisons; four summary fixtures; 11 same-instance native lifecycle assertions
 packaged-runtime smoke cases; GUI Sideload of 0.3.62 with Pj 1.5.0; fresh-engine age-pyramid
 execution, unequal bars, save/reopen/recalculation and native HTML/PNG export. Installed
 Python assets and R databases match the archive, excluding mutable bytecode caches.
+Both summary teaching entries now also pass fresh-session GUI execution, full-app
+restart/reopen, input removal/clearing/restoration, live recalculation, Save As and
+native HTML export. Persisted artifacts retain two matching summaries and unchanged
+measurement data; source labels have only the known empty `[]` → `{}` writer change.
 
 These are execution experiments, not additional baseline ports or clinical validation.
-Keep the own bridge as the normal default; Pj remains optional. Summary-example desktop
-acceptance, other platforms/clean machines, GUI long-job cancellation, new-example System
-Python, Word/LaTeX export and full 0.3.62 regression suites remain separate gates.
+Keep the own bridge as the normal default; Pj remains optional. Other platforms/clean
+machines, GUI long-job cancellation, System GUI/renderer integration and full LaTeX
+compilation/cross-reference handling remain separate gates. Word exports of both
+comparisons pass native-table/media checks and six-page LibreOffice visual review;
+LaTeX tables and two figure PDFs pass artifact/rendering checks. Full LaTeX builds
+are blocked by the local missing `apa7.cls`; repeated result titles also produce
+duplicate exporter labels. See [office-export evidence](python-service-office-exports.md).
+The full bundled-Python suite now passes 473 tests, and the full bundled-R suite
+passes 4,498 assertions with zero failures, warnings or skips. Generator freshness
+passes. Both summary routes also pass same-instance clearing, column changes,
+row-limit rejection and recovery with installed Pj 1.5.0.
+The shared developer source/API harness now passes 16 matched pairs: four summary
+fixtures and four age-pyramid configurations under each of bundled and external
+Python, with executable/dependency provenance and independent R checks. This is
+calculation/plot-data evidence. The fixed teaching entries still use bundled Python;
+external GUI, saved-file and renderer acceptance is additional work. See the
+[source/API comparison guide](python-service-source-api.md).
+An earlier summary GUI attempt stalled before the Data Library loaded. Native Quit
+and relaunch recovered navigation; the subsequent qualification above supersedes
+that attempt without attributing the desktop state to either backend.
 See [age-pyramid comparison](python-age-pyramid-service.md), [summary examples](python-service-examples.md)
 and the [dated qualification record](validation-exports/python-0.3.62-qualification-20261110.json).
 
@@ -47,7 +95,7 @@ are ported. Advance narrow classical cores while retaining all frozen omissions.
 | Next order | Work | Scope and exit gate |
 |---|---|---|
 | 0 | Close outstanding lifecycle/platform gates for existing ports | Keep 0.3.57 inclusion qualification distinct from earlier 200-row inspector evidence; do not enlarge the catalog to avoid acceptance debt. |
-| 1 | `pyagreement` continuous agreement core | Independent paired bias/LoA/CCC, then explicitly selected balanced ICC; independent R/hand fixtures and native lifecycle before repeated/unbalanced models. |
+| 1 | `pyagreement` continuous agreement core | Bland–Altman and balanced ICC are native partial cores; CCC point estimates have native roles/UI, tables and a static plot in 0.3.63. Save/reopen, live method switching, incomplete-input recovery and HTML export pass on the tested Mac. Separately validated uncertainty remains next before repeated/unbalanced models. |
 | 2 | `pyenhancedroc` and `pydecisioncompare` | Empirical ROC and uncertainty, paired test comparison; PR/AP and supplied-prediction calibration have explicit additional feature contracts. |
 | 3 | `pyjjbetweenstats` and `pyjjwithinstats` | Independent/paired estimation cores; subject identity and visit matching; robust/Bayesian/general repeated branches remain separate gates. |
 | 4 | `pysurvival` / `pysinglearm` KM core | Deterministic ties, risk tables and censoring tests; prototype Cox/competing-risk dependencies separately. |

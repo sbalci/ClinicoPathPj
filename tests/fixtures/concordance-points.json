@@ -1,0 +1,1986 @@
+{
+  "schema_version": 1,
+  "metadata": {
+    "seed": 20261110,
+    "normalization": "population (divide by n complete pairs)",
+    "missing_policy": "pairwise complete observations; input null is missing",
+    "retained_index_base": 0,
+    "tolerance": 1e-12,
+    "r_version": "R version 4.6.0 (2026-04-24)",
+    "desctools_version": "0.99.60",
+    "jsonlite_version": "2.0.0",
+    "package_call": "DescTools::CCC(x, y, na.rm = TRUE); point estimates only",
+    "public_data_source": "Installed DescTools help('CCC'), Examples, PEFR Figure 2",
+    "independence": "Base R arithmetic and DescTools; no target implementation read or executed",
+    "session_info": ["R version 4.6.0 (2026-04-24)", "Platform: aarch64-apple-darwin23", "Running under: macOS 27.2.1", "", "Matrix products: default", "BLAS:   /Library/Frameworks/R.framework/Versions/4.6/Resources/lib/libRblas.0.dylib ", "LAPACK: /Library/Frameworks/R.framework/Versions/4.6/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.1", "", "locale:", "[1] C.UTF-8/C.UTF-8/C.UTF-8/C/C.UTF-8/C.UTF-8", "", "time zone: Europe/Istanbul", "tzcode source: internal", "", "attached base packages:", "[1] stats     graphics  grDevices utils     datasets  methods   base     ", "", "loaded via a namespace (and not attached):", " [1] vctrs_0.7.3         httr_1.4.9          cli_3.6.6          ", " [4] rlang_1.3.0         forcats_1.0.1       haven_2.5.5        ", " [7] Exact_3.3           jsonlite_2.0.0      data.table_1.18.6.1", "[10] glue_1.8.1          e1071_1.7-17        rootSolve_1.8.2.4  ", "[13] hms_1.1.4           lmom_3.3            readxl_1.5.0.1     ", "[16] grid_4.6.0          cellranger_1.1.0    tibble_3.3.1       ", "[19] expm_1.0-1          tzdb_0.5.0          MASS_7.3-66        ", "[22] mvtnorm_1.4-2       lifecycle_1.0.5     compiler_4.6.0     ", "[25] fs_2.1.0            Rcpp_1.1.2          pkgconfig_2.0.3    ", "[28] DescTools_0.99.60   rstudioapi_0.19.0   gld_2.6.8          ", "[31] lattice_0.23-1      R6_2.6.1            class_7.3-24       ", "[34] readr_2.2.0         pillar_1.11.1       magrittr_2.0.5     ", "[37] Matrix_1.7-6        tools_4.6.0         proxy_0.4-29       ", "[40] withr_3.0.3         boot_1.3-32        "],
+    "case_count": 41,
+    "degenerate_case_count": 8,
+    "desctools_unexpected_mismatches": 0,
+    "desctools_zero_r_cb_limitations": 2
+  },
+  "cases": [
+    {
+      "id": "tiny_hand_calculation",
+      "note": "",
+      "x": [-1, 0, 1],
+      "y": [-1, 1, 0],
+      "n_input": 3,
+      "n_complete": 3,
+      "missing_x": 0,
+      "missing_y": 0,
+      "missing_either": 0,
+      "missing_both": 0,
+      "retained_indices": [0, 1, 2],
+      "expected": {
+        "ccc": 0.5,
+        "precision": 0.5,
+        "bias_correction": 1,
+        "mean_x": 0,
+        "mean_y": 0,
+        "variance_x": 0.666666666666667,
+        "variance_y": 0.666666666666667,
+        "covariance": 0.333333333333333,
+        "denominator": 1.33333333333333
+      },
+      "desctools": {
+        "ccc": 0.5,
+        "precision": 0.5,
+        "bias_correction": 1
+      },
+      "desctools_nonfinite": {
+        "ccc": null,
+        "precision": null,
+        "bias_correction": null
+      },
+      "desctools_cb_zero_r_limitation": false,
+      "desctools_warnings": [],
+      "absolute_difference": {
+        "ccc": 0,
+        "precision": 0,
+        "bias_correction": 0
+      }
+    },
+    {
+      "id": "identity",
+      "note": "",
+      "x": [-3, -1, 0, 2, 5],
+      "y": [-3, -1, 0, 2, 5],
+      "n_input": 5,
+      "n_complete": 5,
+      "missing_x": 0,
+      "missing_y": 0,
+      "missing_either": 0,
+      "missing_both": 0,
+      "retained_indices": [0, 1, 2, 3, 4],
+      "expected": {
+        "ccc": 1,
+        "precision": 1,
+        "bias_correction": 1,
+        "mean_x": 0.6,
+        "mean_y": 0.6,
+        "variance_x": 7.44,
+        "variance_y": 7.44,
+        "covariance": 7.44,
+        "denominator": 14.88
+      },
+      "desctools": {
+        "ccc": 1,
+        "precision": 1,
+        "bias_correction": 1
+      },
+      "desctools_nonfinite": {
+        "ccc": null,
+        "precision": null,
+        "bias_correction": null
+      },
+      "desctools_cb_zero_r_limitation": false,
+      "desctools_warnings": [],
+      "absolute_difference": {
+        "ccc": 0,
+        "precision": 0,
+        "bias_correction": 0
+      }
+    },
+    {
+      "id": "offset_positive",
+      "note": "",
+      "x": [1, 2, 3, 4, 5, 6, 7, 8],
+      "y": [3, 4, 5, 6, 7, 8, 9, 10],
+      "n_input": 8,
+      "n_complete": 8,
+      "missing_x": 0,
+      "missing_y": 0,
+      "missing_either": 0,
+      "missing_both": 0,
+      "retained_indices": [0, 1, 2, 3, 4, 5, 6, 7],
+      "expected": {
+        "ccc": 0.724137931034483,
+        "precision": 1,
+        "bias_correction": 0.724137931034483,
+        "mean_x": 4.5,
+        "mean_y": 6.5,
+        "variance_x": 5.25,
+        "variance_y": 5.25,
+        "covariance": 5.25,
+        "denominator": 14.5
+      },
+      "desctools": {
+        "ccc": 0.724137931034483,
+        "precision": 1,
+        "bias_correction": 0.724137931034483
+      },
+      "desctools_nonfinite": {
+        "ccc": null,
+        "precision": null,
+        "bias_correction": null
+      },
+      "desctools_cb_zero_r_limitation": false,
+      "desctools_warnings": [],
+      "absolute_difference": {
+        "ccc": 0,
+        "precision": 0,
+        "bias_correction": 0
+      }
+    },
+    {
+      "id": "offset_negative",
+      "note": "",
+      "x": [1, 2, 3, 4, 5, 6, 7, 8],
+      "y": [-3, -2, -1, 0, 1, 2, 3, 4],
+      "n_input": 8,
+      "n_complete": 8,
+      "missing_x": 0,
+      "missing_y": 0,
+      "missing_either": 0,
+      "missing_both": 0,
+      "retained_indices": [0, 1, 2, 3, 4, 5, 6, 7],
+      "expected": {
+        "ccc": 0.39622641509434,
+        "precision": 1,
+        "bias_correction": 0.39622641509434,
+        "mean_x": 4.5,
+        "mean_y": 0.5,
+        "variance_x": 5.25,
+        "variance_y": 5.25,
+        "covariance": 5.25,
+        "denominator": 26.5
+      },
+      "desctools": {
+        "ccc": 0.39622641509434,
+        "precision": 1,
+        "bias_correction": 0.39622641509434
+      },
+      "desctools_nonfinite": {
+        "ccc": null,
+        "precision": null,
+        "bias_correction": null
+      },
+      "desctools_cb_zero_r_limitation": false,
+      "desctools_warnings": [],
+      "absolute_difference": {
+        "ccc": 0,
+        "precision": 0,
+        "bias_correction": 0
+      }
+    },
+    {
+      "id": "scale_positive",
+      "note": "",
+      "x": [-4, -3, -2, -1, 0, 1, 2, 3, 4],
+      "y": [-8, -6, -4, -2, 0, 2, 4, 6, 8],
+      "n_input": 9,
+      "n_complete": 9,
+      "missing_x": 0,
+      "missing_y": 0,
+      "missing_either": 0,
+      "missing_both": 0,
+      "retained_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8],
+      "expected": {
+        "ccc": 0.8,
+        "precision": 1,
+        "bias_correction": 0.8,
+        "mean_x": 0,
+        "mean_y": 0,
+        "variance_x": 6.66666666666667,
+        "variance_y": 26.6666666666667,
+        "covariance": 13.3333333333333,
+        "denominator": 33.3333333333333
+      },
+      "desctools": {
+        "ccc": 0.8,
+        "precision": 1,
+        "bias_correction": 0.8
+      },
+      "desctools_nonfinite": {
+        "ccc": null,
+        "precision": null,
+        "bias_correction": null
+      },
+      "desctools_cb_zero_r_limitation": false,
+      "desctools_warnings": [],
+      "absolute_difference": {
+        "ccc": 0,
+        "precision": 0,
+        "bias_correction": 0
+      }
+    },
+    {
+      "id": "scale_and_offset",
+      "note": "",
+      "x": [-4, -3, -2, -1, 0, 1, 2, 3, 4],
+      "y": [-3.8, -2.1, -0.4, 1.3, 3, 4.7, 6.4, 8.1, 9.8],
+      "n_input": 9,
+      "n_complete": 9,
+      "missing_x": 0,
+      "missing_y": 0,
+      "missing_either": 0,
+      "missing_both": 0,
+      "retained_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8],
+      "expected": {
+        "ccc": 0.648854961832061,
+        "precision": 1,
+        "bias_correction": 0.648854961832061,
+        "mean_x": 0,
+        "mean_y": 3,
+        "variance_x": 6.66666666666667,
+        "variance_y": 19.2666666666667,
+        "covariance": 11.3333333333333,
+        "denominator": 34.9333333333333
+      },
+      "desctools": {
+        "ccc": 0.648854961832061,
+        "precision": 1,
+        "bias_correction": 0.648854961832061
+      },
+      "desctools_nonfinite": {
+        "ccc": null,
+        "precision": null,
+        "bias_correction": null
+      },
+      "desctools_cb_zero_r_limitation": false,
+      "desctools_warnings": [],
+      "absolute_difference": {
+        "ccc": 1.11022302462516e-16,
+        "precision": 1.11022302462516e-16,
+        "bias_correction": 0
+      }
+    },
+    {
+      "id": "reversed_centered",
+      "note": "",
+      "x": [-4, -3, -2, -1, 0, 1, 2, 3, 4],
+      "y": [4, 3, 2, 1, 0, -1, -2, -3, -4],
+      "n_input": 9,
+      "n_complete": 9,
+      "missing_x": 0,
+      "missing_y": 0,
+      "missing_either": 0,
+      "missing_both": 0,
+      "retained_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8],
+      "expected": {
+        "ccc": -1,
+        "precision": -1,
+        "bias_correction": 1,
+        "mean_x": 0,
+        "mean_y": 0,
+        "variance_x": 6.66666666666667,
+        "variance_y": 6.66666666666667,
+        "covariance": -6.66666666666667,
+        "denominator": 13.3333333333333
+      },
+      "desctools": {
+        "ccc": -1,
+        "precision": -1,
+        "bias_correction": 1
+      },
+      "desctools_nonfinite": {
+        "ccc": null,
+        "precision": null,
+        "bias_correction": null
+      },
+      "desctools_cb_zero_r_limitation": false,
+      "desctools_warnings": [],
+      "absolute_difference": {
+        "ccc": 0,
+        "precision": 0,
+        "bias_correction": 0
+      }
+    },
+    {
+      "id": "reversed_shifted",
+      "note": "",
+      "x": [1, 2, 3, 4, 5, 6, 7, 8],
+      "y": [11, 10, 9, 8, 7, 6, 5, 4],
+      "n_input": 8,
+      "n_complete": 8,
+      "missing_x": 0,
+      "missing_y": 0,
+      "missing_either": 0,
+      "missing_both": 0,
+      "retained_indices": [0, 1, 2, 3, 4, 5, 6, 7],
+      "expected": {
+        "ccc": -0.538461538461538,
+        "precision": -1,
+        "bias_correction": 0.538461538461538,
+        "mean_x": 4.5,
+        "mean_y": 7.5,
+        "variance_x": 5.25,
+        "variance_y": 5.25,
+        "covariance": -5.25,
+        "denominator": 19.5
+      },
+      "desctools": {
+        "ccc": -0.538461538461538,
+        "precision": -1,
+        "bias_correction": 0.538461538461538
+      },
+      "desctools_nonfinite": {
+        "ccc": null,
+        "precision": null,
+        "bias_correction": null
+      },
+      "desctools_cb_zero_r_limitation": false,
+      "desctools_warnings": [],
+      "absolute_difference": {
+        "ccc": 0,
+        "precision": 0,
+        "bias_correction": 0
+      }
+    },
+    {
+      "id": "ties_both",
+      "note": "",
+      "x": [0, 0, 1, 1, 2, 2],
+      "y": [0, 1, 1, 1, 2, 3],
+      "n_input": 6,
+      "n_complete": 6,
+      "missing_x": 0,
+      "missing_y": 0,
+      "missing_either": 0,
+      "missing_both": 0,
+      "retained_indices": [0, 1, 2, 3, 4, 5],
+      "expected": {
+        "ccc": 0.8,
+        "precision": 0.866025403784439,
+        "bias_correction": 0.923760430703401,
+        "mean_x": 1,
+        "mean_y": 1.33333333333333,
+        "variance_x": 0.666666666666667,
+        "variance_y": 0.888888888888889,
+        "covariance": 0.666666666666667,
+        "denominator": 1.66666666666667
+      },
+      "desctools": {
+        "ccc": 0.8,
+        "precision": 0.866025403784439,
+        "bias_correction": 0.923760430703401
+      },
+      "desctools_nonfinite": {
+        "ccc": null,
+        "precision": null,
+        "bias_correction": null
+      },
+      "desctools_cb_zero_r_limitation": false,
+      "desctools_warnings": [],
+      "absolute_difference": {
+        "ccc": 0,
+        "precision": 0,
+        "bias_correction": 0
+      }
+    },
+    {
+      "id": "ties_asymmetric",
+      "note": "",
+      "x": [1, 1, 1, 2, 4, 4, 7],
+      "y": [2, 1, 3, 3, 4, 6, 6],
+      "n_input": 7,
+      "n_complete": 7,
+      "missing_x": 0,
+      "missing_y": 0,
+      "missing_either": 0,
+      "missing_both": 0,
+      "retained_indices": [0, 1, 2, 3, 4, 5, 6],
+      "expected": {
+        "ccc": 0.804071246819338,
+        "precision": 0.871983801734487,
+        "bias_correction": 0.922117182933832,
+        "mean_x": 2.85714285714286,
+        "mean_y": 3.57142857142857,
+        "variance_x": 4.40816326530612,
+        "variance_y": 3.10204081632653,
+        "covariance": 3.22448979591837,
+        "denominator": 8.02040816326531
+      },
+      "desctools": {
+        "ccc": 0.804071246819338,
+        "precision": 0.871983801734487,
+        "bias_correction": 0.922117182933832
+      },
+      "desctools_nonfinite": {
+        "ccc": null,
+        "precision": null,
+        "bias_correction": null
+      },
+      "desctools_cb_zero_r_limitation": false,
+      "desctools_warnings": [],
+      "absolute_difference": {
+        "ccc": 2.22044604925031e-16,
+        "precision": 1.11022302462516e-16,
+        "bias_correction": 0
+      }
+    },
+    {
+      "id": "mixed_signs",
+      "note": "",
+      "x": [-8, -3, -1, 0, 2, 6],
+      "y": [-7, -5, 1, 2, 3, 5],
+      "n_input": 6,
+      "n_complete": 6,
+      "missing_x": 0,
+      "missing_y": 0,
+      "missing_either": 0,
+      "missing_both": 0,
+      "retained_indices": [0, 1, 2, 3, 4, 5],
+      "expected": {
+        "ccc": 0.933530280649926,
+        "precision": 0.939797991871168,
+        "bias_correction": 0.993330788876488,
+        "mean_x": -0.666666666666667,
+        "mean_y": -0.166666666666667,
+        "variance_x": 18.5555555555556,
+        "variance_y": 18.8055555555556,
+        "covariance": 17.5555555555556,
+        "denominator": 37.6111111111111
+      },
+      "desctools": {
+        "ccc": 0.933530280649926,
+        "precision": 0.939797991871168,
+        "bias_correction": 0.993330788876488
+      },
+      "desctools_nonfinite": {
+        "ccc": null,
+        "precision": null,
+        "bias_correction": null
+      },
+      "desctools_cb_zero_r_limitation": false,
+      "desctools_warnings": [],
+      "absolute_difference": {
+        "ccc": 2.22044604925031e-16,
+        "precision": 2.22044604925031e-16,
+        "bias_correction": 0
+      }
+    },
+    {
+      "id": "fractional",
+      "note": "",
+      "x": [0.1, 0.25, 0.5, 0.8, 1.3],
+      "y": [0.2, 0.3, 0.45, 0.9, 1.1],
+      "n_input": 5,
+      "n_complete": 5,
+      "missing_x": 0,
+      "missing_y": 0,
+      "missing_either": 0,
+      "missing_both": 0,
+      "retained_indices": [0, 1, 2, 3, 4],
+      "expected": {
+        "ccc": 0.957349081364829,
+        "precision": 0.976454848010959,
+        "bias_correction": 0.980433538032969,
+        "mean_x": 0.59,
+        "mean_y": 0.59,
+        "variance_x": 0.1824,
+        "variance_y": 0.1224,
+        "covariance": 0.1459,
+        "denominator": 0.3048
+      },
+      "desctools": {
+        "ccc": 0.957349081364829,
+        "precision": 0.976454848010959,
+        "bias_correction": 0.980433538032969
+      },
+      "desctools_nonfinite": {
+        "ccc": null,
+        "precision": null,
+        "bias_correction": null
+      },
+      "desctools_cb_zero_r_limitation": false,
+      "desctools_warnings": [],
+      "absolute_difference": {
+        "ccc": 0,
+        "precision": 1.11022302462516e-16,
+        "bias_correction": 0
+      }
+    },
+    {
+      "id": "two_pairs_positive",
+      "note": "",
+      "x": [2, 7],
+      "y": [3, 9],
+      "n_input": 2,
+      "n_complete": 2,
+      "missing_x": 0,
+      "missing_y": 0,
+      "missing_either": 0,
+      "missing_both": 0,
+      "retained_indices": [0, 1],
+      "expected": {
+        "ccc": 0.857142857142857,
+        "precision": 1,
+        "bias_correction": 0.857142857142857,
+        "mean_x": 4.5,
+        "mean_y": 6,
+        "variance_x": 6.25,
+        "variance_y": 9,
+        "covariance": 7.5,
+        "denominator": 17.5
+      },
+      "desctools": {
+        "ccc": 0.857142857142857,
+        "precision": 1,
+        "bias_correction": 0.857142857142857
+      },
+      "desctools_nonfinite": {
+        "ccc": null,
+        "precision": null,
+        "bias_correction": null
+      },
+      "desctools_cb_zero_r_limitation": false,
+      "desctools_warnings": [],
+      "absolute_difference": {
+        "ccc": 0,
+        "precision": 0,
+        "bias_correction": 0
+      }
+    },
+    {
+      "id": "two_pairs_negative",
+      "note": "",
+      "x": [2, 7],
+      "y": [9, 3],
+      "n_input": 2,
+      "n_complete": 2,
+      "missing_x": 0,
+      "missing_y": 0,
+      "missing_either": 0,
+      "missing_both": 0,
+      "retained_indices": [0, 1],
+      "expected": {
+        "ccc": -0.857142857142857,
+        "precision": -1,
+        "bias_correction": 0.857142857142857,
+        "mean_x": 4.5,
+        "mean_y": 6,
+        "variance_x": 6.25,
+        "variance_y": 9,
+        "covariance": -7.5,
+        "denominator": 17.5
+      },
+      "desctools": {
+        "ccc": -0.857142857142857,
+        "precision": -1,
+        "bias_correction": 0.857142857142857
+      },
+      "desctools_nonfinite": {
+        "ccc": null,
+        "precision": null,
+        "bias_correction": null
+      },
+      "desctools_cb_zero_r_limitation": false,
+      "desctools_warnings": [],
+      "absolute_difference": {
+        "ccc": 0,
+        "precision": 0,
+        "bias_correction": 0
+      }
+    },
+    {
+      "id": "zero_pearson_equal_scale",
+      "note": "Both marginal variances are positive. DescTools C.b is NaN because it divides CCC by r.",
+      "x": [-1, -1, 1, 1],
+      "y": [-1, 1, -1, 1],
+      "n_input": 4,
+      "n_complete": 4,
+      "missing_x": 0,
+      "missing_y": 0,
+      "missing_either": 0,
+      "missing_both": 0,
+      "retained_indices": [0, 1, 2, 3],
+      "expected": {
+        "ccc": 0,
+        "precision": 0,
+        "bias_correction": 1,
+        "mean_x": 0,
+        "mean_y": 0,
+        "variance_x": 1,
+        "variance_y": 1,
+        "covariance": 0,
+        "denominator": 2
+      },
+      "desctools": {
+        "ccc": 0,
+        "precision": 0,
+        "bias_correction": null
+      },
+      "desctools_nonfinite": {
+        "ccc": null,
+        "precision": null,
+        "bias_correction": "NaN"
+      },
+      "desctools_cb_zero_r_limitation": true,
+      "desctools_warnings": [],
+      "absolute_difference": {
+        "ccc": 0,
+        "precision": 0,
+        "bias_correction": null
+      }
+    },
+    {
+      "id": "zero_pearson_shifted_scaled",
+      "note": "Both marginal variances are positive. Direct Cb remains defined when r=0.",
+      "x": [-1, -1, 1, 1],
+      "y": [1, 5, 1, 5],
+      "n_input": 4,
+      "n_complete": 4,
+      "missing_x": 0,
+      "missing_y": 0,
+      "missing_either": 0,
+      "missing_both": 0,
+      "retained_indices": [0, 1, 2, 3],
+      "expected": {
+        "ccc": 0,
+        "precision": 0,
+        "bias_correction": 0.285714285714286,
+        "mean_x": 0,
+        "mean_y": 3,
+        "variance_x": 1,
+        "variance_y": 4,
+        "covariance": 0,
+        "denominator": 14
+      },
+      "desctools": {
+        "ccc": 0,
+        "precision": 0,
+        "bias_correction": null
+      },
+      "desctools_nonfinite": {
+        "ccc": null,
+        "precision": null,
+        "bias_correction": "NaN"
+      },
+      "desctools_cb_zero_r_limitation": true,
+      "desctools_warnings": [],
+      "absolute_difference": {
+        "ccc": 0,
+        "precision": 0,
+        "bias_correction": null
+      }
+    },
+    {
+      "id": "missing_alternating",
+      "note": "",
+      "x": [1, null, 3, 4, null, 6, 7],
+      "y": [2, 3, null, 5, null, 5, 9],
+      "n_input": 7,
+      "n_complete": 4,
+      "missing_x": 2,
+      "missing_y": 2,
+      "missing_either": 3,
+      "missing_both": 1,
+      "retained_indices": [0, 3, 5, 6],
+      "expected": {
+        "ccc": 0.854166666666667,
+        "precision": 0.899200649778351,
+        "bias_correction": 0.949917759598166,
+        "mean_x": 4.5,
+        "mean_y": 5.25,
+        "variance_x": 5.25,
+        "variance_y": 6.1875,
+        "covariance": 5.125,
+        "denominator": 12
+      },
+      "desctools": {
+        "ccc": 0.854166666666667,
+        "precision": 0.899200649778351,
+        "bias_correction": 0.949917759598166
+      },
+      "desctools_nonfinite": {
+        "ccc": null,
+        "precision": null,
+        "bias_correction": null
+      },
+      "desctools_cb_zero_r_limitation": false,
+      "desctools_warnings": [],
+      "absolute_difference": {
+        "ccc": 1.11022302462516e-16,
+        "precision": 1.11022302462516e-16,
+        "bias_correction": 0
+      }
+    },
+    {
+      "id": "missing_x_only",
+      "note": "",
+      "x": [null, 2, 4, null, 8, 10],
+      "y": [0, 3, 3, 6, 9, 8],
+      "n_input": 6,
+      "n_complete": 4,
+      "missing_x": 2,
+      "missing_y": 0,
+      "missing_either": 2,
+      "missing_both": 0,
+      "retained_indices": [1, 2, 4, 5],
+      "expected": {
+        "ccc": 0.901408450704225,
+        "precision": 0.912425517619522,
+        "bias_correction": 0.98792551643663,
+        "mean_x": 6,
+        "mean_y": 5.75,
+        "variance_x": 10,
+        "variance_y": 7.6875,
+        "covariance": 8,
+        "denominator": 17.75
+      },
+      "desctools": {
+        "ccc": 0.901408450704225,
+        "precision": 0.912425517619522,
+        "bias_correction": 0.98792551643663
+      },
+      "desctools_nonfinite": {
+        "ccc": null,
+        "precision": null,
+        "bias_correction": null
+      },
+      "desctools_cb_zero_r_limitation": false,
+      "desctools_warnings": [],
+      "absolute_difference": {
+        "ccc": 2.22044604925031e-16,
+        "precision": 2.22044604925031e-16,
+        "bias_correction": 0
+      }
+    },
+    {
+      "id": "missing_y_only",
+      "note": "",
+      "x": [1, 2, 4, 6, 8, 10],
+      "y": [null, 3, 3, null, 9, 8],
+      "n_input": 6,
+      "n_complete": 4,
+      "missing_x": 0,
+      "missing_y": 2,
+      "missing_either": 2,
+      "missing_both": 0,
+      "retained_indices": [1, 2, 4, 5],
+      "expected": {
+        "ccc": 0.901408450704225,
+        "precision": 0.912425517619522,
+        "bias_correction": 0.98792551643663,
+        "mean_x": 6,
+        "mean_y": 5.75,
+        "variance_x": 10,
+        "variance_y": 7.6875,
+        "covariance": 8,
+        "denominator": 17.75
+      },
+      "desctools": {
+        "ccc": 0.901408450704225,
+        "precision": 0.912425517619522,
+        "bias_correction": 0.98792551643663
+      },
+      "desctools_nonfinite": {
+        "ccc": null,
+        "precision": null,
+        "bias_correction": null
+      },
+      "desctools_cb_zero_r_limitation": false,
+      "desctools_warnings": [],
+      "absolute_difference": {
+        "ccc": 2.22044604925031e-16,
+        "precision": 2.22044604925031e-16,
+        "bias_correction": 0
+      }
+    },
+    {
+      "id": "missing_both",
+      "note": "",
+      "x": [1, null, 4, 6, null, 10],
+      "y": [2, null, 3, 7, null, 8],
+      "n_input": 6,
+      "n_complete": 4,
+      "missing_x": 2,
+      "missing_y": 2,
+      "missing_either": 2,
+      "missing_both": 2,
+      "retained_indices": [0, 2, 3, 5],
+      "expected": {
+        "ccc": 0.898550724637681,
+        "precision": 0.929837292709418,
+        "bias_correction": 0.966352642212733,
+        "mean_x": 5.25,
+        "mean_y": 5,
+        "variance_x": 10.6875,
+        "variance_y": 6.5,
+        "covariance": 7.75,
+        "denominator": 17.25
+      },
+      "desctools": {
+        "ccc": 0.898550724637681,
+        "precision": 0.929837292709418,
+        "bias_correction": 0.966352642212733
+      },
+      "desctools_nonfinite": {
+        "ccc": null,
+        "precision": null,
+        "bias_correction": null
+      },
+      "desctools_cb_zero_r_limitation": false,
+      "desctools_warnings": [],
+      "absolute_difference": {
+        "ccc": 0,
+        "precision": 0,
+        "bias_correction": 0
+      }
+    },
+    {
+      "id": "desctools_public_pefr",
+      "note": "Installed DescTools help('CCC'), Examples: Bland and Altman Figure 2 PEFR pairs.",
+      "x": [494, 395, 516, 434, 476, 557, 413, 442, 650, 433, 417, 656, 267, 478, 178, 423, 427],
+      "y": [512, 430, 520, 428, 500, 600, 364, 380, 658, 445, 432, 626, 260, 477, 259, 350, 451],
+      "n_input": 17,
+      "n_complete": 17,
+      "missing_x": 0,
+      "missing_y": 0,
+      "missing_either": 0,
+      "missing_both": 0,
+      "retained_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
+      "expected": {
+        "ccc": 0.942742431427485,
+        "precision": 0.943279446890946,
+        "bias_correction": 0.999430693136343,
+        "mean_x": 450.352941176471,
+        "mean_y": 452.470588235294,
+        "variance_x": 12732.8166089965,
+        "variance_y": 12042.3667820069,
+        "covariance": 11680.4221453287,
+        "denominator": 24779.6678200692
+      },
+      "desctools": {
+        "ccc": 0.942742431427485,
+        "precision": 0.943279446890946,
+        "bias_correction": 0.999430693136343
+      },
+      "desctools_nonfinite": {
+        "ccc": null,
+        "precision": null,
+        "bias_correction": null
+      },
+      "desctools_cb_zero_r_limitation": false,
+      "desctools_warnings": [],
+      "absolute_difference": {
+        "ccc": 0,
+        "precision": 1.11022302462516e-16,
+        "bias_correction": 0
+      }
+    },
+    {
+      "id": "seeded_moderate_01",
+      "note": "",
+      "x": [-0.919358, -0.570448, -1.877127, -1.511802, -0.910489, -1.1673, -1.133034, -0.742336],
+      "y": [-0.791914, -0.84441, -0.817134, -0.535725, -0.609443, -0.625714, -1.230346, -0.845993],
+      "n_input": 8,
+      "n_complete": 8,
+      "missing_x": 0,
+      "missing_y": 0,
+      "missing_either": 0,
+      "missing_both": 0,
+      "retained_indices": [0, 1, 2, 3, 4, 5, 6, 7],
+      "expected": {
+        "ccc": -0.0797955843092162,
+        "precision": -0.148751246156082,
+        "bias_correction": 0.536436408912421,
+        "mean_x": -1.10398675,
+        "mean_y": -0.787584875,
+        "variance_x": 0.156986931496188,
+        "variance_y": 0.0406175017821094,
+        "covariance": -0.0118781544255312,
+        "denominator": 0.297714579781813
+      },
+      "desctools": {
+        "ccc": -0.0797955843092162,
+        "precision": -0.148751246156082,
+        "bias_correction": 0.536436408912421
+      },
+      "desctools_nonfinite": {
+        "ccc": null,
+        "precision": null,
+        "bias_correction": null
+      },
+      "desctools_cb_zero_r_limitation": false,
+      "desctools_warnings": [],
+      "absolute_difference": {
+        "ccc": 0,
+        "precision": 0,
+        "bias_correction": 0
+      }
+    },
+    {
+      "id": "seeded_moderate_02",
+      "note": "",
+      "x": [-1.807625, 0.059343, 0.078222, -0.186651, -0.367817, -0.892129, -1.527863, -0.698784, -0.298362, 0.539924, 0.213568],
+      "y": [-0.35603, 0.815372, 0.284365, -0.047212, 0.242181, -0.065904, -0.638184, 0.141234, 0.571884, 0.771064, 0.488372],
+      "n_input": 11,
+      "n_complete": 11,
+      "missing_x": 0,
+      "missing_y": 0,
+      "missing_either": 0,
+      "missing_both": 0,
+      "retained_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      "expected": {
+        "ccc": 0.484178400405196,
+        "precision": 0.871324348127522,
+        "bias_correction": 0.555681017574795,
+        "mean_x": -0.444379454545455,
+        "mean_y": 0.200649272727273,
+        "variance_x": 0.483616357864975,
+        "variance_y": 0.189285354079289,
+        "covariance": 0.263626368359215,
+        "denominator": 1.08896377095134
+      },
+      "desctools": {
+        "ccc": 0.484178400405196,
+        "precision": 0.871324348127522,
+        "bias_correction": 0.555681017574795
+      },
+      "desctools_nonfinite": {
+        "ccc": null,
+        "precision": null,
+        "bias_correction": null
+      },
+      "desctools_cb_zero_r_limitation": false,
+      "desctools_warnings": [],
+      "absolute_difference": {
+        "ccc": 1.11022302462516e-16,
+        "precision": 0,
+        "bias_correction": 1.11022302462516e-16
+      }
+    },
+    {
+      "id": "seeded_moderate_03",
+      "note": "",
+      "x": [2.210217, 1.094637, 1.234399, 0.892399, 0.405599, 0.061912, 1.730697, 0.944595, 1.181608, 0.103506, 2.367067, 0.887903, 2.646429, 0.428184],
+      "y": [4.007546, 2.183532, 2.779632, 2.687897, 2.298317, 1.528119, 3.047152, 1.936897, 2.983405, 1.612232, 3.764164, 2.644211, 4.008302, 1.995183],
+      "n_input": 14,
+      "n_complete": 14,
+      "missing_x": 0,
+      "missing_y": 0,
+      "missing_either": 0,
+      "missing_both": 0,
+      "retained_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
+      "expected": {
+        "ccc": 0.331893880155245,
+        "precision": 0.944230107877763,
+        "bias_correction": 0.351496819881337,
+        "mean_x": 1.156368,
+        "mean_y": 2.67689921428571,
+        "variance_x": 0.623137230514143,
+        "variance_y": 0.630033115091883,
+        "covariance": 0.591631627724143,
+        "denominator": 3.56518551922321
+      },
+      "desctools": {
+        "ccc": 0.331893880155245,
+        "precision": 0.944230107877763,
+        "bias_correction": 0.351496819881337
+      },
+      "desctools_nonfinite": {
+        "ccc": null,
+        "precision": null,
+        "bias_correction": null
+      },
+      "desctools_cb_zero_r_limitation": false,
+      "desctools_warnings": [],
+      "absolute_difference": {
+        "ccc": 1.11022302462516e-16,
+        "precision": 1.11022302462516e-16,
+        "bias_correction": 5.55111512312578e-17
+      }
+    },
+    {
+      "id": "seeded_moderate_04",
+      "note": "",
+      "x": [0.01685, null, 1.878164, 2.17354, 3.11435, 0.551769, 1.824411, 2.524492, 0.973578, 2.14274, 4.037994, 1.513744, 4.87972, 1.583705, 2.988242, null, 1.725274],
+      "y": [-1.2321, -0.739799, null, 1.687379, 2.961247, -1.176092, 0.589705, 2.039998, -0.711357, 1.225142, 3.71151, 0.714898, 5.840241, 0.432379, 2.588338, null, 0.736316],
+      "n_input": 17,
+      "n_complete": 14,
+      "missing_x": 2,
+      "missing_y": 2,
+      "missing_either": 3,
+      "missing_both": 1,
+      "retained_indices": [0, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16],
+      "expected": {
+        "ccc": 0.82104328316366,
+        "precision": 0.988323827209498,
+        "bias_correction": 0.830743184126048,
+        "mean_x": 2.14645778571429,
+        "mean_y": 1.38625742857143,
+        "variance_x": 1.59212433580845,
+        "variance_y": 3.56809370159353,
+        "covariance": 2.35562351772531,
+        "denominator": 5.73812262040211
+      },
+      "desctools": {
+        "ccc": 0.82104328316366,
+        "precision": 0.988323827209498,
+        "bias_correction": 0.830743184126048
+      },
+      "desctools_nonfinite": {
+        "ccc": null,
+        "precision": null,
+        "bias_correction": null
+      },
+      "desctools_cb_zero_r_limitation": false,
+      "desctools_warnings": [],
+      "absolute_difference": {
+        "ccc": 2.22044604925031e-16,
+        "precision": 1.11022302462516e-16,
+        "bias_correction": 1.11022302462516e-16
+      }
+    },
+    {
+      "id": "seeded_moderate_05",
+      "note": "",
+      "x": [-0.206882, -1.313155, -3.625388, -3.365985, -0.831975, -4.276346, -1.743867, -4.347425, -1.098584, -3.705353, -0.330563, -2.628371, -1.665283, -2.330133, 0.178494, 0.977649, -1.958372, -1.729289, -0.382626, -1.118315],
+      "y": [-0.183034, -0.144755, 1.954833, 2.621199, -0.615053, 2.528678, 0.843206, 2.460235, 0.556197, 1.523707, -0.207112, 0.984736, 0.322648, 1.059144, -1.092384, -1.137632, 0.643075, 0.559371, -0.0228, -1.019533],
+      "n_input": 20,
+      "n_complete": 20,
+      "missing_x": 0,
+      "missing_y": 0,
+      "missing_either": 0,
+      "missing_both": 0,
+      "retained_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
+      "expected": {
+        "ccc": -0.349417745375972,
+        "precision": -0.930094752828066,
+        "bias_correction": 0.375679729741003,
+        "mean_x": -1.77508845,
+        "mean_y": 0.5817363,
+        "variance_x": 2.17546770406005,
+        "variance_y": 1.33189344249221,
+        "covariance": -1.58320901747622,
+        "denominator": 9.06198404876482
+      },
+      "desctools": {
+        "ccc": -0.349417745375972,
+        "precision": -0.930094752828066,
+        "bias_correction": 0.375679729741003
+      },
+      "desctools_nonfinite": {
+        "ccc": null,
+        "precision": null,
+        "bias_correction": null
+      },
+      "desctools_cb_zero_r_limitation": false,
+      "desctools_warnings": [],
+      "absolute_difference": {
+        "ccc": 0,
+        "precision": 0,
+        "bias_correction": 0
+      }
+    },
+    {
+      "id": "seeded_moderate_06",
+      "note": "",
+      "x": [1.669062, -0.93158, -1.184568, -1.047381, -1.141827, -1.23655, -0.122054, -0.432425, -0.039256, -0.686365, -2.072624, -3.193552, -1.285113, 0.686067, -2.949635, -0.973732, 0.31954, -0.660716, -1.308082, -2.794876, 2.136579, -1.492429, -0.696236],
+      "y": [0.695804, 0.134389, -0.504788, 0.040561, -0.088953, 0.4225, 0.609575, 0.61428, 0.657893, -0.125344, 0.007474, 0.376151, -0.402951, 0.955604, -0.223385, 0.137917, 0.796494, 0.976825, 0.74703, -0.753768, 1.217673, -0.499398, 0.617949],
+      "n_input": 23,
+      "n_complete": 23,
+      "missing_x": 0,
+      "missing_y": 0,
+      "missing_either": 0,
+      "missing_both": 0,
+      "retained_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22],
+      "expected": {
+        "ccc": 0.288696682649039,
+        "precision": 0.676469466107451,
+        "bias_correction": 0.42676971705798,
+        "mean_x": -0.845119695652174,
+        "mean_y": 0.278675304347826,
+        "variance_x": 1.6016221788243,
+        "variance_y": 0.281355165770473,
+        "covariance": 0.454104371089733,
+        "denominator": 3.14589254661977
+      },
+      "desctools": {
+        "ccc": 0.288696682649039,
+        "precision": 0.676469466107451,
+        "bias_correction": 0.42676971705798
+      },
+      "desctools_nonfinite": {
+        "ccc": null,
+        "precision": null,
+        "bias_correction": null
+      },
+      "desctools_cb_zero_r_limitation": false,
+      "desctools_warnings": [],
+      "absolute_difference": {
+        "ccc": 0,
+        "precision": 0,
+        "bias_correction": 0
+      }
+    },
+    {
+      "id": "seeded_moderate_07",
+      "note": "",
+      "x": [0.422672, 1.470893, -0.937189, 0.448407, 2.105436, -2.183024, -0.861899, -0.682574, 0.092968, 0.700233, -1.496988, 0.478825, -1.015406, -0.635255, -2.264258, 0.576854, -4.074566, 2.168903, 0.445441, 0.298295, -1.640524, 0.959669, 0.042849, -0.417414, -1.151765, -2.157529],
+      "y": [2.598725, 2.935651, 0.363383, 1.803579, 2.762799, 0.864564, 1.643108, 0.82725, 2.217508, 2.254214, 0.249883, 2.292482, 0.194728, 1.679711, -0.145395, 2.596104, -1.362703, 3.309325, 1.464585, 1.953816, -0.085704, 2.290712, 1.236469, 0.722099, 1.253076, -0.849373],
+      "n_input": 26,
+      "n_complete": 26,
+      "missing_x": 0,
+      "missing_y": 0,
+      "missing_either": 0,
+      "missing_both": 0,
+      "retained_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25],
+      "expected": {
+        "ccc": 0.486647532181154,
+        "precision": 0.918093929229881,
+        "bias_correction": 0.53006290172223,
+        "mean_x": -0.357959461538462,
+        "mean_y": 1.34886907692308,
+        "variance_x": 1.98939250078917,
+        "variance_y": 1.40461531798907,
+        "covariance": 1.53470904990065,
+        "denominator": 6.30727147848499
+      },
+      "desctools": {
+        "ccc": 0.486647532181154,
+        "precision": 0.918093929229881,
+        "bias_correction": 0.53006290172223
+      },
+      "desctools_nonfinite": {
+        "ccc": null,
+        "precision": null,
+        "bias_correction": null
+      },
+      "desctools_cb_zero_r_limitation": false,
+      "desctools_warnings": [],
+      "absolute_difference": {
+        "ccc": 1.11022302462516e-16,
+        "precision": 0,
+        "bias_correction": 0
+      }
+    },
+    {
+      "id": "seeded_moderate_08",
+      "note": "",
+      "x": [0.301499, null, 1.052433, 2.40305, -0.435005, 0.376135, 0.627101, -0.478061, 1.747879, -0.319222, 4.668136, 1.170012, -1.585994, 1.699009, -0.735139, -1.863794, 0.542574, 1.875128, 3.328481, 2.33062, -1.451466, 1.071898, 1.883322, 0.357473, -0.225867, -1.222273, -2.37799, null, 1.431179],
+      "y": [-0.532777, 1.278544, null, 0.95689, -1.681103, -2.025131, -0.495549, -0.757414, -0.14843, -2.111597, 3.709648, -0.757834, -3.018471, 0.32653, -1.805137, -3.064687, -0.544451, -1.147539, 1.516777, -0.196435, -3.292024, 0.832195, 0.19919, -0.281932, -1.982159, -2.829311, -3.148274, null, -1.235536],
+      "n_input": 29,
+      "n_complete": 26,
+      "missing_x": 2,
+      "missing_y": 2,
+      "missing_either": 3,
+      "missing_both": 1,
+      "retained_indices": [0, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 28],
+      "expected": {
+        "ccc": 0.643801828659282,
+        "precision": 0.912596816786399,
+        "bias_correction": 0.705461400716204,
+        "mean_x": 0.581487884615385,
+        "mean_y": -0.904406192307692,
+        "variance_x": 2.70230179077879,
+        "variance_y": 2.58993499943931,
+        "covariance": 2.41429484115352,
+        "denominator": 7.50011799805319
+      },
+      "desctools": {
+        "ccc": 0.643801828659282,
+        "precision": 0.912596816786399,
+        "bias_correction": 0.705461400716204
+      },
+      "desctools_nonfinite": {
+        "ccc": null,
+        "precision": null,
+        "bias_correction": null
+      },
+      "desctools_cb_zero_r_limitation": false,
+      "desctools_warnings": [],
+      "absolute_difference": {
+        "ccc": 1.11022302462516e-16,
+        "precision": 2.22044604925031e-16,
+        "bias_correction": 1.11022302462516e-16
+      }
+    },
+    {
+      "id": "seeded_moderate_09",
+      "note": "",
+      "x": [0.935598, -2.48927, 4.389288, 0.33405, 4.125779, 0.090044, 0.376197, 1.767157, 4.040741, 2.446869, 3.569758, -0.194699, 0.739826, -0.494939, 0.259609, 1.283326, 3.797258, 1.073986, -0.81286, 3.089302, 0.819463, 3.035997, 1.352911, -2.919043, 3.322322, 2.708736, 4.328747, 2.346492, 2.773367, -2.415513, 0.658218, 1.310943],
+      "y": [-0.284818, -4.450333, 5.366656, -0.704397, 4.053092, -0.730127, 0.061278, 1.273981, 6.075505, 2.590576, 4.769282, -0.315738, 0.402711, -1.335392, -0.759987, 1.785927, 4.008838, 1.460652, -2.684198, 2.664458, -0.358887, 3.712567, 0.590798, -3.909396, 3.647319, 3.706625, 5.237637, 2.804323, 3.431577, -4.651727, 0.267784, 1.632102],
+      "n_input": 32,
+      "n_complete": 32,
+      "missing_x": 0,
+      "missing_y": 0,
+      "missing_either": 0,
+      "missing_both": 0,
+      "retained_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
+      "expected": {
+        "ccc": 0.917139317938671,
+        "precision": 0.979288266944396,
+        "bias_correction": 0.936536614290658,
+        "mean_x": 1.426551875,
+        "mean_y": 1.229959,
+        "variance_x": 3.86059351138836,
+        "variance_y": 7.87764047266413,
+        "covariance": 5.4005211029745,
+        "denominator": 11.7768827425533
+      },
+      "desctools": {
+        "ccc": 0.917139317938672,
+        "precision": 0.979288266944396,
+        "bias_correction": 0.936536614290658
+      },
+      "desctools_nonfinite": {
+        "ccc": null,
+        "precision": null,
+        "bias_correction": null
+      },
+      "desctools_cb_zero_r_limitation": false,
+      "desctools_warnings": [],
+      "absolute_difference": {
+        "ccc": 2.22044604925031e-16,
+        "precision": 3.33066907387547e-16,
+        "bias_correction": 0
+      }
+    },
+    {
+      "id": "seeded_moderate_10",
+      "note": "",
+      "x": [-0.982381, -1.915625, -2.623432, -2.5308, -6.27904, -0.830924, 0.674633, -4.469413, -1.121976, -2.466497, -3.976551, -0.497746, -2.214854, -0.289416, -2.801485, -3.205242, 0.435356, -0.878719, -4.170657, -4.8567, -1.556182, -2.092502, 0.243274, -5.472179, 0.544844, -0.236281, -2.786645, -2.125995, -2.966348, -2.909286, -1.277354, -0.965782, 1.259109, -0.063679, 0.635742],
+      "y": [1.562891, 1.026881, 2.295614, 2.673079, 5.520487, 1.369383, -0.456718, 3.008519, 1.385588, 2.139566, 3.450306, 0.496454, 1.781259, -0.269985, 1.948878, 1.417805, -2.102461, 0.949605, 3.176597, 3.916503, 1.553592, 0.999155, 0.175663, 4.827425, -0.107305, -0.540172, 0.330027, 3.986248, 2.157972, 1.973718, 1.009172, 0.426758, -0.946295, 0.316856, -0.413249],
+      "n_input": 35,
+      "n_complete": 35,
+      "missing_x": 0,
+      "missing_y": 0,
+      "missing_either": 0,
+      "missing_both": 0,
+      "retained_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34],
+      "expected": {
+        "ccc": -0.320271078618874,
+        "precision": -0.899322183112881,
+        "bias_correction": 0.356124962369214,
+        "mean_x": -1.85059237142857,
+        "mean_y": 1.45828045714286,
+        "variance_x": 3.38075948895526,
+        "variance_y": 2.72903290545225,
+        "covariance": -2.73166117447543,
+        "denominator": 17.0584317900658
+      },
+      "desctools": {
+        "ccc": -0.320271078618874,
+        "precision": -0.899322183112881,
+        "bias_correction": 0.356124962369214
+      },
+      "desctools_nonfinite": {
+        "ccc": null,
+        "precision": null,
+        "bias_correction": null
+      },
+      "desctools_cb_zero_r_limitation": false,
+      "desctools_warnings": [],
+      "absolute_difference": {
+        "ccc": 5.55111512312578e-17,
+        "precision": 1.11022302462516e-16,
+        "bias_correction": 0
+      }
+    },
+    {
+      "id": "seeded_moderate_11",
+      "note": "",
+      "x": [-3.866224, -0.63206, -0.384786, -1.184081, -1.295808, -0.602011, 2.470098, 0.353174, 0.986466, -0.826357, -0.857984, 1.662069, -2.167316, -2.891693, 1.648905, 0.852969, 0.475169, 1.388514, -0.371033, -3.664127, -2.052853, -1.903474, 2.960152, 1.96831, -3.982738, -0.63497, -0.931216, -4.02018, -2.749921, -3.501589, -2.623795, -4.081029, -1.75296, -1.188089, 0.669997, -0.143198, 2.615718, -0.003971],
+      "y": [0.374809, 1.350741, 0.504086, 1.598466, 0.375454, 1.378163, 0.849202, 1.720763, 2.301244, 1.934185, 1.471476, 1.788132, 0.794673, 0.627931, 1.759401, 2.366266, 2.507286, 2.80627, 0.989816, -0.298116, 0.099646, 0.53465, 2.462685, 1.561503, 0.920452, 1.406817, -0.291151, 0.025033, 0.066847, 0.051205, 1.783264, 0.585848, 1.577048, 1.17005, 2.270514, 0.499873, 2.68124, 1.716167],
+      "n_input": 38,
+      "n_complete": 38,
+      "missing_x": 0,
+      "missing_y": 0,
+      "missing_either": 0,
+      "missing_both": 0,
+      "retained_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37],
+      "expected": {
+        "ccc": 0.273469371478911,
+        "precision": 0.701655671594507,
+        "bias_correction": 0.389748679516056,
+        "mean_x": -0.796366368421053,
+        "mean_y": 1.21899839473684,
+        "variance_x": 3.87814407229792,
+        "variance_y": 0.737288280349344,
+        "covariance": 1.18646429926659,
+        "denominator": 8.67712748122574
+      },
+      "desctools": {
+        "ccc": 0.273469371478911,
+        "precision": 0.701655671594507,
+        "bias_correction": 0.389748679516056
+      },
+      "desctools_nonfinite": {
+        "ccc": null,
+        "precision": null,
+        "bias_correction": null
+      },
+      "desctools_cb_zero_r_limitation": false,
+      "desctools_warnings": [],
+      "absolute_difference": {
+        "ccc": 0,
+        "precision": 1.11022302462516e-16,
+        "bias_correction": 5.55111512312578e-17
+      }
+    },
+    {
+      "id": "seeded_moderate_12",
+      "note": "",
+      "x": [-2.797751, null, 0.491725, 0.31621, 1.705476, 2.176593, 1.706343, -0.444425, 0.680948, -1.229624, -2.711258, -1.671403, -0.90151, 0.413902, -0.000123, 0.905295, -2.188424, -0.005458, -2.795369, -1.268356, -1.098494, 0.359634, -0.100864, 0.782699, -2.627169, -2.942211, -3.195997, 1.555514, -0.282656, 1.051881, 0.456552, -3.14013, 1.271726, -0.013949, -1.438738, -2.269789, 6.616753, -2.252769, 1.881924, null, 3.051621],
+      "y": [-3.045279, -3.099219, null, -0.437668, -0.525395, -0.092964, 0.916091, -2.115431, -1.056802, -1.773274, -2.789644, -2.532241, -3.310508, -0.024272, -0.266663, -0.202589, -1.598986, -1.511321, -5.285666, -3.395629, -2.200969, -1.933183, -2.861745, -0.301648, -3.087017, -2.341818, -4.576681, 0.111084, -2.232822, -1.404427, -3.00895, -4.608767, -0.74402, -3.255647, -2.666256, -3.052109, 2.931622, -3.498257, 1.843932, null, 1.303059],
+      "n_input": 41,
+      "n_complete": 38,
+      "missing_x": 2,
+      "missing_y": 2,
+      "missing_either": 3,
+      "missing_both": 1,
+      "retained_indices": [0, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 40],
+      "expected": {
+        "ccc": 0.669449256647295,
+        "precision": 0.861421049487086,
+        "bias_correction": 0.777145226536899,
+        "mean_x": -0.274826210526316,
+        "mean_y": -1.70086473684211,
+        "variance_x": 4.10276025703548,
+        "variance_y": 3.22536118563472,
+        "covariance": 3.13359400356582,
+        "denominator": 9.36170732120711
+      },
+      "desctools": {
+        "ccc": 0.669449256647295,
+        "precision": 0.861421049487086,
+        "bias_correction": 0.777145226536899
+      },
+      "desctools_nonfinite": {
+        "ccc": null,
+        "precision": null,
+        "bias_correction": null
+      },
+      "desctools_cb_zero_r_limitation": false,
+      "desctools_warnings": [],
+      "absolute_difference": {
+        "ccc": 0,
+        "precision": 1.11022302462516e-16,
+        "bias_correction": 1.11022302462516e-16
+      }
+    },
+    {
+      "id": "seeded_moderate_13",
+      "note": "",
+      "x": [-1.759169, -1.60217, 0.091187, 0.312291, 0.488032, 0.279024, 3.323875, 3.382316, -0.175046, 0.471785, -1.412724, -2.353485, 0.233492, -0.149804, -2.490663, 1.683063, 0.554291, 0.554586, 3.071445, 2.514385, 0.046989, 1.319173, 0.161962, -3.734335, -1.318527, 4.781496, 2.970771, 1.000651, 1.797347, 1.633356, 0.426458, 1.610661, -2.322816, -5.482339, -0.211307, -1.670179, 1.620877, 2.631099, -1.095617, 0.874361, 1.499707, -1.592479, -1.179044, -0.176079],
+      "y": [-2.385868, -1.604387, -1.055224, -0.471735, -0.183473, 0.586338, 3.134277, 3.258744, 0.220729, -0.466844, -2.062192, -2.651364, -0.701002, 0.223888, -2.878267, 1.181571, -0.873069, 0.737913, 2.235563, 2.327951, 1.113046, -0.101557, 0.043921, -4.917922, -1.657372, 4.425353, 2.977283, 0.984699, 0.782472, 1.170335, -0.190312, 0.297445, -2.903166, -6.474659, -1.31228, -1.010939, 1.3049, 1.567058, -1.429605, -1.285402, 0.29061, -1.814771, -0.539332, 0.15579],
+      "n_input": 44,
+      "n_complete": 44,
+      "missing_x": 0,
+      "missing_y": 0,
+      "missing_either": 0,
+      "missing_both": 0,
+      "retained_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43],
+      "expected": {
+        "ccc": 0.924665275103584,
+        "precision": 0.949851585848213,
+        "bias_correction": 0.973483951472126,
+        "mean_x": 0.241111295454545,
+        "mean_y": -0.226155818181818,
+        "variance_x": 3.95701140407444,
+        "variance_y": 4.2276552771551,
+        "covariance": 3.88498357445224,
+        "denominator": 8.4030052367156
+      },
+      "desctools": {
+        "ccc": 0.924665275103584,
+        "precision": 0.949851585848213,
+        "bias_correction": 0.973483951472126
+      },
+      "desctools_nonfinite": {
+        "ccc": null,
+        "precision": null,
+        "bias_correction": null
+      },
+      "desctools_cb_zero_r_limitation": false,
+      "desctools_warnings": [],
+      "absolute_difference": {
+        "ccc": 1.11022302462516e-16,
+        "precision": 1.11022302462516e-16,
+        "bias_correction": 0
+      }
+    },
+    {
+      "id": "seeded_moderate_14",
+      "note": "",
+      "x": [3.761342, -0.186501, 1.204248, 1.285797, 4.08414, 2.212569, -3.128583, 1.442628, 0.128676, 2.825495, 3.747813, -1.531613, 1.060159, 3.927075, 2.873646, 2.755406, 0.585274, -0.762803, 2.17101, 0.255947, 2.939511, 4.242515, 4.456977, 0.408676, 0.69227, -2.81719, 2.058693, -1.655424, -2.886849, 4.099398, 3.825817, -0.022915, 2.37249, 3.81311, 1.285814, 2.777332, -0.254025, 1.236674, 3.19175, 3.539912, 2.849125, -1.000961, 0.322561, -0.955059, 1.466135, -1.769533, 3.038664],
+      "y": [6.308105, -0.794606, 2.368966, 2.542421, 6.328542, 4.723058, -5.414079, 1.905582, 0.074374, 4.605128, 6.495848, -1.881239, 2.819744, 6.915891, 4.179369, 4.80194, 1.659251, -0.728708, 4.50074, -0.25751, 4.46946, 6.04455, 6.509758, 1.954078, 4.415159, -2.976036, 4.961747, -2.994083, -5.622306, 6.661078, 6.501518, 0.179186, 3.820014, 7.113642, 2.763658, 3.444224, -0.631973, 2.403241, 5.283327, 5.231678, 4.212812, -0.745806, 0.082706, -0.57734, 3.412073, -2.207839, 4.543448],
+      "n_input": 47,
+      "n_complete": 47,
+      "missing_x": 0,
+      "missing_y": 0,
+      "missing_either": 0,
+      "missing_both": 0,
+      "retained_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46],
+      "expected": {
+        "ccc": 0.804032495145373,
+        "precision": 0.97096957590989,
+        "bias_correction": 0.828071769799706,
+        "mean_x": 1.40355729787234,
+        "mean_y": 2.54052746808511,
+        "variance_x": 4.27601589087485,
+        "variance_y": 10.9828623614186,
+        "covariance": 6.65400384992903,
+        "denominator": 16.5515794202471
+      },
+      "desctools": {
+        "ccc": 0.804032495145373,
+        "precision": 0.97096957590989,
+        "bias_correction": 0.828071769799706
+      },
+      "desctools_nonfinite": {
+        "ccc": null,
+        "precision": null,
+        "bias_correction": null
+      },
+      "desctools_cb_zero_r_limitation": false,
+      "desctools_warnings": [],
+      "absolute_difference": {
+        "ccc": 0,
+        "precision": 2.22044604925031e-16,
+        "bias_correction": 1.11022302462516e-16
+      }
+    },
+    {
+      "id": "seeded_moderate_15",
+      "note": "",
+      "x": [-4.220925, -0.767986, 0.531401, 1.574344, -4.938146, -1.379668, -4.854577, -4.384206, -3.527794, -3.093849, -3.855206, 2.293177, 0.625261, -0.08656, -4.687009, -0.307099, 0.284228, -2.082468, -4.906101, 0.271584, -1.069387, -2.853801, -2.626641, -1.997469, -1.648012, -1.673801, -3.681025, 2.331065, -4.516164, -0.05763, -5.238206, -1.215132, -1.009512, -1.68099, -0.767838, -3.854876, -1.447976, -3.190434, -0.325521, -4.206833, -3.992527, -2.469066, -2.88277, -5.615264, -2.321436, -0.209748, -5.240036, -2.092767, 1.4532, -3.949637],
+      "y": [3.354107, 0.686582, 0.934981, -2.15014, 4.607575, 2.372162, 5.438314, 5.848369, 3.544231, 3.007873, 2.649146, 1.08196, 1.867394, 0.890877, 4.828097, 2.122477, 1.562589, 2.550892, 3.812301, 0.281475, 2.146135, 3.680767, 4.132035, 2.931001, 3.044965, 4.040408, 3.596769, 1.048698, 4.314729, 2.261176, 2.298735, 3.759912, 0.371903, 0.623296, 3.714359, 3.946546, 2.14883, 3.050893, 2.864947, 3.036178, 4.344605, 1.71619, 3.795617, 6.454656, 4.451259, 0.068735, 5.55376, 3.989547, 1.597036, 4.207156],
+      "n_input": 50,
+      "n_complete": 50,
+      "missing_x": 0,
+      "missing_y": 0,
+      "missing_either": 0,
+      "missing_both": 0,
+      "retained_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49],
+      "expected": {
+        "ccc": -0.17002476870513,
+        "precision": -0.769803656822461,
+        "bias_correction": 0.220867707237123,
+        "mean_x": -2.11123666,
+        "mean_y": 2.8496421,
+        "variance_x": 4.41529111837119,
+        "variance_y": 2.79718922215601,
+        "covariance": -2.70533196977057,
+        "denominator": 31.8227984119463
+      },
+      "desctools": {
+        "ccc": -0.17002476870513,
+        "precision": -0.769803656822461,
+        "bias_correction": 0.220867707237123
+      },
+      "desctools_nonfinite": {
+        "ccc": null,
+        "precision": null,
+        "bias_correction": null
+      },
+      "desctools_cb_zero_r_limitation": false,
+      "desctools_warnings": [],
+      "absolute_difference": {
+        "ccc": 0,
+        "precision": 0,
+        "bias_correction": 2.77555756156289e-17
+      }
+    },
+    {
+      "id": "seeded_moderate_16",
+      "note": "",
+      "x": [-0.401303, null, -3.681911, 2.09596, -7.313592, -2.261886, 5.301825, -2.149504, -0.783565, -1.912056, 1.227681, -6.18548, -3.045475, -0.466477, 0.170676, -1.721109, 0.70175, -3.620757, -0.557535, -6.660786, 0.868613, -1.47066, -3.590956, -0.915434, 2.129854, -1.211859, 0.110836, -2.643602, 0.564546, -0.960739, -0.203863, -1.203178, -2.128949, 0.193482, 1.953795, -4.739358, -0.451398, -3.181068, 1.069251, 0.504475, 4.222321, -1.041801, -0.317468, -2.627288, -1.137061, 1.684682, -2.774664, 1.966195, -2.087769, -2.687069, -5.004983, null, 2.425574],
+      "y": [-0.382726, -3.425509, null, 0.044514, -4.526307, -3.091642, -0.421821, -1.811422, -0.698583, -1.868256, 0.137253, -2.30804, -3.452722, -0.471956, -1.908125, -2.736717, -1.314137, -3.164607, -1.142149, -3.161183, -1.960931, -2.293854, -3.309, -1.426046, -0.155169, -0.502626, -1.737887, -2.42583, 0.561577, -1.995113, -2.126761, -0.675922, -3.007945, -0.428911, -3.374747, -1.43434, 0.383339, -0.903858, -1.280244, -1.940292, 0.7173, -1.397298, -1.375221, -2.651163, -2.04477, -0.325199, -2.009186, -0.358917, -3.019974, -2.904288, -1.989539, null, -0.499628],
+      "n_input": 53,
+      "n_complete": 50,
+      "missing_x": 2,
+      "missing_y": 2,
+      "missing_either": 3,
+      "missing_both": 1,
+      "retained_indices": [0, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 52],
+      "expected": {
+        "ccc": 0.49097565416575,
+        "precision": 0.66264068397399,
+        "bias_correction": 0.740937986513701,
+        "mean_x": -1.00534352,
+        "mean_y": -1.60342138,
+        "variance_x": 6.38469138298385,
+        "variance_y": 1.43878053437996,
+        "covariance": 2.0083774116058,
+        "denominator": 8.18116904398599
+      },
+      "desctools": {
+        "ccc": 0.49097565416575,
+        "precision": 0.66264068397399,
+        "bias_correction": 0.740937986513701
+      },
+      "desctools_nonfinite": {
+        "ccc": null,
+        "precision": null,
+        "bias_correction": null
+      },
+      "desctools_cb_zero_r_limitation": false,
+      "desctools_warnings": [],
+      "absolute_difference": {
+        "ccc": 1.11022302462516e-16,
+        "precision": 1.11022302462516e-16,
+        "bias_correction": 1.11022302462516e-16
+      }
+    },
+    {
+      "id": "seeded_moderate_17",
+      "note": "",
+      "x": [-1.157484, -3.365038, -5.335098, -1.233451, 1.906173, 3.258522, -4.017302, -3.766621, -2.718729, -0.720789, 2.387032, 1.984041, 2.366827, 0.641167, -2.760451, 0.531277, -5.278308, 0.486739, -1.677538, 0.056285, -1.273965, -2.05241, 0.266704, 0.109008, -1.062604, -2.695535, -2.208734, -3.607469, 1.227892, 2.107853, -0.879618, 1.362392, 2.095405, -0.949799, 2.009162, -0.7342, -2.783199, 3.065798, -4.447783, 0.200917, -0.64129, 1.354152, 3.880135, 1.124298, -0.799405, 0.482605, 1.157781, 0.845574, 4.03446, 1.130071, 2.026295, -0.660412, 1.253828, -0.819963, -3.06549, -4.308633],
+      "y": [-1.922964, -3.565149, -3.95271, -2.266606, -0.040478, 1.048913, -3.435559, -2.792228, -2.992898, 0.086076, 2.15964, 2.131075, 0.303261, -2.211198, -1.479939, -1.329902, -4.331558, -1.410258, -1.268615, 0.795561, -1.318684, -1.449028, -1.08738, 0.096153, -1.251197, -1.507968, -2.404507, -1.865355, 0.851707, 1.118886, -2.131974, 1.311226, 1.056025, -1.859694, 0.938241, 0.105345, -2.032585, 2.693853, -5.564728, -0.092392, -1.562923, 3.515466, 3.725325, 0.203158, -3.132157, -0.051257, -0.909904, 2.164914, 2.89346, 0.116925, 0.228018, 0.442533, 0.675219, -1.006763, -3.497305, -4.117286],
+      "n_input": 56,
+      "n_complete": 56,
+      "missing_x": 0,
+      "missing_y": 0,
+      "missing_either": 0,
+      "missing_both": 0,
+      "retained_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55],
+      "expected": {
+        "ccc": 0.857190505566219,
+        "precision": 0.874925106346905,
+        "bias_correction": 0.979730149869931,
+        "mean_x": -0.386945089285714,
+        "mean_y": -0.735395875,
+        "variance_x": 5.40416988876662,
+        "variance_y": 4.20045367383039,
+        "covariance": 4.16853522069835,
+        "denominator": 9.72604151266192
+      },
+      "desctools": {
+        "ccc": 0.857190505566219,
+        "precision": 0.874925106346905,
+        "bias_correction": 0.979730149869931
+      },
+      "desctools_nonfinite": {
+        "ccc": null,
+        "precision": null,
+        "bias_correction": null
+      },
+      "desctools_cb_zero_r_limitation": false,
+      "desctools_warnings": [],
+      "absolute_difference": {
+        "ccc": 0,
+        "precision": 0,
+        "bias_correction": 0
+      }
+    },
+    {
+      "id": "seeded_moderate_18",
+      "note": "",
+      "x": [1.760266, 1.232311, 0.542531, 3.352116, 0.131518, 2.608932, 2.886873, 2.224085, 3.815414, 5.439961, -1.124607, -1.107197, -0.522989, -0.883652, 2.192746, 5.274544, -0.307838, 3.066893, -0.172889, 0.266561, 3.510528, -0.581442, 4.802862, 3.548162, 6.22117, 4.870267, -1.144082, 2.930031, -0.309664, 0.498376, -2.573262, -0.098524, 1.166801, 0.47303, 2.279758, 1.259994, -2.770374, 1.853547, -0.228525, -1.514332, 3.120334, 0.71443, -2.966489, 1.045603, -1.392124, -0.677049, -3.268587, -0.556624, -0.588537, 2.124147, 3.498829, 2.420014, 2.835872, 0.984148, -0.369835, -1.781512, 1.454606, 2.358919, 2.804794],
+      "y": [2.629373, 2.278947, 0.267019, 4.235348, -1.50935, 3.652746, 4.694408, 4.000347, 3.57275, 5.885684, 0.936025, 0.002672, -1.349036, -1.847882, 2.757528, 8.363347, -1.357469, 3.008724, 0.591208, 1.682814, 2.181794, -1.178694, 6.452931, 4.790018, 6.57192, 5.088367, 1.300902, 4.092286, 0.958527, 1.830014, -2.15407, 0.495519, 1.627967, 1.688451, 2.482764, 1.479018, -3.298148, 4.11371, 0.310606, -2.135836, 4.780013, 0.536862, -2.184005, 3.070067, 0.807256, -1.593039, -4.091616, -1.444029, 0.026407, 4.667457, 5.334658, 1.658688, 3.037872, 1.814226, -1.994959, -1.27074, 2.359716, 4.497354, 2.086467],
+      "n_input": 59,
+      "n_complete": 59,
+      "missing_x": 0,
+      "missing_y": 0,
+      "missing_either": 0,
+      "missing_both": 0,
+      "retained_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58],
+      "expected": {
+        "ccc": 0.871428305146524,
+        "precision": 0.915246712717567,
+        "bias_correction": 0.952123938865689,
+        "mean_x": 1.12933625423729,
+        "mean_y": 1.71681193220339,
+        "variance_x": 4.82580196491331,
+        "variance_y": 7.27706372502769,
+        "covariance": 5.42376687902361,
+        "denominator": 12.4479933621427
+      },
+      "desctools": {
+        "ccc": 0.871428305146524,
+        "precision": 0.915246712717567,
+        "bias_correction": 0.952123938865689
+      },
+      "desctools_nonfinite": {
+        "ccc": null,
+        "precision": null,
+        "bias_correction": null
+      },
+      "desctools_cb_zero_r_limitation": false,
+      "desctools_warnings": [],
+      "absolute_difference": {
+        "ccc": 3.33066907387547e-16,
+        "precision": 3.33066907387547e-16,
+        "bias_correction": 0
+      }
+    },
+    {
+      "id": "seeded_moderate_19",
+      "note": "",
+      "x": [4.343807, 2.586204, 0.185438, 0.287961, 1.056989, 6.575293, -0.33597, 7.759905, 5.952726, 0.814081, 3.850542, 1.075166, 4.979884, 2.27022, 2.979723, 3.762288, 3.10631, 2.909071, 2.2404, 5.250339, -1.314258, 4.563975, 5.171305, 2.770749, 4.008169, 1.651387, 0.775839, 5.705847, 2.05975, -0.17297, 2.055484, 6.223718, 0.338489, -6.023087, 3.23549, 1.424961, 2.144689, -0.066046, -0.650528, -0.479861, 0.404656, -0.329031, 4.997141, -0.034151, 3.263721, 5.05508, 3.888161, -0.438832, 3.291833, 6.549583, 0.066307, 5.018425, 5.340627, -1.826861, 2.256987, 2.304138, -2.388571, -1.526543, 7.018412, 3.10153, -1.264749, -2.947216],
+      "y": [7.20142, 6.984681, -0.253699, 1.000836, 3.353406, 10.652978, -0.464859, 11.436077, 9.448299, 3.816488, 6.876658, 5.197821, 8.856299, 4.498952, 8.948886, 6.907332, 4.998151, 4.623387, 4.654464, 10.151467, -1.176752, 7.738489, 9.406443, 6.288282, 6.862523, 5.269771, 3.623819, 10.436228, 3.491882, 1.811364, 4.461376, 9.261216, 2.660755, -8.070036, 8.072704, 4.31739, 4.417106, 1.707371, 0.869892, 1.285967, 2.761105, 1.902583, 6.237629, -1.645831, 4.702865, 9.35984, 7.655838, 1.223292, 5.097316, 9.967213, 1.423984, 7.711579, 9.474791, 1.036477, 3.798199, 3.536904, -0.934056, -1.842138, 10.350205, 5.416796, -1.222065, -1.821887],
+      "n_input": 62,
+      "n_complete": 62,
+      "missing_x": 0,
+      "missing_y": 0,
+      "missing_either": 0,
+      "missing_both": 0,
+      "retained_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61],
+      "expected": {
+        "ccc": 0.719183143352216,
+        "precision": 0.958002981815852,
+        "bias_correction": 0.750710756650294,
+        "mean_x": 2.20764719354839,
+        "mean_y": 4.60992698387097,
+        "variance_x": 7.57100991197683,
+        "variance_y": 15.7513928730955,
+        "covariance": 10.4617238028077,
+        "denominator": 29.0933509760646
+      },
+      "desctools": {
+        "ccc": 0.719183143352216,
+        "precision": 0.958002981815852,
+        "bias_correction": 0.750710756650294
+      },
+      "desctools_nonfinite": {
+        "ccc": null,
+        "precision": null,
+        "bias_correction": null
+      },
+      "desctools_cb_zero_r_limitation": false,
+      "desctools_warnings": [],
+      "absolute_difference": {
+        "ccc": 0,
+        "precision": 1.11022302462516e-16,
+        "bias_correction": 0
+      }
+    },
+    {
+      "id": "seeded_moderate_20",
+      "note": "",
+      "x": [1.029778, null, -1.784694, -3.985918, 0.633853, -4.52983, -0.915253, -2.832933, 0.388464, 2.715748, -1.459523, -4.884484, -1.708741, 0.396364, 1.159616, -2.281443, -1.210017, -4.226483, -5.612351, 3.079483, -5.266005, -4.220741, -0.957219, -6.122379, -4.240533, -4.059924, -3.26886, -7.138891, 1.221422, -0.003912, -3.327327, -2.310773, -5.113715, -2.29736, -4.711176, -1.450472, -6.549868, 3.041458, 1.55535, 4.133331, -3.315538, -0.982388, -3.164198, -0.281504, -3.194877, -5.078827, -5.962959, 1.313837, 0.184449, -1.483409, -2.078252, -8.334534, -0.880821, -4.661659, -3.26174, -1.329365, -4.679994, 0.224965, -8.582003, -1.031685, -8.85436, 0.624837, -2.203439, null, -5.603628],
+      "y": [-1.372847, 2.14341, null, 0.540585, -2.224924, 2.404728, -1.699654, 0.30208, -1.7601, -3.416941, -1.413354, 0.953093, -1.135529, -1.961187, -3.074659, -1.446198, -0.893597, 4.120977, 3.119815, -3.653579, 1.872394, 1.468308, -2.275682, -0.162918, -0.287285, 0.268794, 0.191551, 1.419002, -1.889388, -1.078017, 0.099459, -1.790276, 1.927769, 0.025638, -0.088552, 0.364019, 1.085831, -3.177309, -1.14397, -4.284995, 2.045092, 0.090673, 0.339891, -1.253517, 0.697391, 1.795758, -0.1856, -1.765311, -2.373019, 0.988355, -0.867745, 3.025541, -1.127444, 2.951765, -0.047158, -0.629995, 2.032225, -2.062851, 4.150755, -0.946655, 4.871784, -2.099558, -0.843345, null, 1.672728],
+      "n_input": 65,
+      "n_complete": 62,
+      "missing_x": 2,
+      "missing_y": 2,
+      "missing_either": 3,
+      "missing_both": 1,
+      "retained_indices": [0, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 64],
+      "expected": {
+        "ccc": -0.580351512815689,
+        "precision": -0.874247456615628,
+        "bias_correction": 0.663829798330024,
+        "mean_x": -2.38626380645161,
+        "mean_y": -0.154954161290323,
+        "variance_x": 8.71712756637548,
+        "variance_y": 3.92329156577094,
+        "covariance": -5.11265362137208,
+        "denominator": 17.6191618647362
+      },
+      "desctools": {
+        "ccc": -0.580351512815689,
+        "precision": -0.874247456615628,
+        "bias_correction": 0.663829798330024
+      },
+      "desctools_nonfinite": {
+        "ccc": null,
+        "precision": null,
+        "bias_correction": null
+      },
+      "desctools_cb_zero_r_limitation": false,
+      "desctools_warnings": [],
+      "absolute_difference": {
+        "ccc": 1.11022302462516e-16,
+        "precision": 1.11022302462516e-16,
+        "bias_correction": 1.11022302462516e-16
+      }
+    }
+  ],
+  "degenerate_cases": [
+    {
+      "id": "empty",
+      "note": "Base-R formula outcomes only; JSON null plus formula_nonfinite labels represent undefined values. No estimate or acceptance policy is invented. DescTools parity is not asserted for degenerate inputs.",
+      "x": [],
+      "y": [],
+      "n_input": 0,
+      "n_complete": 0,
+      "missing_x": 0,
+      "missing_y": 0,
+      "missing_either": 0,
+      "missing_both": 0,
+      "retained_indices": [],
+      "expected": {
+        "ccc": null,
+        "precision": null,
+        "bias_correction": null,
+        "mean_x": null,
+        "mean_y": null,
+        "variance_x": null,
+        "variance_y": null,
+        "covariance": null,
+        "denominator": null
+      },
+      "formula_nonfinite": {
+        "ccc": "NaN",
+        "precision": "NaN",
+        "bias_correction": "NaN",
+        "mean_x": "NaN",
+        "mean_y": "NaN",
+        "variance_x": "NaN",
+        "variance_y": "NaN",
+        "covariance": "NaN",
+        "denominator": "NaN"
+      }
+    },
+    {
+      "id": "single_equal",
+      "note": "Base-R formula outcomes only; JSON null plus formula_nonfinite labels represent undefined values. No estimate or acceptance policy is invented. DescTools parity is not asserted for degenerate inputs.",
+      "x": [3],
+      "y": [3],
+      "n_input": 1,
+      "n_complete": 1,
+      "missing_x": 0,
+      "missing_y": 0,
+      "missing_either": 0,
+      "missing_both": 0,
+      "retained_indices": [0],
+      "expected": {
+        "ccc": null,
+        "precision": null,
+        "bias_correction": null,
+        "mean_x": 3,
+        "mean_y": 3,
+        "variance_x": 0,
+        "variance_y": 0,
+        "covariance": 0,
+        "denominator": 0
+      },
+      "formula_nonfinite": {
+        "ccc": "NaN",
+        "precision": "NaN",
+        "bias_correction": "NaN",
+        "mean_x": null,
+        "mean_y": null,
+        "variance_x": null,
+        "variance_y": null,
+        "covariance": null,
+        "denominator": null
+      }
+    },
+    {
+      "id": "single_unequal",
+      "note": "Base-R formula outcomes only; JSON null plus formula_nonfinite labels represent undefined values. No estimate or acceptance policy is invented. DescTools parity is not asserted for degenerate inputs.",
+      "x": [3],
+      "y": [5],
+      "n_input": 1,
+      "n_complete": 1,
+      "missing_x": 0,
+      "missing_y": 0,
+      "missing_either": 0,
+      "missing_both": 0,
+      "retained_indices": [0],
+      "expected": {
+        "ccc": 0,
+        "precision": null,
+        "bias_correction": 0,
+        "mean_x": 3,
+        "mean_y": 5,
+        "variance_x": 0,
+        "variance_y": 0,
+        "covariance": 0,
+        "denominator": 4
+      },
+      "formula_nonfinite": {
+        "ccc": null,
+        "precision": "NaN",
+        "bias_correction": null,
+        "mean_x": null,
+        "mean_y": null,
+        "variance_x": null,
+        "variance_y": null,
+        "covariance": null,
+        "denominator": null
+      }
+    },
+    {
+      "id": "constant_equal",
+      "note": "Base-R formula outcomes only; JSON null plus formula_nonfinite labels represent undefined values. No estimate or acceptance policy is invented. DescTools parity is not asserted for degenerate inputs.",
+      "x": [3, 3, 3, 3],
+      "y": [3, 3, 3, 3],
+      "n_input": 4,
+      "n_complete": 4,
+      "missing_x": 0,
+      "missing_y": 0,
+      "missing_either": 0,
+      "missing_both": 0,
+      "retained_indices": [0, 1, 2, 3],
+      "expected": {
+        "ccc": null,
+        "precision": null,
+        "bias_correction": null,
+        "mean_x": 3,
+        "mean_y": 3,
+        "variance_x": 0,
+        "variance_y": 0,
+        "covariance": 0,
+        "denominator": 0
+      },
+      "formula_nonfinite": {
+        "ccc": "NaN",
+        "precision": "NaN",
+        "bias_correction": "NaN",
+        "mean_x": null,
+        "mean_y": null,
+        "variance_x": null,
+        "variance_y": null,
+        "covariance": null,
+        "denominator": null
+      }
+    },
+    {
+      "id": "constant_unequal",
+      "note": "Base-R formula outcomes only; JSON null plus formula_nonfinite labels represent undefined values. No estimate or acceptance policy is invented. DescTools parity is not asserted for degenerate inputs.",
+      "x": [3, 3, 3, 3],
+      "y": [5, 5, 5, 5],
+      "n_input": 4,
+      "n_complete": 4,
+      "missing_x": 0,
+      "missing_y": 0,
+      "missing_either": 0,
+      "missing_both": 0,
+      "retained_indices": [0, 1, 2, 3],
+      "expected": {
+        "ccc": 0,
+        "precision": null,
+        "bias_correction": 0,
+        "mean_x": 3,
+        "mean_y": 5,
+        "variance_x": 0,
+        "variance_y": 0,
+        "covariance": 0,
+        "denominator": 4
+      },
+      "formula_nonfinite": {
+        "ccc": null,
+        "precision": "NaN",
+        "bias_correction": null,
+        "mean_x": null,
+        "mean_y": null,
+        "variance_x": null,
+        "variance_y": null,
+        "covariance": null,
+        "denominator": null
+      }
+    },
+    {
+      "id": "constant_x",
+      "note": "Base-R formula outcomes only; JSON null plus formula_nonfinite labels represent undefined values. No estimate or acceptance policy is invented. DescTools parity is not asserted for degenerate inputs.",
+      "x": [3, 3, 3, 3],
+      "y": [1, 2, 4, 7],
+      "n_input": 4,
+      "n_complete": 4,
+      "missing_x": 0,
+      "missing_y": 0,
+      "missing_either": 0,
+      "missing_both": 0,
+      "retained_indices": [0, 1, 2, 3],
+      "expected": {
+        "ccc": 0,
+        "precision": null,
+        "bias_correction": 0,
+        "mean_x": 3,
+        "mean_y": 3.5,
+        "variance_x": 0,
+        "variance_y": 5.25,
+        "covariance": 0,
+        "denominator": 5.5
+      },
+      "formula_nonfinite": {
+        "ccc": null,
+        "precision": "NaN",
+        "bias_correction": null,
+        "mean_x": null,
+        "mean_y": null,
+        "variance_x": null,
+        "variance_y": null,
+        "covariance": null,
+        "denominator": null
+      }
+    },
+    {
+      "id": "constant_y",
+      "note": "Base-R formula outcomes only; JSON null plus formula_nonfinite labels represent undefined values. No estimate or acceptance policy is invented. DescTools parity is not asserted for degenerate inputs.",
+      "x": [1, 2, 4, 7],
+      "y": [3, 3, 3, 3],
+      "n_input": 4,
+      "n_complete": 4,
+      "missing_x": 0,
+      "missing_y": 0,
+      "missing_either": 0,
+      "missing_both": 0,
+      "retained_indices": [0, 1, 2, 3],
+      "expected": {
+        "ccc": 0,
+        "precision": null,
+        "bias_correction": 0,
+        "mean_x": 3.5,
+        "mean_y": 3,
+        "variance_x": 5.25,
+        "variance_y": 0,
+        "covariance": 0,
+        "denominator": 5.5
+      },
+      "formula_nonfinite": {
+        "ccc": null,
+        "precision": "NaN",
+        "bias_correction": null,
+        "mean_x": null,
+        "mean_y": null,
+        "variance_x": null,
+        "variance_y": null,
+        "covariance": null,
+        "denominator": null
+      }
+    },
+    {
+      "id": "all_pairs_missing",
+      "note": "Base-R formula outcomes only; JSON null plus formula_nonfinite labels represent undefined values. No estimate or acceptance policy is invented. DescTools parity is not asserted for degenerate inputs.",
+      "x": [null, 1, null],
+      "y": [1, null, null],
+      "n_input": 3,
+      "n_complete": 0,
+      "missing_x": 2,
+      "missing_y": 2,
+      "missing_either": 3,
+      "missing_both": 1,
+      "retained_indices": [],
+      "expected": {
+        "ccc": null,
+        "precision": null,
+        "bias_correction": null,
+        "mean_x": null,
+        "mean_y": null,
+        "variance_x": null,
+        "variance_y": null,
+        "covariance": null,
+        "denominator": null
+      },
+      "formula_nonfinite": {
+        "ccc": "NaN",
+        "precision": "NaN",
+        "bias_correction": "NaN",
+        "mean_x": "NaN",
+        "mean_y": "NaN",
+        "variance_x": "NaN",
+        "variance_y": "NaN",
+        "covariance": "NaN",
+        "denominator": "NaN"
+      }
+    }
+  ]
+}

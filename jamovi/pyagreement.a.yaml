@@ -5,7 +5,7 @@
   "menuGroup": "MedDecide Py",
   "menuSubgroup": "Agreement",
   "menuTitle": "Continuous measurement agreement",
-  "version": "0.3.59",
+  "version": "0.3.63",
   "jas": "1.2",
   "options": [
     {
@@ -14,7 +14,7 @@
     },
     {
       "name": "vars",
-      "title": "Measurement columns (two for Bland-Altman; 2\u201320 for ICC)",
+      "title": "Measurement columns (two for Bland-Altman/CCC; 2\u201320 for ICC)",
       "type": "Variables",
       "permitted": [
         "numeric"
@@ -71,6 +71,10 @@
         {
           "name": "icc",
           "title": "Balanced intraclass correlation (ICC)"
+        },
+        {
+          "name": "ccc",
+          "title": "Lin concordance (CCC, point estimates only)"
         }
       ],
       "default": "blandaltman"
@@ -110,6 +114,18 @@
     {
       "name": "showICCCases",
       "title": "Retained ICC cases",
+      "type": "Bool",
+      "default": false
+    },
+    {
+      "name": "showCCCPairs",
+      "title": "Complete CCC source pairs",
+      "type": "Bool",
+      "default": false
+    },
+    {
+      "name": "cccPlot",
+      "title": "CCC measurement plot",
       "type": "Bool",
       "default": false
     },

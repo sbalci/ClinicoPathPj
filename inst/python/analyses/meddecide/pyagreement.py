@@ -1,12 +1,12 @@
-"""Independent-pair Bland-Altman and balanced ICC core; full suite incomplete."""
+"""Independent-pair Bland-Altman, balanced ICC and Lin CCC points; full suite incomplete."""
 SPEC = {'name': 'pyagreement',
  'title': 'Agreement: Continuous Measurements (Python)',
  'menuGroup': 'MedDecide Py',
  'menuSubgroup': 'Agreement',
- 'version': '0.3.59',
+ 'version': '0.3.63',
  'clearOnInputError': True,
  'options': [{'name': 'vars',
-              'title': 'Measurement columns (two for Bland-Altman; 2–20 for ICC)',
+              'title': 'Measurement columns (two for Bland-Altman/CCC; 2–20 for ICC)',
               'type': 'Variables',
               'permitted': ['numeric']},
              {'name': 'subject',
@@ -38,7 +38,8 @@ SPEC = {'name': 'pyagreement',
               'title': 'Analysis method',
               'type': 'List',
               'options': [{'name': 'blandaltman', 'title': 'Independent-pair Bland-Altman'},
-                          {'name': 'icc', 'title': 'Balanced intraclass correlation (ICC)'}],
+                          {'name': 'icc', 'title': 'Balanced intraclass correlation (ICC)'},
+                          {'name': 'ccc', 'title': 'Lin concordance (CCC, point estimates only)'}],
               'default': 'blandaltman'},
              {'name': 'iccType',
               'title': 'ICC model and inferential unit',
@@ -60,8 +61,32 @@ SPEC = {'name': 'pyagreement',
              {'name': 'showICCCases',
               'title': 'Retained ICC cases',
               'type': 'Bool',
-              'default': False}],
- 'results': [{'name': 'summary', 'title': 'Methods and Scope', 'type': 'Text'},
+              'default': False},
+             {'name': 'showCCCPairs', 'title': 'Complete CCC source pairs',
+              'type': 'Bool', 'default': False},
+             {'name': 'cccPlot', 'title': 'CCC measurement plot', 'type': 'Bool', 'default': False}],
+ 'results': [{'name': 'cccAudit', 'title': 'CCC Paired Observation Audit', 'type': 'Table',
+              'visible': '(method:ccc)',
+              'columns': [{'name': 'input', 'title': 'Supplied Rows', 'type': 'integer'},
+                          {'name': 'retained', 'title': 'Complete Pairs', 'type': 'integer'},
+                          {'name': 'excluded', 'title': 'Excluded Rows', 'type': 'integer'},
+                          {'name': 'firstMissing', 'title': 'First Only Missing', 'type': 'integer'},
+                          {'name': 'secondMissing', 'title': 'Second Only Missing', 'type': 'integer'},
+                          {'name': 'bothMissing', 'title': 'Both Missing', 'type': 'integer'}]},
+             {'name': 'cccStatistics', 'title': 'Concordance Point Estimates', 'type': 'Table',
+              'visible': '(method:ccc)',
+              'columns': [{'name': 'measure', 'title': 'Quantity', 'type': 'text'},
+                          {'name': 'estimate', 'title': 'Estimate', 'type': 'number'}]},
+             {'name': 'cccPairs', 'title': 'Complete Independent CCC Pairs', 'type': 'Table',
+              'visible': '(method:ccc && showCCCPairs)',
+              'columns': [{'name': 'sourceID', 'title': 'Source Row ID', 'type': 'text'},
+                          {'name': 'case', 'title': 'Case', 'type': 'text'},
+                          {'name': 'first', 'title': 'First Measurement', 'type': 'number'},
+                          {'name': 'second', 'title': 'Second Measurement', 'type': 'number'}]},
+             {'name': 'cccFigure', 'title': 'CCC Complete Measurement Pairs', 'type': 'Image',
+              'plot': 'points', 'width': 800, 'height': 600,
+              'visible': '(method:ccc && cccPlot)'},
+             {'name': 'summary', 'title': 'Methods and Scope', 'type': 'Text'},
              {'name': 'cohort',
               'title': 'Paired Observation Audit',
               'type': 'Table',
@@ -134,7 +159,7 @@ SPEC = {'name': 'pyagreement',
                       'persistentItems': True,
                       'permitted': ['numeric', 'factor', 'id'],
                       'children': [{'type': 'TargetLayoutBox',
-                                    'label': 'Measurement columns (two for Bland-Altman; 2–20 for '
+                                    'label': 'Measurement columns (two for Bland-Altman/CCC; 2–20 for '
                                              'ICC)',
                                     'children': [{'type': 'VariablesListBox',
                                                   'name': 'vars',
@@ -160,11 +185,14 @@ SPEC = {'name': 'pyagreement',
                                     'name': 'baConfidenceLevel',
                                     'format': 'number',
                                     'enable': '(method:blandaltman)'},
-                                   {'type': 'TextBox', 'name': 'confLevel', 'format': 'number'}]},
+                                   {'type': 'TextBox', 'name': 'confLevel', 'format': 'number',
+                                    'enable': '(method:blandaltman || method:icc)'}]},
                      {'type': 'CollapseBox',
                       'label': 'Results and Interpretation',
                       'collapsed': False,
-                      'children': [{'type': 'CheckBox',
+                      'children': [{'type': 'CheckBox', 'name': 'showCCCPairs',
+                                    'enable': '(method:ccc)'},
+                                   {'type': 'CheckBox',
                                     'name': 'showPairs',
                                     'enable': '(method:blandaltman)'},
                                    {'type': 'CheckBox',
@@ -173,7 +201,8 @@ SPEC = {'name': 'pyagreement',
                      {'type': 'CollapseBox',
                       'label': 'Plots',
                       'collapsed': True,
-                      'children': [{'type': 'CheckBox',
+                      'children': [{'type': 'CheckBox', 'name': 'cccPlot', 'enable': '(method:ccc)'},
+                                   {'type': 'CheckBox',
                                     'name': 'blandAltmanPlot',
                                     'enable': '(method:blandaltman)'}]},
                      {'type': 'CollapseBox',
@@ -182,12 +211,15 @@ SPEC = {'name': 'pyagreement',
                       'children': [{'type': 'CheckBox', 'name': 'showConsole'}]}]}}
 
 def run(data, options, out):
+    if options.get('method', 'blandaltman') == 'ccc':
+        from cpj_concordance_analysis import run_concordance
+        return run_concordance(data, options, out)
     if options.get('method', 'blandaltman') == 'icc':
         from cpj_icc_analysis import run_icc
         return run_icc(data, options, out)
     if options.get('method', 'blandaltman') != 'blandaltman':
         from cpj_runtime import InputError
-        raise InputError('Choose Bland-Altman or balanced ICC')
+        raise InputError('Choose Bland-Altman, balanced ICC or Lin CCC')
     from cpj_agreement import calculate
     r=calculate(data,options,out.row_ids)
     if r['pending']:
@@ -200,7 +232,7 @@ def run(data, options, out):
                               ('Upper limit of agreement','upper','upperLower','upperUpper')]:
         out.row('statistics',measure=label,estimate=r[key],lower=r.get(low),upper=r.get(high))
     out.note('statistics','Differences are first column minus second column, in the supplied measurement units. LoA coverage = '+str(100*r['coverage'])+'%; CI confidence = '+str(100*r['confidence'])+'%. Bias uses a t interval; LoA CIs use the approximate normal-difference standard error with a t critical value. These are pointwise intervals, not simultaneous or exact tolerance intervals.')
-    out.markdown('summary','Partial Python port: conventional raw-scale Bland-Altman analysis of two measurements on each independent case. Normal differences, constant bias and homoscedasticity are assumed. Missing values are excluded as pairs. Rows must be independent; optional case IDs enforce known unique IDs among complete pairs. No automatic outlier deletion or clinical interchangeability verdict. ICC, CCC, categorical agreement, repeated-measurement models, ratio/log scales, regression-based limits and interactive exploration are not implemented in this core.')
+    out.markdown('summary','Partial Python port: conventional raw-scale Bland-Altman analysis of two measurements on each independent case. Normal differences, constant bias and homoscedasticity are assumed. Missing values are excluded as pairs. Rows must be independent; optional case IDs enforce known unique IDs among complete pairs. No automatic outlier deletion or clinical interchangeability verdict. Categorical agreement, repeated-measurement models, ratio/log scales, regression-based limits and interactive exploration are not implemented in this core. Balanced ICC and CCC point estimates are available through the method selector.')
     if r['sd']==0:out.warn('Observed differences have zero variation. Intervals collapse; this does not establish population agreement.')
     if r['excluded']:out.info(str(r['excluded'])+' source row(s) excluded because one or both measurements are missing.')
     if options.get('showPairs',False):

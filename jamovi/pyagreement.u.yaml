@@ -17,7 +17,7 @@
       "children": [
         {
           "type": "TargetLayoutBox",
-          "label": "Measurement columns (two for Bland-Altman; 2\u201320 for ICC)",
+          "label": "Measurement columns (two for Bland-Altman/CCC; 2\u201320 for ICC)",
           "children": [
             {
               "type": "VariablesListBox",
@@ -71,7 +71,8 @@
         {
           "type": "TextBox",
           "name": "confLevel",
-          "format": "number"
+          "format": "number",
+          "enable": "(method:blandaltman || method:icc)"
         }
       ]
     },
@@ -80,6 +81,11 @@
       "label": "Results and Interpretation",
       "collapsed": false,
       "children": [
+        {
+          "type": "CheckBox",
+          "name": "showCCCPairs",
+          "enable": "(method:ccc)"
+        },
         {
           "type": "CheckBox",
           "name": "showPairs",
@@ -97,6 +103,11 @@
       "label": "Plots",
       "collapsed": true,
       "children": [
+        {
+          "type": "CheckBox",
+          "name": "cccPlot",
+          "enable": "(method:ccc)"
+        },
         {
           "type": "CheckBox",
           "name": "blandAltmanPlot",
