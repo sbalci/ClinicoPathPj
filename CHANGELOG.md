@@ -1,5 +1,26 @@
+# 0.3.63 — 2026-11-11
+
+- Pass the full current 489-test Python suite and 4,573 installed-module R assertions, with no R failures, warnings or skips. Verify post-reopen live method switching, incomplete-input clearing/recovery and regenerated saved/exported artifacts without changing statistical code.
+
+- Build and GUI-sideload the single ClinicoPathPj 0.3.63 module; verify all 1,446 installed files against its archive and archive the superseded 0.3.62 package.
+- Pass 166 focused native assertions against the built package. Save/reopen/Save As and native HTML table/plot export pass on the tested Mac; a subsequent fresh-session single-click test passes live method switching, incomplete-input clearing and recovery after reopen; retain the earlier unsuccessful interaction as history.
+- Verify all saved/exported CCC tables, unchanged dataset bytes/metadata and pixel-identical plot assets; reject four corrupted artifacts.
+
+- Add a population-moment concordance engine, explicit undefined cases and direct bias decomposition at zero Pearson correlation.
+- Freeze independent base-R/DescTools references and verify 436 coefficient/audit comparisons plus focused Bland–Altman/ICC regressions. CCC uncertainty and broader GUI/platform qualification remain pending.
+- Pass all 482 source Python tests; retain the initial registry-edit failure log separately from the stable rerun.
+
+- Pass all 489 source Python tests, six registry/UI checks and native numerical/lifecycle checks; preserve original positional R arguments through a compatibility wrapper. Keep native GUI and release gates open.
+- Add CCC to the existing `pyagreement` method selector with the frozen ten-pair minimum, native coefficient/audit tables, optional source pairs and static measurement plot. Keep CCC interval controls disabled and preserve the Bland–Altman default.
+
 # 0.3.62 — 2026-11-10
 
+- Extend the developer source/API harness to summary examples; verify 16 matched own/Pj pairs with bundled/external Python and independent R references, keeping System GUI/rendering separate.
+- Qualify summary/age-pyramid Word tables and plots through native export and LibreOffice rendering; verify LaTeX tables/figure PDFs while recording missing local APA7 class and duplicate-label limitations.
+- Pass the full 473-test bundled-Python suite, 4,498 R assertions and generator freshness check; keep platform acceptance separate.
+- Verify both summary examples' fresh-engine GUI run/save/reopen, incomplete-state clearing/recovery and native HTML exports on the current macOS arm64 setup; add read-only saved-artifact checks.
+- Run native tests with bundled R and initialized protobuf results so Pj finds jamovi Python; add an optional focused-test filter and explicit local dependency fallback.
+- Extend both summary routes' native checks to same-instance missing selection, changed columns, row-limit rejection and recovery.
 - Validate the three execution-service utilities with 58 focused Python tests, native R/Pj comparisons and 33 packaged smoke cases.
 - Verify age-pyramid Sideload, fresh-engine save/reopen/recalculation and native HTML/PNG export on the current macOS arm64 setup; retain separate platform and full-suite gates.
 

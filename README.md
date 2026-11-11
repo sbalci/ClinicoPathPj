@@ -7,9 +7,13 @@ so users install nothing.
 
 Current direction and implemented/pending work: [revised migration plan](docs/python-migration-plan.md).
 See also the [web-researched Python analysis candidates](docs/python-analysis-opportunities.md).
+The 0.3.63 build adds a [CCC point-estimate integration](docs/python-concordance-integration.md)
+with independent references, native tables and a static plot. Sideload, fresh-engine
+save/reopen, live method switching, incomplete-input recovery and HTML export pass
+on the tested Mac. CCC confidence intervals and broader platform checks remain pending.
 The [2026-11-07 ecosystem review](docs/python-ecosystem-review-2026-11-07.md) compares JASP, jamovi, Orange, MedCalc, GitHub and Hugging Face and prioritizes 20 candidates without expanding the frozen migration inventory.
 
-Status: experimental, 0.3.61 (descriptives and data preparation; full migration remains incomplete). Local validation uses jamovi 28.13 and 28.17 on macOS (Apple Silicon), with
+Status: experimental, 0.3.63 (descriptives and data preparation; full migration remains incomplete). Local validation uses jamovi 28.13 and 28.17 on macOS (Apple Silicon), with
 jmvtools 28.4.
 
 Analyses now use compact family menus: **Descriptives Py**, **Stats Plots Py**,
@@ -677,9 +681,26 @@ remain unavailable; no clinical interpretation bands are assigned. See the
 `pyservicedirect` runs a summary through our own bridge; `pyservicepj` runs the same
 Python calculation through the installed Pj public API. Both produce native tables.
 See [examples, setup and backend code](docs/python-service-examples.md).
+Both summary entries now have current macOS arm64 GUI checks for full-restart
+reopening, missing-selection clearing/recovery and native HTML export. Saved
+comparisons and artifact evidence are linked in that guide; other platforms remain open.
+The [office-export checks](docs/python-service-office-exports.md) also verify Word
+tables/plots in LibreOffice and LaTeX figure assets. Full LaTeX compilation remains
+open because the local APA7 class is missing; repeated result labels need review.
+The [source/API probe](docs/python-service-source-api.md) verifies both examples'
+calculations with bundled and existing external Python across 16 matched pairs.
+The installed teaching entries remain bundled-Python only; System GUI/rendering
+requires additional integration and qualification.
 
 ### Age pyramid through Pj
 
 The experimental `pyagepyramidpj` entry executes the existing age-pyramid engine
 through Pj, with the same options, native tables and static plot data.
 See [matched age-pyramid examples and expected counts](docs/python-age-pyramid-service.md).
+
+The 0.3.62 suites pass 473 Python tests and 4,498 R assertions. Native Pj checks run under jamovi's
+bundled R, so interpreter discovery matches the host engine. The runner permits a
+focused rerun, for example `CPJ_TEST_FILTER=age-pyramid-service bash tools/check.sh --r-only`.
+Its optional local `CPJ_TEST_LIBRARY` fallback supplies test/oracle dependencies;
+these checks do not establish clean-machine dependency availability. Desktop and
+platform acceptance remain separate in the [qualification record](docs/validation-exports/python-0.3.62-qualification-20261110.json).

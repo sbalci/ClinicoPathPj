@@ -5,6 +5,103 @@
   "jrs": "1.1",
   "items": [
     {
+      "name": "cccAudit",
+      "title": "CCC Paired Observation Audit",
+      "type": "Table",
+      "visible": "(method:ccc)",
+      "rows": 0,
+      "columns": [
+        {
+          "name": "input",
+          "title": "Supplied Rows",
+          "type": "integer"
+        },
+        {
+          "name": "retained",
+          "title": "Complete Pairs",
+          "type": "integer"
+        },
+        {
+          "name": "excluded",
+          "title": "Excluded Rows",
+          "type": "integer"
+        },
+        {
+          "name": "firstMissing",
+          "title": "First Only Missing",
+          "type": "integer"
+        },
+        {
+          "name": "secondMissing",
+          "title": "Second Only Missing",
+          "type": "integer"
+        },
+        {
+          "name": "bothMissing",
+          "title": "Both Missing",
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "name": "cccStatistics",
+      "title": "Concordance Point Estimates",
+      "type": "Table",
+      "visible": "(method:ccc)",
+      "rows": 0,
+      "columns": [
+        {
+          "name": "measure",
+          "title": "Quantity",
+          "type": "text"
+        },
+        {
+          "name": "estimate",
+          "title": "Estimate",
+          "type": "number"
+        }
+      ]
+    },
+    {
+      "name": "cccPairs",
+      "title": "Complete Independent CCC Pairs",
+      "type": "Table",
+      "visible": "(method:ccc && showCCCPairs)",
+      "rows": 0,
+      "columns": [
+        {
+          "name": "sourceID",
+          "title": "Source Row ID",
+          "type": "text"
+        },
+        {
+          "name": "case",
+          "title": "Case",
+          "type": "text"
+        },
+        {
+          "name": "first",
+          "title": "First Measurement",
+          "type": "number"
+        },
+        {
+          "name": "second",
+          "title": "Second Measurement",
+          "type": "number"
+        }
+      ]
+    },
+    {
+      "name": "cccFigure",
+      "title": "CCC Complete Measurement Pairs",
+      "type": "Image",
+      "visible": "(method:ccc && cccPlot)",
+      "width": 800,
+      "height": 600,
+      "renderFun": ".plot",
+      "requiresData": false
+    },
+    {
       "name": "summary",
       "title": "Methods and Scope",
       "type": "Text"

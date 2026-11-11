@@ -15,6 +15,8 @@ pyagreementOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             method = "blandaltman",
             iccType = "icc21",
             showICCCases = FALSE,
+            showCCCPairs = FALSE,
+            cccPlot = FALSE,
             showConsole = FALSE, ...) {
 
             super$initialize(
@@ -61,7 +63,8 @@ pyagreementOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                 method,
                 options=list(
                     "blandaltman",
-                    "icc"),
+                    "icc",
+                    "ccc"),
                 default="blandaltman")
             private$..iccType <- jmvcore::OptionList$new(
                 "iccType",
@@ -78,6 +81,14 @@ pyagreementOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                 "showICCCases",
                 showICCCases,
                 default=FALSE)
+            private$..showCCCPairs <- jmvcore::OptionBool$new(
+                "showCCCPairs",
+                showCCCPairs,
+                default=FALSE)
+            private$..cccPlot <- jmvcore::OptionBool$new(
+                "cccPlot",
+                cccPlot,
+                default=FALSE)
             private$..showConsole <- jmvcore::OptionBool$new(
                 "showConsole",
                 showConsole,
@@ -92,6 +103,8 @@ pyagreementOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             self$.addOption(private$..method)
             self$.addOption(private$..iccType)
             self$.addOption(private$..showICCCases)
+            self$.addOption(private$..showCCCPairs)
+            self$.addOption(private$..cccPlot)
             self$.addOption(private$..showConsole)
         }),
     active = list(
@@ -104,6 +117,8 @@ pyagreementOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
         method = function() private$..method$value,
         iccType = function() private$..iccType$value,
         showICCCases = function() private$..showICCCases$value,
+        showCCCPairs = function() private$..showCCCPairs$value,
+        cccPlot = function() private$..cccPlot$value,
         showConsole = function() private$..showConsole$value),
     private = list(
         ..vars = NA,
@@ -115,6 +130,8 @@ pyagreementOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
         ..method = NA,
         ..iccType = NA,
         ..showICCCases = NA,
+        ..showCCCPairs = NA,
+        ..cccPlot = NA,
         ..showConsole = NA)
 )
 
@@ -122,6 +139,10 @@ pyagreementResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
     "pyagreementResults",
     inherit = jmvcore::Group,
     active = list(
+        cccAudit = function() private$.items[["cccAudit"]],
+        cccStatistics = function() private$.items[["cccStatistics"]],
+        cccPairs = function() private$.items[["cccPairs"]],
+        cccFigure = function() private$.items[["cccFigure"]],
         summary = function() private$.items[["summary"]],
         cohort = function() private$.items[["cohort"]],
         statistics = function() private$.items[["statistics"]],
@@ -139,6 +160,84 @@ pyagreementResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                 options=options,
                 name="",
                 title="Agreement: Continuous Measurements (Python)")
+            self$add(jmvcore::Table$new(
+                options=options,
+                name="cccAudit",
+                title="CCC Paired Observation Audit",
+                visible="(method:ccc)",
+                rows=0,
+                columns=list(
+                    list(
+                        `name`="input", 
+                        `title`="Supplied Rows", 
+                        `type`="integer"),
+                    list(
+                        `name`="retained", 
+                        `title`="Complete Pairs", 
+                        `type`="integer"),
+                    list(
+                        `name`="excluded", 
+                        `title`="Excluded Rows", 
+                        `type`="integer"),
+                    list(
+                        `name`="firstMissing", 
+                        `title`="First Only Missing", 
+                        `type`="integer"),
+                    list(
+                        `name`="secondMissing", 
+                        `title`="Second Only Missing", 
+                        `type`="integer"),
+                    list(
+                        `name`="bothMissing", 
+                        `title`="Both Missing", 
+                        `type`="integer"))))
+            self$add(jmvcore::Table$new(
+                options=options,
+                name="cccStatistics",
+                title="Concordance Point Estimates",
+                visible="(method:ccc)",
+                rows=0,
+                columns=list(
+                    list(
+                        `name`="measure", 
+                        `title`="Quantity", 
+                        `type`="text"),
+                    list(
+                        `name`="estimate", 
+                        `title`="Estimate", 
+                        `type`="number"))))
+            self$add(jmvcore::Table$new(
+                options=options,
+                name="cccPairs",
+                title="Complete Independent CCC Pairs",
+                visible="(method:ccc && showCCCPairs)",
+                rows=0,
+                columns=list(
+                    list(
+                        `name`="sourceID", 
+                        `title`="Source Row ID", 
+                        `type`="text"),
+                    list(
+                        `name`="case", 
+                        `title`="Case", 
+                        `type`="text"),
+                    list(
+                        `name`="first", 
+                        `title`="First Measurement", 
+                        `type`="number"),
+                    list(
+                        `name`="second", 
+                        `title`="Second Measurement", 
+                        `type`="number"))))
+            self$add(jmvcore::Image$new(
+                options=options,
+                name="cccFigure",
+                title="CCC Complete Measurement Pairs",
+                visible="(method:ccc && cccPlot)",
+                width=800,
+                height=600,
+                renderFun=".plot",
+                requiresData=FALSE))
             self$add(jmvcore::Text$new(
                 options=options,
                 name="summary",
@@ -331,7 +430,7 @@ pyagreementBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             super$initialize(
                 package = "ClinicoPathPj",
                 name = "pyagreement",
-                version = c(0,3,59),
+                version = c(0,3,63),
                 options = options,
                 results = pyagreementResults$new(options=options),
                 data = data,
@@ -357,9 +456,15 @@ pyagreementBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param method .
 #' @param iccType .
 #' @param showICCCases .
+#' @param showCCCPairs .
+#' @param cccPlot .
 #' @param showConsole .
 #' @return A results object containing:
 #' \tabular{llllll}{
+#'   \code{results$cccAudit} \tab \tab \tab \tab \tab a table \cr
+#'   \code{results$cccStatistics} \tab \tab \tab \tab \tab a table \cr
+#'   \code{results$cccPairs} \tab \tab \tab \tab \tab a table \cr
+#'   \code{results$cccFigure} \tab \tab \tab \tab \tab an image \cr
 #'   \code{results$summary} \tab \tab \tab \tab \tab a text \cr
 #'   \code{results$cohort} \tab \tab \tab \tab \tab a table \cr
 #'   \code{results$statistics} \tab \tab \tab \tab \tab a table \cr
@@ -374,9 +479,9 @@ pyagreementBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'
 #' Tables can be converted to data frames with \code{asDF} or \code{\link{as.data.frame}}. For example:
 #'
-#' \code{results$cohort$asDF}
+#' \code{results$cccAudit$asDF}
 #'
-#' \code{as.data.frame(results$cohort)}
+#' \code{as.data.frame(results$cccAudit)}
 #'
 #' @export
 pyagreement <- function(
@@ -390,6 +495,8 @@ pyagreement <- function(
     method = "blandaltman",
     iccType = "icc21",
     showICCCases = FALSE,
+    showCCCPairs = FALSE,
+    cccPlot = FALSE,
     showConsole = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
@@ -414,6 +521,8 @@ pyagreement <- function(
         method = method,
         iccType = iccType,
         showICCCases = showICCCases,
+        showCCCPairs = showCCCPairs,
+        cccPlot = cccPlot,
         showConsole = showConsole)
 
     analysis <- pyagreementClass$new(

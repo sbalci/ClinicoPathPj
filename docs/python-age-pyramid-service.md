@@ -175,7 +175,19 @@ Matplotlib lacks `text.parse_math`; the bundled/pinned renderer subsequently pas
 The standalone app-R plot harness explicitly loads the existing system-R PNG dependency;
 it installs no packages and does not establish clean-machine dependency qualification.
 
-Additional platforms, clean installations, GUI long-job cancellation, System Python for
-this entry, Word/LaTeX export and the full 0.3.62 suites remain unverified. These results
+The subsequent full suites pass 473 Python tests and 4,498 R assertions; see the dated
+qualification record. Word export now passes table/media checks and LibreOffice visual
+review. LaTeX tables and figure PDFs pass artifact/rendering checks; full compilation
+is blocked by missing local `apa7.cls`, with duplicate result labels also retained as a
+cross-reference limitation. See [office export details](python-service-office-exports.md).
+
+The [source/API follow-up](python-service-source-api.md) also passes all four
+age-pyramid configurations with external Python 3.9.12/NumPy 1.24.3, plus a bundled
+regression run, checking executable/dependency identity and independent R counts.
+This is calculation/plot-data evidence; it does not resolve the external renderer
+incompatibility above or expose a System interpreter selector in the installed entry.
+
+Additional platforms, clean installations, GUI long-job cancellation, System GUI/renderer
+integration and full LaTeX compilation remain unverified. These results
 qualify the demonstrated core and current Mac setup; they do not establish full R-method
 parity or clinical approval for the 61-analysis migration.

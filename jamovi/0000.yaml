@@ -1,11 +1,11 @@
 ---
 title: ClinicoPathPj - Python-Backed Analyses
 name: ClinicoPathPj
-version: 0.3.62
+version: 0.3.63
 jms: '1.0'
 authors: Serdar Balci
 maintainer: Serdar Balci <serdarbalci@serdarbalci.com>
-date: '2026-11-10'
+date: '2026-11-11'
 type: R
 description: >-
   Experimental analyses generated from Python specifications and computed in the

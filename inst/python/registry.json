@@ -1388,8 +1388,8 @@
       "status": "partial",
       "coverage": {
         "full_parity": false,
-        "numerical": "90 ICC R configurations, paired coverage study and Bland-Altman references; see docs/python-icc-prototype.md",
-        "gui": "0.3.58 Bland-Altman save/reopen/export observed; new ICC branch pending",
+        "numerical": "90 ICC R configurations, paired coverage study and Bland-Altman references; CCC engine passes 436 R/DescTools comparisons and native/runtime adapters match 20 frozen public-minimum fixtures; see docs/python-concordance-integration.md",
+        "gui": "0.3.58 Bland-Altman observed; 0.3.63 CCC Sideload, fresh-engine save/reopen and HTML plot export observed on macOS arm64; live method switching, incomplete-role clearing and recovery after reopen pass with single-click selection; ICC GUI pending",
         "compatibility": "First executable Python core under the preallocated stable identifier; frozen R baseline unchanged",
         "platforms": []
       },
@@ -1405,8 +1405,8 @@
       "source_name": "agreement",
       "menu_group": "MedDecide Py",
       "menu_title": "Continuous measurement agreement",
-      "supported_core": "Raw independent-pair Bland-Altman and balanced ICC(1/2/3), single/average; five qualified interval forms, complete-case/ID audits and native tables",
-      "omissions": "ICC(2,k) public interval withheld; CCC, categorical, repeated/unbalanced/hierarchical models, bootstrap uncertainty and clinical bands omitted"
+      "supported_core": "Raw independent-pair Bland-Altman, balanced ICC(1/2/3) single/average with five interval forms, and Lin CCC point estimates with ten-pair minimum, native cohort/ID audits, coefficient tables and static plot",
+      "omissions": "ICC(2,k) public interval withheld; CCC confidence intervals, categorical, repeated/unbalanced/hierarchical models, bootstrap uncertainty and clinical bands omitted"
     },
     {
       "id": "pycotest",

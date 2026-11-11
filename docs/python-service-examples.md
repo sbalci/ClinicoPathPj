@@ -132,10 +132,105 @@ following invalid infinite input. See
 The 33 packaged-runtime smoke cases include both examples and verify their shared helper
 and typed Data Library `.omv` assets in the archive.
 
-Their normal location is **Python Lab → Execution services**. GUI save/reopen/export was
-qualified for the separate [age-pyramid pair](python-age-pyramid-service.md), not these
-summary entries. Their own desktop acceptance and additional platforms remain pending.
+Their normal location is **Python Lab → Execution services**. The separate
+[age-pyramid pair](python-age-pyramid-service.md) and these summary entries have
+current-macOS GUI evidence; see the subsequent summary desktop qualification below.
+Additional platforms remain pending.
 A standalone service caller must initialize `jmvcore:::initProtoBuf()` before requesting
 results; the host jamovi engine performs that initialization for ordinary R6 analyses.
 The [dated qualification record](validation-exports/python-0.3.62-qualification-20261110.json)
 keeps numerical, compiler, native, desktop and platform evidence separate.
+
+### Regression follow-up — 2026-11-10
+
+The full bundled-Python suite passed **473 tests** in 179.036 seconds, and the
+generator freshness check passed. See
+[full Python log](validation-exports/python-0.3.62-full-python-20261110.log).
+This extends the focused checks above; it does not establish desktop acceptance.
+
+An earlier summary-example GUI attempt stalled before loading the Data Library
+(superseded by the successful restart and qualification below).
+The accessibility tree changed to File/Open/Data Library while the displayed window
+remained on the saved age-pyramid comparison. Refocusing and keyboard navigation
+did not recover a usable library listing. No summary analysis was opened or saved
+in that attempt, so it did not establish summary save/reopen/export. This observation
+does not establish a defect in Pj or either summary calculation.
+
+The full R run exposed a runner mismatch: `tools/check.sh` used system R, and Pj's
+macOS discovery searches upward from `R.home()` to find the jamovi application.
+That run failed before calculating the age-pyramid service result and was stopped;
+its [log](validation-exports/python-0.3.62-full-r-system-runner-20261110.log) is retained.
+The runner now launches bundled R and initializes protobuf results, matching the
+host's service-discovery context. The previously failing lifecycle test passes
+all 11 assertions with the corrected runner; see the
+[focused log](validation-exports/python-0.3.62-r-runner-focused-20261110.log).
+Use `CPJ_TEST_FILTER=age-pyramid-service bash tools/check.sh --r-only` to reproduce.
+The optional `CPJ_TEST_LIBRARY` fallback is for already-installed local test/oracle
+dependencies and does not qualify a clean installation.
+
+The full suite with the corrected runner passed **4,498 R assertions**, with zero
+failures, warnings or skips (499.2 seconds); see the
+[full R log](validation-exports/python-0.3.62-full-r-20261110.log).
+
+The summary harness now also reuses each R6 instance across valid → incomplete →
+changed-variable → over-limit → valid transitions. It checks table and route-text
+clearing, independently computed summaries for the replacement column, rejection
+above the documented 100,000-row limit, and restoration of the initial table.
+Both the own bridge and real Pj service pass; see the
+[lifecycle log](validation-exports/python-service-examples-lifecycle-20261110.log).
+The harness explicitly refreshes selected data when roles change, as the engine
+does. Its initial missing-refresh attempt is retained in the
+[harness log](validation-exports/python-service-examples-lifecycle-harness-20261110.log);
+that failure was in the test setup. These are native backend checks, separate from
+the separately observed desktop save/reopen/export test below.
+
+### Summary desktop qualification — 2026-11-10
+
+The stalled session recovered after **native jamovi menu → Quit jamovi**, followed
+by reopening the application. Neither backend nor module source needed a change.
+In the fresh session, Data Library → ClinicoPathPj → Python Execution Service
+Examples loaded successfully. Both entries ran with **Measurement** and displayed
+the expected row: input 6, N 5, missing 1, mean 4, sample SD 3.54, median 3,
+minimum 1 and maximum 10. SD is rounded for display; numerical checks above use
+the unrounded value. The Pj service ran without an editor opening.
+
+Both analyses were saved together, exported as a native Web Page, and reopened
+after quitting and relaunching the full application. Each saved selection remained
+Measurement. Removing it cleared the table, route explanation and timing; restoring
+it produced the same summary with a new backend timing in the fresh engine.
+Save As then wrote a separate reopened file, followed by another native HTML export.
+
+- [Initial comparison](validation-exports/python-summary-service-0.3.62-comparison.omv)
+  and [HTML](validation-exports/python-summary-service-0.3.62-comparison.html).
+- [Reopened and recalculated comparison](validation-exports/python-summary-service-0.3.62-reopened.omv)
+  and [HTML](validation-exports/python-summary-service-0.3.62-reopened.html).
+- [Artifact evidence](validation-exports/python-summary-service-artifacts-20261110.json)
+  and [read-only checker](../tools/check-summary-service-artifacts.py).
+
+The checker verifies archive CRCs, two literal native table displays, host/variable
+records, both execution-route explanations, matching HTML exports and unchanged
+source bytes/metadata. For this numeric-only fixture, jmvReadWrite emits empty
+label metadata as `[]` and jamovi emits `{}`; that exact empty-label change alone
+is allowed. Four corrupted-HTML probes (mean, SD, removed table and missing service
+identity) are rejected. These checks inspect persisted displays and do not decode
+all protobuf options or replace the numerical or GUI evidence.
+
+Qualification is limited to **ClinicoPathPj 0.3.62 / Pj 1.5.0 / jamovi 28.17 on the
+current macOS arm64 setup**. No plot is defined in these summary examples, so
+there is no summary plot-export claim. Other platforms, clean-machine dependencies,
+System GUI/renderer integration and GUI long-job cancellation remain separate gates.
+The subsequent [office-export checks](python-service-office-exports.md) verify Word
+tables and LibreOffice page rendering, plus LaTeX tables/figure assets. Full LaTeX
+compilation remains blocked by missing local `apa7.cls`, with duplicate labels also
+requiring cross-reference review. Observed elapsed times are whole-route observations, not a speed
+benchmark. No new package build was needed for this qualification follow-up.
+
+### Bundled and external source/API calculations
+
+The [shared source/API harness](python-service-source-api.md) now includes
+`--summaries --all`. All four summary fixtures match base R through both the own
+subprocess and Pj under bundled Python 3.11.9/NumPy 2.4.6 and existing external
+Python 3.9.12/NumPy 1.24.3. Every pair verifies matching executable, Python version,
+NumPy version and dependency location. No packages or persistent settings changed.
+These are developer source/API calculations; the installed summary entries remain
+fixed to bundled Python. System GUI execution and persistence are not qualified.
