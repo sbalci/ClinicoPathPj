@@ -6,16 +6,24 @@ into the jamovi files, and the statistics run in **the Python bundled with jamov
 so users install nothing.
 
 Current direction and implemented/pending work: [revised migration plan](docs/python-migration-plan.md).
+The unreleased [Clinical ROC native partial core](docs/python-roc-native.md) now adds organized
+controls, native tables and a static plot through the existing `pyenhancedroc` identifier.
+The **0.3.64 package is GUI-sideloaded and verified on macOS arm64**: fresh-engine
+reopen, live direction changes, incomplete-input recovery, Save As and native HTML/PNG exports pass.
+See the [package qualification record](docs/validation-exports/python-roc-0.3.64-qualification-20261111.json)
+for the bounded evidence and remaining platform/full-parity gates.
 See also the [web-researched Python analysis candidates](docs/python-analysis-opportunities.md).
 The 0.3.63 build adds a [CCC point-estimate integration](docs/python-concordance-integration.md)
 with independent references, native tables and a static plot. Sideload, fresh-engine
 save/reopen, live method switching, incomplete-input recovery and HTML export pass
 on the tested Mac. Public CCC confidence intervals and broader platform checks remain pending. A
 [source-only uncertainty prototype](docs/python-concordance-uncertainty-plan.md)
-now has independent numerical checks; coverage limitations defer its UI integration.
+now includes separately labelled Lin and [empirical-moment methods](docs/python-concordance-empirical.md)
+with independent numerical checks. A separate [paired-percentile bootstrap](docs/python-concordance-bootstrap.md)
+also passes numerical checks but fails its frozen coverage screen. All CCC interval controls remain deferred.
 The [2026-11-07 ecosystem review](docs/python-ecosystem-review-2026-11-07.md) compares JASP, jamovi, Orange, MedCalc, GitHub and Hugging Face and prioritizes 20 candidates without expanding the frozen migration inventory.
 
-Status: experimental, 0.3.63 (descriptives and data preparation; full migration remains incomplete). Local validation uses jamovi 28.13 and 28.17 on macOS (Apple Silicon), with
+Status: experimental, 0.3.64 (descriptives and data preparation; full migration remains incomplete). Local validation uses jamovi 28.13 and 28.17 on macOS (Apple Silicon), with
 jmvtools 28.4.
 
 Analyses now use compact family menus: **Descriptives Py**, **Stats Plots Py**,

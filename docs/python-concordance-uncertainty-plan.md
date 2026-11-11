@@ -131,3 +131,41 @@ The R reference generators under `tests/reference/concordance-intervals*.R` requ
 existing developer DescTools/jsonlite/Rmpfr installations. They are not runtime
 dependencies. Their expected values were generated independently of the Python
 implementation; all three reference generators produced identical JSON on two runs.
+
+## Empirical-moment alternative — 2026-11-11
+
+A separately labelled source helper now evaluates empirical-moment delta variance,
+with transformed and normal limits. It does not modify Lin's variance formula or
+silently replace an interval. The independent R/MPFR oracle supports 1,895
+numerical/domain checks; exact zero Pearson correlation can have positive empirical
+variance. The point engine, installed analysis, confidence controls and package
+remain unchanged.
+
+A matched-input comparison covers 38,000 datasets and 114,000 interval evaluations,
+including all 15 original input tapes and four extensions. Empirical transformed
+coverage improves in some larger skewed/scale-mixture scenarios, but reaches only
+.9075 for the tested lognormal n=1,000 scenario and can be worse than Lin in small
+normal samples. This does not resolve the public inference gate.
+
+See the [method, complete evidence and delivery decision](python-concordance-empirical.md).
+The next research step is to prespecify a paired-resampling contract and coverage
+criteria, then validate independently; bootstrap is not assumed to repair coverage.
+Do not expose generic CCC intervals or select an apparently best method post hoc.
+
+## Paired-percentile bootstrap — 2026-11-11
+
+The paired-resampling contract and coverage gate were frozen before implementation.
+The new source-only percentile helper passes 10,071 independent R checks with
+identical resampling indices. Undefined draws are counted without dropping or
+redrawing; the existing point engine and all public interfaces remain unchanged.
+
+Coverage on 34,000 matched observed datasets (999 resamples each) passes the
+prespecified research criterion in only 2 of 17 scenarios. At n=100, lognormal
+coverage is .8965 and common-scale-mixture coverage is .913; all intervals were
+available. Increasing to 1,999 resamples on a prespecified 340-dataset subset
+changes coverage classification twice but does not qualify the method.
+
+See the [full paired-bootstrap evidence and delivery decision](python-concordance-bootstrap.md).
+Keep all CCC uncertainty source-only. BCa/studentized inference would require a
+new method/domain contract and independent validation; it is not assumed to fix
+coverage and should not block other migration features.

@@ -5,16 +5,55 @@ This is the current delivery plan. It supersedes the implementation recommendati
 The original 61-analysis inventory remains the target; a menu entry does not establish parity.
 Detailed per-analysis evidence remains in the [generated status matrix](python-migration-status.md).
 
-## Current implementation increment — CCC uncertainty prototype
+## Current implementation increment — native empirical ROC partial core
 
-The new source-only `cpj_concordance_uncertainty.py` implements explicit Lin
-transformed and normal intervals. Independent R/DescTools/MPFR checks pass, including
-higher-precision boundary arithmetic. A 30,000-dataset coverage study exposes
-small-sample and nonnormal coverage limitations, so **no interval controls or
-native CCC inference have been added**. See the [updated uncertainty plan](python-concordance-uncertainty-plan.md).
-Public-domain/assumption policy remains a gate; mathematical agreement alone is
-not calibration or clinical validation. The final source suite passes 499 Python
-tests, and the coverage study reproduces byte-identically.
+The existing `pyenhancedroc` identifier now has a generator-owned SPEC/UI/R bridge,
+common-cohort/AUC/paired-comparison tables, optional threshold/source-row details
+and a native static ROC image. The adapter preserves the independently checked
+fixed-direction, tie-aware DeLong engine. All 17 frozen R/pROC fixtures match the
+runtime adapter; the compiler and isolated-source installation succeed. The final
+source suite passes 531 Python tests and the focused native run passes 320
+assertions, including serialized static rendering and genuine missing-factor
+levels. Local 0.3.64 package/GUI qualification is now recorded below; other
+platforms and full baseline scope remain pending. See the
+[native implementation and acceptance boundary](python-roc-native.md).
+
+Registry totals are now 29 partial targets, 32 planned targets, 15 retained
+utilities and zero full-parity releases. This is unreleased source work: the
+installed module is now 0.3.64; the qualified 0.3.63 rollback archive is preserved
+under packages/archive. The 0.3.64 archive passes packaged runtime checks, 320
+installed-module native assertions and local macOS arm64 GUI Sideload, fresh-engine
+reopen/recalculation, role clearing/recovery, Save As and native HTML/PNG exports.
+Saved artifacts preserve data/metadata and pass corruption probes; earlier
+desktop timeouts are resolved for these checks. The known-truth
+simulation still documents small-class approximate AUC undercoverage.
+
+Next specify binary paired diagnostic-test comparisons separately. Preserve the
+bounded local ROC acceptance and keep full baseline/other-platform gates open.
+Interactive inspection and the larger enhancedROC baseline remain omitted.
+`pydecisioncompare` retains its separate binary paired-test contract.
+
+## Completed source research — CCC uncertainty prototypes
+
+The source-only Lin transformed/normal interval helper passes 3,410 independent
+R/DescTools/MPFR checks; the empirical-moment delta helper passes 1,895 checks.
+A separate paired-percentile bootstrap now passes 10,071 independent R checks
+with identical resampling indices, distributions and quantile definitions.
+Its frozen coverage screen evaluates 34,000 paired datasets with 999 resamples;
+only 2 of 17 scenarios pass. Small-normal, skewed and scale-mixture deficits remain.
+See the [paired-bootstrap method and evidence](python-concordance-bootstrap.md),
+[empirical method](python-concordance-empirical.md) and
+[uncertainty plan](python-concordance-uncertainty-plan.md).
+
+All three approaches remain source-only; public CCC remains point-only.
+Numerical agreement is distinct from calibration and clinical validation.
+Further CCC inference is a research gate: a separately specified BCa/studentized
+candidate would need its own independent reference and frozen coverage screen.
+It must not block unrelated migration work or produce automatic method switching.
+The final source suite passes 517 Python tests, with byte-identical coverage replay.
+Native/package acceptance remains separate. The next feature-delivery priority
+is native integration of the independently checked ROC core above, followed by
+the binary paired-test contract; further CCC interval research remains parked.
 
 The 0.3.63 `pyagreement` build now offers Lin CCC point estimates, Pearson
 precision and direct bias correction through its existing method selector. It
@@ -104,8 +143,8 @@ are ported. Advance narrow classical cores while retaining all frozen omissions.
 | Next order | Work | Scope and exit gate |
 |---|---|---|
 | 0 | Close outstanding lifecycle/platform gates for existing ports | Keep 0.3.57 inclusion qualification distinct from earlier 200-row inspector evidence; do not enlarge the catalog to avoid acceptance debt. |
-| 1 | `pyagreement` continuous agreement core | Bland–Altman and balanced ICC are native partial cores; CCC point estimates have native roles/UI, tables and a static plot in 0.3.63. Save/reopen, live method switching, incomplete-input recovery and HTML export pass on the tested Mac. Separately validated uncertainty remains next before repeated/unbalanced models. |
-| 2 | `pyenhancedroc` and `pydecisioncompare` | Empirical ROC and uncertainty, paired test comparison; PR/AP and supplied-prediction calibration have explicit additional feature contracts. |
+| 1 | `pyagreement` continuous agreement core | Bland–Altman and balanced ICC are native partial cores; CCC point estimates have native roles/UI, tables and a static plot in 0.3.63. Save/reopen, live method switching, incomplete-input recovery and HTML export pass on the tested Mac. Lin and empirical-delta uncertainty are numerically checked source prototypes; both remain unexposed after coverage failures. Paired-percentile bootstrap also fails the frozen coverage screen; any BCa/studentized candidate needs a separate contract and independent validation. |
+| 2 | `pyenhancedroc` and `pydecisioncompare` | Empirical ROC / paired DeLong now has a narrow generated native partial core; package/desktop acceptance is next, preserving explicit direction/common cohort and approximation disclosures. Binary paired comparisons need a separate contract. PR/AP/calibration remain excluded. |
 | 3 | `pyjjbetweenstats` and `pyjjwithinstats` | Independent/paired estimation cores; subject identity and visit matching; robust/Bayesian/general repeated branches remain separate gates. |
 | 4 | `pysurvival` / `pysinglearm` KM core | Deterministic ties, risk tables and censoring tests; prototype Cox/competing-risk dependencies separately. |
 | 5 | Optional lab/PCA extensions | Reconcile umbrella drafts for method comparison, reference intervals, QC, equivalence and PCA before adding any stable `py…` identifier through the registry. |
@@ -211,9 +250,9 @@ Do not add rpy2 or replace the current bridge based on an announced future engin
 
 ## Verified current inventory
 
-Current source inventory: **43 registered implementation entry points**, comprising
-**28 partial baseline ports** and **15 retained utilities/demonstrations**. Of the
-61 baseline targets, **33 remain planned** and **zero have full supported-feature
+Current source inventory: **44 registered implementation entry points**, comprising
+**29 partial baseline ports** and **15 retained utilities/demonstrations**. Of the
+61 baseline targets, **32 remain planned** and **zero have full supported-feature
 parity plus all release gates**. Numerical, packaged and GUI evidence is listed
 per analysis; newly implemented study review does not establish pooled-meta-analysis parity.
 
@@ -221,7 +260,7 @@ per analysis; newly implemented study review does not establish pooled-meta-anal
 |---|---:|---:|---:|
 | ClinicoPathDescriptives | 14 | 14 | 0 |
 | jjstatsplot | 19 | 1 | 18 |
-| meddecide | 15 | 9 | 6 |
+| meddecide | 15 | 10 | 5 |
 | jsurvival | 9 | 3 | 6 |
 | OncoPath | 4 | 1 | 3 |
 

@@ -32,6 +32,12 @@ if ("--build-only" %in% commandArgs(TRUE)) {
     compiler <- system.file("node_modules", "jamovi-compiler", "index.js", package = "jmvtools", mustWork = TRUE)
     status <- system2(node, c(shQuote(compiler), "--build", ".", "--assume-app-version", version,
                              "--skip-deps"))
+    if (status != 0) quit(status = status)
+    package_version <- read.dcf("DESCRIPTION")[1, "Version"]
+    archive <- paste0("ClinicoPathPj_", package_version, ".jmo")
+    status <- system2(file.path(app, "MacOS", "python"),
+        c("-B", "tools/prune-package-bytecode.py", shQuote(archive)),
+        env = paste0("PYTHONHOME=", shQuote(file.path(app, "Resources"))))
     quit(status = status)
 }
 
