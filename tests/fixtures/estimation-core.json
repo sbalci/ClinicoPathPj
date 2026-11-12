@@ -1,0 +1,4154 @@
+{
+  "schema_version": 1,
+  "source": "Independent base R stats::t.test and explicit complete-case indexing; no target Python called",
+  "extreme_scale_reference": "At magnitude below 1e-50 or above 1e50, t.test uses a common scale divisor; SE/CI endpoints restored to original units. Summary SD uses translation-invariant centering because raw R sd loses precision near 1e15 with 0.125 increments. Raw initial reference is retained locally; no Python values generate targets.",
+  "R_version": "4.6.0",
+  "baseline": {
+    "commit": "4c3cbe8de39d6259ee61d5fde28704f45e9cc8ed",
+    "jjbetweenstats_backend_sha256": "0c93805b31adac65d59d29f54cbebdf9b374c34f4fd140e0c8283ac7d98bd9f0",
+    "jjwithinstats_backend_sha256": "a32fecc07edce644ed57f305181f5e39b255fd0cf407f706a6cf539fbe7cafc2"
+  },
+  "fixtures": [
+    {
+      "id": "hand_unequal_variance",
+      "design": "independent",
+      "values": [2, 4, 6, 8, 10, 1, 1, 2, 3, 4, 6, 9, 15],
+      "codes": [0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1],
+      "levels": ["First", "Second", "unused"],
+      "first": "First",
+      "second": "Second",
+      "expected": {
+        "n_source": 13,
+        "n_complete": 13,
+        "excluded_missing": 0,
+        "retained_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+        "first_indices": [0, 1, 2, 3, 4],
+        "second_indices": [5, 6, 7, 8, 9, 10, 11, 12],
+        "missing_by_role": {
+          "outcome": 0,
+          "group": 0
+        },
+        "summaries": {
+          "first": {
+            "n": 5,
+            "mean": 6,
+            "sd": 3.1622776601683795
+          },
+          "second": {
+            "n": 8,
+            "mean": 5.125,
+            "sd": 4.8236767245387764
+          }
+        },
+        "runs": [
+          {
+            "confidence": 0.5,
+            "method": "welch",
+            "difference": 0.875,
+            "stderr": 2.2155094544725245,
+            "df": 10.909467028626661,
+            "statistic": 0.39494302235253731,
+            "p": 0.7004971617186857,
+            "lower": -0.67063077192464693,
+            "upper": 2.4206307719246469,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.5,
+            "method": "student",
+            "difference": 0.875,
+            "stderr": 2.4482716538221592,
+            "df": 11,
+            "statistic": 0.35739498050960949,
+            "p": 0.72755869053439803,
+            "lower": -0.83253562555556904,
+            "upper": 2.5825356255555691,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.80000000000000004,
+            "method": "welch",
+            "difference": 0.875,
+            "stderr": 2.2155094544725245,
+            "df": 10.909467028626661,
+            "statistic": 0.39494302235253731,
+            "p": 0.7004971617186857,
+            "lower": -2.1472930857908281,
+            "upper": 3.8972930857908286,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.80000000000000004,
+            "method": "student",
+            "difference": 0.875,
+            "stderr": 2.4482716538221592,
+            "df": 11,
+            "statistic": 0.35739498050960949,
+            "p": 0.72755869053439803,
+            "lower": -2.4630477995714228,
+            "upper": 4.2130477995714228,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.94999999999999996,
+            "method": "welch",
+            "difference": 0.875,
+            "stderr": 2.2155094544725245,
+            "df": 10.909467028626661,
+            "statistic": 0.39494302235253731,
+            "p": 0.7004971617186857,
+            "lower": -4.0062451231409701,
+            "upper": 5.7562451231409693,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.94999999999999996,
+            "method": "student",
+            "difference": 0.875,
+            "stderr": 2.4482716538221592,
+            "df": 11,
+            "statistic": 0.35739498050960949,
+            "p": 0.72755869053439803,
+            "lower": -4.5136095779355863,
+            "upper": 6.2636095779355871,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.98999999999999999,
+            "method": "welch",
+            "difference": 0.875,
+            "stderr": 2.2155094544725245,
+            "df": 10.909467028626661,
+            "statistic": 0.39494302235253731,
+            "p": 0.7004971617186857,
+            "lower": -6.0174313455081645,
+            "upper": 7.7674313455081645,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.98999999999999999,
+            "method": "student",
+            "difference": 0.875,
+            "stderr": 2.4482716538221592,
+            "df": 11,
+            "statistic": 0.35739498050960949,
+            "p": 0.72755869053439803,
+            "lower": -6.7288580542509902,
+            "upper": 8.4788580542509919,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.999,
+            "method": "welch",
+            "difference": 0.875,
+            "stderr": 2.2155094544725245,
+            "df": 10.909467028626661,
+            "statistic": 0.39494302235253731,
+            "p": 0.7004971617186857,
+            "lower": -8.9820882118476799,
+            "upper": 10.732088211847678,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.999,
+            "method": "student",
+            "difference": 0.875,
+            "stderr": 2.4482716538221592,
+            "df": 11,
+            "statistic": 0.35739498050960949,
+            "p": 0.72755869053439803,
+            "lower": -9.9879307423941679,
+            "upper": 11.737930742394168,
+            "status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "id": "one_constant",
+      "design": "independent",
+      "values": [4, 4, 4, 4, 4, 4, -1, 0, 2, 4, 8],
+      "codes": [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1],
+      "levels": ["First", "Second", "unused"],
+      "first": "First",
+      "second": "Second",
+      "expected": {
+        "n_source": 11,
+        "n_complete": 11,
+        "excluded_missing": 0,
+        "retained_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        "first_indices": [0, 1, 2, 3, 4, 5],
+        "second_indices": [6, 7, 8, 9, 10],
+        "missing_by_role": {
+          "outcome": 0,
+          "group": 0
+        },
+        "summaries": {
+          "first": {
+            "n": 6,
+            "mean": 4,
+            "sd": 0
+          },
+          "second": {
+            "n": 5,
+            "mean": 2.6000000000000001,
+            "sd": 3.5777087639996639
+          }
+        },
+        "runs": [
+          {
+            "confidence": 0.5,
+            "method": "welch",
+            "difference": 1.3999999999999999,
+            "stderr": 1.6000000000000001,
+            "df": 4,
+            "statistic": 0.87499999999999989,
+            "p": 0.43096867170316899,
+            "lower": 0.2148846654197076,
+            "upper": 2.5851153345802924,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.5,
+            "method": "student",
+            "difference": 1.3999999999999999,
+            "stderr": 1.4442734941575044,
+            "df": 9,
+            "statistic": 0.96934549146224502,
+            "p": 0.35769989733708607,
+            "lower": 0.38507702968959939,
+            "upper": 2.4149229703104007,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.80000000000000004,
+            "method": "welch",
+            "difference": 1.3999999999999999,
+            "stderr": 1.6000000000000001,
+            "df": 4,
+            "statistic": 0.87499999999999989,
+            "p": 0.43096867170316899,
+            "lower": -1.0531300384943096,
+            "upper": 3.8531300384943097,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.80000000000000004,
+            "method": "student",
+            "difference": 1.3999999999999999,
+            "stderr": 1.4442734941575044,
+            "df": 9,
+            "statistic": 0.96934549146224502,
+            "p": 0.35769989733708607,
+            "lower": -0.59747174852434937,
+            "upper": 3.3974717485243495,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.94999999999999996,
+            "method": "welch",
+            "difference": 1.3999999999999999,
+            "stderr": 1.6000000000000001,
+            "df": 4,
+            "statistic": 0.87499999999999989,
+            "p": 0.43096867170316899,
+            "lower": -3.0423121683164696,
+            "upper": 5.8423121683164698,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.94999999999999996,
+            "method": "student",
+            "difference": 1.3999999999999999,
+            "stderr": 1.4442734941575044,
+            "df": 9,
+            "statistic": 0.96934549146224502,
+            "p": 0.35769989733708607,
+            "lower": -1.86717362984799,
+            "upper": 4.6671736298479898,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.98999999999999999,
+            "method": "welch",
+            "difference": 1.3999999999999999,
+            "stderr": 1.6000000000000001,
+            "df": 4,
+            "statistic": 0.87499999999999989,
+            "p": 0.43096867170316899,
+            "lower": -5.9665517941599875,
+            "upper": 8.7665517941599873,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.98999999999999999,
+            "method": "student",
+            "difference": 1.3999999999999999,
+            "stderr": 1.4442734941575044,
+            "df": 9,
+            "statistic": 0.96934549146224502,
+            "p": 0.35769989733708607,
+            "lower": -3.2936513330925044,
+            "upper": 6.0936513330925051,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.999,
+            "method": "welch",
+            "difference": 1.3999999999999999,
+            "stderr": 1.6000000000000001,
+            "df": 4,
+            "statistic": 0.87499999999999989,
+            "p": 0.43096867170316899,
+            "lower": -12.376482530207236,
+            "upper": 15.176482530207236,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.999,
+            "method": "student",
+            "difference": 1.3999999999999999,
+            "stderr": 1.4442734941575044,
+            "df": 9,
+            "statistic": 0.96934549146224502,
+            "p": 0.35769989733708607,
+            "lower": -5.5049453257444707,
+            "upper": 8.3049453257444696,
+            "status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "id": "equal_means",
+      "design": "independent",
+      "values": [-2, -1, 0, 1, 2, -6, -3, 0, 3, 6],
+      "codes": [0, 0, 0, 0, 0, 1, 1, 1, 1, 1],
+      "levels": ["First", "Second", "unused"],
+      "first": "First",
+      "second": "Second",
+      "expected": {
+        "n_source": 10,
+        "n_complete": 10,
+        "excluded_missing": 0,
+        "retained_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+        "first_indices": [0, 1, 2, 3, 4],
+        "second_indices": [5, 6, 7, 8, 9],
+        "missing_by_role": {
+          "outcome": 0,
+          "group": 0
+        },
+        "summaries": {
+          "first": {
+            "n": 5,
+            "mean": 0,
+            "sd": 1.5811388300841898
+          },
+          "second": {
+            "n": 5,
+            "mean": 0,
+            "sd": 4.7434164902525691
+          }
+        },
+        "runs": [
+          {
+            "confidence": 0.5,
+            "method": "welch",
+            "difference": 0,
+            "stderr": 2.2360679774997894,
+            "df": 4.8780487804878039,
+            "statistic": 0,
+            "p": 1,
+            "lower": -1.6280157011006302,
+            "upper": 1.6280157011006302,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.5,
+            "method": "student",
+            "difference": 0,
+            "stderr": 2.2360679774997898,
+            "df": 8,
+            "statistic": 0,
+            "p": 1,
+            "lower": -1.5795284842696717,
+            "upper": 1.5795284842696717,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.80000000000000004,
+            "method": "welch",
+            "difference": 0,
+            "stderr": 2.2360679774997894,
+            "df": 4.8780487804878039,
+            "statistic": 0,
+            "p": 1,
+            "lower": -3.3126103031506107,
+            "upper": 3.3126103031506107,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.80000000000000004,
+            "method": "student",
+            "difference": 0,
+            "stderr": 2.2360679774997898,
+            "df": 8,
+            "statistic": 0,
+            "p": 1,
+            "lower": -3.1233739845997066,
+            "upper": 3.1233739845997066,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.94999999999999996,
+            "method": "welch",
+            "difference": 0,
+            "stderr": 2.2360679774997894,
+            "df": 4.8780487804878039,
+            "statistic": 0,
+            "p": 1,
+            "lower": -5.7914874806881969,
+            "upper": 5.7914874806881969,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.94999999999999996,
+            "method": "student",
+            "difference": 0,
+            "stderr": 2.2360679774997898,
+            "df": 8,
+            "statistic": 0,
+            "p": 1,
+            "lower": -5.1563820027121299,
+            "upper": 5.1563820027121299,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.98999999999999999,
+            "method": "welch",
+            "difference": 0,
+            "stderr": 2.2360679774997894,
+            "df": 4.8780487804878039,
+            "statistic": 0,
+            "p": 1,
+            "lower": -9.1332665728726372,
+            "upper": 9.1332665728726372,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.98999999999999999,
+            "method": "student",
+            "difference": 0,
+            "stderr": 2.2360679774997898,
+            "df": 8,
+            "statistic": 0,
+            "p": 1,
+            "lower": -7.5028741637030816,
+            "upper": 7.5028741637030816,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.999,
+            "method": "welch",
+            "difference": 0,
+            "stderr": 2.2360679774997894,
+            "df": 4.8780487804878039,
+            "statistic": 0,
+            "p": 1,
+            "lower": -15.699658593199445,
+            "upper": 15.699658593199445,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.999,
+            "method": "student",
+            "difference": 0,
+            "stderr": 2.2360679774997898,
+            "df": 8,
+            "statistic": 0,
+            "p": 1,
+            "lower": -11.272701644362085,
+            "upper": 11.272701644362085,
+            "status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "id": "both_constant",
+      "design": "independent",
+      "values": [1, 1, 1, 1, 3, 3, 3, 3, 3],
+      "codes": [0, 0, 0, 0, 1, 1, 1, 1, 1],
+      "levels": ["First", "Second", "unused"],
+      "first": "First",
+      "second": "Second",
+      "expected": {
+        "n_source": 9,
+        "n_complete": 9,
+        "excluded_missing": 0,
+        "retained_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8],
+        "first_indices": [0, 1, 2, 3],
+        "second_indices": [4, 5, 6, 7, 8],
+        "missing_by_role": {
+          "outcome": 0,
+          "group": 0
+        },
+        "summaries": {
+          "first": {
+            "n": 4,
+            "mean": 1,
+            "sd": 0
+          },
+          "second": {
+            "n": 5,
+            "mean": 3,
+            "sd": 0
+          }
+        },
+        "runs": [
+          {
+            "confidence": 0.5,
+            "method": "welch",
+            "difference": -2,
+            "stderr": null,
+            "df": null,
+            "statistic": null,
+            "p": null,
+            "lower": null,
+            "upper": null,
+            "status": "degenerate"
+          },
+          {
+            "confidence": 0.5,
+            "method": "student",
+            "difference": -2,
+            "stderr": null,
+            "df": null,
+            "statistic": null,
+            "p": null,
+            "lower": null,
+            "upper": null,
+            "status": "degenerate"
+          },
+          {
+            "confidence": 0.80000000000000004,
+            "method": "welch",
+            "difference": -2,
+            "stderr": null,
+            "df": null,
+            "statistic": null,
+            "p": null,
+            "lower": null,
+            "upper": null,
+            "status": "degenerate"
+          },
+          {
+            "confidence": 0.80000000000000004,
+            "method": "student",
+            "difference": -2,
+            "stderr": null,
+            "df": null,
+            "statistic": null,
+            "p": null,
+            "lower": null,
+            "upper": null,
+            "status": "degenerate"
+          },
+          {
+            "confidence": 0.94999999999999996,
+            "method": "welch",
+            "difference": -2,
+            "stderr": null,
+            "df": null,
+            "statistic": null,
+            "p": null,
+            "lower": null,
+            "upper": null,
+            "status": "degenerate"
+          },
+          {
+            "confidence": 0.94999999999999996,
+            "method": "student",
+            "difference": -2,
+            "stderr": null,
+            "df": null,
+            "statistic": null,
+            "p": null,
+            "lower": null,
+            "upper": null,
+            "status": "degenerate"
+          },
+          {
+            "confidence": 0.98999999999999999,
+            "method": "welch",
+            "difference": -2,
+            "stderr": null,
+            "df": null,
+            "statistic": null,
+            "p": null,
+            "lower": null,
+            "upper": null,
+            "status": "degenerate"
+          },
+          {
+            "confidence": 0.98999999999999999,
+            "method": "student",
+            "difference": -2,
+            "stderr": null,
+            "df": null,
+            "statistic": null,
+            "p": null,
+            "lower": null,
+            "upper": null,
+            "status": "degenerate"
+          },
+          {
+            "confidence": 0.999,
+            "method": "welch",
+            "difference": -2,
+            "stderr": null,
+            "df": null,
+            "statistic": null,
+            "p": null,
+            "lower": null,
+            "upper": null,
+            "status": "degenerate"
+          },
+          {
+            "confidence": 0.999,
+            "method": "student",
+            "difference": -2,
+            "stderr": null,
+            "df": null,
+            "statistic": null,
+            "p": null,
+            "lower": null,
+            "upper": null,
+            "status": "degenerate"
+          }
+        ]
+      }
+    },
+    {
+      "id": "both_zero",
+      "design": "independent",
+      "values": [0, 0, 0, 0, 0, 0, 0],
+      "codes": [0, 0, 0, 1, 1, 1, 1],
+      "levels": ["First", "Second", "unused"],
+      "first": "First",
+      "second": "Second",
+      "expected": {
+        "n_source": 7,
+        "n_complete": 7,
+        "excluded_missing": 0,
+        "retained_indices": [0, 1, 2, 3, 4, 5, 6],
+        "first_indices": [0, 1, 2],
+        "second_indices": [3, 4, 5, 6],
+        "missing_by_role": {
+          "outcome": 0,
+          "group": 0
+        },
+        "summaries": {
+          "first": {
+            "n": 3,
+            "mean": 0,
+            "sd": 0
+          },
+          "second": {
+            "n": 4,
+            "mean": 0,
+            "sd": 0
+          }
+        },
+        "runs": [
+          {
+            "confidence": 0.5,
+            "method": "welch",
+            "difference": 0,
+            "stderr": null,
+            "df": null,
+            "statistic": null,
+            "p": null,
+            "lower": null,
+            "upper": null,
+            "status": "degenerate"
+          },
+          {
+            "confidence": 0.5,
+            "method": "student",
+            "difference": 0,
+            "stderr": null,
+            "df": null,
+            "statistic": null,
+            "p": null,
+            "lower": null,
+            "upper": null,
+            "status": "degenerate"
+          },
+          {
+            "confidence": 0.80000000000000004,
+            "method": "welch",
+            "difference": 0,
+            "stderr": null,
+            "df": null,
+            "statistic": null,
+            "p": null,
+            "lower": null,
+            "upper": null,
+            "status": "degenerate"
+          },
+          {
+            "confidence": 0.80000000000000004,
+            "method": "student",
+            "difference": 0,
+            "stderr": null,
+            "df": null,
+            "statistic": null,
+            "p": null,
+            "lower": null,
+            "upper": null,
+            "status": "degenerate"
+          },
+          {
+            "confidence": 0.94999999999999996,
+            "method": "welch",
+            "difference": 0,
+            "stderr": null,
+            "df": null,
+            "statistic": null,
+            "p": null,
+            "lower": null,
+            "upper": null,
+            "status": "degenerate"
+          },
+          {
+            "confidence": 0.94999999999999996,
+            "method": "student",
+            "difference": 0,
+            "stderr": null,
+            "df": null,
+            "statistic": null,
+            "p": null,
+            "lower": null,
+            "upper": null,
+            "status": "degenerate"
+          },
+          {
+            "confidence": 0.98999999999999999,
+            "method": "welch",
+            "difference": 0,
+            "stderr": null,
+            "df": null,
+            "statistic": null,
+            "p": null,
+            "lower": null,
+            "upper": null,
+            "status": "degenerate"
+          },
+          {
+            "confidence": 0.98999999999999999,
+            "method": "student",
+            "difference": 0,
+            "stderr": null,
+            "df": null,
+            "statistic": null,
+            "p": null,
+            "lower": null,
+            "upper": null,
+            "status": "degenerate"
+          },
+          {
+            "confidence": 0.999,
+            "method": "welch",
+            "difference": 0,
+            "stderr": null,
+            "df": null,
+            "statistic": null,
+            "p": null,
+            "lower": null,
+            "upper": null,
+            "status": "degenerate"
+          },
+          {
+            "confidence": 0.999,
+            "method": "student",
+            "difference": 0,
+            "stderr": null,
+            "df": null,
+            "statistic": null,
+            "p": null,
+            "lower": null,
+            "upper": null,
+            "status": "degenerate"
+          }
+        ]
+      }
+    },
+    {
+      "id": "two_per_group",
+      "design": "independent",
+      "values": [1, 5, 3, 8],
+      "codes": [0, 0, 1, 1],
+      "levels": ["First", "Second", "unused"],
+      "first": "First",
+      "second": "Second",
+      "expected": {
+        "n_source": 4,
+        "n_complete": 4,
+        "excluded_missing": 0,
+        "retained_indices": [0, 1, 2, 3],
+        "first_indices": [0, 1],
+        "second_indices": [2, 3],
+        "missing_by_role": {
+          "outcome": 0,
+          "group": 0
+        },
+        "summaries": {
+          "first": {
+            "n": 2,
+            "mean": 3,
+            "sd": 2.8284271247461903
+          },
+          "second": {
+            "n": 2,
+            "mean": 5.5,
+            "sd": 3.5355339059327378
+          }
+        },
+        "runs": [
+          {
+            "confidence": 0.5,
+            "method": "welch",
+            "difference": -2.5,
+            "stderr": 3.2015621187164243,
+            "df": 1.9080590238365494,
+            "statistic": -0.78086880944303039,
+            "p": 0.52001921483910662,
+            "lower": -5.139112732297014,
+            "upper": 0.1391127322970141,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.5,
+            "method": "student",
+            "difference": -2.5,
+            "stderr": 3.2015621187164243,
+            "df": 2,
+            "statistic": -0.78086880944303039,
+            "p": 0.51663175547716822,
+            "lower": -5.1140645235596871,
+            "upper": 0.11406452355968645,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.80000000000000004,
+            "method": "welch",
+            "difference": -2.5,
+            "stderr": 3.2015621187164243,
+            "df": 1.9080590238365494,
+            "statistic": -0.78086880944303039,
+            "p": 0.52001921483910662,
+            "lower": -8.6671839481174615,
+            "upper": 3.6671839481174606,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.80000000000000004,
+            "method": "student",
+            "difference": -2.5,
+            "stderr": 3.2015621187164243,
+            "df": 2,
+            "statistic": -0.78086880944303039,
+            "p": 0.51663175547716822,
+            "lower": -8.5369234254249449,
+            "upper": 3.5369234254249444,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.94999999999999996,
+            "method": "welch",
+            "difference": -2.5,
+            "stderr": 3.2015621187164243,
+            "df": 1.9080590238365494,
+            "statistic": -0.78086880944303039,
+            "p": 0.52001921483910662,
+            "lower": -16.93125881600989,
+            "upper": 11.931258816009889,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.94999999999999996,
+            "method": "student",
+            "difference": -2.5,
+            "stderr": 3.2015621187164243,
+            "df": 2,
+            "statistic": -0.78086880944303039,
+            "p": 0.51663175547716822,
+            "lower": -16.275209989557695,
+            "upper": 11.275209989557695,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.98999999999999999,
+            "method": "welch",
+            "difference": -2.5,
+            "stderr": 3.2015621187164243,
+            "df": 1.9080590238365494,
+            "statistic": -0.78086880944303039,
+            "p": 0.52001921483910662,
+            "lower": -36.978667129203856,
+            "upper": 31.97866712920386,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.98999999999999999,
+            "method": "student",
+            "difference": -2.5,
+            "stderr": 3.2015621187164243,
+            "df": 2,
+            "statistic": -0.78086880944303039,
+            "p": 0.51663175547716822,
+            "lower": -34.275002026260253,
+            "upper": 29.275002026260257,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.999,
+            "method": "welch",
+            "difference": -2.5,
+            "stderr": 3.2015621187164243,
+            "df": 1.9080590238365494,
+            "statistic": -0.78086880944303039,
+            "p": 0.52001921483910662,
+            "lower": -118.3901981466838,
+            "upper": 113.39019814668382,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.999,
+            "method": "student",
+            "difference": -2.5,
+            "stderr": 3.2015621187164243,
+            "df": 2,
+            "statistic": -0.78086880944303039,
+            "p": 0.51663175547716822,
+            "lower": -103.66633611920035,
+            "upper": 98.666336119200338,
+            "status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "id": "missing_outcomes",
+      "design": "independent",
+      "values": [1, null, 4, 9, 2, 3, null, 8, 10],
+      "codes": [0, 0, 0, 0, 1, 1, 1, 1, 1],
+      "levels": ["First", "Second", "unused"],
+      "first": "First",
+      "second": "Second",
+      "expected": {
+        "n_source": 9,
+        "n_complete": 7,
+        "excluded_missing": 2,
+        "retained_indices": [0, 2, 3, 4, 5, 7, 8],
+        "first_indices": [0, 2, 3],
+        "second_indices": [4, 5, 7, 8],
+        "missing_by_role": {
+          "outcome": 2,
+          "group": 0
+        },
+        "summaries": {
+          "first": {
+            "n": 3,
+            "mean": 4.666666666666667,
+            "sd": 4.0414518843273806
+          },
+          "second": {
+            "n": 4,
+            "mean": 5.75,
+            "sd": 3.8622100754188224
+          }
+        },
+        "runs": [
+          {
+            "confidence": 0.5,
+            "method": "welch",
+            "difference": -1.083333333333333,
+            "stderr": 3.028796974231041,
+            "df": 4.3252860942220988,
+            "statistic": -0.35767776531418799,
+            "p": 0.73736297638396242,
+            "lower": -3.310662912187305,
+            "upper": 1.1439962455206392,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.5,
+            "method": "student",
+            "difference": -1.083333333333333,
+            "stderr": 3.0053193581455599,
+            "df": 5,
+            "statistic": -0.36047195130763299,
+            "p": 0.73322200190364351,
+            "lower": -3.2672593723164427,
+            "upper": 1.1005927056497766,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.80000000000000004,
+            "method": "welch",
+            "difference": -1.083333333333333,
+            "stderr": 3.028796974231041,
+            "df": 4.3252860942220988,
+            "statistic": -0.35767776531418799,
+            "p": 0.73736297638396242,
+            "lower": -5.6604453482128498,
+            "upper": 3.4937786815461838,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.80000000000000004,
+            "method": "student",
+            "difference": -1.083333333333333,
+            "stderr": 3.0053193581455599,
+            "df": 5,
+            "statistic": -0.36047195130763299,
+            "p": 0.73322200190364351,
+            "lower": -5.518836235643791,
+            "upper": 3.3521695689771236,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.94999999999999996,
+            "method": "welch",
+            "difference": -1.083333333333333,
+            "stderr": 3.028796974231041,
+            "df": 4.3252860942220988,
+            "statistic": -0.35767776531418799,
+            "p": 0.73736297638396242,
+            "lower": -9.2489823815764254,
+            "upper": 7.0823157149097602,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.94999999999999996,
+            "method": "student",
+            "difference": -1.083333333333333,
+            "stderr": 3.0053193581455599,
+            "df": 5,
+            "statistic": -0.36047195130763299,
+            "p": 0.73322200190364351,
+            "lower": -8.8087526856684963,
+            "upper": 6.6420860190018294,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.98999999999999999,
+            "method": "welch",
+            "difference": -1.083333333333333,
+            "stderr": 3.028796974231041,
+            "df": 4.3252860942220988,
+            "statistic": -0.35767776531418799,
+            "p": 0.73736297638396242,
+            "lower": -14.337418444210204,
+            "upper": 12.170751777543538,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.98999999999999999,
+            "method": "student",
+            "difference": -1.083333333333333,
+            "stderr": 3.0053193581455599,
+            "df": 5,
+            "statistic": -0.36047195130763299,
+            "p": 0.73322200190364351,
+            "lower": -13.201210696622656,
+            "upper": 11.03454402995599,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.999,
+            "method": "welch",
+            "difference": -1.083333333333333,
+            "stderr": 3.028796974231041,
+            "df": 4.3252860942220988,
+            "statistic": -0.35767776531418799,
+            "p": 0.73736297638396242,
+            "lower": -24.996915902271713,
+            "upper": 22.830249235605049,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.999,
+            "method": "student",
+            "difference": -1.083333333333333,
+            "stderr": 3.0053193581455599,
+            "df": 5,
+            "statistic": -0.36047195130763299,
+            "p": 0.73322200190364351,
+            "lower": -21.726350959839973,
+            "upper": 19.559684293173309,
+            "status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "id": "unicode_literal_NA",
+      "design": "independent",
+      "values": [1, 3, 5, 7, 0, 2, 3, 6, 10],
+      "codes": [0, 0, 0, 0, 1, 1, 1, 1, 1],
+      "levels": ["NA", "測定 B", "unused"],
+      "first": "NA",
+      "second": "測定 B",
+      "expected": {
+        "n_source": 9,
+        "n_complete": 9,
+        "excluded_missing": 0,
+        "retained_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8],
+        "first_indices": [0, 1, 2, 3],
+        "second_indices": [4, 5, 6, 7, 8],
+        "missing_by_role": {
+          "outcome": 0,
+          "group": 0
+        },
+        "summaries": {
+          "first": {
+            "n": 4,
+            "mean": 4,
+            "sd": 2.5819888974716112
+          },
+          "second": {
+            "n": 5,
+            "mean": 4.2000000000000002,
+            "sd": 3.8987177379235853
+          }
+        },
+        "runs": [
+          {
+            "confidence": 0.5,
+            "method": "welch",
+            "difference": -0.20000000000000018,
+            "stderr": 2.1694853460363972,
+            "df": 6.845018585318515,
+            "statistic": -0.092187762579450397,
+            "p": 0.92918872691420651,
+            "lower": -1.7446916538269959,
+            "upper": 1.3446916538269955,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.5,
+            "method": "student",
+            "difference": -0.20000000000000018,
+            "stderr": 2.2790975657671422,
+            "df": 7,
+            "statistic": -0.087754031685203598,
+            "p": 0.93252984402055994,
+            "lower": -1.8207614953415172,
+            "upper": 1.4207614953415169,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.80000000000000004,
+            "method": "welch",
+            "difference": -0.20000000000000018,
+            "stderr": 2.1694853460363972,
+            "df": 6.845018585318515,
+            "statistic": -0.092187762579450397,
+            "p": 0.92918872691420651,
+            "lower": -3.2768743015359441,
+            "upper": 2.8768743015359433,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.80000000000000004,
+            "method": "student",
+            "difference": -0.20000000000000018,
+            "stderr": 2.2790975657671422,
+            "df": 7,
+            "statistic": -0.087754031685203598,
+            "p": 0.93252984402055994,
+            "lower": -3.4247496792539582,
+            "upper": 3.0247496792539579,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.94999999999999996,
+            "method": "welch",
+            "difference": -0.20000000000000018,
+            "stderr": 2.1694853460363972,
+            "df": 6.845018585318515,
+            "statistic": -0.092187762579450397,
+            "p": 0.92918872691420651,
+            "lower": -5.3536577902628233,
+            "upper": 4.9536577902628229,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.94999999999999996,
+            "method": "student",
+            "difference": -0.20000000000000018,
+            "stderr": 2.2790975657671422,
+            "df": 7,
+            "statistic": -0.087754031685203598,
+            "p": 0.93252984402055994,
+            "lower": -5.5892093757590651,
+            "upper": 5.1892093757590638,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.98999999999999999,
+            "method": "welch",
+            "difference": -0.20000000000000018,
+            "stderr": 2.1694853460363972,
+            "df": 6.845018585318515,
+            "statistic": -0.092187762579450397,
+            "p": 0.92918872691420651,
+            "lower": -7.8509966346573785,
+            "upper": 7.450996634657379,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.98999999999999999,
+            "method": "student",
+            "difference": -0.20000000000000018,
+            "stderr": 2.2790975657671422,
+            "df": 7,
+            "statistic": -0.087754031685203598,
+            "p": 0.93252984402055994,
+            "lower": -8.1756638644342825,
+            "upper": 7.7756638644342813,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.999,
+            "method": "welch",
+            "difference": -0.20000000000000018,
+            "stderr": 2.1694853460363972,
+            "df": 6.845018585318515,
+            "statistic": -0.092187762579450397,
+            "p": 0.92918872691420651,
+            "lower": -12.085267239911605,
+            "upper": 11.685267239911607,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.999,
+            "method": "student",
+            "difference": -0.20000000000000018,
+            "stderr": 2.2790975657671422,
+            "df": 7,
+            "statistic": -0.087754031685203598,
+            "p": 0.93252984402055994,
+            "lower": -12.52509188925087,
+            "upper": 12.125091889250871,
+            "status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "id": "large_offset",
+      "design": "independent",
+      "values": [1000000001, 1000000003, 1000000004, 1000000008, 1000000010, 999999998, 1000000000, 1000000002, 1000000003, 1000000005, 1000000007],
+      "codes": [0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
+      "levels": ["First", "Second", "unused"],
+      "first": "First",
+      "second": "Second",
+      "expected": {
+        "n_source": 11,
+        "n_complete": 11,
+        "excluded_missing": 0,
+        "retained_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        "first_indices": [0, 1, 2, 3, 4],
+        "second_indices": [5, 6, 7, 8, 9, 10],
+        "missing_by_role": {
+          "outcome": 0,
+          "group": 0
+        },
+        "summaries": {
+          "first": {
+            "n": 5,
+            "mean": 1000000005.2,
+            "sd": 3.7013511046643495
+          },
+          "second": {
+            "n": 6,
+            "mean": 1000000002.5,
+            "sd": 3.271085446759225
+          }
+        },
+        "runs": [
+          {
+            "confidence": 0.5,
+            "method": "welch",
+            "difference": 2.7000000476837158,
+            "stderr": 2.1268129521265693,
+            "df": 8.1420240000707391,
+            "statistic": 1.2695051743897012,
+            "p": 0.23934321584571802,
+            "lower": 1.1988755654957279,
+            "upper": 4.201124529871703,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.5,
+            "method": "student",
+            "difference": 2.7000000476837158,
+            "stderr": 2.1005290338917537,
+            "df": 9,
+            "statistic": 1.2853904916902257,
+            "p": 0.2307449101613982,
+            "lower": 1.2239117756738134,
+            "upper": 4.1760883196936183,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.80000000000000004,
+            "method": "welch",
+            "difference": 2.7000000476837158,
+            "stderr": 2.1268129521265693,
+            "df": 8.1420240000707391,
+            "statistic": 1.2695051743897012,
+            "p": 0.23934321584571802,
+            "lower": -0.26612530917692884,
+            "upper": 5.6661254045443599,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.80000000000000004,
+            "method": "student",
+            "difference": 2.7000000476837158,
+            "stderr": 2.1005290338917537,
+            "df": 9,
+            "statistic": 1.2853904916902257,
+            "p": 0.2307449101613982,
+            "lower": -0.20509197202509327,
+            "upper": 5.6050920673925253,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.94999999999999996,
+            "method": "welch",
+            "difference": 2.7000000476837158,
+            "stderr": 2.1268129521265693,
+            "df": 8.1420240000707391,
+            "statistic": 1.2695051743897012,
+            "p": 0.23934321584571802,
+            "lower": -2.1895881607069558,
+            "upper": 7.5895882560743866,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.94999999999999996,
+            "method": "student",
+            "difference": 2.7000000476837158,
+            "stderr": 2.1005290338917537,
+            "df": 9,
+            "statistic": 1.2853904916902257,
+            "p": 0.2307449101613982,
+            "lower": -2.0517267520001079,
+            "upper": 7.4517268473675395,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.98999999999999999,
+            "method": "welch",
+            "difference": 2.7000000476837158,
+            "stderr": 2.1268129521265693,
+            "df": 8.1420240000707391,
+            "statistic": 1.2695051743897012,
+            "p": 0.23934321584571802,
+            "lower": -4.4002569987948732,
+            "upper": 9.8002570941623031,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.98999999999999999,
+            "method": "student",
+            "difference": 2.7000000476837158,
+            "stderr": 2.1005290338917537,
+            "df": 9,
+            "statistic": 1.2853904916902257,
+            "p": 0.2307449101613982,
+            "lower": -4.1263738628038755,
+            "upper": 9.5263739581713072,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.999,
+            "method": "welch",
+            "difference": 2.7000000476837158,
+            "stderr": 2.1268129521265693,
+            "df": 8.1420240000707391,
+            "statistic": 1.2695051743897012,
+            "p": 0.23934321584571802,
+            "lower": -7.9320479647184809,
+            "upper": 13.332048060085913,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.999,
+            "method": "student",
+            "difference": 2.7000000476837158,
+            "stderr": 2.1005290338917537,
+            "df": 9,
+            "statistic": 1.2853904916902257,
+            "p": 0.2307449101613982,
+            "lower": -7.3424456475633111,
+            "upper": 12.742445742930745,
+            "status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "id": "small_scale",
+      "design": "independent",
+      "values": [9.9999999999999977e-101, 1.9999999999999995e-100, 4.9999999999999991e-100, 6.9999999999999981e-100, 1.9999999999999995e-100, 3.9999999999999991e-100, 5.9999999999999981e-100, 7.9999999999999981e-100, 1.0999999999999998e-99],
+      "codes": [0, 0, 0, 0, 1, 1, 1, 1, 1],
+      "levels": ["First", "Second", "unused"],
+      "first": "First",
+      "second": "Second",
+      "expected": {
+        "n_source": 9,
+        "n_complete": 9,
+        "excluded_missing": 0,
+        "retained_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8],
+        "first_indices": [0, 1, 2, 3],
+        "second_indices": [4, 5, 6, 7, 8],
+        "missing_by_role": {
+          "outcome": 0,
+          "group": 0
+        },
+        "summaries": {
+          "first": {
+            "n": 4,
+            "mean": 3.7499999999999991e-100,
+            "sd": 2.7537852736430499e-100
+          },
+          "second": {
+            "n": 5,
+            "mean": 6.1999999999999987e-100,
+            "sd": 3.4928498393145952e-100
+          }
+        },
+        "runs": [
+          {
+            "confidence": 0.5,
+            "method": "welch",
+            "difference": -2.4499999999999996e-100,
+            "stderr": 2.0822663934600999e-100,
+            "df": 6.9978489533379538,
+            "statistic": -1.1766025748169699,
+            "p": 0.27782177427161725,
+            "lower": -3.9308111001799767e-100,
+            "upper": -9.6918889982002238e-101,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.5,
+            "method": "student",
+            "difference": -2.4499999999999996e-100,
+            "stderr": 2.1446777979787207e-100,
+            "df": 7,
+            "statistic": -1.1423627373347334,
+            "p": 0.29086723985676394,
+            "lower": -3.9751699826671175e-100,
+            "upper": -9.2483001733288161e-101,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.80000000000000004,
+            "method": "welch",
+            "difference": -2.4499999999999996e-100,
+            "stderr": 2.0822663934600999e-100,
+            "df": 6.9978489533379538,
+            "statistic": -1.1766025748169699,
+            "p": 0.27782177427161725,
+            "lower": -5.3963423904164074e-100,
+            "upper": 4.9634239041640861e-101,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.80000000000000004,
+            "method": "student",
+            "difference": -2.4499999999999996e-100,
+            "stderr": 2.1446777979787207e-100,
+            "df": 7,
+            "statistic": -1.1423627373347334,
+            "p": 0.29086723985676394,
+            "lower": -5.4845559334608947e-100,
+            "upper": 5.8455593346089567e-101,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.94999999999999996,
+            "method": "welch",
+            "difference": -2.4499999999999996e-100,
+            "stderr": 2.0822663934600999e-100,
+            "df": 6.9978489533379538,
+            "statistic": -1.1766025748169699,
+            "p": 0.27782177427161725,
+            "lower": -7.3740844434407559e-100,
+            "upper": 2.4740844434407567e-100,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.94999999999999996,
+            "method": "student",
+            "difference": -2.4499999999999996e-100,
+            "stderr": 2.1446777979787207e-100,
+            "df": 7,
+            "statistic": -1.1423627373347334,
+            "p": 0.29086723985676394,
+            "lower": -7.5213571329530913e-100,
+            "upper": 2.6213571329530926e-100,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.98999999999999999,
+            "method": "welch",
+            "difference": -2.4499999999999996e-100,
+            "stderr": 2.0822663934600999e-100,
+            "df": 6.9978489533379538,
+            "statistic": -1.1766025748169699,
+            "p": 0.27782177427161725,
+            "lower": -9.7376195731130987e-100,
+            "upper": 4.8376195731130984e-100,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.98999999999999999,
+            "method": "student",
+            "difference": -2.4499999999999996e-100,
+            "stderr": 2.1446777979787207e-100,
+            "df": 7,
+            "statistic": -1.1423627373347334,
+            "p": 0.29086723985676394,
+            "lower": -9.9552641322249665e-100,
+            "upper": 5.0552641322249693e-100,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.999,
+            "method": "welch",
+            "difference": -2.4499999999999996e-100,
+            "stderr": 2.0822663934600999e-100,
+            "df": 6.9978489533379538,
+            "statistic": -1.1766025748169699,
+            "p": 0.27782177427161725,
+            "lower": -1.371262682113858e-99,
+            "upper": 8.8126268211385802e-100,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.999,
+            "method": "student",
+            "difference": -2.4499999999999996e-100,
+            "stderr": 2.1446777979787207e-100,
+            "df": 7,
+            "statistic": -1.1423627373347334,
+            "p": 0.29086723985676394,
+            "lower": -1.404816557656956e-99,
+            "upper": 9.1481655765695601e-100,
+            "status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "id": "large_scale",
+      "design": "independent",
+      "values": [1.0000000000000002e+100, 2.0000000000000004e+100, 5.0000000000000014e+100, 7.0000000000000011e+100, 2.0000000000000004e+100, 4.0000000000000008e+100, 6.0000000000000013e+100, 8.0000000000000017e+100, 1.1000000000000002e+101],
+      "codes": [0, 0, 0, 0, 1, 1, 1, 1, 1],
+      "levels": ["First", "Second", "unused"],
+      "first": "First",
+      "second": "Second",
+      "expected": {
+        "n_source": 9,
+        "n_complete": 9,
+        "excluded_missing": 0,
+        "retained_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8],
+        "first_indices": [0, 1, 2, 3],
+        "second_indices": [4, 5, 6, 7, 8],
+        "missing_by_role": {
+          "outcome": 0,
+          "group": 0
+        },
+        "summaries": {
+          "first": {
+            "n": 4,
+            "mean": 3.7500000000000007e+100,
+            "sd": 2.7537852736430514e+100
+          },
+          "second": {
+            "n": 5,
+            "mean": 6.2000000000000009e+100,
+            "sd": 3.4928498393145968e+100
+          }
+        },
+        "runs": [
+          {
+            "confidence": 0.5,
+            "method": "welch",
+            "difference": -2.4500000000000002e+100,
+            "stderr": 2.0822663934601007e+100,
+            "df": 6.997848953337952,
+            "statistic": -1.1766025748169697,
+            "p": 0.27782177427161742,
+            "lower": -3.9308111001799768e+100,
+            "upper": -9.6918889982002289e+99,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.5,
+            "method": "student",
+            "difference": -2.4500000000000002e+100,
+            "stderr": 2.1446777979787215e+100,
+            "df": 7,
+            "statistic": -1.1423627373347331,
+            "p": 0.29086723985676399,
+            "lower": -3.9751699826671187e+100,
+            "upper": -9.2483001733288152e+99,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.80000000000000004,
+            "method": "welch",
+            "difference": -2.4500000000000002e+100,
+            "stderr": 2.0822663934601007e+100,
+            "df": 6.997848953337952,
+            "statistic": -1.1766025748169697,
+            "p": 0.27782177427161742,
+            "lower": -5.3963423904164091e+100,
+            "upper": 4.9634239041640976e+99,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.80000000000000004,
+            "method": "student",
+            "difference": -2.4500000000000002e+100,
+            "stderr": 2.1446777979787215e+100,
+            "df": 7,
+            "statistic": -1.1423627373347331,
+            "p": 0.29086723985676399,
+            "lower": -5.4845559334608958e+100,
+            "upper": 5.8455593346089642e+99,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.94999999999999996,
+            "method": "welch",
+            "difference": -2.4500000000000002e+100,
+            "stderr": 2.0822663934601007e+100,
+            "df": 6.997848953337952,
+            "statistic": -1.1766025748169697,
+            "p": 0.27782177427161742,
+            "lower": -7.374084443440758e+100,
+            "upper": 2.4740844434407587e+100,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.94999999999999996,
+            "method": "student",
+            "difference": -2.4500000000000002e+100,
+            "stderr": 2.1446777979787215e+100,
+            "df": 7,
+            "statistic": -1.1423627373347331,
+            "p": 0.29086723985676399,
+            "lower": -7.5213571329530937e+100,
+            "upper": 2.621357132953094e+100,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.98999999999999999,
+            "method": "welch",
+            "difference": -2.4500000000000002e+100,
+            "stderr": 2.0822663934601007e+100,
+            "df": 6.997848953337952,
+            "statistic": -1.1766025748169697,
+            "p": 0.27782177427161742,
+            "lower": -9.737619573113102e+100,
+            "upper": 4.8376195731131031e+100,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.98999999999999999,
+            "method": "student",
+            "difference": -2.4500000000000002e+100,
+            "stderr": 2.1446777979787215e+100,
+            "df": 7,
+            "statistic": -1.1423627373347331,
+            "p": 0.29086723985676399,
+            "lower": -9.9552641322249701e+100,
+            "upper": 5.0552641322249705e+100,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.999,
+            "method": "welch",
+            "difference": -2.4500000000000002e+100,
+            "stderr": 2.0822663934601007e+100,
+            "df": 6.997848953337952,
+            "statistic": -1.1766025748169697,
+            "p": 0.27782177427161742,
+            "lower": -1.3712626821138587e+101,
+            "upper": 8.8126268211385848e+100,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.999,
+            "method": "student",
+            "difference": -2.4500000000000002e+100,
+            "stderr": 2.1446777979787215e+100,
+            "df": 7,
+            "statistic": -1.1423627373347331,
+            "p": 0.29086723985676399,
+            "lower": -1.4048165576569566e+101,
+            "upper": 9.1481655765695637e+100,
+            "status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "id": "essentially_constant",
+      "design": "independent",
+      "values": [1000000000000000, 1000000000000000.1, 1000000000000000.2, 1000000000000000.4, 1000000000000000.1, 1000000000000000.2, 1000000000000000.4, 1000000000000000.5],
+      "codes": [0, 0, 0, 0, 1, 1, 1, 1],
+      "levels": ["First", "Second", "unused"],
+      "first": "First",
+      "second": "Second",
+      "expected": {
+        "n_source": 8,
+        "n_complete": 8,
+        "excluded_missing": 0,
+        "retained_indices": [0, 1, 2, 3, 4, 5, 6, 7],
+        "first_indices": [0, 1, 2, 3],
+        "second_indices": [4, 5, 6, 7],
+        "missing_by_role": {
+          "outcome": 0,
+          "group": 0
+        },
+        "summaries": {
+          "first": {
+            "n": 4,
+            "mean": 1000000000000000.2,
+            "sd": 0.1613743060919757
+          },
+          "second": {
+            "n": 4,
+            "mean": 1000000000000000.2,
+            "sd": 0.1613743060919757
+          }
+        },
+        "runs": [
+          {
+            "confidence": 0.5,
+            "method": "welch",
+            "difference": 0,
+            "stderr": null,
+            "df": null,
+            "statistic": null,
+            "p": null,
+            "lower": null,
+            "upper": null,
+            "status": "degenerate"
+          },
+          {
+            "confidence": 0.5,
+            "method": "student",
+            "difference": 0,
+            "stderr": null,
+            "df": null,
+            "statistic": null,
+            "p": null,
+            "lower": null,
+            "upper": null,
+            "status": "degenerate"
+          },
+          {
+            "confidence": 0.80000000000000004,
+            "method": "welch",
+            "difference": 0,
+            "stderr": null,
+            "df": null,
+            "statistic": null,
+            "p": null,
+            "lower": null,
+            "upper": null,
+            "status": "degenerate"
+          },
+          {
+            "confidence": 0.80000000000000004,
+            "method": "student",
+            "difference": 0,
+            "stderr": null,
+            "df": null,
+            "statistic": null,
+            "p": null,
+            "lower": null,
+            "upper": null,
+            "status": "degenerate"
+          },
+          {
+            "confidence": 0.94999999999999996,
+            "method": "welch",
+            "difference": 0,
+            "stderr": null,
+            "df": null,
+            "statistic": null,
+            "p": null,
+            "lower": null,
+            "upper": null,
+            "status": "degenerate"
+          },
+          {
+            "confidence": 0.94999999999999996,
+            "method": "student",
+            "difference": 0,
+            "stderr": null,
+            "df": null,
+            "statistic": null,
+            "p": null,
+            "lower": null,
+            "upper": null,
+            "status": "degenerate"
+          },
+          {
+            "confidence": 0.98999999999999999,
+            "method": "welch",
+            "difference": 0,
+            "stderr": null,
+            "df": null,
+            "statistic": null,
+            "p": null,
+            "lower": null,
+            "upper": null,
+            "status": "degenerate"
+          },
+          {
+            "confidence": 0.98999999999999999,
+            "method": "student",
+            "difference": 0,
+            "stderr": null,
+            "df": null,
+            "statistic": null,
+            "p": null,
+            "lower": null,
+            "upper": null,
+            "status": "degenerate"
+          },
+          {
+            "confidence": 0.999,
+            "method": "welch",
+            "difference": 0,
+            "stderr": null,
+            "df": null,
+            "statistic": null,
+            "p": null,
+            "lower": null,
+            "upper": null,
+            "status": "degenerate"
+          },
+          {
+            "confidence": 0.999,
+            "method": "student",
+            "difference": 0,
+            "stderr": null,
+            "df": null,
+            "statistic": null,
+            "p": null,
+            "lower": null,
+            "upper": null,
+            "status": "degenerate"
+          }
+        ]
+      }
+    },
+    {
+      "id": "missing_factor_and_outcome",
+      "design": "independent",
+      "values": [2, 4, null, 7, 8, 1, null, 5, 9, 10],
+      "codes": [0, -1, 0, 0, 0, 1, 1, 1, 1, 1],
+      "levels": ["A", "B", "unused"],
+      "first": "A",
+      "second": "B",
+      "expected": {
+        "n_source": 10,
+        "n_complete": 7,
+        "excluded_missing": 3,
+        "retained_indices": [0, 3, 4, 5, 7, 8, 9],
+        "first_indices": [0, 3, 4],
+        "second_indices": [5, 7, 8, 9],
+        "missing_by_role": {
+          "outcome": 2,
+          "group": 1
+        },
+        "summaries": {
+          "first": {
+            "n": 3,
+            "mean": 5.666666666666667,
+            "sd": 3.2145502536643185
+          },
+          "second": {
+            "n": 4,
+            "mean": 6.25,
+            "sd": 4.1129875597510219
+          }
+        },
+        "runs": [
+          {
+            "confidence": 0.5,
+            "method": "welch",
+            "difference": -0.58333333333333304,
+            "stderr": 2.7701283564324437,
+            "df": 4.950736918928782,
+            "statistic": -0.21057989315866527,
+            "p": 0.84160750725132771,
+            "lower": -2.5978737803981393,
+            "upper": 1.431207113731473,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.5,
+            "method": "student",
+            "difference": -0.58333333333333304,
+            "stderr": 2.8865107733116888,
+            "df": 5,
+            "statistic": -0.20208943570443555,
+            "p": 0.84781204371206409,
+            "lower": -2.6809227367871222,
+            "upper": 1.5142560701204564,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.80000000000000004,
+            "method": "welch",
+            "difference": -0.58333333333333304,
+            "stderr": 2.7701283564324437,
+            "df": 4.950736918928782,
+            "statistic": -0.21057989315866527,
+            "p": 0.84160750725132771,
+            "lower": -4.6778398951434106,
+            "upper": 3.5111732284767441,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.80000000000000004,
+            "method": "student",
+            "difference": -0.58333333333333304,
+            "stderr": 2.8865107733116888,
+            "df": 5,
+            "statistic": -0.20208943570443555,
+            "p": 0.84781204371206409,
+            "lower": -4.8434885404240697,
+            "upper": 3.6768218737574032,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.94999999999999996,
+            "method": "welch",
+            "difference": -0.58333333333333304,
+            "stderr": 2.7701283564324437,
+            "df": 4.950736918928782,
+            "statistic": -0.21057989315866527,
+            "p": 0.84160750725132771,
+            "lower": -7.7255400266558887,
+            "upper": 6.5588733599892226,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.94999999999999996,
+            "method": "student",
+            "difference": -0.58333333333333304,
+            "stderr": 2.8865107733116888,
+            "df": 5,
+            "statistic": -0.20208943570443555,
+            "p": 0.84781204371206409,
+            "lower": -8.003345495576891,
+            "upper": 6.836678828910224,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.98999999999999999,
+            "method": "welch",
+            "difference": -0.58333333333333304,
+            "stderr": 2.7701283564324437,
+            "df": 4.950736918928782,
+            "statistic": -0.21057989315866527,
+            "p": 0.84160750725132771,
+            "lower": -11.810305157302448,
+            "upper": 10.643638490635782,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.98999999999999999,
+            "method": "student",
+            "difference": -0.58333333333333304,
+            "stderr": 2.8865107733116888,
+            "df": 5,
+            "statistic": -0.20208943570443555,
+            "p": 0.84781204371206409,
+            "lower": -12.222157494898635,
+            "upper": 11.055490828231971,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.999,
+            "method": "welch",
+            "difference": -0.58333333333333304,
+            "stderr": 2.7701283564324437,
+            "df": 4.950736918928782,
+            "statistic": -0.21057989315866527,
+            "p": 0.84160750725132771,
+            "lower": -19.777296827714967,
+            "upper": 18.610630161048299,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.999,
+            "method": "student",
+            "difference": -0.58333333333333304,
+            "stderr": 2.8865107733116888,
+            "df": 5,
+            "statistic": -0.20208943570443555,
+            "p": 0.84781204371206409,
+            "lower": -20.410275388949806,
+            "upper": 19.243608722283142,
+            "status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "id": "hand_paired",
+      "design": "paired",
+      "a": [10, 12, 8, 15, 9, 18],
+      "b": [8, 11, 9, 12, 7, 14],
+      "expected": {
+        "n_source": 6,
+        "n_complete": 6,
+        "excluded_missing": 0,
+        "retained_indices": [0, 1, 2, 3, 4, 5],
+        "first_indices": [0, 1, 2, 3, 4, 5],
+        "second_indices": [0, 1, 2, 3, 4, 5],
+        "missing_by_role": {
+          "first": 0,
+          "second": 0
+        },
+        "summaries": {
+          "first": {
+            "n": 6,
+            "mean": 12,
+            "sd": 3.8470768123342691
+          },
+          "second": {
+            "n": 6,
+            "mean": 10.166666666666666,
+            "sd": 2.6394443859772205
+          }
+        },
+        "runs": [
+          {
+            "confidence": 0.5,
+            "method": "paired_t",
+            "difference": 1.8333333333333335,
+            "stderr": 0.70316743699096629,
+            "df": 5,
+            "statistic": 2.6072500472698747,
+            "p": 0.047828429596299182,
+            "lower": 1.3223508078831356,
+            "upper": 2.3443158587835313,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.80000000000000004,
+            "method": "paired_t",
+            "difference": 1.8333333333333335,
+            "stderr": 0.70316743699096629,
+            "df": 5,
+            "statistic": 2.6072500472698747,
+            "p": 0.047828429596299182,
+            "lower": 0.79553972942557361,
+            "upper": 2.8711269372410935,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.94999999999999996,
+            "method": "paired_t",
+            "difference": 1.8333333333333335,
+            "stderr": 0.70316743699096629,
+            "df": 5,
+            "statistic": 2.6072500472698747,
+            "p": 0.047828429596299182,
+            "lower": 0.025783892393413138,
+            "upper": 3.6408827742732535,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.98999999999999999,
+            "method": "paired_t",
+            "difference": 1.8333333333333335,
+            "stderr": 0.70316743699096629,
+            "df": 5,
+            "statistic": 2.6072500472698747,
+            "p": 0.047828429596299182,
+            "lower": -1.0019383139943046,
+            "upper": 4.6686049806609713,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.999,
+            "method": "paired_t",
+            "difference": 1.8333333333333335,
+            "stderr": 0.70316743699096629,
+            "df": 5,
+            "statistic": 2.6072500472698747,
+            "p": 0.047828429596299182,
+            "lower": -2.9966018803229084,
+            "upper": 6.6632685469895749,
+            "status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "id": "paired_missing_alignment",
+      "design": "paired",
+      "a": [null, 10, 12, 8, 15, null, 18, 9],
+      "b": [1, 8, 11, null, 12, 7, 14, 7],
+      "expected": {
+        "n_source": 8,
+        "n_complete": 5,
+        "excluded_missing": 3,
+        "retained_indices": [1, 2, 4, 6, 7],
+        "first_indices": [1, 2, 4, 6, 7],
+        "second_indices": [1, 2, 4, 6, 7],
+        "missing_by_role": {
+          "first": 2,
+          "second": 1
+        },
+        "summaries": {
+          "first": {
+            "n": 5,
+            "mean": 12.800000000000001,
+            "sd": 3.7013511046643495
+          },
+          "second": {
+            "n": 5,
+            "mean": 10.4,
+            "sd": 2.8809720581775866
+          }
+        },
+        "runs": [
+          {
+            "confidence": 0.5,
+            "method": "paired_t",
+            "difference": 2.3999999999999999,
+            "stderr": 0.50990195135927852,
+            "df": 4,
+            "statistic": 4.7067872433164162,
+            "p": 0.0092616967595144251,
+            "lower": 2.0223171114448153,
+            "upper": 2.7776828885551845,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.80000000000000004,
+            "method": "paired_t",
+            "difference": 2.3999999999999999,
+            "stderr": 0.50990195135927852,
+            "df": 4,
+            "statistic": 4.7067872433164162,
+            "p": 0.0092616967595144251,
+            "lower": 1.6182151290210558,
+            "upper": 3.181784870978944,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.94999999999999996,
+            "method": "paired_t",
+            "difference": 2.3999999999999999,
+            "stderr": 0.50990195135927852,
+            "df": 4,
+            "statistic": 4.7067872433164162,
+            "p": 0.0092616967595144251,
+            "lower": 0.9842852230177277,
+            "upper": 3.8157147769822721,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.98999999999999999,
+            "method": "paired_t",
+            "difference": 2.3999999999999999,
+            "stderr": 0.50990195135927852,
+            "df": 4,
+            "statistic": 4.7067872433164162,
+            "p": 0.0092616967595144251,
+            "lower": 0.052363040855392527,
+            "upper": 4.7476369591446073,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.999,
+            "method": "paired_t",
+            "difference": 2.3999999999999999,
+            "stderr": 0.50990195135927852,
+            "df": 4,
+            "statistic": 4.7067872433164162,
+            "p": 0.0092616967595144251,
+            "lower": -1.9904095781373001,
+            "upper": 6.7904095781373002,
+            "status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "id": "three_pairs",
+      "design": "paired",
+      "a": [1, 2, 5],
+      "b": [2, 1, 3],
+      "expected": {
+        "n_source": 3,
+        "n_complete": 3,
+        "excluded_missing": 0,
+        "retained_indices": [0, 1, 2],
+        "first_indices": [0, 1, 2],
+        "second_indices": [0, 1, 2],
+        "missing_by_role": {
+          "first": 0,
+          "second": 0
+        },
+        "summaries": {
+          "first": {
+            "n": 3,
+            "mean": 2.6666666666666665,
+            "sd": 2.0816659994661326
+          },
+          "second": {
+            "n": 3,
+            "mean": 2,
+            "sd": 1
+          }
+        },
+        "runs": [
+          {
+            "confidence": 0.5,
+            "method": "paired_t",
+            "difference": 0.66666666666666674,
+            "stderr": 0.88191710368819687,
+            "df": 2,
+            "statistic": 0.75592894601845451,
+            "p": 0.52859547920896832,
+            "lower": -0.05341563315642877,
+            "upper": 1.3867489664897623,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.80000000000000004,
+            "method": "paired_t",
+            "difference": 0.66666666666666674,
+            "stderr": 0.88191710368819687,
+            "df": 2,
+            "statistic": 0.75592894601845451,
+            "p": 0.52859547920896832,
+            "lower": -0.99629217189952979,
+            "upper": 2.3296255052328632,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.94999999999999996,
+            "method": "paired_t",
+            "difference": 0.66666666666666674,
+            "stderr": 0.88191710368819687,
+            "df": 2,
+            "statistic": 0.75592894601845451,
+            "p": 0.52859547920896832,
+            "lower": -3.1279163669300925,
+            "upper": 4.4612497002634264,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.98999999999999999,
+            "method": "paired_t",
+            "difference": 0.66666666666666674,
+            "stderr": 0.88191710368819687,
+            "df": 2,
+            "statistic": 0.75592894601845451,
+            "p": 0.52859547920896832,
+            "lower": -8.086222303646684,
+            "upper": 9.4195556369800162,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.999,
+            "method": "paired_t",
+            "difference": 0.66666666666666674,
+            "stderr": 0.88191710368819687,
+            "df": 2,
+            "statistic": 0.75592894601845451,
+            "p": 0.52859547920896832,
+            "lower": -27.201080024677292,
+            "upper": 28.534413358010625,
+            "status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "id": "zero_mean_difference",
+      "design": "paired",
+      "a": [1, 4, 2, 5],
+      "b": [2, 3, 3, 4],
+      "expected": {
+        "n_source": 4,
+        "n_complete": 4,
+        "excluded_missing": 0,
+        "retained_indices": [0, 1, 2, 3],
+        "first_indices": [0, 1, 2, 3],
+        "second_indices": [0, 1, 2, 3],
+        "missing_by_role": {
+          "first": 0,
+          "second": 0
+        },
+        "summaries": {
+          "first": {
+            "n": 4,
+            "mean": 3,
+            "sd": 1.8257418583505538
+          },
+          "second": {
+            "n": 4,
+            "mean": 3,
+            "sd": 0.81649658092772603
+          }
+        },
+        "runs": [
+          {
+            "confidence": 0.5,
+            "method": "paired_t",
+            "difference": 0,
+            "stderr": 0.57735026918962573,
+            "df": 3,
+            "statistic": 0,
+            "p": 1,
+            "lower": -0.4416107917053283,
+            "upper": 0.4416107917053283,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.80000000000000004,
+            "method": "paired_t",
+            "difference": 0,
+            "stderr": 0.57735026918962573,
+            "df": 3,
+            "statistic": 0,
+            "p": 1,
+            "lower": -0.94555214347029626,
+            "upper": 0.94555214347029626,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.94999999999999996,
+            "method": "paired_t",
+            "difference": 0,
+            "stderr": 0.57735026918962573,
+            "df": 3,
+            "statistic": 0,
+            "p": 1,
+            "lower": -1.8373862310370785,
+            "upper": 1.8373862310370785,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.98999999999999999,
+            "method": "paired_t",
+            "difference": 0,
+            "stderr": 0.57735026918962573,
+            "df": 3,
+            "statistic": 0,
+            "p": 1,
+            "lower": -3.3722505622867431,
+            "upper": 3.3722505622867431,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.999,
+            "method": "paired_t",
+            "difference": 0,
+            "stderr": 0.57735026918962573,
+            "df": 3,
+            "statistic": 0,
+            "p": 1,
+            "lower": -7.461662544892766,
+            "upper": 7.461662544892766,
+            "status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "id": "constant_difference",
+      "design": "paired",
+      "a": [1, 2, 4, 8],
+      "b": [0, 1, 3, 7],
+      "expected": {
+        "n_source": 4,
+        "n_complete": 4,
+        "excluded_missing": 0,
+        "retained_indices": [0, 1, 2, 3],
+        "first_indices": [0, 1, 2, 3],
+        "second_indices": [0, 1, 2, 3],
+        "missing_by_role": {
+          "first": 0,
+          "second": 0
+        },
+        "summaries": {
+          "first": {
+            "n": 4,
+            "mean": 3.75,
+            "sd": 3.0956959368344519
+          },
+          "second": {
+            "n": 4,
+            "mean": 2.75,
+            "sd": 3.0956959368344519
+          }
+        },
+        "runs": [
+          {
+            "confidence": 0.5,
+            "method": "paired_t",
+            "difference": 1,
+            "stderr": null,
+            "df": null,
+            "statistic": null,
+            "p": null,
+            "lower": null,
+            "upper": null,
+            "status": "degenerate"
+          },
+          {
+            "confidence": 0.80000000000000004,
+            "method": "paired_t",
+            "difference": 1,
+            "stderr": null,
+            "df": null,
+            "statistic": null,
+            "p": null,
+            "lower": null,
+            "upper": null,
+            "status": "degenerate"
+          },
+          {
+            "confidence": 0.94999999999999996,
+            "method": "paired_t",
+            "difference": 1,
+            "stderr": null,
+            "df": null,
+            "statistic": null,
+            "p": null,
+            "lower": null,
+            "upper": null,
+            "status": "degenerate"
+          },
+          {
+            "confidence": 0.98999999999999999,
+            "method": "paired_t",
+            "difference": 1,
+            "stderr": null,
+            "df": null,
+            "statistic": null,
+            "p": null,
+            "lower": null,
+            "upper": null,
+            "status": "degenerate"
+          },
+          {
+            "confidence": 0.999,
+            "method": "paired_t",
+            "difference": 1,
+            "stderr": null,
+            "df": null,
+            "statistic": null,
+            "p": null,
+            "lower": null,
+            "upper": null,
+            "status": "degenerate"
+          }
+        ]
+      }
+    },
+    {
+      "id": "identical_measurements",
+      "design": "paired",
+      "a": [1, 2, 4, 8],
+      "b": [1, 2, 4, 8],
+      "expected": {
+        "n_source": 4,
+        "n_complete": 4,
+        "excluded_missing": 0,
+        "retained_indices": [0, 1, 2, 3],
+        "first_indices": [0, 1, 2, 3],
+        "second_indices": [0, 1, 2, 3],
+        "missing_by_role": {
+          "first": 0,
+          "second": 0
+        },
+        "summaries": {
+          "first": {
+            "n": 4,
+            "mean": 3.75,
+            "sd": 3.0956959368344519
+          },
+          "second": {
+            "n": 4,
+            "mean": 3.75,
+            "sd": 3.0956959368344519
+          }
+        },
+        "runs": [
+          {
+            "confidence": 0.5,
+            "method": "paired_t",
+            "difference": 0,
+            "stderr": null,
+            "df": null,
+            "statistic": null,
+            "p": null,
+            "lower": null,
+            "upper": null,
+            "status": "degenerate"
+          },
+          {
+            "confidence": 0.80000000000000004,
+            "method": "paired_t",
+            "difference": 0,
+            "stderr": null,
+            "df": null,
+            "statistic": null,
+            "p": null,
+            "lower": null,
+            "upper": null,
+            "status": "degenerate"
+          },
+          {
+            "confidence": 0.94999999999999996,
+            "method": "paired_t",
+            "difference": 0,
+            "stderr": null,
+            "df": null,
+            "statistic": null,
+            "p": null,
+            "lower": null,
+            "upper": null,
+            "status": "degenerate"
+          },
+          {
+            "confidence": 0.98999999999999999,
+            "method": "paired_t",
+            "difference": 0,
+            "stderr": null,
+            "df": null,
+            "statistic": null,
+            "p": null,
+            "lower": null,
+            "upper": null,
+            "status": "degenerate"
+          },
+          {
+            "confidence": 0.999,
+            "method": "paired_t",
+            "difference": 0,
+            "stderr": null,
+            "df": null,
+            "statistic": null,
+            "p": null,
+            "lower": null,
+            "upper": null,
+            "status": "degenerate"
+          }
+        ]
+      }
+    },
+    {
+      "id": "paired_one_constant",
+      "design": "paired",
+      "a": [4, 4, 4, 4, 4],
+      "b": [1, 2, 4, 6, 9],
+      "expected": {
+        "n_source": 5,
+        "n_complete": 5,
+        "excluded_missing": 0,
+        "retained_indices": [0, 1, 2, 3, 4],
+        "first_indices": [0, 1, 2, 3, 4],
+        "second_indices": [0, 1, 2, 3, 4],
+        "missing_by_role": {
+          "first": 0,
+          "second": 0
+        },
+        "summaries": {
+          "first": {
+            "n": 5,
+            "mean": 4,
+            "sd": 0
+          },
+          "second": {
+            "n": 5,
+            "mean": 4.4000000000000004,
+            "sd": 3.2093613071762421
+          }
+        },
+        "runs": [
+          {
+            "confidence": 0.5,
+            "method": "paired_t",
+            "difference": -0.40000000000000002,
+            "stderr": 1.4352700094407322,
+            "df": 4,
+            "statistic": -0.27869320571664713,
+            "p": 0.79429474278651724,
+            "lower": -1.463100310907133,
+            "upper": 0.66310031090713284,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.80000000000000004,
+            "method": "paired_t",
+            "difference": -0.40000000000000002,
+            "stderr": 1.4352700094407322,
+            "df": 4,
+            "statistic": -0.27869320571664713,
+            "p": 0.79429474278651724,
+            "lower": -2.6005649834431694,
+            "upper": 1.8005649834431696,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.94999999999999996,
+            "method": "paired_t",
+            "difference": -0.40000000000000002,
+            "stderr": 1.4352700094407322,
+            "df": 4,
+            "statistic": -0.27869320571664713,
+            "p": 0.79429474278651724,
+            "lower": -4.3849483923489112,
+            "upper": 3.5849483923489118,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.98999999999999999,
+            "method": "paired_t",
+            "difference": -0.40000000000000002,
+            "stderr": 1.4352700094407322,
+            "df": 4,
+            "statistic": -0.27869320571664713,
+            "p": 0.79429474278651724,
+            "lower": -7.0081192894685298,
+            "upper": 6.20811928946853,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.999,
+            "method": "paired_t",
+            "difference": -0.40000000000000002,
+            "stderr": 1.4352700094407322,
+            "df": 4,
+            "statistic": -0.27869320571664713,
+            "p": 0.79429474278651724,
+            "lower": -12.75810763199414,
+            "upper": 11.958107631994137,
+            "status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "id": "paired_large_offset",
+      "design": "paired",
+      "a": [1000000000, 1000000002, 1000000004, 1000000006, 1000000008, 1000000011],
+      "b": [1000000001, 1000000000, 1000000005, 1000000003, 1000000007, 1000000006],
+      "expected": {
+        "n_source": 6,
+        "n_complete": 6,
+        "excluded_missing": 0,
+        "retained_indices": [0, 1, 2, 3, 4, 5],
+        "first_indices": [0, 1, 2, 3, 4, 5],
+        "second_indices": [0, 1, 2, 3, 4, 5],
+        "missing_by_role": {
+          "first": 0,
+          "second": 0
+        },
+        "summaries": {
+          "first": {
+            "n": 6,
+            "mean": 1000000005.1666666,
+            "sd": 4.0207793606049398
+          },
+          "second": {
+            "n": 6,
+            "mean": 1000000003.6666666,
+            "sd": 2.8047578623950171
+          }
+        },
+        "runs": [
+          {
+            "confidence": 0.5,
+            "method": "paired_t",
+            "difference": 1.5,
+            "stderr": 0.9574271077563381,
+            "df": 5,
+            "statistic": 1.5666989036012806,
+            "p": 0.17796592231085215,
+            "lower": 0.80425031689557935,
+            "upper": 2.1957496831044208,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.80000000000000004,
+            "method": "paired_t",
+            "difference": 1.5,
+            "stderr": 0.9574271077563381,
+            "df": 5,
+            "statistic": 1.5666989036012806,
+            "p": 0.17796592231085215,
+            "lower": 0.086948603750263878,
+            "upper": 2.9130513962497364,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.94999999999999996,
+            "method": "paired_t",
+            "difference": 1.5,
+            "stderr": 0.9574271077563381,
+            "df": 5,
+            "statistic": 1.5666989036012806,
+            "p": 0.17796592231085215,
+            "lower": -0.96114473214425467,
+            "upper": 3.9611447321442546,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.98999999999999999,
+            "method": "paired_t",
+            "difference": 1.5,
+            "stderr": 0.9574271077563381,
+            "df": 5,
+            "statistic": 1.5666989036012806,
+            "p": 0.17796592231085215,
+            "lower": -2.3604829948052943,
+            "upper": 5.3604829948052943,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.999,
+            "method": "paired_t",
+            "difference": 1.5,
+            "stderr": 0.9574271077563381,
+            "df": 5,
+            "statistic": 1.5666989036012806,
+            "p": 0.17796592231085215,
+            "lower": -5.0764008100972342,
+            "upper": 8.0764008100972351,
+            "status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "id": "paired_small_scale",
+      "design": "paired",
+      "a": [9.9999999999999977e-101, 1.9999999999999995e-100, 3.9999999999999991e-100, 7.9999999999999981e-100],
+      "b": [0, 2.999999999999999e-100, 1.9999999999999995e-100, 4.9999999999999991e-100],
+      "expected": {
+        "n_source": 4,
+        "n_complete": 4,
+        "excluded_missing": 0,
+        "retained_indices": [0, 1, 2, 3],
+        "first_indices": [0, 1, 2, 3],
+        "second_indices": [0, 1, 2, 3],
+        "missing_by_role": {
+          "first": 0,
+          "second": 0
+        },
+        "summaries": {
+          "first": {
+            "n": 4,
+            "mean": 3.7499999999999991e-100,
+            "sd": 3.0956959368344512e-100
+          },
+          "second": {
+            "n": 4,
+            "mean": 2.4999999999999995e-100,
+            "sd": 2.0816659994661323e-100
+          }
+        },
+        "runs": [
+          {
+            "confidence": 0.5,
+            "method": "paired_t",
+            "difference": 1.2499999999999998e-100,
+            "stderr": 8.5391256382996634e-101,
+            "df": 3,
+            "statistic": 1.4638501094227998,
+            "p": 0.23944259863600284,
+            "lower": 5.968488307983728e-101,
+            "upper": 1.9031511692016266e-100,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.80000000000000004,
+            "method": "paired_t",
+            "difference": 1.2499999999999998e-100,
+            "stderr": 8.5391256382996634e-101,
+            "df": 3,
+            "statistic": 1.4638501094227998,
+            "p": 0.23944259863600284,
+            "lower": -1.4849047996278193e-101,
+            "upper": 2.6484904799627814e-100,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.94999999999999996,
+            "method": "paired_t",
+            "difference": 1.2499999999999998e-100,
+            "stderr": 8.5391256382996634e-101,
+            "df": 3,
+            "statistic": 1.4638501094227998,
+            "p": 0.23944259863600284,
+            "lower": -1.467530883796015e-100,
+            "upper": 3.9675308837960148e-100,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.98999999999999999,
+            "method": "paired_t",
+            "difference": 1.2499999999999998e-100,
+            "stderr": 8.5391256382996634e-101,
+            "df": 3,
+            "statistic": 1.4638501094227998,
+            "p": 0.23944259863600284,
+            "lower": -3.7376258437727282e-100,
+            "upper": 6.2376258437727267e-100,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.999,
+            "method": "paired_t",
+            "difference": 1.2499999999999998e-100,
+            "stderr": 8.5391256382996634e-101,
+            "df": 3,
+            "statistic": 1.4638501094227998,
+            "p": 0.23944259863600284,
+            "lower": -9.7859477325379295e-100,
+            "upper": 1.2285947732537931e-99,
+            "status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "id": "paired_large_scale",
+      "design": "paired",
+      "a": [1.0000000000000002e+100, 2.0000000000000004e+100, 4.0000000000000008e+100, 8.0000000000000017e+100],
+      "b": [0, 3.0000000000000006e+100, 2.0000000000000004e+100, 5.0000000000000014e+100],
+      "expected": {
+        "n_source": 4,
+        "n_complete": 4,
+        "excluded_missing": 0,
+        "retained_indices": [0, 1, 2, 3],
+        "first_indices": [0, 1, 2, 3],
+        "second_indices": [0, 1, 2, 3],
+        "missing_by_role": {
+          "first": 0,
+          "second": 0
+        },
+        "summaries": {
+          "first": {
+            "n": 4,
+            "mean": 3.7500000000000007e+100,
+            "sd": 3.0956959368344521e+100
+          },
+          "second": {
+            "n": 4,
+            "mean": 2.5000000000000007e+100,
+            "sd": 2.0816659994661332e+100
+          }
+        },
+        "runs": [
+          {
+            "confidence": 0.5,
+            "method": "paired_t",
+            "difference": 1.2500000000000002e+100,
+            "stderr": 8.5391256382996665e+99,
+            "df": 3,
+            "statistic": 1.4638501094227998,
+            "p": 0.23944259863600284,
+            "lower": 5.9684883079837302e+99,
+            "upper": 1.9031511692016274e+100,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.80000000000000004,
+            "method": "paired_t",
+            "difference": 1.2500000000000002e+100,
+            "stderr": 8.5391256382996665e+99,
+            "df": 3,
+            "statistic": 1.4638501094227998,
+            "p": 0.23944259863600284,
+            "lower": -1.4849047996278197e+99,
+            "upper": 2.6484904799627822e+100,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.94999999999999996,
+            "method": "paired_t",
+            "difference": 1.2500000000000002e+100,
+            "stderr": 8.5391256382996665e+99,
+            "df": 3,
+            "statistic": 1.4638501094227998,
+            "p": 0.23944259863600284,
+            "lower": -1.4675308837960156e+100,
+            "upper": 3.9675308837960163e+100,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.98999999999999999,
+            "method": "paired_t",
+            "difference": 1.2500000000000002e+100,
+            "stderr": 8.5391256382996665e+99,
+            "df": 3,
+            "statistic": 1.4638501094227998,
+            "p": 0.23944259863600284,
+            "lower": -3.7376258437727297e+100,
+            "upper": 6.2376258437727296e+100,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.999,
+            "method": "paired_t",
+            "difference": 1.2500000000000002e+100,
+            "stderr": 8.5391256382996665e+99,
+            "df": 3,
+            "statistic": 1.4638501094227998,
+            "p": 0.23944259863600284,
+            "lower": -9.7859477325379334e+100,
+            "upper": 1.2285947732537935e+101,
+            "status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "id": "normal_n5",
+      "design": "independent",
+      "values": [2.9954742458591443, 0.78401288717140305, 1.6500569065822575, 2.8397889786840667, -1.5337453885998875, 5.7697626879065655, -1.0801822907881542, 1.2976507749182085, -1.2247036018135304, 5.4359987334060484, -3.8525203737920428, 3.4415237456203944, -10.664058759586771],
+      "codes": [0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1],
+      "levels": ["First", "Second", "unused"],
+      "first": "First",
+      "second": "Second",
+      "expected": {
+        "n_source": 13,
+        "n_complete": 13,
+        "excluded_missing": 0,
+        "retained_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+        "first_indices": [0, 1, 2, 3, 4],
+        "second_indices": [5, 6, 7, 8, 9, 10, 11, 12],
+        "missing_by_role": {
+          "outcome": 0,
+          "group": 0
+        },
+        "summaries": {
+          "first": {
+            "n": 5,
+            "mean": 1.3471175259393968,
+            "sd": 1.8475238954379973
+          },
+          "second": {
+            "n": 8,
+            "mean": -0.10956613551616012,
+            "sd": 5.4445640541379801
+          }
+        },
+        "runs": [
+          {
+            "confidence": 0.5,
+            "method": "welch",
+            "difference": 1.4566836614555569,
+            "stderr": 2.094774122977058,
+            "df": 9.2664723763372923,
+            "statistic": 0.6953893718074684,
+            "p": 0.50387541489816723,
+            "lower": -0.013603408155789427,
+            "upper": 2.9269707310669029,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.5,
+            "method": "student",
+            "difference": 1.4566836614555569,
+            "stderr": 2.5562011011565691,
+            "df": 11,
+            "statistic": 0.56986270008117568,
+            "p": 0.58022278298556251,
+            "lower": -0.32612685284951654,
+            "upper": 3.2394941757606306,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.80000000000000004,
+            "method": "welch",
+            "difference": 1.4566836614555569,
+            "stderr": 2.094774122977058,
+            "df": 9.2664723763372923,
+            "statistic": 0.6953893718074684,
+            "p": 0.50387541489816723,
+            "lower": -1.433881353348148,
+            "upper": 4.3472486762592615,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.80000000000000004,
+            "method": "student",
+            "difference": 1.4566836614555569,
+            "stderr": 2.5562011011565691,
+            "df": 11,
+            "statistic": 0.56986270008117568,
+            "p": 0.58022278298556251,
+            "lower": -2.0285184188188015,
+            "upper": 4.9418857417299158,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.94999999999999996,
+            "method": "welch",
+            "difference": 1.4566836614555569,
+            "stderr": 2.094774122977058,
+            "df": 9.2664723763372923,
+            "statistic": 0.6953893718074684,
+            "p": 0.50387541489816723,
+            "lower": -3.261333473860303,
+            "upper": 6.1747007967714165,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.94999999999999996,
+            "method": "student",
+            "difference": 1.4566836614555569,
+            "stderr": 2.5562011011565691,
+            "df": 11,
+            "statistic": 0.56986270008117568,
+            "p": 0.58022278298556251,
+            "lower": -4.1694770283999576,
+            "upper": 7.0828443513110715,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.98999999999999999,
+            "method": "welch",
+            "difference": 1.4566836614555569,
+            "stderr": 2.094774122977058,
+            "df": 9.2664723763372923,
+            "statistic": 0.6953893718074684,
+            "p": 0.50387541489816723,
+            "lower": -5.3017349537071565,
+            "upper": 8.2151022766182713,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.98999999999999999,
+            "method": "student",
+            "difference": 1.4566836614555569,
+            "stderr": 2.5562011011565691,
+            "df": 11,
+            "statistic": 0.56986270008117568,
+            "p": 0.58022278298556251,
+            "lower": -6.4823823735451969,
+            "upper": 9.3957496964563116,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.999,
+            "method": "welch",
+            "difference": 1.4566836614555569,
+            "stderr": 2.094774122977058,
+            "df": 9.2664723763372923,
+            "statistic": 0.6953893718074684,
+            "p": 0.50387541489816723,
+            "lower": -8.4387398055145706,
+            "upper": 11.352107128425683,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.999,
+            "method": "student",
+            "difference": 1.4566836614555569,
+            "stderr": 2.5562011011565691,
+            "df": 11,
+            "statistic": 0.56986270008117568,
+            "p": 0.58022278298556251,
+            "lower": -9.8851278087484573,
+            "upper": 12.798495131659571,
+            "status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "id": "skewed_n5",
+      "design": "independent",
+      "values": [0.29843961010672215, 1.3749502729204419, 0.33389530563727021, 0.15994335385039449, 0.58453045086935163, 0.97583670479555928, 0.5708995911603173, 1.3856737858926258, 1.7873694871862731, 1.8939196209733686, 0.98516649617185026, 2.4076807460154033, 0.22665740456432104, 2.0727483571196599, 0.3466284682656075],
+      "codes": [0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      "levels": ["First", "Second", "unused"],
+      "first": "First",
+      "second": "Second",
+      "expected": {
+        "n_source": 15,
+        "n_complete": 15,
+        "excluded_missing": 0,
+        "retained_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
+        "first_indices": [0, 1, 2, 3, 4],
+        "second_indices": [5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
+        "missing_by_role": {
+          "outcome": 0,
+          "group": 0
+        },
+        "summaries": {
+          "first": {
+            "n": 5,
+            "mean": 0.55035179867683603,
+            "sd": 0.48576299311278148
+          },
+          "second": {
+            "n": 10,
+            "mean": 1.2652580662144985,
+            "sd": 0.76058509332240276
+          }
+        },
+        "runs": [
+          {
+            "confidence": 0.5,
+            "method": "welch",
+            "difference": -0.71490626753766251,
+            "stderr": 0.32410199862697925,
+            "df": 11.881829547194005,
+            "statistic": -2.205806414543201,
+            "p": 0.047849704374555754,
+            "lower": -0.94038309587257296,
+            "upper": -0.48942943920275217,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.5,
+            "method": "student",
+            "difference": -0.71490626753766251,
+            "stderr": 0.37673505992233774,
+            "df": 13,
+            "statistic": -1.8976366778420815,
+            "p": 0.080174773194449322,
+            "lower": -0.97629609204467516,
+            "upper": -0.45351644303064975,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.80000000000000004,
+            "method": "welch",
+            "difference": -0.71490626753766251,
+            "stderr": 0.32410199862697925,
+            "df": 11.881829547194005,
+            "statistic": -2.205806414543201,
+            "p": 0.047849704374555754,
+            "lower": -1.1547136046898971,
+            "upper": -0.2750989303854281,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.80000000000000004,
+            "method": "student",
+            "difference": -0.71490626753766251,
+            "stderr": 0.37673505992233774,
+            "df": 13,
+            "statistic": -1.8976366778420815,
+            "p": 0.080174773194449322,
+            "lower": -1.2235631289216367,
+            "upper": -0.20624940615368839,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.94999999999999996,
+            "method": "welch",
+            "difference": -0.71490626753766251,
+            "stderr": 0.32410199862697925,
+            "df": 11.881829547194005,
+            "statistic": -2.205806414543201,
+            "p": 0.047849704374555754,
+            "lower": -1.4218435710231785,
+            "upper": -0.0079689640521465929,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.94999999999999996,
+            "method": "student",
+            "difference": -0.71490626753766251,
+            "stderr": 0.37673505992233774,
+            "df": 13,
+            "statistic": -1.8976366778420815,
+            "p": 0.080174773194449322,
+            "lower": -1.5287928827845125,
+            "upper": 0.098980347709187649,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.98999999999999999,
+            "method": "welch",
+            "difference": -0.71490626753766251,
+            "stderr": 0.32410199862697925,
+            "df": 11.881829547194005,
+            "statistic": -2.205806414543201,
+            "p": 0.047849704374555754,
+            "lower": -1.7066836364756566,
+            "upper": 0.27687110140033161,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.98999999999999999,
+            "method": "student",
+            "difference": -0.71490626753766251,
+            "stderr": 0.37673505992233774,
+            "df": 13,
+            "statistic": -1.8976366778420815,
+            "p": 0.080174773194449322,
+            "lower": -1.8497361861391626,
+            "upper": 0.41992365106383761,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.999,
+            "method": "welch",
+            "difference": -0.71490626753766251,
+            "stderr": 0.32410199862697925,
+            "df": 11.881829547194005,
+            "statistic": -2.205806414543201,
+            "p": 0.047849704374555754,
+            "lower": -2.1184572685605065,
+            "upper": 0.68864473348518163,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.999,
+            "method": "student",
+            "difference": -0.71490626753766251,
+            "stderr": 0.37673505992233774,
+            "df": 13,
+            "statistic": -1.8976366778420815,
+            "p": 0.080174773194449322,
+            "lower": -2.3050415613975312,
+            "upper": 0.87522902632220645,
+            "status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "id": "correlated_n5",
+      "design": "paired",
+      "a": [11.600227574476381, 12.88182031569351, 12.502717865124277, 13.910036203074704, 10.456398414972462],
+      "b": [10.139592994270119, 10.717053452255279, 14.964585482984791, 15.094088349425206, 9.6352762438190958],
+      "expected": {
+        "n_source": 5,
+        "n_complete": 5,
+        "excluded_missing": 0,
+        "retained_indices": [0, 1, 2, 3, 4],
+        "first_indices": [0, 1, 2, 3, 4],
+        "second_indices": [0, 1, 2, 3, 4],
+        "missing_by_role": {
+          "first": 0,
+          "second": 0
+        },
+        "summaries": {
+          "first": {
+            "n": 5,
+            "mean": 12.270240074668267,
+            "sd": 1.3091930695915286
+          },
+          "second": {
+            "n": 5,
+            "mean": 12.110119304550897,
+            "sd": 2.6926057550347182
+          }
+        },
+        "runs": [
+          {
+            "confidence": 0.5,
+            "method": "paired_t",
+            "difference": 0.16012077011736844,
+            "stderr": 0.86106007101498683,
+            "df": 4,
+            "statistic": 0.18595772293636123,
+            "p": 0.86152743176994684,
+            "lower": -0.47766391372929173,
+            "upper": 0.79790545396402868,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.80000000000000004,
+            "method": "paired_t",
+            "difference": 0.16012077011736844,
+            "stderr": 0.86106007101498683,
+            "df": 4,
+            "statistic": 0.18595772293636123,
+            "p": 0.86152743176994684,
+            "lower": -1.1600619331044488,
+            "upper": 1.4803034733391855,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.94999999999999996,
+            "method": "paired_t",
+            "difference": 0.16012077011736844,
+            "stderr": 0.86106007101498683,
+            "df": 4,
+            "statistic": 0.18595772293636123,
+            "p": 0.86152743176994684,
+            "lower": -2.230565249333456,
+            "upper": 2.5508067895681927,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.98999999999999999,
+            "method": "paired_t",
+            "difference": 0.16012077011736844,
+            "stderr": 0.86106007101498683,
+            "df": 4,
+            "statistic": 0.18595772293636123,
+            "p": 0.86152743176994684,
+            "lower": -3.8042814867669921,
+            "upper": 4.1245230270017297,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.999,
+            "method": "paired_t",
+            "difference": 0.16012077011736844,
+            "stderr": 0.86106007101498683,
+            "df": 4,
+            "statistic": 0.18595772293636123,
+            "p": 0.86152743176994684,
+            "lower": -7.2538661210057356,
+            "upper": 7.5741076612404736,
+            "status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "id": "normal_n17",
+      "design": "independent",
+      "values": [2.4358723927209747, 0.40211213287392389, -1.4358627011225136, -0.19582517563254265, -0.12226096766829309, 0.66574731843296964, 0.2903739548842077, 0.4909870828473295, -0.89624086064665676, 1.2348205964684433, 0.24653196504298847, -0.39798572837618873, 4.2204319656879008, -0.083953768861996014, 2.2479537252867523, 1.7584269630714373, 0.28924395129094094, -3.4266468569866468, -2.348486200056505, -2.5404298103192242, 4.5696811044263228, 2.0535347643371926, -3.3485635454646241, 1.9095699147027685, 1.514632602846838, 5.8930301896217321, 1.6703221806801609, -2.1220629429143205, -7.1461704477605323, 2.8505973624770098, -7.4420754029504899, -3.4890371365336144, -0.54565432396719693, -2.1182065115939204, -3.8583569272308846, -0.84340411979245811, 1.9446243278721962],
+      "codes": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      "levels": ["First", "Second", "unused"],
+      "first": "First",
+      "second": "Second",
+      "expected": {
+        "n_source": 37,
+        "n_complete": 37,
+        "excluded_missing": 0,
+        "retained_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36],
+        "first_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
+        "second_indices": [17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36],
+        "missing_by_role": {
+          "outcome": 0,
+          "group": 0
+        },
+        "summaries": {
+          "first": {
+            "n": 17,
+            "mean": 0.65590428507645171,
+            "sd": 1.3752388605921162
+          },
+          "second": {
+            "n": 20,
+            "mean": -0.84115508893030977,
+            "sd": 3.5890878872694234
+          }
+        },
+        "runs": [
+          {
+            "confidence": 0.5,
+            "method": "welch",
+            "difference": 1.4970593740067615,
+            "stderr": 0.8690969284210438,
+            "df": 25.236510787754153,
+            "statistic": 1.7225459267547822,
+            "p": 0.097205860319829862,
+            "lower": 0.90230537676519118,
+            "upper": 2.0918133712483318,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.5,
+            "method": "student",
+            "difference": 1.4970593740067615,
+            "stderr": 0.92470162610799911,
+            "df": 35,
+            "statistic": 1.6189647900888571,
+            "p": 0.11443229135509625,
+            "lower": 0.86681596274028061,
+            "upper": 2.1273027852732427,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.80000000000000004,
+            "method": "welch",
+            "difference": 1.4970593740067615,
+            "stderr": 0.8690969284210438,
+            "df": 25.236510787754153,
+            "statistic": 1.7225459267547822,
+            "p": 0.097205860319829862,
+            "lower": 0.35331894632881256,
+            "upper": 2.640799801684711,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.80000000000000004,
+            "method": "student",
+            "difference": 1.4970593740067615,
+            "stderr": 0.92470162610799911,
+            "df": 35,
+            "statistic": 1.6189647900888571,
+            "p": 0.11443229135509625,
+            "lower": 0.28920319664107469,
+            "upper": 2.7049155513724488,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.94999999999999996,
+            "method": "welch",
+            "difference": 1.4970593740067615,
+            "stderr": 0.8690969284210438,
+            "df": 25.236510787754153,
+            "statistic": 1.7225459267547822,
+            "p": 0.097205860319829862,
+            "lower": -0.29202905826490916,
+            "upper": 3.2861478062784326,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.94999999999999996,
+            "method": "student",
+            "difference": 1.4970593740067615,
+            "stderr": 0.92470162610799911,
+            "df": 35,
+            "statistic": 1.6189647900888571,
+            "p": 0.11443229135509625,
+            "lower": -0.38018472842107132,
+            "upper": 3.3743034764345943,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.98999999999999999,
+            "method": "welch",
+            "difference": 1.4970593740067615,
+            "stderr": 0.8690969284210438,
+            "df": 25.236510787754153,
+            "statistic": 1.7225459267547822,
+            "p": 0.097205860319829862,
+            "lower": -0.92364169209988367,
+            "upper": 3.917760440113407,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.98999999999999999,
+            "method": "student",
+            "difference": 1.4970593740067615,
+            "stderr": 0.92470162610799911,
+            "df": 35,
+            "statistic": 1.6189647900888571,
+            "p": 0.11443229135509625,
+            "lower": -1.0216480835360171,
+            "upper": 4.0157668315495405,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.999,
+            "method": "welch",
+            "difference": 1.4970593740067615,
+            "stderr": 0.8690969284210438,
+            "df": 25.236510787754153,
+            "statistic": 1.7225459267547822,
+            "p": 0.097205860319829862,
+            "lower": -1.736514648409976,
+            "upper": 4.7306333964234994,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.999,
+            "method": "student",
+            "difference": 1.4970593740067615,
+            "stderr": 0.92470162610799911,
+            "df": 35,
+            "statistic": 1.6189647900888571,
+            "p": 0.11443229135509625,
+            "lower": -1.8236798891779999,
+            "upper": 4.8177986371915233,
+            "status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "id": "skewed_n17",
+      "design": "independent",
+      "values": [1.7074044085198883, 0.35357339352940803, 1.5272492392931245, 0.34444541716948152, 0.36313821608200669, 0.057731314096599817, 0.58544079074588251, 0.9546826779422285, 0.0047160543973330509, 1.0942447855648521, 0.85405404055636691, 1.2101173596036556, 0.67888940824195743, 1.5139255969876293, 0.70569013983602014, 0.046477601397782564, 2.3218826519927744, 9.0498373218646861, 10.001596013144814, 2.1424610473430246, 1.7289207814104579, 2.4339542044531819, 2.2709888281921549, 0.15829609090579336, 4.141493898986818, 1.5663196612149477, 5.3004282801220448, 8.4616325095985818, 4.4247681863447443, 0.7146399669970076, 0.73041694704443216, 0.43345093261450529, 1.0531516521213125, 0.88708971316615748, 0.32411497969970859, 8.191792399512849, 1.3325413518274825, 1.3535056449472904, 5.9050796116074737],
+      "codes": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      "levels": ["First", "Second", "unused"],
+      "first": "First",
+      "second": "Second",
+      "expected": {
+        "n_source": 39,
+        "n_complete": 39,
+        "excluded_missing": 0,
+        "retained_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38],
+        "first_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
+        "second_indices": [17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38],
+        "missing_by_role": {
+          "outcome": 0,
+          "group": 0
+        },
+        "summaries": {
+          "first": {
+            "n": 17,
+            "mean": 0.84256841740923483,
+            "sd": 0.65418930999636438
+          },
+          "second": {
+            "n": 22,
+            "mean": 3.3002945465054303,
+            "sd": 3.1523879141053075
+          }
+        },
+        "runs": [
+          {
+            "confidence": 0.5,
+            "method": "welch",
+            "difference": -2.4577261290961956,
+            "stderr": 0.69056580481153274,
+            "df": 23.310922293068305,
+            "statistic": -3.5590035185234101,
+            "p": 0.0016443269600804899,
+            "lower": -2.9308742248277406,
+            "upper": -1.9845780333646501,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.5,
+            "method": "student",
+            "difference": -2.4577261290961956,
+            "stderr": 0.77939121934627331,
+            "df": 37,
+            "statistic": -3.1533921195027732,
+            "p": 0.0031970628657937831,
+            "lower": -2.9886305751878322,
+            "upper": -1.926821683004559,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.80000000000000004,
+            "method": "welch",
+            "difference": -2.4577261290961956,
+            "stderr": 0.69056580481153274,
+            "df": 23.310922293068305,
+            "statistic": -3.5590035185234101,
+            "p": 0.0016443269600804899,
+            "lower": -3.3685408853642702,
+            "upper": -1.5469113728281203,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.80000000000000004,
+            "method": "student",
+            "difference": -2.4577261290961956,
+            "stderr": 0.77939121934627331,
+            "df": 37,
+            "statistic": -3.1533921195027732,
+            "p": 0.0031970628657937831,
+            "lower": -3.4747181765609563,
+            "upper": -1.4407340816314345,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.94999999999999996,
+            "method": "welch",
+            "difference": -2.4577261290961956,
+            "stderr": 0.69056580481153274,
+            "df": 23.310922293068305,
+            "statistic": -3.5590035185234101,
+            "p": 0.0016443269600804899,
+            "lower": -3.8852167424147006,
+            "upper": -1.0302355157776903,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.94999999999999996,
+            "method": "student",
+            "difference": -2.4577261290961956,
+            "stderr": 0.77939121934627331,
+            "df": 37,
+            "statistic": -3.1533921195027732,
+            "p": 0.0031970628657937831,
+            "lower": -4.0369227434866817,
+            "upper": -0.87852951470570928,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.98999999999999999,
+            "method": "welch",
+            "difference": -2.4577261290961956,
+            "stderr": 0.69056580481153274,
+            "df": 23.310922293068305,
+            "statistic": -3.5590035185234101,
+            "p": 0.0016443269600804899,
+            "lower": -4.3940727901307772,
+            "upper": -0.52137946806161406,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.98999999999999999,
+            "method": "student",
+            "difference": -2.4577261290961956,
+            "stderr": 0.77939121934627331,
+            "df": 37,
+            "statistic": -3.1533921195027732,
+            "p": 0.0031970628657937831,
+            "lower": -4.5740918436085467,
+            "upper": -0.34136041458384514,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.999,
+            "method": "welch",
+            "difference": -2.4577261290961956,
+            "stderr": 0.69056580481153274,
+            "df": 23.310922293068305,
+            "statistic": -3.5590035185234101,
+            "p": 0.0016443269600804899,
+            "lower": -5.0545899079359957,
+            "upper": 0.1391376497436049,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.999,
+            "method": "student",
+            "difference": -2.4577261290961956,
+            "stderr": 0.77939121934627331,
+            "df": 37,
+            "statistic": -3.1533921195027732,
+            "p": 0.0031970628657937831,
+            "lower": -5.2430169236554782,
+            "upper": 0.32756466546308705,
+            "status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "id": "correlated_n17",
+      "design": "paired",
+      "a": [10.367950055720565, 14.300219435498205, 6.6990027086235493, 7.3988772893160855, 13.363350627778015, 12.662054646683345, 14.740218774451606, 3.6331051425939171, 11.199335273919797, 6.5789392882855369, 12.432275491554647, 12.288466851678344, 12.888118363199373, 7.331489706827667, 10.357637712900946, 10.928008982543471, 8.470508738654555],
+      "b": [9.6905303655769561, 13.675974169133475, 8.0652338322003114, 7.5834601863157083, 13.447742144538667, 12.72129464428714, 14.030695798280066, 5.3544475131843452, 12.7840315166726, 9.670540182804487, 13.539903948261529, 11.93399124046144, 13.656880954811971, 9.1125548061957957, 12.035302896770835, 10.102747441574856, 9.5785705362582583],
+      "expected": {
+        "n_source": 17,
+        "n_complete": 17,
+        "excluded_missing": 0,
+        "retained_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
+        "first_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
+        "second_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
+        "missing_by_role": {
+          "first": 0,
+          "second": 0
+        },
+        "summaries": {
+          "first": {
+            "n": 17,
+            "mean": 10.331738770013507,
+            "sd": 3.1514902520071959
+          },
+          "second": {
+            "n": 17,
+            "mean": 10.999053069254614,
+            "sd": 2.5734865946448009
+          }
+        },
+        "runs": [
+          {
+            "confidence": 0.5,
+            "method": "paired_t",
+            "difference": -0.66731429924110708,
+            "stderr": 0.27496275245236884,
+            "df": 16,
+            "statistic": -2.4269261683242145,
+            "p": 0.027408107845955324,
+            "lower": -0.85707496330501565,
+            "upper": -0.4775536351771984,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.80000000000000004,
+            "method": "paired_t",
+            "difference": -0.66731429924110708,
+            "stderr": 0.27496275245236884,
+            "df": 16,
+            "statistic": -2.4269261683242145,
+            "p": 0.027408107845955324,
+            "lower": -1.0348727293298572,
+            "upper": -0.2997558691523568,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.94999999999999996,
+            "method": "paired_t",
+            "difference": -0.66731429924110708,
+            "stderr": 0.27496275245236884,
+            "df": 16,
+            "statistic": -2.4269261683242145,
+            "p": 0.027408107845955324,
+            "lower": -1.2502092952533455,
+            "upper": -0.084419303228868425,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.98999999999999999,
+            "method": "paired_t",
+            "difference": -0.66731429924110708,
+            "stderr": 0.27496275245236884,
+            "df": 16,
+            "statistic": -2.4269261683242145,
+            "p": 0.027408107845955324,
+            "lower": -1.4704204534554075,
+            "upper": 0.13579185497319368,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.999,
+            "method": "paired_t",
+            "difference": -0.66731429924110708,
+            "stderr": 0.27496275245236884,
+            "df": 16,
+            "statistic": -2.4269261683242145,
+            "p": 0.027408107845955324,
+            "lower": -1.771288740449801,
+            "upper": 0.43666014196758701,
+            "status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "id": "normal_n100",
+      "design": "independent",
+      "values": [4.5178859525076502, 0.58432119141082928, 0.79203632068991681, 0.23347880631325713, 0.95161752480216721, 1.0353383081961136, -0.73350694572546282, -0.25340035514424564, 0.13874357678806937, 3.1312558926379896, 1.738501429438728, 0.98713873634867966, 2.1297806008497449, 0.52242056501768475, -1.2447857203274961, 1.4346470725905831, 0.36806149731100712, 2.2906115494278358, 1.5755028565530564, 0.79234581388024172, 1.507888063158844, 5.1855654922809817, -0.37542602424379479, -1.4018396237570978, 2.0514256205913779, 0.027710546970178052, -0.37452231191006535, -0.91657125443409893, 4.4499061670486508, 3.3546100997507149, -1.2119452332592413, 5.1197601630301008, 3.936000126320812, 1.6078303512377037, -0.62716497210671895, -1.7702840106300961, 2.6370040644142749, 3.6453511664290978, 1.1648363690084587, -1.665140293004463, -1.2526929623066407, 2.5103071295601467, 0.00099507931430742325, 0.35548583193004946, 4.7369436793777915, 0.20559143040944217, -1.8805836973309837, 0.66662886679927968, 1.9776507497349574, 3.0582918873120049, -1.1400295754976972, -0.23200227261731388, 2.8194951172033851, 3.6788936245904917, 3.406107444466282, 0.89753898340568405, 1.5107990011844514, 2.2109276052045885, 1.9380201404319792, 0.73293054841687422, -3.455260247403336, -1.807479391694935, 1.8664739202427452, -2.2863554549793741, 4.2205323164708064, -0.84825839596036512, 0.7657792993819843, 0.51961258822809941, 0.83367541070698592, 0.31711743532880088, -1.4472302071527783, 1.942038701277194, 1.1848836893989592, -1.1903428050762286, 3.8003909372525846, 4.4745177102853422, 2.5367296870312854, 2.6790812489097702, -0.47382821446396783, 4.7745174648080386, -0.40102479830631776, 1.4083980033322627, 2.5305151434402484, 2.1546867155858287, -1.7487884730821284, 0.44061457775512669, -0.42962456594528908, 1.4123672696714282, 4.6834006020030774, -0.87711149791292575, -3.2088516082274516, 1.1500312839198801, -1.1114064252774005, 1.7332388834790442, 0.89547368407446082, -3.025571740067865, -1.7352528361549453, 1.5463501809916353, -0.6600757023546977, -3.0945865666078349, -6.1601330997182053, -0.37450587141460667, 0.58807322225875747, 5.2429862365011566, -2.7487397553734696, 1.4976851384862611, 4.6637186034282703, 7.2945636546656516, -3.9830327634803524, -1.8761948354764197, -5.8225322741778083, 7.0924762440617544, -1.7095096833370573, 4.183175032170559, -5.3409458968788908, -3.0193114128153082, 11.367414639816797, 2.3958939742272407, 3.7239682998194161, 0.59828756762215796, -0.92460029791602849, -6.1661584755912138, 8.7170997953036906, -7.173246257510681, 7.5554351809749294, -8.2274943282985085, -4.5300137290780036, 6.8581130153462562, -0.40867497810115155, 6.8268329810797921, 1.906999552788873, 15.298129757400261, -10.984424195009591, 2.6409345556960768, -6.1022507786358036, 5.3484339768580114, -6.5427878741805019, 2.4596536298201532, 4.7320265087242959, 8.4722676917115098, 1.7932300568290058, 3.197426736261356, 4.9542125066293305, -3.8461845822142076, -4.0655446510383015, -1.0574132264376463, -4.33753197158613, -6.9370176197022468, -9.1050833606269137, 13.435577155021853, 0.56675159344699377, 2.018459673489716, 5.1663419947587084, 5.3320694360155247, 0.69411699719485864, -3.3789381126476341, 4.0651733036624451, -3.4253829764425312, -4.1637539840631641, -0.39664304812711421, 5.3756290398694535, -1.7330614386838907, -9.3685343864604427, 2.2943849505330691, 9.0186912643850086, 1.7137758668597041, 9.3860959999124205, 2.8425501135918836, 3.8718766497378998, 3.8065378901637659, 7.5180627382597871, -0.9643691630532415, 7.1480012734983527, 0.01765040533829132, 2.6670910790528755, 0.80960742363808458, -5.4095740685835452, 1.9335476882461184, 2.8518108420639896, -2.6187332901125489, 3.2341747250859614, 4.7875059349753615, 9.9935282107654544, 1.1351499929228663, -0.023795747751802876, 4.6489882552097814, -1.8279308770511937, -7.8816635720747881, 3.7834178659945774, 4.0185485631416276, 3.1177086967032097, -9.8955735338118611, -0.33812222703131928, -4.3730609296782816, 0.011903763843553905, 9.6284709860809556, 3.2366081572166596, -3.1746893207735178, 6.2370007685573041, -3.9680847782695046, -0.75652719182589601, 10.721124176347898, -0.7663476508918694],
+      "codes": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      "levels": ["First", "Second", "unused"],
+      "first": "First",
+      "second": "Second",
+      "expected": {
+        "n_source": 203,
+        "n_complete": 203,
+        "excluded_missing": 0,
+        "retained_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202],
+        "first_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99],
+        "second_indices": [100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202],
+        "missing_by_role": {
+          "outcome": 0,
+          "group": 0
+        },
+        "summaries": {
+          "first": {
+            "n": 100,
+            "mean": 0.9360766561495879,
+            "sd": 2.0329705243224643
+          },
+          "second": {
+            "n": 103,
+            "mean": 1.0736781924090717,
+            "sd": 5.4254935484770472
+          }
+        },
+        "runs": [
+          {
+            "confidence": 0.5,
+            "method": "welch",
+            "difference": -0.13760153625948379,
+            "stderr": 0.57194047548175886,
+            "df": 130.8163931601851,
+            "statistic": -0.24058716275252034,
+            "p": 0.8102517364134636,
+            "lower": -0.52444480529876547,
+            "upper": 0.24924173277979786,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.5,
+            "method": "student",
+            "difference": -0.13760153625948379,
+            "stderr": 0.57837909909233487,
+            "df": 201,
+            "statistic": -0.23790890174874127,
+            "p": 0.81219409475817339,
+            "lower": -0.52841940111915153,
+            "upper": 0.253216328600184,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.80000000000000004,
+            "method": "welch",
+            "difference": -0.13760153625948379,
+            "stderr": 0.57194047548175886,
+            "df": 130.8163931601851,
+            "statistic": -0.24058716275252034,
+            "p": 0.8102517364134636,
+            "lower": -0.87429323532412562,
+            "upper": 0.59909016280515814,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.80000000000000004,
+            "method": "student",
+            "difference": -0.13760153625948379,
+            "stderr": 0.57837909909233487,
+            "df": 201,
+            "statistic": -0.23790890174874127,
+            "p": 0.81219409475817339,
+            "lower": -0.88126842186143672,
+            "upper": 0.60606534934246914,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.94999999999999996,
+            "method": "welch",
+            "difference": -0.13760153625948379,
+            "stderr": 0.57194047548175886,
+            "df": 130.8163931601851,
+            "statistic": -0.24058716275252034,
+            "p": 0.8102517364134636,
+            "lower": -1.269051030863859,
+            "upper": 0.99384795834489126,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.94999999999999996,
+            "method": "student",
+            "difference": -0.13760153625948379,
+            "stderr": 0.57837909909233487,
+            "df": 201,
+            "statistic": -0.23790890174874127,
+            "p": 0.81219409475817339,
+            "lower": -1.2780705586081944,
+            "upper": 1.0028674860892268,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.98999999999999999,
+            "method": "welch",
+            "difference": -0.13760153625948379,
+            "stderr": 0.57194047548175886,
+            "df": 130.8163931601851,
+            "statistic": -0.24058716275252034,
+            "p": 0.8102517364134636,
+            "lower": -1.6326165378248441,
+            "upper": 1.3574134653058765,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.98999999999999999,
+            "method": "student",
+            "difference": -0.13760153625948379,
+            "stderr": 0.57837909909233487,
+            "df": 201,
+            "statistic": -0.23790890174874127,
+            "p": 0.81219409475817339,
+            "lower": -1.6416821204394967,
+            "upper": 1.3664790479205289,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.999,
+            "method": "welch",
+            "difference": -0.13760153625948379,
+            "stderr": 0.57194047548175886,
+            "df": 130.8163931601851,
+            "statistic": -0.24058716275252034,
+            "p": 0.8102517364134636,
+            "lower": -2.0630133213863613,
+            "upper": 1.7878102488673937,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.999,
+            "method": "student",
+            "difference": -0.13760153625948379,
+            "stderr": 0.57837909909233487,
+            "df": 201,
+            "statistic": -0.23790890174874127,
+            "p": 0.81219409475817339,
+            "lower": -2.0691487345671957,
+            "upper": 1.7939456620482279,
+            "status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "id": "skewed_n100",
+      "design": "independent",
+      "values": [0.20806111162528396, 0.36539986023333565, 0.41072004660964012, 0.080614756593087644, 0.37219725595787168, 2.2542505356154208, 0.26322054024785757, 0.45033512869849801, 2.9169084866709749, 2.0602726991379505, 0.22072415659204125, 0.17792186234146357, 0.65846959128975868, 1.0489403362897161, 4.0444190555945649, 0.83467940888823289, 0.40835941873246923, 0.027759084943681955, 0.33078222814947367, 1.0338495904159668, 1.6011440848559686, 0.97006095475972909, 0.46052642166614532, 0.84754021061094365, 2.5477514545104269, 0.87848925243388298, 0.16806156560778618, 3.0818919537771232, 0.71011832352252025, 3.5203862989083539, 1.4148729269196714, 0.96950701751930046, 0.19572945265099406, 0.86600506312590853, 0.37845529895275831, 8.3132433681784406, 0.16847502486780286, 2.5205329569088226, 0.43069218983873725, 2.0783471538776404, 3.0777849255311973, 0.063857077620923519, 0.77283548765219023, 1.3286431710747006, 2.2735971802072843, 0.70667020413548964, 0.91976554687590617, 1.2725784293887141, 0.98666871387861876, 0.16704558923817353, 0.076778970193117857, 0.30626482097432017, 0.0090617437989675281, 0.67331154039129615, 1.5210664755755905, 1.9614659714603666, 0.7793467402647235, 0.33967542368918657, 0.47176499385386705, 0.33535147225484252, 4.20242479874093, 0.14128737291321158, 0.65295772440731525, 0.76113140392572898, 0.40340913599357009, 2.6472591519436484, 0.30054828803986311, 0.96534406855226773, 0.32794203562662005, 6.5396672476958653, 1.0440856292423728, 0.80820666399047802, 0.83465665655137378, 0.68007056461647153, 0.24944119248539209, 0.35073428740724921, 0.15736903679955827, 0.65038443962112069, 1.1008812610294474, 0.089922735001891851, 0.24615200096741319, 1.917573423972154, 1.7197549658918623, 0.96155029996753949, 1.0859087397855642, 0.40904334621132404, 1.4341573937887195, 1.9592155999595169, 1.8310565612370018, 0.47373335901647806, 0.17093111202120781, 5.5370022521207582, 0.18992439517751336, 0.325626106467098, 0.91513403258658454, 0.20592247249423179, 1.3323217164304975, 0.51922869452364506, 1.2581939221871021, 0.69307982875034213, 3.3091155065685913, 2.275222834820549, 0.41977008494238061, 0.55981682458271587, 6.9385870479813434, 1.9606942310929298, 2.083509118917088, 2.6120571511328623, 2.0856247159341974, 0.91007543225017473, 6.5376011838198513, 1.5370858522273005, 0.26012146224578225, 9.1170805378030959, 0.45721889783938729, 2.5724420757184832, 0.87473185888181137, 4.5266117806077411, 0.88507737653950858, 1.431845142506063, 8.7594177631806556, 6.5371266625504507, 5.6859597995560183, 5.5842212336441692, 7.1319063686600543, 5.4553785544813485, 0.41316135442353935, 8.8898423247805454, 3.8461033843299162, 4.6266395576097725, 2.3987471997011829, 1.482366003798413, 3.6442929846386525, 4.4052948677132937, 3.122216515688065, 0.07695239157118397, 1.0114117481192459, 0.90122140788783633, 0.24503700124720734, 2.1416735555976629, 3.8453672252367408, 3.1862646370967633, 2.3027349434172115, 1.6359965472171705, 1.2334011433025203, 4.9751798371156868, 1.2286545688027206, 3.5726320586940061, 8.318735077335738, 5.3366299902082295, 1.2236549829443297, 0.27910532196519616, 1.3769894015664856, 0.56861052750745922, 0.55550312049350359, 3.6165354275296542, 2.9695962119688994, 3.5698954852760245, 3.3629875007858288, 1.5701509437834225, 0.87840716199328506, 4.4732794319431397, 1.1899707807848852, 9.7985862567704967, 3.3568247716715347, 1.4799836386616032, 0.30482127641638124, 4.2714890153299185, 9.725162449106957, 3.7535586951762845, 1.6456579122071466, 3.449667217069905, 2.6841930080342156, 1.0905194457512111, 0.84622430149465799, 12.619806397006117, 5.4511467550874562, 1.7182895137617986, 1.5060383888582389, 9.585952286358836, 1.7695608533297977, 0.64714771695435047, 2.0633689067742713, 1.1134460832302771, 7.0575433779032251, 1.7026359137768547, 6.3583461751223416, 1.2682736075718679, 0.94804704424723552, 5.8302570317865223, 0.95832703961560506, 1.9938834616914392, 1.4741292813171945, 0.096144234918954657, 5.246478176085235, 0.019364498291704373, 15.354067247762524, 6.2916356011908068, 2.2682791731009884, 2.5584219922463505, 4.0939993006329152, 0.91433304051558184, 1.3275943649932742, 0.48481411300599575, 0.02501452734561626],
+      "codes": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      "levels": ["First", "Second", "unused"],
+      "first": "First",
+      "second": "Second",
+      "expected": {
+        "n_source": 205,
+        "n_complete": 205,
+        "excluded_missing": 0,
+        "retained_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204],
+        "first_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99],
+        "second_indices": [100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204],
+        "missing_by_role": {
+          "outcome": 0,
+          "group": 0
+        },
+        "summaries": {
+          "first": {
+            "n": 100,
+            "mean": 1.1442648452432067,
+            "sd": 1.3602625023390911
+          },
+          "second": {
+            "n": 105,
+            "mean": 3.1822531068069875,
+            "sd": 2.923329972893641
+          }
+        },
+        "runs": [
+          {
+            "confidence": 0.5,
+            "method": "welch",
+            "difference": -2.0379882615637808,
+            "stderr": 0.31605737739262041,
+            "df": 148.59436616559083,
+            "statistic": -6.4481591234369509,
+            "p": 1.49581693957073e-09,
+            "lower": -2.2516886830885481,
+            "upper": -1.8242878400390137,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.5,
+            "method": "student",
+            "difference": -2.0379882615637808,
+            "stderr": 0.32108616646494365,
+            "df": 203,
+            "statistic": -6.3471693097257411,
+            "p": 1.4057325110946053e-09,
+            "lower": -2.2549462564675933,
+            "upper": -1.821030266659968,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.80000000000000004,
+            "method": "welch",
+            "difference": -2.0379882615637808,
+            "stderr": 0.31605737739262041,
+            "df": 148.59436616559083,
+            "statistic": -6.4481591234369509,
+            "p": 1.49581693957073e-09,
+            "lower": -2.4448409546569541,
+            "upper": -1.6311355684706075,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.80000000000000004,
+            "method": "student",
+            "difference": -2.0379882615637808,
+            "stderr": 0.32108616646494365,
+            "df": 203,
+            "statistic": -6.3471693097257411,
+            "p": 1.4057325110946053e-09,
+            "lower": -2.4508202465590667,
+            "upper": -1.6251562765684946,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.94999999999999996,
+            "method": "welch",
+            "difference": -2.0379882615637808,
+            "stderr": 0.31605737739262041,
+            "df": 148.59436616559083,
+            "statistic": -6.4481591234369509,
+            "p": 1.49581693957073e-09,
+            "lower": -2.662535762381264,
+            "upper": -1.4134407607462975,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.94999999999999996,
+            "method": "student",
+            "difference": -2.0379882615637808,
+            "stderr": 0.32108616646494365,
+            "df": 203,
+            "statistic": -6.3471693097257411,
+            "p": 1.4057325110946053e-09,
+            "lower": -2.6710799079635836,
+            "upper": -1.4048966151639779,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.98999999999999999,
+            "method": "welch",
+            "difference": -2.0379882615637808,
+            "stderr": 0.31605737739262041,
+            "df": 148.59436616559083,
+            "statistic": -6.4481591234369509,
+            "p": 1.49581693957073e-09,
+            "lower": -2.8626831572044895,
+            "upper": -1.2132933659230722,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.98999999999999999,
+            "method": "student",
+            "difference": -2.0379882615637808,
+            "stderr": 0.32108616646494365,
+            "df": 203,
+            "statistic": -6.3471693097257411,
+            "p": 1.4057325110946053e-09,
+            "lower": -2.8728972530772543,
+            "upper": -1.203079270050307,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.999,
+            "method": "welch",
+            "difference": -2.0379882615637808,
+            "stderr": 0.31605737739262041,
+            "df": 148.59436616559083,
+            "statistic": -6.4481591234369509,
+            "p": 1.49581693957073e-09,
+            "lower": -3.0990577035451703,
+            "upper": -0.97691881958239135,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.999,
+            "method": "student",
+            "difference": -2.0379882615637808,
+            "stderr": 0.32108616646494365,
+            "df": 203,
+            "statistic": -6.3471693097257411,
+            "p": 1.4057325110946053e-09,
+            "lower": -3.1101261167561045,
+            "upper": -0.9658504063714568,
+            "status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "id": "correlated_n100",
+      "design": "paired",
+      "a": [5.8650525856209725, 6.6183422630518685, 8.2721072513027547, 7.8618020007149632, 13.133152538655837, 8.9888924285998684, 11.259012689059984, 8.4161093893310372, 10.496146743880706, 5.1900286618905263, 12.910918010327299, 6.8008403242326008, 12.468687166499915, 6.9253360766319219, 9.1387438067034807, 9.6917814388522689, 7.78714532694935, 9.477725364454189, 8.870060101410326, 5.100588443152402, 9.0190171221633033, 10.150386907069244, 12.210035677819853, 8.7006417038844113, 8.3218792792867191, 10.872802071692783, 12.483351286470011, 6.9236265982480427, 10.452859028274062, 10.242250490768303, 15.984940381659674, 10.909088905447646, 12.346614214856983, 11.496211273920034, 12.000086811811347, 9.5933791535652464, 12.0894425340331, 9.6954202796431908, 10.265747347462028, 14.633272794207899, 14.520083635233714, 14.662513338060638, 8.0437996043216149, 10.013545687171261, 11.021977208177912, 16.890031030613006, 11.913411486787069, 15.57915094972696, 11.861340653165033, 6.4367859520739046, 10.10955523579182, 6.4036694464717074, 10.126814405086666, 14.87981008633473, 9.5904158174254803, 8.068654099782103, 11.890885918703281, 5.594184796242633, 10.854392620033282, 7.806696119910546, 10.426237292235749, 12.10448315968517, 12.260131196058488, 15.869747170655437, 17.905900792310593, 7.853377632001135, 15.44382650866102, 8.8869680899735979, 12.538854229135774, 11.42334464015495, 8.4528053157610437, 9.5976405193941332, 9.9715802145325103, 8.8506133866395373, 6.9016749162023805, 14.760595913849238, 10.259329766044706, 11.534227170642755, 8.1713702998725033, 6.8121969253904897, 10.850209522174591, 7.6903009254776347, 15.489624123860681, 8.5631713716230955, 10.416105349414254, 10.23365140125123, 4.4713910937888341, 12.529293817194848, 7.6066856538691505, 5.5091131717299913, 11.258191212614395, 10.002243279373385, 13.031528885895453, 7.7195582405993237, 11.235977120184259, 12.81219181734725, 11.973918190344701, 5.9487540634961018, 6.3972825979822563, 2.9465510990628352],
+      "b": [8.7650542897350778, 6.941446434151656, 8.4493305932477689, 8.3089163365721319, 14.347810067180896, 10.624986030491696, 11.302969337401535, 9.3110163537414898, 10.299621785555381, 5.4187833624443762, 14.599048227882145, 7.9759722712545678, 14.43705966812702, 6.9991308081072265, 9.6363584992141345, 11.581955551220272, 8.203470674127022, 10.423113630819994, 8.3575436292843044, 6.7505922925998192, 9.3130617651613061, 11.004370931044697, 12.288957158100862, 9.0537005628190954, 7.7669394819459576, 13.161998813723738, 12.915711657444939, 5.8289807565586269, 10.61710037230654, 11.138205100818684, 14.865580374482294, 10.497582437145796, 11.557509208898312, 11.274398448440168, 10.922359838174186, 9.2725452367199477, 10.715370246435771, 11.086544163765643, 10.459779109460335, 15.111058225048103, 15.183672204354526, 15.073491995989105, 9.05750768254779, 8.239500252108229, 12.905584131973297, 16.114080785672378, 11.236617021218937, 16.784503080660496, 12.54871047544534, 5.9437727905522761, 11.60525216930588, 6.76828454644183, 9.891802611253615, 15.337962012923228, 10.10922532041214, 8.2787762100022615, 11.563698122985622, 5.0129498624840547, 9.2329004098286536, 9.728090723703481, 10.725394983519761, 11.778152660261835, 11.124128019330799, 16.231285131329464, 18.281741103376977, 8.5891974415972712, 16.083069443703543, 11.969563600392728, 12.778312035925461, 12.032447959904292, 8.0714346673724844, 10.207625728676211, 10.615339108794949, 9.447037457575659, 6.5475918538896885, 15.272845835339655, 11.636973264592037, 12.942221089785793, 10.296868448836278, 7.9178195539060621, 11.292808131426714, 6.973199101991681, 15.03690540628352, 8.1416995447575076, 10.893121345455903, 10.02764148355463, 6.2752749311638762, 11.986429806122576, 8.0835800660314021, 4.9257481910180676, 10.994156887561642, 9.2291724079564261, 12.811858950309187, 8.5845513532171491, 11.714846854870011, 13.898775498184097, 11.832816259763526, 6.4069834440217557, 4.8828374669396934, 3.0696493522629082],
+      "expected": {
+        "n_source": 100,
+        "n_complete": 100,
+        "excluded_missing": 0,
+        "retained_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99],
+        "first_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99],
+        "second_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99],
+        "missing_by_role": {
+          "first": 0,
+          "second": 0
+        },
+        "summaries": {
+          "first": {
+            "n": 100,
+            "mean": 10.166418926412049,
+            "sd": 2.9574708543475041
+          },
+          "second": {
+            "n": 100,
+            "mean": 10.518134220125198,
+            "sd": 3.0031560831967532
+          }
+        },
+        "runs": [
+          {
+            "confidence": 0.5,
+            "method": "paired_t",
+            "difference": -0.35171529371314897,
+            "stderr": 0.095168165587578721,
+            "df": 99,
+            "statistic": -3.6957242113643787,
+            "p": 0.00035964080650538753,
+            "lower": -0.41614185640441947,
+            "upper": -0.28728873102187846,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.80000000000000004,
+            "method": "paired_t",
+            "difference": -0.35171529371314897,
+            "stderr": 0.095168165587578721,
+            "df": 99,
+            "statistic": -3.6957242113643787,
+            "p": 0.00035964080650538753,
+            "lower": -0.47449759146339582,
+            "upper": -0.22893299596290209,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.94999999999999996,
+            "method": "paired_t",
+            "difference": -0.35171529371314897,
+            "stderr": 0.095168165587578721,
+            "df": 99,
+            "statistic": -3.6957242113643787,
+            "p": 0.00035964080650538753,
+            "lower": -0.54054958112340579,
+            "upper": -0.16288100630289212,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.98999999999999999,
+            "method": "paired_t",
+            "difference": -0.35171529371314897,
+            "stderr": 0.095168165587578721,
+            "df": 99,
+            "statistic": -3.6957242113643787,
+            "p": 0.00035964080650538753,
+            "lower": -0.60166548317177115,
+            "upper": -0.10176510425452677,
+            "status": "ok"
+          },
+          {
+            "confidence": 0.999,
+            "method": "paired_t",
+            "difference": -0.35171529371314897,
+            "stderr": 0.095168165587578721,
+            "df": 99,
+            "statistic": -3.6957242113643787,
+            "p": 0.00035964080650538753,
+            "lower": -0.67448087132175172,
+            "upper": -0.028949716104546219,
+            "status": "ok"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -3,11 +3,11 @@
 `pyenhancedroc` now has a literal Python SPEC and `run()` adapter, generated native
 options/results/UI/R bridge, native tables and an exportable static ROC plot. It
 uses the independently checked [ROC/paired DeLong engine](python-roc-core.md).
-The **0.3.64 local package is now installed through jamovi's Sideload menu** and
+The **0.3.65 local package is now installed through jamovi's Sideload menu** and
 has passed bounded native GUI checks on macOS arm64 / jamovi 28.17.0. The 0.3.63
-rollback archive remains under `packages/archive`. This remains an experimental
+and 0.3.64 rollback archives remain under `packages/archive`. This remains an experimental
 partial implementation, without full baseline parity, other-platform or clinical
-acceptance. See [package qualification](validation-exports/python-roc-0.3.64-qualification-20261111.json).
+acceptance. See [package qualification](validation-exports/python-roc-0.3.65-ui-qualification-20261111.json).
 
 The existing stable identifier is retained under **MedDecide Py → ROC and
 comparison → Clinical ROC Analysis**. The registry now has 29 partial targets,
@@ -20,7 +20,7 @@ enhancedROC feature inventory.
 | Section | Controls and purpose |
 |---|---|
 | Data roles | Binary reference, explicit positive level, one required score and two optional scores; all roles use the first variable supplier. |
-| Analysis and Model | Higher/lower direction for each score. Directions remain visible and are never inferred; an unused direction control appeared enabled in the inspected panel (UI advisory below). |
+| Analysis and Model | Higher/lower direction for each score. Directions remain visible and are never inferred; source bindings now disable unused directions (desktop follow-up below). |
 | Uncertainty and Validation | Confidence level .80–.99, default .95; the displayed method is the approximate normal DeLong method. |
 | Results and Interpretation | Paired unadjusted comparisons, observed-threshold classifications and retained source rows. Secondary details default off. |
 | Plots and Interaction | Native static empirical ROC plot, enabled by default. Interactive exploration is deferred. |
@@ -156,12 +156,53 @@ Bootstrap, partial/smoothed/multiclass ROC, calibration, model validation, inter
 threshold views and complete baseline parity remain omitted. `pydecisioncompare`
 still requires its separate binary paired-test implementation.
 
-## Remaining UI advisory
+## Direction-control follow-up — 0.3.65
 
-The empty Score 3 role's direction control appeared enabled in the inspected
-panel despite its generated enable expression. No inactive score enters the
-engine, and runtime/native tests verify that empty slots do not create an extra
-model. Conditional disabling still needs a focused UI follow-up. This cosmetic
-control-state observation does not establish a numerical defect or invalidate
-the observed role/lifecycle tests; it remains open rather than being described
-as verified disabled behavior.
+The installed 0.3.64 panel showed an enabled direction for empty Score 3. The
+jamovi 28.17.0 client explains this: `(marker3)` propagates `null` for an empty
+role, while ComboBox disables its input only for strict `false`. The literal
+SPEC now uses `(!(!marker1))` through `(!(!marker3))` to return booleans. The outer
+parentheses ensure the client recognizes a dynamic binding. Only the
+generated UI changes; option identities, defaults and calculations are preserved.
+
+Run `node tools/check-roc-ui-bindings.js` to exercise the actual installed
+client's binding and ComboBox methods in an isolated VM. It checks all three
+roles through empty → selected → empty → reselected → empty transitions,
+including binding recognition, dependency registration and 45 state checks. The
+original UI fails on its first empty dropdown; the repaired UI passes. The tool
+records the client bundle hash and fails if its extraction assumptions no longer
+match the installed client. This is a focused client-method check, not a full
+browser or native GUI test.
+
+All 533 Python regressions and 33 separately rerun generator tests pass, as do
+generator/status freshness checks. An AST comparison confirms executable code
+and option/result contracts are unchanged; the only SPEC differences are the
+three enable expressions. Compiler preparation passes with jamovi 28.17.0
+without warnings. The 0.3.65 archive passes all 17 frozen ROC fixtures, contains
+the compiled boolean bindings and matches all 1,438 installed files. The
+installed native suite passes 320 assertions without failures, warnings or skips
+in the host run. An earlier restricted-shell run also passed its assertions but
+emitted two teardown permission errors; it is retained separately.
+
+On macOS arm64 / jamovi 28.17.0, GUI Sideload and native Quit/relaunch pass.
+Removing Score 2 disables its dropdown; moving that variable into Score 3
+enables Score 3, and removing it disables Score 3 again. Restoring Score 2
+re-enables its dropdown. Clearing required Score 1 disables its direction and
+clears computed native results; restoring it re-enables the control and recovers
+the original two-model results. Save As to a separate fixture, another native
+Quit/relaunch, reopening and HTML export pass. The reopened empty Score 3
+control is visibly grey and disabled.
+
+Run `tools/check-roc-artifacts.py --ui-followup 0.3.65` in bundled Python to check
+the [saved fixture](validation-exports/python-roc-0.3.65-ui-recovered.omv) and
+[HTML export](validation-exports/python-roc-0.3.65-ui-recovered.html). Their tables,
+threshold counts and source rows pass independent checks; dataset bytes and
+metadata equal the qualified 0.3.64 fixture, and cached/exported plot pixels
+match that baseline. Four artifact corruption probes are rejected. Generated
+JSON reports and logs remain local and ignored. Native standalone PNG export
+was not repeated for 0.3.65; the 0.3.64 result remains separate evidence.
+
+The standard archive is `ClinicoPathPj_0.3.65.jmo`, SHA-256
+`d5f10ffc0614cb69739fcac2e2e31470542b02b95290d30a3b4f2e373c9c4283`.
+Other platforms, full baseline parity and clinical review remain open. Inactive
+scores remain excluded from results.

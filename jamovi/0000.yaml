@@ -1,11 +1,11 @@
 ---
 title: ClinicoPathPj - Python-Backed Analyses
 name: ClinicoPathPj
-version: 0.3.64
+version: 0.3.67
 jms: '1.0'
 authors: Serdar Balci
 maintainer: Serdar Balci <serdarbalci@serdarbalci.com>
-date: '2026-11-11'
+date: '2026-11-12'
 type: R
 description: >-
   Experimental analyses generated from Python specifications and computed in the
@@ -364,6 +364,30 @@ analyses:
     menuSubgroup: ROC and comparison
     menuTitle: Clinical ROC Analysis
     hidden: false
+  - name: pydecisioncompare
+    ns: ClinicoPathPj
+    hidden: false
+    menuGroup: MedDecide Py
+    menuSubgroup: Test comparisons
+    menuTitle: Paired Binary Tests
+    title: Paired Binary Test Comparison
+    category: analyses
+  - title: Independent Mean Comparison (Python)
+    name: pyjjbetweenstats
+    ns: ClinicoPathPj
+    category: analyses
+    menuGroup: Stats Plots Py
+    menuSubgroup: Group comparisons
+    menuTitle: Independent Mean Comparison
+    hidden: false
+  - title: Paired Mean Comparison (Python)
+    name: pyjjwithinstats
+    ns: ClinicoPathPj
+    category: analyses
+    menuGroup: Stats Plots Py
+    menuSubgroup: Group comparisons
+    menuTitle: Paired Mean Comparison
+    hidden: false
 usesNative: 'yes'
 datasets:
   - name: Python Core Examples
@@ -598,5 +622,27 @@ datasets:
       - Python
       - Pj
       - Age pyramid
+  - name: Paired Binary Test Examples
+    path: python_paired_test_examples.csv
+    description: >-
+      Twenty synthetic cases with three paired binary calls: the third test
+      includes one explicit indeterminate result. All three tests retain 16
+      common cases after explicit exclusion; three rows have missing roles and
+      one has an outside-pair result.
+    tags:
+      - Python
+      - Paired diagnostic tests
+      - Common cohort
+  - name: Independent and Paired Mean Examples
+    path: python_estimation_examples.csv
+    description: >-
+      Thirteen synthetic independent cases in groups of five and eight; the two
+      wide measurement columns retain five complete paired subjects and exclude
+      eight rows. Leading-zero subject labels remain distinct. Raw mean
+      estimation examples only.
+    tags:
+      - Python
+      - Mean differences
+      - Paired measurements
 
 ...

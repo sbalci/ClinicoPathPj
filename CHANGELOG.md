@@ -1,3 +1,56 @@
+# Unreleased — standardized mean-effect source core (2026-11-12)
+
+- Specify explicit pooled independent and within-difference paired estimands; add Cohen d/d_z and exact Hedges-corrected points with noncentral-t population-delta intervals. Keep g-specific intervals, Welch-compatible unequal-variance effects and native controls outside this source increment.
+- Freeze independent R fixtures before Python implementation; pass 2,060 comparisons over 160 dataset configurations, 210 t/df cases and 20 difficult-tail integral cases. Independently audit all 420 pt-grid endpoints and pass 126 effectsize/MBESS cross-checks. Retain initial mixture-integration failure and R inversion warnings as oracle evidence.
+- Pass 11 focused tests and reject five statistical mutations; audited R references replay byte-for-byte. Verify exhausted-iteration red/green behavior, pass all 599 Python regressions and generator/status freshness. Preserve the installed/qualified 0.3.67 archive and all 1,452 installed files; native integration/package qualification remain separate gates.
+
+# 0.3.67 — 2026-11-12
+
+- Add pyjjbetweenstats and pyjjwithinstats as bounded independent/paired mean comparisons, with explicit contrast roles, optional retained-subject identity checks, cohort/missingness tables, raw t-based limits, source rows and static contrast plots.
+- Generate organized interfaces under Stats Plots Py → Group comparisons. Reject unsupported statistical branches; retain supported confidence/variance defaults and explicit method/plot omissions.
+- Pass six adapter tests covering all 255 independent R configurations, all 588 Python regressions and 761 native assertions. Compiler preparation/isolated installation, valid/incomplete/invalid recovery and serialized rendering pass. Add a 13-subject synthetic data-library example and visually checked native source renders.
+- Correct compiler relocation of the outcome control by leaving the Variables widget uncapped and enforcing one outcome in the adapter. Post-compiler generator freshness passes; preserve earlier test-failure evidence locally.
+- Build and GUI-Sideload 0.3.67 on macOS arm64/jamovi 28.17.0; preserve qualified 0.3.66 in packages/archive. Pass 1,071 actual-JMO runtime checks, 761 built and 761 installed native assertions, and 1,452 installed-file comparisons. Both analyses pass second-engine reopen/recalculation, independent required-input recovery, Save As and HTML/PNG export.
+- Check all ten saved native tables against independent fixtures, preserve dataset bytes/metadata and equivalent plot pixels, and reject four artifact corruptions. HTML PNG encoding differs but pixels agree; direct PNG exports match source renders.
+- Registry has 32 partial targets, 29 planned targets and 15 retained utilities (47 entries), with zero full-parity releases. Clinical review, broader platforms and omitted estimation methods/geometry remain separate gates.
+
+# Unreleased — independent/paired estimation source core (2026-11-12)
+
+- Freeze the bounded two-group/paired raw-mean contract and all eight released baseline hashes; add explicit-contrast Welch/Student and paired t engines with audited source-row alignment, optional retained subject IDs, degeneracy and numeric-range checks.
+- Pass 20,380 independent base-R comparisons across 32 datasets/255 confidence-method configurations and 17 focused tests. Preserve initial raw references and document extreme-scale/offset oracle corrections; replay final R fixtures byte-for-byte and detect five statistical/alignment mutations.
+- Pass all 582 Python regressions and generator/status freshness checks. Keep both baseline targets planned: native adapters, plot geometry, standardized effects, robust/Bayesian/rank/general repeated branches and lifecycle qualification remain separate gates. Preserve installed 0.3.66 and all existing analysis defaults.
+
+# 0.3.66 — 2026-11-11
+
+- Add the partial pydecisioncompare native analysis under MedDecide Py → Test comparisons → Paired Binary Tests, with explicit factor level pairs, audited common cohort, comparator-aware terminology, per-test exact intervals, McNemar comparisons, Holm accuracy adjustment and a static plot.
+- Preserve frozen comparison/CI/plot defaults. Omit paired-difference intervals after their coverage-screen failures; do not expose the source-only opt-in.
+- Add a 20-row synthetic data-library example, independent-fixture adapter checks, native lifecycle/serialization checks and an exact-JMO runtime checker.
+- Pass 565 Python tests, 960 isolated-source and 960 built-library native assertions, plus 1,984 exact-archive runtime checks across 13 independent fixtures and both public methods. Compiler preparation/build and archive/source-registry checks pass; preserve the qualified 0.3.65 rollback. See docs/python-paired-decision-native.md.
+- Resolve the earlier desktop-service blocker; GUI-Sideload 0.3.66 on macOS arm64 / jamovi 28.17.0. All 1,444 installed files match the archive; 960 installed-native assertions pass. Verify required-level recovery, optional Test 3 transitions, Save As, second-engine reopen/recalculation and HTML/PNG export.
+- Validate all seven saved tables against independent fixtures, unchanged source data/metadata, cleared incomplete outputs and equivalent plot pixels; reject four artifact corruptions. Registry now has 30 partial targets, 31 planned targets and 15 retained utilities, with no full-parity releases. Broader platforms and clinical review remain open.
+
+# Unreleased — paired-difference interval prototype
+
+- Pin the original method-10 R helper and independent GPL-3 test references; add opt-in source intervals while preserving default point results, p-values and cohort handling.
+- Pass 39,222 numerical checks across 731 tables and 2,193 confidence runs against the original R helper, independent R and MPFR256. Correct MPFR string serialization without changing numeric targets; preserve reference history locally.
+- Agree with independent R on all 108 exact coverage profiles; retain six prespecified screen failures. Keep intervals source-only, with no automatic replacement or public interval controls. Native point/comparison integration remains a separate next gate.
+- Pass 557 Python regressions and 10 focused interval tests; reproduce R interval/coverage fixtures byte-for-byte and detect five interval mutations. Preserve the installed 0.3.65 package.
+
+# Unreleased — paired diagnostic source core
+
+- Freeze a separate binary paired-test contract and implement an audited common-cohort numerical engine with explicit level pairs, per-test exact proportion intervals, paired accuracy/sensitivity/specificity comparisons and informative-pair Holm adjustment.
+- Pass 27,552 independent base-R checks and 14 focused tests; detect five deliberate implementation mutations. Preserve the frozen baseline's equal-split mid-p rule. Exact conditional remains a numerical reference option.
+- Pass all 547 Python regressions, final focused checks, byte-identical independent R fixture replay and generator/status freshness checks. Keep generated validation JSON and logs ignored.
+- At this source-only milestone pydecisioncompare remained planned. The subsequent 0.3.66 native partial increment and local GUI acceptance are recorded above; paired-difference intervals remain omitted.
+
+# 0.3.65 — 2026-11-11
+
+- Return boolean enablement values for all three ROC direction controls so empty roles disable their dropdowns. Preserve option contracts and statistical behavior.
+- Add a check using the installed jamovi client's binding and ComboBox methods, with original-code failure and repaired-code success through selection/removal/reselection.
+- Pass 533 Python tests, 33 separately rerun generator tests, 45 client state checks, freshness checks and warning-free compiler preparation; preserve executable analysis code and option/result contracts.
+- Build/Sideload the standard 0.3.65 archive, pass 17 packaged fixtures and 320 installed native assertions, and verify all three control states, required-role recovery, Save As, fresh-engine reopening and HTML export on macOS arm64. Preserve the 0.3.64 rollback archive; other platforms and full parity remain open.
+- Check saved/exported tables and plot pixels against the qualified baseline, preserve dataset bytes/metadata and reject four artifact corruptions. Generated logs and validation JSON remain local and ignored.
+
 # 0.3.64 — 2026-11-11
 
 - Build/archive-check the native empirical ROC/paired DeLong partial core; pass 17 exact-archive ROC fixtures and 320 built-library native assertions under the single ClinicoPathPj identity.

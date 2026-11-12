@@ -6,12 +6,40 @@ into the jamovi files, and the statistics run in **the Python bundled with jamov
 so users install nothing.
 
 Current direction and implemented/pending work: [revised migration plan](docs/python-migration-plan.md).
-The unreleased [Clinical ROC native partial core](docs/python-roc-native.md) now adds organized
+The new [independent/paired estimation partial adapters](docs/python-estimation-native.md)
+implement two-group Welch/Student and two-column paired raw-mean inference,
+with explicit contrasts, missing-row alignment and optional subject-ID checks.
+The shared engine passes 20,380 independent R comparisons and 17 focused tests.
+Both adapters have organized native controls, tables and static raw-difference plots in
+**ClinicoPathPj 0.3.67** under Stats Plots Py → Group comparisons. All 588 Python
+regressions pass; source, built and installed native runs each pass 761 assertions.
+The actual archive passes 1,071 checks. GUI Sideload, fresh-engine save/reopen/
+recalculation, both required-input recovery states and HTML/PNG exports pass on
+macOS arm64. Saved tables and plot pixels are independently checked; the 0.3.66
+rollback is archived. [Standardized effects](docs/python-standardized-effects.md)
+now have a checked core and [optional native source integration](docs/python-standardized-native.md)
+for pooled and paired-difference SDs, with separate Cohen/population-delta and
+Hedges point-only tables plus a static plot. Packaging/desktop qualification of
+these new results remains pending; installed 0.3.67 is unchanged. Rank/robust/Bayesian branches remain omitted.
+The experimental [Clinical ROC native partial core](docs/python-roc-native.md) now adds organized
 controls, native tables and a static plot through the existing `pyenhancedroc` identifier.
-The **0.3.64 package is GUI-sideloaded and verified on macOS arm64**: fresh-engine
-reopen, live direction changes, incomplete-input recovery, Save As and native HTML/PNG exports pass.
-See the [package qualification record](docs/validation-exports/python-roc-0.3.64-qualification-20261111.json)
-for the bounded evidence and remaining platform/full-parity gates.
+The **0.3.65 package is GUI-sideloaded and verified on macOS arm64**: all three ROC
+direction controls now disable when their score is empty and re-enable on restoration.
+Fresh-engine save/reopen, required-role recovery and HTML export pass; the prior
+0.3.64 package retains its separate native PNG export evidence. See the
+[qualification boundary](docs/python-roc-native.md#direction-control-follow-up--0365)
+for the remaining platform/full-parity gates.
+The new [paired binary-test partial core](docs/python-paired-decision-native.md)
+adds explicit level roles, common-cohort native tables and a static comparison plot
+under **MedDecide Py → Test comparisons → Paired Binary Tests**. Its 565-test Python
+suite and 960 assertions against each source/build/GUI-installed native library
+pass. **0.3.66 is GUI-Sideloaded and locally verified on macOS arm64**: required-level
+clearing/recovery, optional Test 3 transitions, second-engine reopen/recalculation
+and HTML/PNG export pass. Saved tables/plots and source-row alignment are checked.
+Broader platforms and full baseline parity remain open. A separate
+[paired-difference interval prototype](docs/python-paired-difference-intervals.md)
+passes numerical checks but fails six small-sample coverage profiles; it stays
+source-only; per-test exact binomial intervals are available separately.
 See also the [web-researched Python analysis candidates](docs/python-analysis-opportunities.md).
 The 0.3.63 build adds a [CCC point-estimate integration](docs/python-concordance-integration.md)
 with independent references, native tables and a static plot. Sideload, fresh-engine
@@ -23,7 +51,7 @@ with independent numerical checks. A separate [paired-percentile bootstrap](docs
 also passes numerical checks but fails its frozen coverage screen. All CCC interval controls remain deferred.
 The [2026-11-07 ecosystem review](docs/python-ecosystem-review-2026-11-07.md) compares JASP, jamovi, Orange, MedCalc, GitHub and Hugging Face and prioritizes 20 candidates without expanding the frozen migration inventory.
 
-Status: experimental, 0.3.64 (descriptives and data preparation; full migration remains incomplete). Local validation uses jamovi 28.13 and 28.17 on macOS (Apple Silicon), with
+Status: experimental 0.3.67, with bounded local desktop acceptance (descriptives and data preparation; full migration remains incomplete). Local validation uses jamovi 28.13 and 28.17 on macOS (Apple Silicon), with
 jmvtools 28.4.
 
 Analyses now use compact family menus: **Descriptives Py**, **Stats Plots Py**,
@@ -47,6 +75,7 @@ and [source review](docs/pj-service-review.md).
 | `pywelch` | Welch two-sample t-test with group descriptives, a group-means plot and a narrative | `stats::t.test(var.equal = FALSE)` |
 | `pycotest` | Post-test probabilities for two tests used together, independent or conditionally dependent (Gardner et al. 2000). **New:** Monte Carlo uncertainty intervals from the validation sample sizes (Jeffreys priors, seeded) | an independent R oracle; `qbeta` closed forms; an R Monte Carlo |
 | `pyexacttests` | 2×2 tables: Fisher's exact test with the conditional-MLE odds ratio and its exact CI, Barnard's and Boschloo's unconditional exact tests, exact McNemar for paired data, and a Newcombe risk difference. Larger tables are refused, because scipy's r×c Fisher test is Monte Carlo | `fisher.test`, `Exact::exact.test`, `exact2x2::mcnemar.exact`, brute force |
+| `pydecisioncompare` | Two or three paired binary tests on one common complete determinate cohort: explicit levels, comparator-aware sample proportions/exact intervals, mid-p or uncorrected asymptotic McNemar, informative accuracy-pair Holm adjustment and static plot. Paired-difference intervals are omitted | Independent base-R fixtures; native lifecycle checks; [qualification boundary](docs/python-paired-decision-native.md) |
 | `pykappaci` / `pykappafixedn` / `pykappapower` | Kappa sample size for 2–5 categories and 2–6 raters (CI approach, lowest kappa for a fixed N, power approach). **New:** a seeded Monte Carlo check of coverage or power, offered for a binary rating with two raters only, where it is validated (Donner & Eliasziw 1992) | `kappaSize` 1.2 to 1e-8 |
 
 An experimental [annotated IHC heatmap](docs/python-ihc-heatmap.md) is available under
@@ -62,7 +91,8 @@ Open **Data Library > ClinicoPathPj > Python Core Examples**, or import
 `data/python_core_examples.csv`, for the synthetic examples.
 
 Build the single standard module without installing it:
-`Rscript --vanilla tools/build.R --build-only` → `ClinicoPathPj_0.3.61.jmo`.
+`Rscript --vanilla tools/build.R --build-only` → `ClinicoPathPj_0.3.67.jmo`.
+Install through jamovi’s Modules → Sideload menu; opening the JMO in Finder does not install it.
 After replacing a loaded development build, use a fresh jamovi engine to avoid stale namespaces.
 
 `pywelch` reports the mean difference as *comparison minus reference*. The reference defaults to

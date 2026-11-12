@@ -1,11 +1,147 @@
-# ClinicoPathPj implementation plan — revised 2026-11-11
+# ClinicoPathPj implementation plan — revised 2026-11-12
 
 This is the current delivery plan. It supersedes the implementation recommendations in
 `python-roadmap.md` (2026-10-18) and the initial `interactive-analysis-plan.md`.
 The original 61-analysis inventory remains the target; a menu entry does not establish parity.
 Detailed per-analysis evidence remains in the [generated status matrix](python-migration-status.md).
 
-## Current implementation increment — native empirical ROC partial core
+## Current native source increment — standardized mean effects
+
+The [standardized-effect contract](python-standardized-effects.md) now has
+[optional native integration](python-standardized-native.md) in both existing
+mean-comparison analyses. One switch defaults off; independent effects require
+the explicit Student model, while paired effects use difference SD. Separate
+compact tables show the denominator/model, Cohen estimate/population-delta
+limits and Hedges point-only estimate; a static delta plot uses serialized state.
+Welch remains the raw default and no g-specific interval is supplied.
+
+Independent source references retain 2,060 comparisons, 32 datasets/160 confidence
+configurations, 210 t/df cases, 20 difficult-tail integral cases, 420 independent
+endpoint checks and 126 package cross-checks. Six adapter tests match all 160
+configurations and validate defaults, visibility/model gating, raw-result equality,
+subprocess execution, degenerate and unavailable-limit behavior.
+
+Compiler preparation, isolated-source installation and immediate generator
+freshness pass. The isolated native runs pass **531 new standardized assertions**
+and **761 existing raw-mean assertions**, with no failures/errors/warnings/skips.
+Both source-native example figures match R points/limits and were visually
+inspected. The final frozen-source suite passes **605 Python tests**.
+State export after clearing analysis data, required-input/ID recovery,
+Student/Welch changes, on/off, valid/degenerate/recovered transitions and
+reuse-versus-fresh results are checked. Earlier all-null plot and changing-schema
+failures are retained separately from final frozen-source checks.
+
+The qualified **0.3.67** archive is now also preserved in `packages/archive/`;
+all 1,452 installed files still match it. These new standardized results are not
+in that installed package. Next build **0.3.68**, check its extracted runtime and
+complete GUI Sideload, new-option/model transitions, fresh-engine `.omv` lifecycle,
+recalculation and native exports. Counts remain 32 partial / 29 planned / 15
+utilities; unequal-variance effects and full baseline/plot-method parity remain open.
+
+## Current qualified partial increment — independent and paired estimation
+
+The [frozen estimation contract](python-estimation-core.md) now has a shared
+raw-mean engine used by the native partial adapters for
+`pyjjbetweenstats` and `pyjjwithinstats`.
+It implements explicit first-minus-second two-group Welch (default) and pooled
+Student tests, plus two-column paired t inference with the frozen three-subject
+minimum. It preserves source positions and factor labels, audits missingness,
+optionally rejects unknown/repeated retained subject IDs, and keeps inference
+undefined for degenerate data. No implicit group exclusion, pairing-by-sorting
+or method fallback is allowed.
+
+All eight frozen baseline file hashes are verified. Independently constructed
+base-R references cover 32 datasets and 255 method/confidence configurations;
+20,380 checks and 17 focused tests pass. The final R reference replays
+byte-for-byte and all five deliberate statistical/alignment mutations are
+caught. Extreme-scale/offset reference corrections are documented, with the
+initial raw reference preserved locally; no target Python generates the oracle.
+All 582 Python regression tests and generator/status freshness checks pass.
+
+Both targets now have literal SPECs, generator-owned organized UI/R bridges,
+native cohort/descriptive/raw-contrast/source-row tables and static difference
+plots under Stats Plots Py → Group comparisons. Six adapter tests match all 255
+frozen R configurations, including source IDs, unsupported-method rejection and
+optional-output behavior. All 588 final Python regressions and 761 native
+assertions pass. Compiler preparation, isolated-source installation and immediate
+generator freshness pass after correcting a compiler control-relocation issue;
+numerical/lifecycle/serialized-image evidence is recorded in the
+[native implementation record](python-estimation-native.md).
+The standard **0.3.67** archive is built and GUI-Sideloaded; all 1,452 installed
+files match it. Its extracted runtime passes 1,071 checks/51 independent R
+configurations, and both built/installed native runs pass 761 assertions each.
+Both analyses pass fresh-engine save/reopen/recalculation, independent required-input
+clearing/recovery and HTML/direct PNG export on macOS arm64/jamovi 28.17.0.
+All ten saved tables agree with independent fixtures at display precision; source
+bytes/metadata and equivalent plot pixels are preserved; four corruption probes
+are rejected. HTML re-encoding changes PNG file bytes but not rendered pixels.
+Qualified 0.3.66 is archived for rollback; existing `pywelch` remains unchanged.
+Counts remain **32 partial / 29 planned / 15 utilities**, with 47 implementation
+entry points and zero full-parity releases. The standardized native source extension above now completes the next bounded
+estimand/oracle/integration step; its new-package/GUI gates remain open alongside
+broader platforms and clinical review.
+Standardized-effect definitions/intervals and full
+box/violin parity need separate validation. More than two groups/measurements,
+rank, robust and Bayesian inference, splitting and multiple endpoints remain
+explicit omissions from this first core.
+
+## Current native increment — binary paired diagnostic comparisons
+
+The separately frozen [paired-test contract](python-paired-decision-core.md) now
+has a source-only common-cohort engine: explicit positive/negative factor levels,
+audited missing/indeterminate exclusions, per-test exact proportion intervals,
+paired correctness/sensitivity/specificity counts and point differences, mid-p
+and uncorrected asymptotic McNemar, and informative-pair Holm adjustment for
+accuracy. Exact conditional McNemar remains a named numerical reference option,
+not an added frozen public UI method. All 27,552 independent base-R checks and
+14 focused tests pass; five deliberate implementation mutations are detected.
+The full Python suite passes 547 tests; final focused checks and byte-identical
+R reference replay pass, with generator/status freshness preserved.
+
+The [paired-difference interval prototype](python-paired-difference-intervals.md)
+now passes 39,222 checks against a pinned baseline helper, independent R and
+MPFR256. Exact enumeration agrees with independent R on all 108 coverage
+profiles, but six fail the prespecified small-sample screen. The method remains
+an explicit source-only opt-in; it does not change default point results or
+p-values, and no interval control is added to jamovi.
+The full source suite now passes 557 Python tests; interval/coverage R fixtures
+replay byte-for-byte, and all five interval mutations are detected.
+
+`pydecisioncompare` now has a literal SPEC, generator-owned UI/R bridge, native
+cohort/count/proportion/comparison tables, source-row audit and an optional static
+proportion plot. Positive and negative levels are visible beside every factor.
+Comparator interpretation changes terminology without changing numerical results.
+Statistical comparisons, per-test intervals and plots retain their frozen off defaults.
+The common-cohort policy remains explicitly narrower than the R baseline's per-test
+and pair-specific cohorts. Paired-difference intervals are explicitly disabled in
+the adapter; no control or result columns expose the failed-screen prototype.
+
+All 565 Python regressions, eight adapter tests and 960 isolated-source native
+assertions pass. Native tests cover valid → incomplete/invalid → valid, Test 3
+transitions, genuine missing levels, duplicate roles, comparator terminology,
+source-row alignment and static rendering from serialized state. Compiler
+preparation and the standard 0.3.66 build pass. Exact-archive runtime and built-library
+evidence are maintained in the [native integration record](python-paired-decision-native.md).
+The final 0.3.66 exact-archive run passes 1,984 checks across 13 fixtures and both
+public methods, including source/embedded-registry agreement; 960 built-library
+assertions pass. Archive hashes and reproduction tools are recorded separately.
+The earlier computer-use startup failure is resolved. Version 0.3.66 is now
+GUI-Sideloaded on macOS arm64 / jamovi 28.17.0; all 1,444 installed files match
+the JMO, and 960 installed-native assertions pass. Required-level clearing/recovery,
+optional Test 3 removal/restoration, Save As, second-engine reopen/recalculation
+and native HTML/PNG export pass. Saved tables, source-row alignment, cleared
+incomplete outputs and plot pixels pass artifact checks, including four corruption
+probes. Preserve the qualified 0.3.65 rollback archive. Cochran Q, OPA/non-inferiority,
+stratification and full reporting parity remain omitted.
+
+At the paired-test milestone, registry totals were **30 partial targets, 31 planned
+targets and 15 utilities**; the estimation adapters above advance those totals.
+The bounded paired-test package/desktop lifecycle gate is closed locally. Next
+integrate the independently checked raw-mean estimation cores for
+`pyjjbetweenstats`/`pyjjwithinstats` behind their native acceptance gates.
+Any paired-difference interval exposure requires a separately reviewed scope.
+
+## Native empirical ROC partial core
 
 The existing `pyenhancedroc` identifier now has a generator-owned SPEC/UI/R bridge,
 common-cohort/AUC/paired-comparison tables, optional threshold/source-row details
@@ -18,9 +154,9 @@ levels. Local 0.3.64 package/GUI qualification is now recorded below; other
 platforms and full baseline scope remain pending. See the
 [native implementation and acceptance boundary](python-roc-native.md).
 
-Registry totals are now 29 partial targets, 32 planned targets, 15 retained
-utilities and zero full-parity releases. This is unreleased source work: the
-installed module is now 0.3.64; the qualified 0.3.63 rollback archive is preserved
+At the ROC milestone, registry totals were 29 partial targets, 32 planned targets, 15 retained
+utilities and zero full-parity releases. At that experimental ROC milestone,
+the installed module was 0.3.65; qualified 0.3.63 and 0.3.64 rollback archives were preserved
 under packages/archive. The 0.3.64 archive passes packaged runtime checks, 320
 installed-module native assertions and local macOS arm64 GUI Sideload, fresh-engine
 reopen/recalculation, role clearing/recovery, Save As and native HTML/PNG exports.
@@ -28,10 +164,23 @@ Saved artifacts preserve data/metadata and pass corruption probes; earlier
 desktop timeouts are resolved for these checks. The known-truth
 simulation still documents small-class approximate AUC undercoverage.
 
-Next specify binary paired diagnostic-test comparisons separately. Preserve the
+Binary paired diagnostic-test comparisons now have the source contract above. Preserve the
 bounded local ROC acceptance and keep full baseline/other-platform gates open.
 Interactive inspection and the larger enhancedROC baseline remain omitted.
-`pydecisioncompare` retains its separate binary paired-test contract.
+`pydecisioncompare` retains its separate binary paired-test contract and native gates.
+
+The 0.3.65 ROC UI follow-up now returns boolean direction-control bindings
+for all three score slots. Original-code failure and repaired-code success are
+verified against the installed client's binding/ComboBox methods through role
+selection, removal and reselection. All 533 Python tests, 33 separately rerun
+generator tests, freshness checks and compiler preparation pass. The 0.3.65
+archive passes all 17 frozen ROC fixtures; 320 installed native assertions pass.
+GUI Sideload, fresh-engine role transitions for all three slots, required-role
+clearing/recovery, Save As, second-engine reopen and HTML export pass on macOS
+arm64 / jamovi 28.17.0. Saved/exported plots match the earlier baseline pixels;
+dataset bytes/metadata are unchanged. Other platforms and additional export
+formats remain open. See the
+[direction-control evidence and boundary](python-roc-native.md#direction-control-follow-up--0365).
 
 ## Completed source research — CCC uncertainty prototypes
 
@@ -51,9 +200,11 @@ Further CCC inference is a research gate: a separately specified BCa/studentized
 candidate would need its own independent reference and frozen coverage screen.
 It must not block unrelated migration work or produce automatic method switching.
 The final source suite passes 517 Python tests, with byte-identical coverage replay.
-Native/package acceptance remains separate. The next feature-delivery priority
-is native integration of the independently checked ROC core above, followed by
-the binary paired-test contract; further CCC interval research remains parked.
+Native/package acceptance remains separate. The native ROC core and its local
+UI follow-up are now qualified within the bounds above. The next feature-delivery
+priority is native integration of the statistical estimation cores after bounded local
+paired-test package/desktop acceptance; the failed-screen interval prototype and further CCC
+interval research remain parked.
 
 The 0.3.63 `pyagreement` build now offers Lin CCC point estimates, Pearson
 precision and direct bias correction through its existing method selector. It
@@ -144,8 +295,8 @@ are ported. Advance narrow classical cores while retaining all frozen omissions.
 |---|---|---|
 | 0 | Close outstanding lifecycle/platform gates for existing ports | Keep 0.3.57 inclusion qualification distinct from earlier 200-row inspector evidence; do not enlarge the catalog to avoid acceptance debt. |
 | 1 | `pyagreement` continuous agreement core | Bland–Altman and balanced ICC are native partial cores; CCC point estimates have native roles/UI, tables and a static plot in 0.3.63. Save/reopen, live method switching, incomplete-input recovery and HTML export pass on the tested Mac. Lin and empirical-delta uncertainty are numerically checked source prototypes; both remain unexposed after coverage failures. Paired-percentile bootstrap also fails the frozen coverage screen; any BCa/studentized candidate needs a separate contract and independent validation. |
-| 2 | `pyenhancedroc` and `pydecisioncompare` | Empirical ROC / paired DeLong now has a narrow generated native partial core; package/desktop acceptance is next, preserving explicit direction/common cohort and approximation disclosures. Binary paired comparisons need a separate contract. PR/AP/calibration remain excluded. |
-| 3 | `pyjjbetweenstats` and `pyjjwithinstats` | Independent/paired estimation cores; subject identity and visit matching; robust/Bayesian/general repeated branches remain separate gates. |
+| 2 | `pyenhancedroc` and `pydecisioncompare` | Native ROC/paired DeLong and 0.3.65 controls have bounded local acceptance. Binary paired point/comparison native core passes packaged and bounded macOS arm64 desktop acceptance, including saved/exported artifacts. Paired intervals pass numerical checks but fail six small-sample coverage profiles and stay source-only. PR/AP/calibration remain excluded. |
+| 3 | `pyjjbetweenstats` and `pyjjwithinstats` | Two-group Welch/Student and two-column paired raw-mean native partial adapters compile and match independent R fixtures. Next packaging/GUI gates; standardized effects, robust/Bayesian/general repeated branches remain separate gates. |
 | 4 | `pysurvival` / `pysinglearm` KM core | Deterministic ties, risk tables and censoring tests; prototype Cox/competing-risk dependencies separately. |
 | 5 | Optional lab/PCA extensions | Reconcile umbrella drafts for method comparison, reference intervals, QC, equivalence and PCA before adding any stable `py…` identifier through the registry. |
 
@@ -250,17 +401,17 @@ Do not add rpy2 or replace the current bridge based on an announced future engin
 
 ## Verified current inventory
 
-Current source inventory: **44 registered implementation entry points**, comprising
-**29 partial baseline ports** and **15 retained utilities/demonstrations**. Of the
-61 baseline targets, **32 remain planned** and **zero have full supported-feature
+Current source inventory: **47 registered implementation entry points**, comprising
+**32 partial baseline ports** and **15 retained utilities/demonstrations**. Of the
+61 baseline targets, **29 remain planned** and **zero have full supported-feature
 parity plus all release gates**. Numerical, packaged and GUI evidence is listed
 per analysis; newly implemented study review does not establish pooled-meta-analysis parity.
 
 | Family | Baseline targets | Partial ports | Planned |
 |---|---:|---:|---:|
 | ClinicoPathDescriptives | 14 | 14 | 0 |
-| jjstatsplot | 19 | 1 | 18 |
-| meddecide | 15 | 10 | 5 |
+| jjstatsplot | 19 | 3 | 16 |
+| meddecide | 15 | 11 | 4 |
 | jsurvival | 9 | 3 | 6 |
 | OncoPath | 4 | 1 | 3 |
 

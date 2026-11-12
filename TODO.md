@@ -73,8 +73,9 @@
 - [x] Implement the independent paired continuous core of `pyagreement` and a separate validated numerical ICC prototype.
 - [x] Integrate the balanced ICC native subset under the same identifier, explicitly withholding ICC(2,k) limits.
 - [ ] Resolve ICC(2,k) interval policy before adding that uncertainty output.
-- [ ] Specify `pyenhancedroc` ROC/uncertainty and `pydecisioncompare` paired cores; define PR/AP and supplied-prediction calibration separately.
-- [ ] Specify independent/paired estimation cores for `pyjjbetweenstats` and `pyjjwithinstats`.
+- [x] Specify and integrate the partial `pyenhancedroc` ROC/DeLong and `pydecisioncompare` paired cores; preserve their distinct native/package/desktop gates and omitted methods.
+- [ ] Specify PR/AP and supplied-prediction calibration separately.
+- [x] Specify and validate bounded independent/paired raw-mean cores for `pyjjbetweenstats` and `pyjjwithinstats`; full method/plot parity remains open (2026-11-12).
 - [ ] Specify deterministic KM/risk tables for `pysurvival` / `pysinglearm` and independently prototype advanced engines.
 - [ ] Review optional assay regression, equivalence, reference intervals, QC and PCA scopes before registry allocation.
 - [ ] Qualify offline dependency bundles before model-fitting pipelines; defer foundation-model inference and runtime network access.
@@ -805,7 +806,19 @@ Acceptance criteria:
 - [x] Verify frozen enhancedROC baseline hashes and implement a source-only fixed-direction/common-cohort ROC and paired DeLong engine; pass 16,689 independent R/pROC/kernel checks and run 12,000 known-truth binormal simulations (2026-11-11).
 - [x] Add the narrow generator-owned native `pyenhancedroc` SPEC, explicit direction/event roles, common-cohort tables, approximate CI/multiplicity disclosures and static ROC; validate the runtime adapter against all frozen fixtures (2026-11-11).
 - [x] Package/Sideload 0.3.64 and verify fresh-engine ROC edits, `.omv` save/reopen/recalculation and native HTML/PNG export on macOS arm64. Interactive local inspection remains omitted (2026-11-11).
-- [ ] Specify binary `pydecisioncompare` separately; paired AUC testing does not implement McNemar or paired diagnostic proportions.
+- [x] Freeze the binary `pydecisioncompare` source contract and verify archived baseline hashes; implement a common-cohort numerical engine with explicit level pairs, per-test exact intervals, paired correctness/sensitivity/specificity comparisons and informative-pair Holm adjustment. Pass 27,552 independent R checks and 14 focused tests; keep the registry planned and installed 0.3.65 unchanged (2026-11-11).
+- [x] Pin the original R helper and independent Newcombe references; pass 39,222 interval checks, MPFR256 arithmetic and exact independent R/Python coverage replay. Six of 108 profiles fail the prespecified screen; keep intervals source-only and opt-in (2026-11-11).
+- [x] Add native `pydecisioncompare` point/comparison integration with paired intervals explicitly omitted, visible cohort/comparator roles, 565 Python tests and 960 isolated-source native assertions. Build 0.3.66; retain full baseline omissions (2026-11-11).
+- [x] Pass 1,984 exact-archive runtime checks across 13 frozen paired fixtures/two public methods and 960 built-library native assertions; preserve the byte-identical qualified 0.3.65 rollback (2026-11-11).
+- [x] GUI-Sideload 0.3.66; verify required-level recovery, optional Test 3 transitions, Save As, second-engine reopen/recalculation and HTML/PNG export on macOS arm64. Pass 960 installed-native assertions, 1,444 installed-file comparisons and independent saved-artifact/corruption checks. Earlier desktop-service blocker is resolved; retain other-platform/full-parity/clinical gates (2026-11-11).
+- [x] Freeze independent/paired raw-mean estimation contracts for `pyjjbetweenstats`/`pyjjwithinstats`, verify eight baseline hashes, and freeze independent R fixtures before the engine. Pass 20,380 checks across 32 datasets/255 configurations, 17 focused tests, byte-identical R replay, five mutation probes and all 582 Python regressions (2026-11-12).
+- [x] Add native raw-mean adapters, organized controls, tables, source-row audit and static contrast plots under the stable estimation identifiers; six adapter tests match all 255 R configurations, all 588 Python regressions and 761 isolated native assertions pass. Compiler preparation/install, serialized rendering and post-compiler generator freshness pass after correcting outcome-control relocation (2026-11-12).
+- [x] Build/Sideload 0.3.67; archive qualified 0.3.66. Pass 1,071 actual-archive checks, 761 built and 761 installed native assertions, 1,452 installed-file comparisons, two fresh-engine GUI lifecycle/recalculation checks, both incomplete-state artifacts and HTML/two PNG exports. Ten native tables agree with independent references; equivalent plot pixels/source bytes are preserved and four corruption probes rejected (2026-11-12).
+- [x] Specify source pooled/difference-SD standardized estimands, exact Hedges point correction and unscaled population-delta intervals. Freeze independent R/package/mixture oracles; pass 2,060 comparisons, 11 focused tests, five mutation probes, byte-identical R replay and all 599 Python regressions. Verify exhausted-iteration red/green handling and generator/status freshness. Keep native defaults and installed 0.3.67 unchanged (2026-11-12).
+- [x] Integrate optional standardized Student/paired results (off by default), three compact native tables and a static delta plot. Six adapter tests match all 160 R configurations; all 605 final Python tests, compiler preparation/install/freshness, 531 standardized native assertions, 761 raw native regressions and two visually inspected source renders pass. Preserve raw defaults and the qualified installed 0.3.67 artifact (2026-11-12).
+- [ ] Build standardized additions as 0.3.68 after frozen-source regression gates, inspect/execute the actual archive, GUI-Sideload and verify new option/model transitions, fresh-engine `.omv` save/reopen/recalculation and native exports. Qualified 0.3.67 is archived for rollback. Unequal-variance effects and rank/robust/Bayesian/general repeated/box/violin branches retain separate gates.
+- [x] Pass 557 Python regressions, 10 focused interval tests, byte-identical R interval/coverage replay and five interval mutation probes; preserve installed 0.3.65 and planned registry status (2026-11-11).
+- [x] Pass 547 Python regressions, 14 final focused paired-comparison tests, byte-identical independent R fixture replay and generator/status freshness; detect all five in-memory statistical/input-policy mutations (2026-11-11).
 
 - [x] Pass 527 source Python tests, generator/status freshness and deterministic final-source ROC simulation replay; keep installed 0.3.63 unchanged (2026-11-11).
 
@@ -816,4 +829,5 @@ Acceptance criteria:
 
 - [x] Verify 1,438 installed files against 0.3.64, pass 320 installed-native assertions, preserve dataset bytes/metadata through GUI lifecycle and reject four saved/exported artifact corruptions (2026-11-11).
 
-- [ ] Investigate generated conditional enablement for unused ROC direction controls; empty Score 3 direction appeared enabled in the inspected GUI. Inactive slots do not enter numerical results.
+- [x] Diagnose ROC empty-role enablement: the client forwards null but ComboBox disables only on false. Use boolean bindings in the literal SPEC; reproduce original failure and repaired success with the installed client's methods across all three slots and selection/removal/reselection (2026-11-11).
+- [x] Build/Sideload 0.3.65; confirm all three ROC direction controls disable/re-enable with their role, clear/recover required input, Save As, reopen in another fresh engine and export HTML on macOS arm64. Pass 17 packaged fixtures, 320 installed native assertions and saved/exported artifact checks; preserve the 0.3.64 rollback archive (2026-11-11).

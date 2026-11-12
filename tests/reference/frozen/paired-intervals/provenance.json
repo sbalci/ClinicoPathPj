@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "baseline": {
+    "repository": "https://github.com/sbalci/meddecide",
+    "commit": "c343bf8a2f9f711e7a0f6ed3941415170d1e3f58",
+    "path": "R/utils-paired-proportions.R",
+    "sha256": "b59b06c725862412190980797e2a591899263d265b7fa7560e9fc8fc8e098d67"
+  },
+  "independent": {
+    "repository": "https://github.com/ocbe-uio/contingencytables",
+    "commit": "fe8231b58d199039e023fe9e03baf97254bc7abd",
+    "version": "3.1.1.9010",
+    "license": "GPL-3",
+    "files": {
+      "Newcombe_square_and_add_CI_paired_2x2.R": "324514b5884ca2ad1e999450a19aab4127c00c927feff68c35e4278bf03a3330",
+      "Wilson_score_CI_1x2.R": "d99fb184e21340b9b057850c513fef754e9525b9a0de2d94ba82e03d9d75ae87",
+      "DESCRIPTION": "a3a9a2f32632939a8bb3b9dc3bbad2de77a63f8726daaeb9b6a9046795713720"
+    }
+  },
+  "use": "Test-only numerical references; not bundled runtime dependencies"
+}
