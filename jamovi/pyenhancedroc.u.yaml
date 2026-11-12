@@ -78,17 +78,17 @@
             {
               "type": "ComboBox",
               "name": "direction1",
-              "enable": "(marker1)"
+              "enable": "(!(!marker1))"
             },
             {
               "type": "ComboBox",
               "name": "direction2",
-              "enable": "(marker2)"
+              "enable": "(!(!marker2))"
             },
             {
               "type": "ComboBox",
               "name": "direction3",
-              "enable": "(marker3)"
+              "enable": "(!(!marker3))"
             }
           ]
         }

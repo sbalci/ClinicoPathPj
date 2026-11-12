@@ -35,9 +35,9 @@ parity and GUI/platform acceptance remain separate gates.
 | pydecision | decision | meddecide | 2 | partial | pending | pending |
 | pydecisioncalculator | decisioncalculator | meddecide | 2 | partial | pending | pending |
 | pydecisioncombine | decisioncombine | meddecide | 2 | planned | pending | pending |
-| pydecisioncompare | decisioncompare | meddecide | 2 | planned | pending | pending |
+| pydecisioncompare | decisioncompare | meddecide | 2 | partial | pending | 0.3.66 macOS arm64 / jamovi 28.17.0: GUI Sideload, fresh-engine run and second-engine reopen/recalculation, required-level clearing/recovery, optional Test 3 removal/restoration, Save As and HTML/PNG exports pass. Seven native tables and cached plots clear in the incomplete saved state; equivalent-input tables/pixels and source data/metadata agree across recovery/reopen. See docs/python-paired-decision-native.md. |
 | pydecisioncurve | decisioncurve | meddecide | 2 | partial | pending | pending |
-| pyenhancedroc | enhancedROC | meddecide | 2 | partial | pending | 0.3.64 macOS arm64 jamovi 28.17.0: GUI Sideload, fresh-engine run/reopen, live direction reversal, required-role clearing/recovery, Save As and HTML/PNG exports verified; artifact hashes/row alignment checked |
+| pyenhancedroc | enhancedROC | meddecide | 2 | partial | pending | 0.3.64 macOS arm64 jamovi 28.17.0: GUI Sideload, fresh-engine run/reopen, live direction reversal, required-role clearing/recovery, Save As and HTML/PNG exports verified; artifact hashes/row alignment checked; 0.3.65: all three direction dropdowns disable/re-enable on role changes, required-role clearing/recovery, Save As, second-engine reopen and HTML export pass; saved/exported pixels and dataset bytes match the qualified baseline |
 | pykappaci | kappaSizeCI | meddecide | 2 | partial | pending | pending |
 | pykappafixedn | kappaSizeFixedN | meddecide | 2 | partial | pending | pending |
 | pykappapower | kappaSizePower | meddecide | 2 | partial | pending | legacy .omv reopen and power 0.8 -> 0.9 -> 0.8 rerun verified |
@@ -47,7 +47,7 @@ parity and GUI/platform acceptance remain separate gates.
 | pyhullplot | hullplot | jjstatsplot | 3 | planned | pending | pending |
 | pyjjarcdiagram | jjarcdiagram | jjstatsplot | 3 | planned | pending | pending |
 | pyjjbarstats | jjbarstats | jjstatsplot | 3 | planned | pending | pending |
-| pyjjbetweenstats | jjbetweenstats | jjstatsplot | 3 | planned | pending | pending |
+| pyjjbetweenstats | jjbetweenstats | jjstatsplot | 3 | partial | pending | Raw results only: 0.3.67 GUI-Sideload on jamovi 28.17.0/macOS arm64; 1,452 installed files match archive, second-engine save/reopen/recalculation and both required-input recoveries, HTML/PNG artifacts and four corruption probes pass. New optional standardized tables/control/plot are isolated-source verified but not packaged or GUI-qualified (2026-11-12). |
 | pyjjcorrmat | jjcorrmat | jjstatsplot | 3 | partial | pending | macOS arm64 jamovi 28.13: 0.3.23 GUI install, fresh-engine Hochberg/Hommel/BY native/local reruns match R, BY OMV save/second-engine reopen and Hochberg recalculation; keyboard repair qualified 0.3.22; native PNG export qualified 0.3.20; 0.3.24 partial Pearson invalid/constant/valid recovery, second-engine save/reopen/rerun and native PNG export verified on macOS arm64; 0.3.25 partial Spearman tied-data controls, R agreement, second-engine save/reopen/rerun and native PNG export verified on macOS arm64; 0.3.26 previous saved-file rerun, grouped cohorts, local switching/remembered focus, constant-system recovery, fresh-engine save/reopen/rerun and native stacked PNG export verified on macOS arm64 |
 | pyjjdotchart | jjdotchart | jjstatsplot | 3 | planned | pending | pending |
 | pyjjdotplotstats | jjdotplotstats | jjstatsplot | 3 | planned | pending | pending |
@@ -56,7 +56,7 @@ parity and GUI/platform acceptance remain separate gates.
 | pyjjridges | jjridges | jjstatsplot | 3 | planned | pending | pending |
 | pyjjscatterstats | jjscatterstats | jjstatsplot | 3 | planned | pending | pending |
 | pyjjsegmentedtotalbar | jjsegmentedtotalbar | jjstatsplot | 3 | planned | pending | pending |
-| pyjjwithinstats | jjwithinstats | jjstatsplot | 3 | planned | pending | pending |
+| pyjjwithinstats | jjwithinstats | jjstatsplot | 3 | partial | pending | Raw results only: 0.3.67 GUI-Sideload on jamovi 28.17.0/macOS arm64; 1,452 installed files match archive, second-engine save/reopen/recalculation and both required-input recoveries, HTML/PNG artifacts and four corruption probes pass. New optional standardized tables/control/plot are isolated-source verified but not packaged or GUI-qualified (2026-11-12). |
 | pyjwaffle | jwaffle | jjstatsplot | 3 | planned | pending | pending |
 | pylinechart | linechart | jjstatsplot | 3 | planned | pending | pending |
 | pylollipop | lollipop | jjstatsplot | 3 | planned | pending | pending |

@@ -1,0 +1,49 @@
+Package: contingencytables
+Title: Statistical Analysis of Contingency Tables
+Version: 3.1.1.9010
+Date: 2026-10-29
+Authors@R:
+    c(
+        person(
+            given  = "Morten Wang",
+            family = "Fagerland",
+            role   = "aut",
+            email  = "morten.fagerland@medisin.uio.no"
+        ),
+        person(
+            given  = "Stian",
+            family = "Lydersen",
+            role   = "ctb"
+        ),
+        person(
+            given  = "Petter",
+            family = "Laake",
+            role   = "ctb"
+        ),
+        person(
+            given  = "Waldir",
+            family = "Leoncio",
+            role   = "cre",
+            email  = "w.l.netto@medisin.uio.no"
+        ),
+        person(
+            given  = "Ole Christian",
+            family = "Lingjærde",
+            role   = "trl"
+        ),
+        person(
+            given  = "Brad J.",
+            family = "Biggerstaff",
+            role   = "ctb"
+        )
+    )
+Description: Provides functions to perform statistical inference of data organized in contingency tables. This package is a companion to the "Statistical Analysis of Contingency Tables" book by Fagerland et al. <ISBN 9781466588172>.
+License: GPL-3
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+URL: https://contingencytables.com/ https://ocbe-uio.github.io/contingencytables/
+BugReports: https://github.com/ocbe-uio/contingencytables/issues
+Imports: MASS, boot, methods, utils
+Suggests: testthat
+Language: en-GB
+Config/roxygen2/version: 8.1.1

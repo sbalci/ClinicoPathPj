@@ -23,6 +23,24 @@ sync_module_metadata <- function(root = ".") {
             "    tags: [Python, Diagnostic accuracy, Decision curves, Data quality]")
     }
     document <- yaml::yaml.load(paste(metadata, collapse = "\n"))
+    estimation_data <- "python_estimation_examples.csv"
+    if (file.exists(file.path(root, "data", estimation_data))) {
+        entry <- list(name = "Independent and Paired Mean Examples", path = estimation_data,
+            description = "Thirteen synthetic independent cases in groups of five and eight; the two wide measurement columns retain five complete paired subjects and exclude eight rows. Leading-zero subject labels remain distinct. Raw mean estimation examples only.",
+            tags = c("Python", "Mean differences", "Paired measurements"))
+        index <- which(vapply(document$datasets, function(x) identical(x$path, estimation_data), logical(1)))
+        if (length(index)) document$datasets[[index[1L]]] <- entry
+        else document$datasets[[length(document$datasets) + 1L]] <- entry
+    }
+    paired_data <- "python_paired_test_examples.csv"
+    if (file.exists(file.path(root, "data", paired_data))) {
+        entry <- list(name = "Paired Binary Test Examples", path = paired_data,
+            description = "Twenty synthetic cases with three paired binary calls: the third test includes one explicit indeterminate result. All three tests retain 16 common cases after explicit exclusion; three rows have missing roles and one has an outside-pair result.",
+            tags = c("Python", "Paired diagnostic tests", "Common cohort"))
+        index <- which(vapply(document$datasets, function(x) identical(x$path, paired_data), logical(1)))
+        if (length(index)) document$datasets[[index[1L]]] <- entry
+        else document$datasets[[length(document$datasets) + 1L]] <- entry
+    }
     pyramid_service_data <- "python_age_pyramid_service_examples.omv"
     if (file.exists(file.path(root, "data", pyramid_service_data))) {
         entry <- list(name = "Age Pyramid Service Examples", path = pyramid_service_data,

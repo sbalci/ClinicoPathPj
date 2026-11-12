@@ -106,4 +106,50 @@ def check():
     print(json.dumps(report,indent=2))
 
 
-if __name__=='__main__':check()
+def check_ui_followup(version):
+    """Check the recovered UI fixture against the previously qualified dataset."""
+    require(re.fullmatch(r'\d+\.\d+\.\d+', version), 'Invalid package version')
+    stem = EXPORTS/f'python-roc-{version}-ui-recovered'
+    saved = Path(str(stem)+'.omv')
+    html_path = Path(str(stem)+'.html')
+    baseline = EXPORTS/'python-roc-0.3.64-reopened.omv'
+    with zipfile.ZipFile(saved) as z, zipfile.ZipFile(baseline) as old:
+        require(z.testzip() is None, 'Saved OMV CRC failed')
+        report = dict(saved=inspect(z.read('index.html').decode(), z))
+        report['baseline'] = inspect(old.read('index.html').decode(), old)
+        for name in ['data.bin', 'metadata.json', 'xdata.json']:
+            require(z.read(name) == old.read(name), 'Dataset changed: '+name)
+    html = html_path.read_text()
+    report['HTML'] = inspect(html)
+    require(report['saved']['pixel_sha256'] == report['HTML']['pixel_sha256'],
+            'Exported plot differs from saved plot')
+    require(report['saved']['pixel_sha256'] == report['baseline']['pixel_sha256'],
+            'Equivalent-input plot changed from qualified baseline')
+    probes = {'AUC': html.replace('0.656', '0.556', 1),
+              'paired_p': html.replace('.789', '.689', 1),
+              'row_value': html.replace('5.00', '6.00', 1),
+              'missing_plot': re.sub(r'data:image/png;base64,[A-Za-z0-9+/=\s]+', '', html, count=1)}
+    for name, changed in probes.items():
+        require(changed != html, 'No-op corruption probe '+name)
+        try:
+            inspect(changed)
+        except (ValueError, IndexError):
+            continue
+        raise ValueError('Accepted artifact corruption '+name)
+    report.update(version=version, source_bytes_and_metadata_unchanged=True,
+                  corruption_probes_rejected=list(probes),
+                  scope='Saved OMV and HTML artifact checks; desktop controls observed separately',
+                  files={p.name: hashlib.sha256(p.read_bytes()).hexdigest()
+                         for p in [saved, html_path]})
+    (EXPORTS/f'python-roc-{version}-ui-artifacts-20261111.json').write_text(
+        json.dumps(report, indent=2)+'\n')
+    print(json.dumps(report, indent=2))
+
+
+if __name__=='__main__':
+    if len(sys.argv) == 3 and sys.argv[1] == '--ui-followup':
+        check_ui_followup(sys.argv[2])
+    elif len(sys.argv) == 1:
+        check()
+    else:
+        raise SystemExit('Usage: check-roc-artifacts.py [--ui-followup VERSION]')

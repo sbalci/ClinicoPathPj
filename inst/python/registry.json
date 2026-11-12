@@ -84,7 +84,7 @@
       "source_name": "alluvial",
       "menu_group": "Descriptives Py",
       "menu_title": "Categorical alluvial flows (core)",
-      "supported_core": "Counts for 2\u20134 categorical axes, retain missing categories by default or complete-case exclusion, collision-free missing labels, native flow/marginal tables, shared count-scaled static/local geometry and local highlighting; 10,000 rows/60 paths/20 categories per axis without sampling",
+      "supported_core": "Counts for 2–4 categorical axes, retain missing categories by default or complete-case exclusion, collision-free missing labels, native flow/marginal tables, shared count-scaled static/local geometry and local highlighting; 10,000 rows/60 paths/20 categories per axis without sampling",
       "omissions": "Weights, condensation, numeric binning, marginal plot panels, alternative fill rules/orientations and baseline styling; no full parity"
     },
     {
@@ -301,7 +301,7 @@
       "source_name": "crosstable",
       "menu_group": "Descriptives Py",
       "menu_title": "Cross tables (core)",
-      "supported_core": "Grouped/overall native summaries; baseline numeric \u22646-level typing or explicit numeric override; per-variable or complete-case missingness; type-7 quartiles/sample SD; exact/normal Wilcoxon, Kruskal\u2013Wallis, uncorrected Pearson with sparse 2\u00d72 Fisher switch; five p-adjust methods",
+      "supported_core": "Grouped/overall native summaries; baseline numeric ≤6-level typing or explicit numeric override; per-variable or complete-case missingness; type-7 quartiles/sample SD; exact/normal Wilcoxon, Kruskal–Wallis, uncorrected Pearson with sparse 2×2 Fisher switch; five p-adjust methods",
       "omissions": "Larger exact RxC tests, alternate R table engines/styles, SMDs, copy-ready summaries and full baseline parity; unused group columns omitted"
     },
     {
@@ -556,7 +556,7 @@
       "source_name": "vartree",
       "menu_group": "Descriptives Py",
       "menu_title": "Categorical variable tree (core)",
-      "supported_core": "Observed prefix counts for 1\u20134 factors; common complete cohort; parent/cohort percentages; native node table; local expandable tree; optional top-30 leaf bar plot; maximum 200 non-root nodes and 10,000 input rows; optional continuous node mean/sample SD with valid/missing counts, leaf-only or all-node locations (0.3.39); explicit reference-level matches/valid-reference percentages, missing counts and combined numeric annotations (0.3.40)",
+      "supported_core": "Observed prefix counts for 1–4 factors; common complete cohort; parent/cohort percentages; native node table; local expandable tree; optional top-30 leaf bar plot; maximum 200 non-root nodes and 10,000 input rows; optional continuous node mean/sample SD with valid/missing counts, leaf-only or all-node locations (0.3.39); explicit reference-level matches/valid-reference percentages, missing counts and combined numeric annotations (0.3.40)",
       "omissions": "Pruning/follow rules, missing-category branches, baseline styling and full vtree parity; numeric and reference summaries supported in retained complete-cohort core"
     },
     {
@@ -764,10 +764,10 @@
     {
       "id": "pyjjbetweenstats",
       "family": "jjstatsplot",
-      "menu": "Statistical Plots",
-      "title": "Box-Violin Plots to Compare Between Groups",
+      "menu": "Group comparisons",
+      "title": "Independent Mean Comparison (Python)",
       "aliases": [],
-      "source": null,
+      "source": "analyses/jjstatsplot/pyjjbetweenstats.py",
       "baseline": {
         "module": "jjstatsplot",
         "version": "1.0.82.03",
@@ -781,13 +781,15 @@
         }
       },
       "wave": 3,
-      "status": "planned",
+      "status": "partial",
       "coverage": {
         "full_parity": false,
-        "numerical": "pending",
-        "gui": "pending",
+        "numerical": "Raw-mean core: 20,380 independent R checks/255 configurations; qualified raw 0.3.67 archive has 1,071 runtime checks and 761 built/installed native assertions. New working-source standardized core: 2,060 independent checks, six adapters matching all 160 R configurations, 605 Python tests, 531 standardized and 761 raw isolated-native assertions. Compiler preparation/install/freshness, recovery and serialized rendering pass. New package/GUI and full baseline parity remain pending; see docs/python-standardized-native.md.",
+        "gui": "Raw results only: 0.3.67 GUI-Sideload on jamovi 28.17.0/macOS arm64; 1,452 installed files match archive, second-engine save/reopen/recalculation and both required-input recoveries, HTML/PNG artifacts and four corruption probes pass. New optional standardized tables/control/plot are isolated-source verified but not packaged or GUI-qualified (2026-11-12).",
         "compatibility": "existing Python identifier preserved",
-        "platforms": []
+        "platforms": [
+          "macOS arm64 / jamovi 28.17.0: raw 0.3.67 GUI; standardized source-native only, GUI pending"
+        ]
       },
       "methods": "plot first: ggstatsplot::ggbetweenstats box-violin plot. Subtitle: Welch or Fisher one-way ANOVA (omega^2/eta^2 CI), Kruskal-Wallis (epsilon^2), trimmed-means ANOVA (WRS2::t1way) or anovaBF; with 2 groups: Welch t, Mann-Whitney, Yuen or ttestBF. Pairwise Games-Howell, Student, Dunn or Yuen with p-adjustment; Levene check; ggpubr variants.",
       "oracle": "statsExpressions::oneway_anova, statsExpressions::two_sample_test, statsExpressions::pairwise_comparisons (PMCMRplus::gamesHowellTest, PMCMRplus::kwAllPairsDunnTest, WRS2::lincon), stats::oneway.test, WRS2::t1way, BayesFactor::anovaBF",
@@ -799,7 +801,7 @@
       },
       "source_name": "jjbetweenstats",
       "menu_group": "Stats Plots Py",
-      "menu_title": "Box-Violin Plots to Compare Between Groups"
+      "menu_title": "Independent Mean Comparison"
     },
     {
       "id": "pyjjcorrmat",
@@ -1168,10 +1170,10 @@
     {
       "id": "pyjjwithinstats",
       "family": "jjstatsplot",
-      "menu": "Statistical Plots",
-      "title": "Box-Violin Plots to Compare Within Groups",
+      "menu": "Group comparisons",
+      "title": "Paired Mean Comparison (Python)",
       "aliases": [],
-      "source": null,
+      "source": "analyses/jjstatsplot/pyjjwithinstats.py",
       "baseline": {
         "module": "jjstatsplot",
         "version": "1.0.82.03",
@@ -1185,13 +1187,15 @@
         }
       },
       "wave": 3,
-      "status": "planned",
+      "status": "partial",
       "coverage": {
         "full_parity": false,
-        "numerical": "pending",
-        "gui": "pending",
+        "numerical": "Raw-mean core: 20,380 independent R checks/255 configurations; qualified raw 0.3.67 archive has 1,071 runtime checks and 761 built/installed native assertions. New working-source standardized core: 2,060 independent checks, six adapters matching all 160 R configurations, 605 Python tests, 531 standardized and 761 raw isolated-native assertions. Compiler preparation/install/freshness, recovery and serialized rendering pass. New package/GUI and full baseline parity remain pending; see docs/python-standardized-native.md.",
+        "gui": "Raw results only: 0.3.67 GUI-Sideload on jamovi 28.17.0/macOS arm64; 1,452 installed files match archive, second-engine save/reopen/recalculation and both required-input recoveries, HTML/PNG artifacts and four corruption probes pass. New optional standardized tables/control/plot are isolated-source verified but not packaged or GUI-qualified (2026-11-12).",
         "compatibility": "existing Python identifier preserved",
-        "platforms": []
+        "platforms": [
+          "macOS arm64 / jamovi 28.17.0: raw 0.3.67 GUI; standardized source-native only, GUI pending"
+        ]
       },
       "methods": "plot first: ggwithinstats paired box-violin with connecting paths. Subtitle: repeated-measures ANOVA (afex), Friedman, WRS2 rmanova or anovaBF; with 2 levels: paired t, signed-rank, Yuen or BF. Pairwise Student, Durbin-Conover or Yuen with p-adjustment. Its own 'Paired Changes' table gives mean/median/Hodges-Lehmann changes with a t, signed-rank (normal approximation) or seeded whole-case bootstrap CI, plus geometric-mean time ratios.",
       "oracle": "statsExpressions::oneway_anova(paired = TRUE), statsExpressions::two_sample_test(paired = TRUE), statsExpressions::pairwise_comparisons (PMCMRplus::durbinAllPairsTest, WRS2::rmmcp), WRS2::rmanova, stats::wilcox.test(paired, conf.int = TRUE, exact = FALSE, correct = TRUE), DescTools::HodgesLehmann",
@@ -1203,7 +1207,7 @@
       },
       "source_name": "jjwithinstats",
       "menu_group": "Stats Plots Py",
-      "menu_title": "Box-Violin Plots to Compare Within Groups"
+      "menu_title": "Paired Mean Comparison"
     },
     {
       "id": "pylinechart",
@@ -1574,10 +1578,10 @@
     {
       "id": "pydecisioncompare",
       "family": "meddecide",
-      "menu": "Medical Decisions",
-      "title": "Compare Medical Decision Tests",
+      "menu": "Test comparisons",
+      "title": "Paired Binary Test Comparison",
       "aliases": [],
-      "source": null,
+      "source": "analyses/meddecide/pydecisioncompare.py",
       "baseline": {
         "module": "meddecide",
         "version": "1.1.2",
@@ -1591,15 +1595,17 @@
         }
       },
       "wave": 2,
-      "status": "planned",
+      "status": "partial",
       "coverage": {
         "full_parity": false,
-        "numerical": "pending",
-        "gui": "pending",
+        "numerical": "Common-cohort partial native core: 27,552 independent base-R engine checks, 8 adapter tests across 13 frozen datasets/two public methods/three confidence levels, and 960 isolated-source native assertions. Full source suite: 565 Python tests. Exact per-test CIs are separate from paired differences; paired-difference CIs remain unexposed after 6/108 exact coverage-screen failures despite 39,222 numerical checks. Packaged/GUI evidence is recorded separately in docs/python-paired-decision-native.md; full baseline parity remains open.",
+        "gui": "0.3.66 macOS arm64 / jamovi 28.17.0: GUI Sideload, fresh-engine run and second-engine reopen/recalculation, required-level clearing/recovery, optional Test 3 removal/restoration, Save As and HTML/PNG exports pass. Seven native tables and cached plots clear in the incomplete saved state; equivalent-input tables/pixels and source data/metadata agree across recovery/reopen. See docs/python-paired-decision-native.md.",
         "compatibility": "existing Python identifier preserved",
-        "platforms": []
+        "platforms": [
+          "macOS arm64: bounded local native/GUI core acceptance only"
+        ]
       },
-      "methods": "Compares 2-3 tests on the same cases: per-test epi.tests metrics, paired McNemar (exact, mid-p or asymptotic) with Holm adjustment, Newcombe method-10 CIs for paired differences, Cochran's Q, OPA with a non-inferiority margin, and stratified tables.",
+      "methods": "Frozen baseline: 2-3 tests, per-test epi.tests metrics, paired McNemar mid-p (default) or asymptotic without continuity correction, informative-pair Holm adjustment, Newcombe method-10 difference CIs, Cochran Q, OPA/non-inferiority and stratification. Source-only numerical exact-conditional checks are not an additional frozen public method.",
       "oracle": "epiR::epi.tests, stats::mcnemar.test, stats::binom.test, stats::p.adjust(method = 'holm'), DescTools::CochranQTest",
       "dependencies": {
         "bundled": [],
@@ -1607,7 +1613,7 @@
       },
       "source_name": "decisioncompare",
       "menu_group": "MedDecide Py",
-      "menu_title": "Compare Medical Decision Tests"
+      "menu_title": "Paired Binary Tests"
     },
     {
       "id": "pydecisioncurve",
@@ -1674,7 +1680,7 @@
       "coverage": {
         "full_parity": false,
         "numerical": "Source engine passes 16,689 independent R/pROC/kernel checks; native adapter matches all 17 fixtures and passes 320 focused R assertions, compiler preparation and serialized PNG rendering in an isolated source library. Full source Python suite passes 531 tests; see docs/python-roc-native.md",
-        "gui": "0.3.64 macOS arm64 jamovi 28.17.0: GUI Sideload, fresh-engine run/reopen, live direction reversal, required-role clearing/recovery, Save As and HTML/PNG exports verified; artifact hashes/row alignment checked",
+        "gui": "0.3.64 macOS arm64 jamovi 28.17.0: GUI Sideload, fresh-engine run/reopen, live direction reversal, required-role clearing/recovery, Save As and HTML/PNG exports verified; artifact hashes/row alignment checked; 0.3.65: all three direction dropdowns disable/re-enable on role changes, required-role clearing/recovery, Save As, second-engine reopen and HTML export pass; saved/exported pixels and dataset bytes match the qualified baseline",
         "compatibility": "existing Python identifier preserved",
         "platforms": [
           "macOS arm64: bounded local native/GUI core acceptance only"
