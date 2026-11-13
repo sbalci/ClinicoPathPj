@@ -1,11 +1,11 @@
-# Native standardized mean effects — working source (2026-11-12)
+# Native standardized mean effects — 0.3.68 qualification (2026-11-12)
 
 The existing `pyjjbetweenstats` and `pyjjwithinstats` partial analyses now optionally
 use the [checked standardized-effect core](python-standardized-effects.md).
 Their identifiers and menus stay **Stats Plots Py → Group comparisons**. The new
 `showStandardized` Boolean defaults to false, preserving the raw default methods
-and result contracts. This is an **unpackaged native source increment**; the
-installed and desktop-qualified 0.3.67 archive remains unchanged.
+and result contracts. These results are included in **ClinicoPathPj 0.3.68**, GUI-qualified locally on
+macOS arm64/jamovi 28.17.0. Qualified 0.3.67 is archived for rollback.
 
 ## Controls and presentation
 
@@ -60,10 +60,9 @@ schema. That log is retained; final qualification requires a separate frozen-sou
 suite, not that failed run. The final frozen-source suite passes **605 Python
 tests**, including the six adapter tests and all 11 standardized-core tests.
 
-Compiler preparation and post-compiler generator freshness pass. The source is
-installed only into `/private/tmp/cpj-standardized-native-library`, using current
-DESCRIPTION metadata; this does not replace the installed desktop module or build
-a new JMO. All five Python analysis/shared-engine files in that isolated library
+Compiler preparation and post-compiler generator freshness pass. The initial source gate installed into
+`/private/tmp/cpj-standardized-native-library`; the packaged/installed qualification
+below subsequently verified the 0.3.68 artifact and actual desktop installation. All five Python analysis/shared-engine files in that isolated library
 match the frozen workspace bytes.
 
 **531 native assertions pass with zero failures, errors, warnings or skips.** They
@@ -93,18 +92,68 @@ Reproduce with `tests/python/test_standardized_adapters.py`,
 `tools/check-standardized-native.R`, `tools/check-estimation-native.R <isolated-library>`,
 and `tools/render-standardized-example.R`. Generated JSON and logs remain ignored.
 
+## Packaged and native GUI qualification — 0.3.68
+
+Build and post-compiler freshness pass. The immutable archive passes CRC,
+single-namespace, source-byte, registry-contract and bytecode checks. Its extracted
+runtime passes **1,875 checks across 102 configurations**: 51 raw, 32 standardized
+and 19 requested-standardized/Welch cases across the 32 independent R datasets.
+Both the built and GUI-installed libraries separately pass **531 standardized and
+761 raw native assertions**, with no failures, errors, warnings or skips.
+
+Installed through **Modules → Manage installed → Sideload**, then verified all
+**1,453 installed files** against the archive. A fresh engine reopened the existing
+0.3.67 saved example. It retained the prior roles/subject labels, selected Welch,
+and kept the new standardized controls off; the independent control was disabled
+until Student was explicitly selected. Both analyses then produced the expected
+Cohen/population-delta and Hedges point-only tables and plots.
+
+Saved states verify Student → Welch → Student, paired standardized off/on,
+required paired measurement clearing/restoration, and independent-result
+preservation. Unsupported independent standardized tables/plot disappear under
+Welch, with raw Welch results retained and explained. The incomplete paired file
+contains no computed paired rows, stale notes or cached paired images. Restoration
+recovers all results. A second fresh engine reopens the recovered file; changing
+both confidence levels to 0.90 then back to 0.95 recalculates the raw and standardized
+intervals. Save As, HTML export and both direct standardized PNG exports pass.
+The initial desktop-control timeout was resolved by reconnecting; final acceptance
+uses observed successful interactions and inspected saved/exported files.
+
+`tools/check-standardized-artifacts.py` validates all **16 native tables** against
+independent R fixtures at display precision. Valid/recovered/reopened tables and
+plot pixels are identical. Welch raw results match the default-off state; model,
+off and incomplete transitions preserve unaffected outputs. Dataset bytes,
+metadata and exact source/subject IDs match the original 0.3.67 example in all
+seven saved states. HTML re-encoding changes PNG file bytes but preserves pixels;
+both direct 1300×600 PNG exports match the source renders. Four deliberately
+corrupted artifacts (cohort, Cohen estimate, Hedges estimate, missing plot) fail.
+
+Artifact: `ClinicoPathPj_0.3.68.jmo`, **23,226,839 bytes**,
+SHA-256 `69f1a62d823a4718d493a6981669cb3fc833b1dd1f8c28eb1cdb57efaeba5088`.
+Rollback: `packages/archive/ClinicoPathPj_0.3.67.jmo`,
+SHA-256 `77dda13ba6530f4808dffcfb178518808a3708a171d4befc5fb55726d15174d1`.
+Only post-build numerical/GUI/platform coverage evidence may advance in the source
+registry; the packaged implementation, defaults, baselines and contracts stay fixed.
+
+Saved artifacts: [defaults/compatibility](validation-exports/python-standardized-0.3.68-defaults.omv),
+[valid](validation-exports/python-standardized-0.3.68-valid.omv),
+[Welch](validation-exports/python-standardized-0.3.68-welch.omv),
+[paired standardized off](validation-exports/python-standardized-0.3.68-off.omv),
+[incomplete](validation-exports/python-standardized-0.3.68-incomplete.omv),
+[recovered](validation-exports/python-standardized-0.3.68-recovered.omv),
+[reopened/recalculated](validation-exports/python-standardized-0.3.68-reopened.omv),
+[HTML](validation-exports/python-standardized-0.3.68-reopened.html),
+[independent PNG](validation-exports/python-standardized-0.3.68-independent-plot.png),
+[paired PNG](validation-exports/python-standardized-0.3.68-paired-plot.png).
+
 ## Remaining gates
 
 Counts remain **32 partial targets / 29 planned / 15 utilities**, with zero full
-supported-baseline parity releases. Qualified 0.3.67 is preserved in `packages/archive/` with SHA-256
-`77dda13ba6530f4808dffcfb178518808a3708a171d4befc5fb55726d15174d1`; all
-1,452 installed files still match it. Next build a new
-standard `ClinicoPathPj_0.3.68.jmo`, check its actual packaged runtime, then GUI
-Sideload and verify fresh-engine option/model transitions, `.omv` save/reopen,
-recalculation, and native table/plot exports for these added results. Do not
-rebuild this source over the qualified 0.3.67 artifact.
-
-Unequal-variance standardized effects, g-specific interval conventions, rank,
-robust/Bayesian/general repeated methods, box/violin/interactive geometry, broader
-platforms and clinical review remain separate gates. No new dependency installation
-is required; production uses the existing bundled Python libraries.
+supported-baseline parity releases. Unequal-variance standardized effects,
+g-specific interval conventions, rank, robust/Bayesian/general repeated methods,
+box/violin/interactive geometry, broader platforms and clinical review remain
+separate gates. A separate [unequal-variance source prototype](python-welch-standardized-effects.md)
+now has frozen independent references and a coverage screen (11 pass, one
+inconclusive). Review its approximate methods and further coverage evidence before
+extending the current Welch controls; it is not part of the qualified archive.
+No new dependency installation is required; production uses bundled libraries.

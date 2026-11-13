@@ -250,6 +250,14 @@ sync_module_metadata <- function(root = ".") {
             description = "Twelve synthetic profiles with separate calendar, Excel and Unix examples. Explicit YYYY-MM-DD parsing gives seven valid, four invalid and one missing value; the numeric columns illustrate different origins and fractions.",
             tags = c("Python", "UTC dates", "Data preparation"))
     }
+    bar_data <- "python_barstats_examples.csv"
+    if (file.exists(file.path(root, "data", bar_data)) &&
+        !any(vapply(document$datasets, function(x) identical(x$path, bar_data), logical(1)))) {
+        document$datasets[[length(document$datasets) + 1L]] <- list(
+            name = "Categorical Bar Frequency Examples", path = bar_data,
+            description = "Seven synthetic frequency rows: four positive complete cells represent 50 observations in groups of 20 and 30; one complete row has zero frequency and two rows have missing roles. Compare equal-height percentage bars with unequal-height count bars.",
+            tags = c("Python", "Categorical bars", "Frequency denominators"))
+    }
     registry_path <- file.path(root, "inst", "python", "registry.json")
     if (file.exists(registry_path)) {
         registry <- jsonlite::fromJSON(registry_path, simplifyVector = FALSE)

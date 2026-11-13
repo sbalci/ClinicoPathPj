@@ -100,16 +100,15 @@
         },
         {
           "type": "CheckBox",
-          "name": "showStandardized",
-          "enable": "(varequal)"
+          "name": "showStandardized"
         },
         {
           "type": "Label",
-          "label": "Pooled SD: requires the Student equal-variance model."
+          "label": "Student: pooled SD with delta interval; Welch: RMS SD, point only."
         },
         {
           "type": "Label",
-          "label": "Cohen estimate: population-delta CI; Hedges estimate: point only."
+          "label": "Welch standardized intervals, adjusted points and plots are omitted."
         }
       ]
     },

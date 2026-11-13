@@ -1,3 +1,46 @@
+# Unreleased — independent categorical bar core (2026-11-13)
+
+- Add `pyjjbarstats` native partial source entry under Stats Plots Py → Categorical comparisons. Preserve the 100% stacked default with explicit group denominators; add count scale for unequal group totals. Support independent factor pairs, integer frequency counts and optional unweighted subject audits without expanding frequencies.
+- Separate optional primary Pearson/Fisher results, uncorrected Pearson audit and raw/bias-corrected Cramér V points; omit confidence intervals, paired/Bayesian/split/per-bar tests and clinical bands explicitly. Add missingness/zero-frequency/removed-level/source-row audits, organized UI and a dedicated static stacked renderer without changing existing grouped bar rendering.
+- Freeze independent R/table/ggplot2 references before implementation: pass 8,837 comparisons/28 datasets/47 configurations, six rejected mutations and deterministic replay. Pass all 662 final-source Python tests and 390 isolated native assertions with recovery/state export; inspect both synthetic plot scales and keep the qualified installed 0.3.70 unchanged. New-package/GUI qualification remains open.
+
+# 0.3.70 — 2026-11-13
+
+- Add partial `pyjjhistostats` under Stats Plots Py → Distribution, with generator-owned organized controls, native cohort/descriptive/binning tables, optional bin/case rows and Student test/mean/contrast intervals, plus a static histogram and optional mean line. Preserve supported defaults and disclose omitted baseline methods.
+- Freeze actual ggplot2 geometry before Python implementation: 20 datasets/54 configurations, exact supported counts/edges/geometry, explicit constant/manual recovery and refusal of unsafe count loss/overflow/excessive bins. Add compensated mean summation verified against an independent exact-rational oracle; retain the frozen R rounding discrepancy.
+- Retain the 651-test source gate; qualify the actual JMO with 6,692 histogram and 2,008 existing mean-route checks. Built and GUI-installed libraries each pass 671 native assertions; all 1,461 installed files match. Two fresh engines verify Data Library/menu, custom null/confidence, optional/required-input recovery, OMV save/reopen/rerun and HTML/direct PNG export. Six saved states preserve data and equivalent plot pixels; four artifact corruptions are rejected. Archive qualified 0.3.69; full methods, clinical review and other platforms remain open. See docs/python-histogram-geometry.md.
+
+# Unreleased — histogram/one-sample source core (2026-11-12)
+
+- Add reusable exact-boundary histogram counts/proportions/densities and two-sided one-sample mean estimation, with strict numeric/identity validation, retained-row audit, type-7 summaries and explicit insufficient/degenerate states. No public histogram menu or automatic binning policy is introduced.
+- Freeze independent R oracles before Python implementation: verify four archived baseline hashes, exact double edge serialization and 6,538 comparisons over 21 datasets/252 configurations. Pass all 638 final-source Python tests, including 11 focused tests and five rejected mutations; R fixtures replay byte-identically and generator/status freshness passes. Retain ten explicit zero-SE base-R discrepancies and the archived help/backend normality discrepancy.
+- Inspect the local range/sqrt(n) width helper; leave exact ggplot2 bin placement/fuzz, native integration/rendering, other methods and diagnostics for their own gates. Preserve qualified installed 0.3.69 and its 1,454 files.
+
+# 0.3.69 — 2026-11-12
+
+- Add two compact optional Welch RMS-SD point/audit tables under the existing independent mean analysis. Keep the standardized switch off by default and retain raw Welch defaults. Preserve Student/paired tables, limits, Hedges points and plots; omit Welch standardized uncertainty, adjusted points and plots.
+- Enable the standardized switch for both independent models and generate model-specific visibility. Extend the bounded generator grammar to allow a negated second declared Bool; reject undeclared names and extra terms. Five focused adapter tests match all 110 independent R configurations and preserve raw outputs.
+- Retain the 627-test frozen-source gate; pass 2,008 actual-archive runtime checks across 102 configurations and 1,738 assertions in both built and GUI-installed native libraries. Verify all 1,454 installed files, two fresh engines, prior-file compatibility, model/off/input recovery, save/reopen/recalculation and HTML/PNG export on macOS arm64. Validate six saved states, preserved data/plot pixels and four rejected corruptions. Archive qualified 0.3.68; broader platforms, clinical review, full parity and submission remain open. Retain initial environment/harness failures separately.
+
+# Unreleased — Welch replication and sensitivity (2026-11-12)
+
+- Freeze a separate independent replication/sensitivity protocol before execution: 84,000 datasets/17 profiles, actual observed moments, 68 selected original datasets and six unchanged source/prior-fixture hashes. Independent R oracle builder and parent Python replay agree on 1,037 comparisons and all 84,000 CDF values; manifest/compressed draws regenerate byte-identically.
+- The previously inconclusive normal profile independently passes (18,949/20,000); the expanded screen has seven passes, seven failures and three inconclusive profiles. Separate interval unavailability from undercoverage; retain all 237 R precision warnings and the failed nonnormal profiles. Generic Welch NCT intervals stay source-only.
+- Pass all 622 frozen-source Python tests, including six new numerical/provenance/corruption tests, plus generator/status freshness and whitespace checks. Update the roadmap toward optional native RMS-SD point-only Welch outputs, with uncertainty and approximate adjusted points omitted; preserve installed 0.3.68 and all statistical defaults.
+
+# Unreleased — unequal-variance source prototype (2026-11-12)
+
+- Add a separate RMS-variance standardized-effect helper with explicit target, distinct Welch/SD degrees of freedom, approximate J(Welch df) point and opt-in approximate population-delta limits. Native Student/paired engines and installed 0.3.68 remain unchanged.
+- Freeze independent R references before Python implementation: 22 datasets/110 configurations and 88 package/base-R cross-checks. Replay 24,000 actual sufficient-statistic draws and 48 full-engine intervals; 11 coverage profiles pass and one remains inconclusive under prespecified simultaneous bounds.
+- Pass all 616 final-source Python regressions, including 11 focused tests and five rejected statistical mutations; independently regenerate three reference fixtures byte-for-byte. Generator/status freshness and whitespace checks pass. Check the new inversion against the existing independent R/mixture grid; retain the bundled-SciPy NaN reproduction and complementary-tail repair. Native integration and broader coverage/clinical/platform gates remain open.
+
+# 0.3.68 — 2026-11-12
+
+- Add optional standardized results and population-delta plots to the existing independent/paired mean analyses, off by default. Keep Welch as the raw default; require explicit Student for pooled effects. Separate compact model/SD, Cohen/population-delta and Hedges point-only tables, with explicit unavailable and degenerate states.
+- Retain the 605-test source regression gate and six adapters matching all 160 independent R configurations. Build/freshness pass; actual JMO execution passes 1,875 checks over 102 configurations. Built and GUI-installed libraries each pass 531 standardized and 761 raw native assertions without failures/errors/warnings/skips.
+- GUI-Sideload on macOS arm64/jamovi 28.17.0 and verify all 1,453 installed files. Reopen the 0.3.67 example with prior roles/defaults, test Student/Welch, standardized off/on and incomplete/recovery states, then save/reopen/recalculate in a second engine and export HTML/two PNGs.
+- Check all 16 native tables against R fixtures, preserve source data/metadata and equivalent plot pixels, and reject four corrupted artifacts. Preserve the qualified 0.3.67 rollback. Counts remain 32 partial/29 planned/15 utilities; broader platforms, omitted methods, full parity and clinical review remain open. See docs/python-standardized-native.md.
+
 # Unreleased — standardized mean-effect source core (2026-11-12)
 
 - Specify explicit pooled independent and within-difference paired estimands; add Cohen d/d_z and exact Hedges-corrected points with noncentral-t population-delta intervals. Keep g-specific intervals, Welch-compatible unequal-variance effects and native controls outside this source increment.

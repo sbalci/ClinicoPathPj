@@ -47,7 +47,7 @@ def figure(state, width=600, height=400, palette=None, background='white', foreg
     palette = palette or DEFAULT_PALETTE
     columns = state['columns']; kind = state['kind']
     n = len(next(iter(columns.values()), []))
-    if n > {'agreement':5000, 'alluvial':1, 'interval':200, 'line':20000, 'box':20000, 'bar':2000, 'scatter':5000, 'points':5000, 'histogram':2000, 'pyramid':200, 'qualitymap':4000, 'ihcheatmap':4000, 'dendrogram':199, 'setmatrix':16, 'screeningquantiles':2020}.get(kind, 0):
+    if n > {'stackedbar':400, 'agreement':5000, 'alluvial':1, 'interval':200, 'line':20000, 'box':20000, 'bar':2000, 'scatter':5000, 'points':5000, 'histogram':2000, 'pyramid':200, 'qualitymap':4000, 'ihcheatmap':4000, 'dendrogram':199, 'setmatrix':16, 'screeningquantiles':2020}.get(kind, 0):
         raise ValueError('Unsupported plot kind or excessive plot rows')
     if any(len(c) != n for c in columns.values()): raise ValueError('Plot columns have unequal lengths')
     if kind == 'alluvial':
@@ -317,6 +317,51 @@ def figure(state, width=600, height=400, palette=None, background='white', foreg
         ax.xaxis.set_major_formatter(FuncFormatter(lambda x,pos:format(abs(x),'.4g')))
         ax.axvline(0,color=foreground,linewidth=.8)
         ax.set_title(columns['title'][0],color=foreground)
+        ax.legend()
+    elif kind == 'stackedbar':
+        groups = list(dict.fromkeys(columns['group']))
+        outcomes = list(dict.fromkeys(columns['outcome']))
+        scales = set(columns['scale'])
+        if (not 2<=len(groups)<=20 or not 2<=len(outcomes)<=20 or len(scales)!=1
+                or next(iter(scales)) not in ('percentage','count') or n!=len(groups)*len(outcomes)):
+            raise ValueError('Stacked bars require a complete bounded factor grid and one explicit scale')
+        percentage = next(iter(scales))=='percentage'
+        pairs=set()
+        for i,outcome in enumerate(outcomes):
+            indices=[j for j in range(n) if columns['outcome'][j]==outcome]
+            for j in indices:
+                g=columns['group'][j]; x=columns['x'][j]
+                lo,hi=columns['lower'][j],columns['upper'][j]
+                if ((g,outcome) in pairs or x!=groups.index(g)+1 or
+                        any(v is None or not np.isfinite(v) for v in (x,lo,hi))
+                        or lo<0 or hi<lo or (percentage and hi>1+1e-12)):
+                    raise ValueError('Invalid stacked-bar positions or bounds')
+                pairs.add((g,outcome))
+                ax.bar(x,hi-lo,bottom=lo,width=.9,color=palette[i%len(palette)],
+                    edgecolor=background,label=outcome if j==indices[0] else None,
+                    hatch='//' if i>=len(palette) else None)
+                annotation=columns.get('annotation',[None]*n)[j]
+                if annotation and hi>lo:
+                    ax.text(x,(hi+lo)/2,annotation,ha='center',va='center',color=foreground,
+                        fontsize=8,bbox=dict(facecolor=background,edgecolor='none',alpha=.8,pad=1))
+        for group in groups:
+            expected=0.
+            for outcome in reversed(outcomes):
+                j=next(j for j in range(n) if columns['group'][j]==group and columns['outcome'][j]==outcome)
+                lo,hi=columns['lower'][j],columns['upper'][j]
+                if abs(lo-expected)>1e-10*max(1,abs(expected)):
+                    raise ValueError('Stacked-bar segments have gaps or overlaps')
+                expected=hi
+            if expected<=0 or (percentage and abs(expected-1)>1e-12):
+                raise ValueError('Stacked-bar totals do not match the declared scale')
+        ax.set_xticks(range(1,len(groups)+1),groups,rotation=30 if len(groups)>6 else 0)
+        if percentage:
+            from matplotlib.ticker import PercentFormatter
+            ax.yaxis.set_major_formatter(PercentFormatter(xmax=1))
+            ax.set_ylim(0,1.04)
+        else:
+            from matplotlib.ticker import MaxNLocator
+            ax.yaxis.set_major_locator(MaxNLocator(integer=True))
         ax.legend()
     elif kind == 'bar':
         labels = list(dict.fromkeys(columns['label'])); groups = list(dict.fromkeys(columns['group']))

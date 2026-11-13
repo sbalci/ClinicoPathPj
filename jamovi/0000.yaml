@@ -1,11 +1,11 @@
 ---
 title: ClinicoPathPj - Python-Backed Analyses
 name: ClinicoPathPj
-version: 0.3.67
+version: 0.3.70
 jms: '1.0'
 authors: Serdar Balci
 maintainer: Serdar Balci <serdarbalci@serdarbalci.com>
-date: '2026-11-12'
+date: '2026-11-13'
 type: R
 description: >-
   Experimental analyses generated from Python specifications and computed in the
@@ -388,6 +388,22 @@ analyses:
     menuSubgroup: Group comparisons
     menuTitle: Paired Mean Comparison
     hidden: false
+  - title: Histogram (Core, Python)
+    name: pyjjhistostats
+    ns: ClinicoPathPj
+    category: analyses
+    menuGroup: Stats Plots Py
+    menuSubgroup: Distribution
+    menuTitle: Histogram (core)
+    hidden: false
+  - title: Categorical Bars (Core, Python)
+    name: pyjjbarstats
+    ns: ClinicoPathPj
+    category: analyses
+    menuGroup: Stats Plots Py
+    menuSubgroup: Categorical comparisons
+    menuTitle: Categorical bars (core)
+    hidden: false
 usesNative: 'yes'
 datasets:
   - name: Python Core Examples
@@ -644,5 +660,26 @@ datasets:
       - Python
       - Mean differences
       - Paired measurements
+  - name: Histogram and One-Sample Mean Examples
+    path: python_histogram_examples.csv
+    description: >-
+      Twenty retained synthetic measurements and two missing rows, with
+      skewness, ties and unequal bin counts. A manual width of two gives counts
+      5, 7, 4, 1, 1, 1, 0, 0, 0, 1; optional Student results are illustrative.
+    tags:
+      - Python
+      - Histogram
+      - One-sample mean
+  - name: Categorical Bar Frequency Examples
+    path: python_barstats_examples.csv
+    description: >-
+      Seven synthetic frequency rows: four positive complete cells represent 50
+      observations in groups of 20 and 30; one complete row has zero frequency
+      and two rows have missing roles. Compare equal-height percentage bars with
+      unequal-height count bars.
+    tags:
+      - Python
+      - Categorical bars
+      - Frequency denominators
 
 ...

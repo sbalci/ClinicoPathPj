@@ -1,11 +1,130 @@
-# ClinicoPathPj implementation plan — revised 2026-11-12
+# ClinicoPathPj implementation plan — revised 2026-11-13
 
 This is the current delivery plan. It supersedes the implementation recommendations in
 `python-roadmap.md` (2026-10-18) and the initial `interactive-analysis-plan.md`.
 The original 61-analysis inventory remains the target; a menu entry does not establish parity.
 Detailed per-analysis evidence remains in the [generated status matrix](python-migration-status.md).
 
-## Current native source increment — standardized mean effects
+## Current source increment — independent categorical bars
+
+The bounded [`pyjjbarstats` core](python-barstats-core.md) now has a partial native
+SPEC/run adapter under Stats Plots Py → Categorical comparisons. Independent R
+fixtures were frozen before implementation: 28 datasets, 47 configurations and
+8,837 count/cohort/inference/geometry comparisons pass, including nine refusals.
+The point-only subset separates primary Fisher/uncorrected Pearson p-values from
+Pearson audit statistics and raw/Bergsma-corrected V points. No intervals or
+clinical magnitude bands are inferred. Six deliberate statistical/geometry
+mutations are rejected, and the reference replays byte-for-byte.
+
+The original 100% stacked default uses complete-data group denominators. An
+explicit count-scale extension shows different group totals. Exact frequency
+accumulation avoids record expansion; optional original-row and subject audits,
+missing/zero-frequency/unused-level tables and organized UI controls are present.
+A synthetic seven-row frequency CSV represents 50 observations in groups of 20
+and 30; the native static images were inspected in both scales. The isolated
+native suite passes 390 assertions, including result clearing/recovery and
+serialized drawing-state export after data removal. Package/GUI/platform gates
+remain separate, alongside paired/Bayesian models, multiple outcomes/splits,
+per-bar proportion tests, full effect uncertainty and clinical presets.
+
+Source inventory is now **34 partial / 27 planned / 15 utilities**, with 49 entries
+and no full-parity releases. All 662 final-source Python tests and generator/status
+freshness pass. Next build the next standard-version JMO and validate its actual runtime before GUI
+Sideload/fresh-engine OMV save/reopen/rerun and HTML/PNG export. Preserve qualified
+0.3.70 and all 1,461 installed files until that next package is qualified.
+
+## Current qualified partial increment — native histogram core (0.3.70)
+
+`pyjjhistostats` now has a partial SPEC/run entry under **Stats Plots Py → Distribution**.
+The [frozen geometry/native contract](python-histogram-geometry.md) preserves automatic
+range/sqrt(n) width, manual width 1.1, right-closed fuzzy counting, origin and empty
+bins. A blinded actual-ggplot2 reference covers 20 datasets/54 configurations:
+42 valid, four automatic-constant cases and eight explicit refusals. Geometry and
+counts agree exactly for supported cases; unsafe ggplot2 count loss at large numeric
+offsets is rejected rather than reproduced. The existing source core retains its
+6,538 independent R comparisons. Exact arithmetic also guards a cancellation-prone
+mean; its small difference from R is documented separately.
+
+Organized generator-owned controls expose one measurement and optional subject ID,
+manual binning, optional Student results, custom null, confidence, bin/case tables
+and histogram/mean line. The supported defaults remain unchanged: statistical
+results and mean line off, custom null off (reference zero), confidence .95,
+Student two-sided. Native tables separate mean and mean-minus-reference intervals.
+No normality pretest selects a method. A synthetic Data Library CSV demonstrates
+unequal bar heights, empty bins and missingness. Full baseline methods, splits,
+standardized effects, clinical heuristics, extra distribution panels and interaction
+remain omitted explicitly.
+
+At the 0.3.70 checkpoint, the source inventory was **33 partial / 28 planned / 15 utilities**, with 48
+implementation entries and no full-parity releases. The retained 651-test source
+gate is supplemented by the actual **0.3.70 JMO**: 6,692 histogram checks/270
+configurations and 2,008 existing mean-route checks/102 configurations. Built and
+GUI-installed libraries each pass 671 histogram assertions. All 1,461 installed
+files match the archive. GUI Sideload/Data Library, two fresh engines, custom-null/
+confidence changes, outputs-off and required-role recovery, OMV save/reopen/rerun
+and native HTML/direct PNG export pass on macOS arm64/jamovi 28.17.0. Six saved
+states preserve dataset bytes; equivalent tables/plot pixels and four rejected
+artifact corruptions pass. Qualified 0.3.69 is archived for rollback.
+
+Next source target: freeze a bounded `pyjjbarstats` baseline contract and independent
+R references for categorical denominators, contingency inference and bar geometry
+before writing its adapter. Keep alternative models, full baseline parity, clinical
+review, wider themes/accessibility and additional platforms as explicit gates.
+
+## Current qualified partial increment — Welch RMS point-only results
+
+The [optional native Welch route](python-welch-native.md) now uses the independently
+verified RMS-SD point engine in `pyjjbetweenstats`. Two compact tables show the
+standardizer/audit df and the explicit first-minus-second point. Standardized
+uncertainty, adjusted points and plots are omitted for Welch; existing Student
+and paired results retain their methods. The switch remains off by default.
+Five focused adapters match all 110 independent R configurations, preserve raw
+outputs and prove that confidence changes do not alter the standardized point.
+Compiler preparation/post-compiler freshness and isolated source installation pass.
+All **627 Python tests** and **1,738 targeted native assertions** pass (446 Welch,
+531 standardized/paired, 761 raw), with no native failures/errors/warnings/skips.
+**0.3.69 is now built and GUI-Sideloaded on macOS arm64/jamovi 28.17.0.**
+The actual archive passes 2,008 runtime checks across 102 configurations. Both built
+and installed libraries separately pass all 1,738 targeted native assertions;
+all 1,454 installed files match the archive. Two fresh engines verify prior-file
+compatibility, confidence recalculation, Student→Welch, off/input recovery,
+save/reopen and HTML/PNG export. Six saved states preserve source data and
+equivalent native tables/plot pixels; four corrupted artifacts are rejected.
+Qualified 0.3.68 is archived for rollback. Other-platform/full-parity/clinical and
+library-submission gates remain open. Generic Welch
+standardized intervals remain deferred after the coverage failures documented below.
+
+## Current source increment — unequal-variance standardized effects
+
+The [frozen Welch-compatible contract](python-welch-standardized-effects.md) now
+has a separate Python prototype. It reports the RMS-variance standardized point,
+distinct Welch/denominator degrees of freedom, and an explicitly approximate
+J(Welch df) adjusted point. Optional noncentral-t plug-in limits remain source-only;
+no native controls, defaults, menus, package version or registry status change.
+
+Independent R references cover 22 datasets/110 configurations and 88 package/base-R
+cross-checks. The fixed-draw coverage screen replays all 24,000 probabilities in
+Python, plus 48 actual full-engine interval audits: 11 profiles pass and one is
+inconclusive under the prespecified simultaneous bounds. Coverage ranges from
+94.15% to 95.75%; this does not establish exact or general coverage. Eleven focused
+tests include the independent inversion/mixture grid and five rejected mutations.
+All **616 final-source Python regressions** and generator/status freshness pass.
+
+The [independent replication and sensitivity study](python-welch-standardized-replication.md)
+now freezes 84,000 fresh datasets/17 profiles and audits 68 original datasets through
+the actual helper. R/SciPy probabilities agree within 7.43e-13; all 1,037 selected
+numeric/metadata comparisons pass. The replicated normal profile passes, but the
+new study totals **7 pass / 7 fail / 3 inconclusive**, including tiny-sample refusal
+and severe lognormal undercoverage. Generic Welch plug-in intervals remain source-only.
+All **622 final-source Python regressions**, byte-identical R replay and
+generator/status freshness pass; the installed archive/files remain unchanged.
+
+The qualified 0.3.69 increment above now implements optional RMS-SD point-only
+results and completes its bounded package/desktop gates. Generic standardized
+uncertainty, g-specific intervals and alternative estimands remain separate;
+0.3.68 rollback is preserved.
+
+## Current qualified partial increment — standardized mean effects
 
 The [standardized-effect contract](python-standardized-effects.md) now has
 [optional native integration](python-standardized-native.md) in both existing
@@ -31,12 +150,21 @@ Student/Welch changes, on/off, valid/degenerate/recovered transitions and
 reuse-versus-fresh results are checked. Earlier all-null plot and changing-schema
 failures are retained separately from final frozen-source checks.
 
-The qualified **0.3.67** archive is now also preserved in `packages/archive/`;
-all 1,452 installed files still match it. These new standardized results are not
-in that installed package. Next build **0.3.68**, check its extracted runtime and
-complete GUI Sideload, new-option/model transitions, fresh-engine `.omv` lifecycle,
-recalculation and native exports. Counts remain 32 partial / 29 planned / 15
-utilities; unequal-variance effects and full baseline/plot-method parity remain open.
+**0.3.68 is now built and GUI-Sideloaded on macOS arm64/jamovi 28.17.0**.
+Its extracted runtime passes 1,875 checks over 102 raw/standardized/Welch-gating
+configurations; both built and installed libraries pass 531 standardized and 761
+raw native assertions each. All 1,453 installed files match the archive. Reopening
+the 0.3.67 example preserves roles/defaults; Student/Welch, off/on, required paired
+input recovery, second-engine save/reopen/recalculation and HTML/two PNG exports
+pass. Sixteen native tables agree with independent references at display precision;
+all seven saved states preserve dataset bytes/metadata and equivalent plot pixels;
+four corrupted artifacts are rejected. Qualified 0.3.67 is archived for rollback.
+
+At the 0.3.68 checkpoint, counts were 32 partial / 29 planned / 15 utilities. The unequal-variance source
+prototype above freezes that estimand and its independent interval oracles;
+approximation review and further coverage evidence remain required before extending
+Welch controls. Broader platforms, clinical review and full baseline/plot-method
+parity remain open; local acceptance does not establish them.
 
 ## Current qualified partial increment — independent and paired estimation
 
@@ -76,7 +204,7 @@ All ten saved tables agree with independent fixtures at display precision; sourc
 bytes/metadata and equivalent plot pixels are preserved; four corruption probes
 are rejected. HTML re-encoding changes PNG file bytes but not rendered pixels.
 Qualified 0.3.66 is archived for rollback; existing `pywelch` remains unchanged.
-Counts remain **32 partial / 29 planned / 15 utilities**, with 47 implementation
+At the 0.3.67 checkpoint, counts were **32 partial / 29 planned / 15 utilities**, with 47 implementation
 entry points and zero full-parity releases. The standardized native source extension above now completes the next bounded
 estimand/oracle/integration step; its new-package/GUI gates remain open alongside
 broader platforms and clinical review.
@@ -401,31 +529,31 @@ Do not add rpy2 or replace the current bridge based on an announced future engin
 
 ## Verified current inventory
 
-Current source inventory: **47 registered implementation entry points**, comprising
-**32 partial baseline ports** and **15 retained utilities/demonstrations**. Of the
-61 baseline targets, **29 remain planned** and **zero have full supported-feature
+Current source inventory: **49 registered implementation entry points**, comprising
+**34 partial baseline ports** and **15 retained utilities/demonstrations**. Of the
+61 baseline targets, **27 remain planned** and **zero have full supported-feature
 parity plus all release gates**. Numerical, packaged and GUI evidence is listed
 per analysis; newly implemented study review does not establish pooled-meta-analysis parity.
 
 | Family | Baseline targets | Partial ports | Planned |
 |---|---:|---:|---:|
 | ClinicoPathDescriptives | 14 | 14 | 0 |
-| jjstatsplot | 19 | 3 | 16 |
+| jjstatsplot | 19 | 5 | 14 |
 | meddecide | 15 | 11 | 4 |
 | jsurvival | 9 | 3 | 6 |
 | OncoPath | 4 | 1 | 3 |
 
 Partial ClinicoPathDescriptives: `pyagepyramid`, `pyalluvial`, `pybenford`, `pycategorize`, `pycheckdata`, `pychisqposttest`, `pycrosstable`, `pydataquality`, `pyoutlierdetection`, `pyreportcat`, `pysummarydata`, `pytableone`, `pyvartree`, `pyvenn`.
 
-Partial jjstatsplot: `pyjjcorrmat`.
+Partial jjstatsplot: `pyjjbarstats`, `pyjjbetweenstats`, `pyjjcorrmat`, `pyjjhistostats`, `pyjjwithinstats`.
 
-Partial meddecide: `pyagreement`, `pycotest`, `pydecision`, `pydecisioncalculator`, `pydecisioncurve`, `pykappaci`, `pykappafixedn`, `pykappapower`, `pysequentialtests`.
+Partial meddecide: `pyagreement`, `pycotest`, `pydecision`, `pydecisioncalculator`, `pydecisioncompare`, `pydecisioncurve`, `pyenhancedroc`, `pykappaci`, `pykappafixedn`, `pykappapower`, `pysequentialtests`.
 
 Partial jsurvival: `pydatetimeconverter`, `pyoutcomeorganizer`, `pytimeinterval`.
 
 Partial OncoPath: `pydiagnosticmeta`.
 
-Utilities/demonstrations: `pydescriptives`, `pydotdecision`, `pyexacttests`, `pyruntime`, `pywelch`, `pyd3cutoff`, `pyobservablecutoff`, `pysvgcutoff`, `pybridgecompare`, `pyihcheatmap`, `pyintervalcensoring`, `pyfirstevent`.
+Utilities/demonstrations: `pydescriptives`, `pydotdecision`, `pyexacttests`, `pyruntime`, `pywelch`, `pyd3cutoff`, `pyobservablecutoff`, `pysvgcutoff`, `pybridgecompare`, `pyihcheatmap`, `pyintervalcensoring`, `pyfirstevent`, `pyservicedirect`, `pyservicepj`, `pyagepyramidpj`.
 
 ## Implemented foundation
 

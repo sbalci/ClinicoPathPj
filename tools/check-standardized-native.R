@@ -8,7 +8,8 @@ env<-new.env(parent=globalenv())
 for(prefix in c('pyjjbetweenstats','pyjjwithinstats'))for(suffix in c('','Options','Class')) {
  name<-paste0(prefix,suffix);assign(name,get(name,asNamespace('ClinicoPathPj')),env)
 }
-result<-testthat::test_file('tests/testthat/test-standardized-python.R',env=env)
+file<-if(length(args)>1)args[[2]] else 'tests/testthat/test-standardized-python.R'
+result<-testthat::test_file(file,env=env)
 d<-as.data.frame(result)
 summary<-list(passed=sum(d$passed),failed=sum(d$failed),errors=sum(d$error),
  warnings=sum(d$warning),skipped=sum(d$skipped))

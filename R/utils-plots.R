@@ -11,6 +11,8 @@
     line = c(x = "number", y = "number", group = "text"),
     box = c(group = "text", value = "number"),
     bar = c(label = "text", value = "number", group = "text"),
+    stackedbar = c(group = "text", outcome = "text", x = "number", lower = "number",
+                   upper = "number", scale = "text", annotation = "text"),
     points = c(x = "number", y = "number", group = "text"),
     scatter = c(x = "number", y = "number", group = "text"),
     ihcheatmap = c(variable = "text", row = "text", label = "text", value = "number"),

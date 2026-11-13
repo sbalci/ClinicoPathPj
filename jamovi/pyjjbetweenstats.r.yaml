@@ -291,6 +291,64 @@
       ]
     },
     {
+      "name": "welchStandardizer",
+      "title": "Welch RMS Standardizer",
+      "type": "Table",
+      "visible": "(showStandardized && !varequal)",
+      "rows": 0,
+      "columns": [
+        {
+          "name": "denominator",
+          "title": "Standardizer",
+          "type": "text"
+        },
+        {
+          "name": "sd",
+          "title": "RMS SD",
+          "type": "number"
+        },
+        {
+          "name": "welch_df",
+          "title": "Welch SE df",
+          "type": "number"
+        },
+        {
+          "name": "sd_moment_df",
+          "title": "SD Moment df",
+          "type": "number"
+        }
+      ]
+    },
+    {
+      "name": "welchEffect",
+      "title": "RMS Standardized Difference (Point Only)",
+      "type": "Table",
+      "visible": "(showStandardized && !varequal)",
+      "rows": 0,
+      "columns": [
+        {
+          "name": "first",
+          "title": "First",
+          "type": "text"
+        },
+        {
+          "name": "second",
+          "title": "Second",
+          "type": "text"
+        },
+        {
+          "name": "estimate",
+          "title": "RMS Effect",
+          "type": "number"
+        },
+        {
+          "name": "status",
+          "title": "Status",
+          "type": "text"
+        }
+      ]
+    },
+    {
       "name": "standardizedPlot",
       "title": "Population Standardized Difference and Confidence Interval",
       "type": "Image",

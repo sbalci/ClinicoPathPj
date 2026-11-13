@@ -1,9 +1,8 @@
 # Standardized raw-mean effects — source contract (2026-11-12)
 
 The core source/reference gate is complete and the existing analyses now have
-[optional native source integration](python-standardized-native.md). The installed
-and qualified 0.3.67 module is unchanged; packaging and desktop qualification of
-these added results remain separate gates.
+[optional native source integration](python-standardized-native.md). These added results are now packaged and locally GUI-qualified in 0.3.68;
+the separate native record identifies the precise macOS acceptance boundary.
 
 ## Estimands and supported models
 
@@ -126,9 +125,8 @@ Reproduce with R `tests/reference/standardized-effects.R` and bundled Python
 The bundled interpreter omits unittest's `__main__`; run the test file directly or
 use an imported unittest runner. Logs and generated validation JSON remain ignored.
 
-Native controls/tables/plots are now implemented in working source; packaged
-execution, saved-file and desktop qualification for these effects remain open. The installed 0.3.67
-raw-mean analyses are preserved; this source milestone does not increase the
+Native controls/tables/plots and 0.3.68 package/save/reopen/export qualification
+are recorded separately in the native record. The 0.3.67 rollback is archived; this source milestone does not increase the
 32 partial / 29 planned / 15 utility inventory counts or establish full parity.
 
 
@@ -153,6 +151,7 @@ checks pass. The initial 599-test run also passed before guard hardening. An
 in-memory red/green replay verifies that the initial solver raised RuntimeError
 on zero allowed iterations, while the hardened solver retains finite points and
 returns explicit unavailable limits. Unexpected programming errors still
-propagate. The installed 0.3.67 archive hash and all 1,452 installed files are
-unchanged. This records the source/reference gate; native integration evidence is tracked
+propagate. At that source gate, the installed 0.3.67 archive and all 1,452 files were unchanged;
+0.3.68 subsequently completed the separate package/native GUI qualification.
+This records the source/reference gate; native integration evidence is tracked
 separately in the native record.

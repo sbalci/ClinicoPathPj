@@ -57,7 +57,7 @@ SUGGESTED = {"continuous", "nominal", "ordinal", "id"}
 COLUMN_KEYS = {"name", "title", "type", "format", "superTitle", "visible"}
 COLUMN_TYPES = {"text", "integer", "number"}
 FORMAT_TOKENS = {"zto", "pvalue", "pc", "log10"}
-PLOT_KINDS = {"agreement", "alluvial", "screeningquantiles", "setmatrix", "interval", "line", "box", "bar", "scatter", "points", "histogram", "pyramid", "qualitymap", "ihcheatmap", "dendrogram"}
+PLOT_KINDS = {"stackedbar", "agreement", "alluvial", "screeningquantiles", "setmatrix", "interval", "line", "box", "bar", "scatter", "points", "histogram", "pyramid", "qualitymap", "ihcheatmap", "dendrogram"}
 IMAGE_KEYS = {"name", "type", "title", "plot", "width", "height", "xlab", "ylab", "visible"}
 
 
@@ -249,10 +249,10 @@ def validate(spec, stem):
             for key in ("varTitle", "varDescription"):
                 if key in result: check_text(result[key], key)
             continue
-        if "visible" in result:  # one Bool, or a bounded AND/OR of two declared Bools
-            match = re.fullmatch(r"\(([a-z][A-Za-z0-9_]*)(?:(?: && | \|\| )([a-z][A-Za-z0-9_]*))?\)", str(result["visible"]))
-            if not list_visibility(result['visible'],list_choices) and not list_bool_visibility(result['visible'],list_choices,bools) and (not match or any(name not in bools for name in match.groups() if name is not None)):
-                fail(f"result {rname!r}: visible must be '(x)' naming a Bool option or '(x && y)'/'(x || y)' naming Bool options, or a bounded OR of declared List choices")
+        if "visible" in result:  # one Bool, or two Bools with optional negation on the second
+            match = re.fullmatch(r"\(([a-z][A-Za-z0-9_]*)(?:(?: && | \|\| )(!?[a-z][A-Za-z0-9_]*))?\)", str(result["visible"]))
+            if not list_visibility(result['visible'],list_choices) and not list_bool_visibility(result['visible'],list_choices,bools) and (not match or any(name.lstrip('!') not in bools for name in match.groups() if name is not None)):
+                fail(f"result {rname!r}: visible must be '(x)' naming a Bool option or '(x && y)'/'(x || y)' naming Bool options (second Bool may be negated), or a bounded OR of declared List choices")
         if result.get("type") in ("Preformatted", "Text", "Html", "Svg"):
             allowed = {"name", "type", "title", "visible"}
             if result["type"] == "Svg":

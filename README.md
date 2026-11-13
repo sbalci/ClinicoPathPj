@@ -5,22 +5,46 @@ analysis: a literal `SPEC` (options, results and organized UI) plus a `run()` fu
 into the jamovi files, and the statistics run in **the Python bundled with jamovi** (numpy, scipy),
 so users install nothing.
 
+In development: [`pyjjbarstats` categorical bars](docs/python-barstats-core.md) now
+provides native counts/denominators, optional Pearson/Fisher association tables and
+raw/bias-corrected Cramér V points. Keep the default 100% stacked view, or select
+counts to show unequal group sizes. The [count-scale preview](docs/validation-exports/python-barstats-source-count.png)
+shows groups of 20 and 30. This source increment is not yet in the qualified 0.3.70
+JMO; packaging and desktop acceptance remain the next gate.
+
 Current direction and implemented/pending work: [revised migration plan](docs/python-migration-plan.md).
-The new [independent/paired estimation partial adapters](docs/python-estimation-native.md)
-implement two-group Welch/Student and two-column paired raw-mean inference,
-with explicit contrasts, missing-row alignment and optional subject-ID checks.
-The shared engine passes 20,380 independent R comparisons and 17 focused tests.
-Both adapters have organized native controls, tables and static raw-difference plots in
-**ClinicoPathPj 0.3.67** under Stats Plots Py → Group comparisons. All 588 Python
-regressions pass; source, built and installed native runs each pass 761 assertions.
-The actual archive passes 1,071 checks. GUI Sideload, fresh-engine save/reopen/
-recalculation, both required-input recovery states and HTML/PNG exports pass on
-macOS arm64. Saved tables and plot pixels are independently checked; the 0.3.66
-rollback is archived. [Standardized effects](docs/python-standardized-effects.md)
-now have a checked core and [optional native source integration](docs/python-standardized-native.md)
-for pooled and paired-difference SDs, with separate Cohen/population-delta and
-Hedges point-only tables plus a static plot. Packaging/desktop qualification of
-these new results remains pending; installed 0.3.67 is unchanged. Rank/robust/Bayesian branches remain omitted.
+The earlier [ClinicoPathPj 0.3.69](docs/python-welch-native.md) adds optional Welch RMS-SD
+**point-only** results. The package is GUI-Sideloaded and locally qualified on
+macOS arm64: 2,008 actual-runtime checks and 1,738 assertions in both built and
+installed native libraries pass, alongside the 627-test frozen-source gate.
+Two fresh engines verify prior-file compatibility, clearing/recovery and save/reopen/
+recalculation/export. Welch standardized intervals remain omitted after coverage
+checks; qualified 0.3.68 is archived for rollback.
+
+[ClinicoPathPj 0.3.70 — Histogram (Core, Python)](docs/python-histogram-geometry.md)
+is now built and GUI-Sideloaded on macOS arm64/jamovi 28.17.0. Under **Stats Plots Py
+→ Distribution**, it supplies native summaries/bin frequencies, optional two-sided
+Student results and a static histogram/mean line. The actual JMO passes 6,692
+histogram checks; built and installed libraries each pass 671 native assertions.
+Two fresh engines verify missing-input/output recovery, custom null/confidence,
+OMV save/reopen/rerun and HTML/PNG export. All 1,461 installed files match; qualified
+0.3.69 is archived. [Open the saved example](docs/validation-exports/python-histogram-0.3.70-reopened.omv)
+or [view its exported plot](docs/validation-exports/python-histogram-0.3.70-plot.png).
+Full baseline methods and other platforms remain pending.
+
+The [independent/paired estimation analyses](docs/python-standardized-native.md)
+now include optional standardized results in **ClinicoPathPj 0.3.68** under
+Stats Plots Py → Group comparisons. Welch remains the raw default; standardized
+results default off and use explicit Student pooled SD or paired-difference SD.
+Compact tables separate Cohen/population-delta intervals from Hedges point-only
+estimates, with a static standardized plot.
+
+The 605-test source regression gate, 1,875 actual-archive checks, and 531
+standardized/761 raw assertions in both built and installed libraries pass.
+**0.3.68 is GUI-Sideloaded and locally verified on macOS arm64**: compatibility
+reopening, model/off/input transitions, second-engine recalculation and HTML/PNG
+exports pass. Sixteen native tables, source identity and plot pixels are checked;
+qualified 0.3.67 is archived. Rank/robust/Bayesian and full baseline parity remain open.
 The experimental [Clinical ROC native partial core](docs/python-roc-native.md) now adds organized
 controls, native tables and a static plot through the existing `pyenhancedroc` identifier.
 The **0.3.65 package is GUI-sideloaded and verified on macOS arm64**: all three ROC
@@ -51,7 +75,7 @@ with independent numerical checks. A separate [paired-percentile bootstrap](docs
 also passes numerical checks but fails its frozen coverage screen. All CCC interval controls remain deferred.
 The [2026-11-07 ecosystem review](docs/python-ecosystem-review-2026-11-07.md) compares JASP, jamovi, Orange, MedCalc, GitHub and Hugging Face and prioritizes 20 candidates without expanding the frozen migration inventory.
 
-Status: experimental 0.3.67, with bounded local desktop acceptance (descriptives and data preparation; full migration remains incomplete). Local validation uses jamovi 28.13 and 28.17 on macOS (Apple Silicon), with
+Status: experimental 0.3.68, with bounded local desktop acceptance (descriptives and data preparation; full migration remains incomplete). Local validation uses jamovi 28.13 and 28.17 on macOS (Apple Silicon), with
 jmvtools 28.4.
 
 Analyses now use compact family menus: **Descriptives Py**, **Stats Plots Py**,
@@ -91,7 +115,7 @@ Open **Data Library > ClinicoPathPj > Python Core Examples**, or import
 `data/python_core_examples.csv`, for the synthetic examples.
 
 Build the single standard module without installing it:
-`Rscript --vanilla tools/build.R --build-only` → `ClinicoPathPj_0.3.67.jmo`.
+`Rscript --vanilla tools/build.R --build-only` → `ClinicoPathPj_0.3.68.jmo`.
 Install through jamovi’s Modules → Sideload menu; opening the JMO in Finder does not install it.
 After replacing a loaded development build, use a fresh jamovi engine to avoid stale namespaces.
 
@@ -661,7 +685,7 @@ Sideload, Data Library loading, five saved states, fresh-engine reopen/rerun and
 native HTML/embedded forest export pass on macOS arm64 jamovi 28.13. See
 [scope, omissions and evidence](docs/python-diagnostic-study-review.md).
 
-The current inventory is 27 partial baseline ports, 34 planned targets and twelve
+At the 0.3.55 checkpoint, the inventory was 27 partial baseline ports, 34 planned targets and twelve
 retained utilities: 39 executable entries, with zero full-parity releases.
 
 ## Linked study inspection — 0.3.56
