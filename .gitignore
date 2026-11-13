@@ -16,3 +16,6 @@ docs/python-ecosystem-review-2026-11-07.md
 # Generated local validation evidence (keep runtime/fixture JSON tracked).
 *.log
 /docs/validation-exports/**/*.json
+
+# Generated validation figures remain local.
+/docs/validation-exports/**/*.png
