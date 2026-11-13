@@ -5,7 +5,7 @@
   "menuGroup": "Stats Plots Py",
   "menuSubgroup": "Group comparisons",
   "menuTitle": "Independent Mean Comparison",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "jas": "1.2",
   "options": [
     {
@@ -89,7 +89,7 @@
     },
     {
       "name": "showStandardized",
-      "title": "Standardized results and plot",
+      "title": "Standardized results (Welch: point only)",
       "type": "Bool",
       "default": false
     },

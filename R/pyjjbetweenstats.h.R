@@ -137,6 +137,8 @@ pyjjbetweenstatsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6
         standardizer = function() private$.items[["standardizer"]],
         standardized = function() private$.items[["standardized"]],
         hedges = function() private$.items[["hedges"]],
+        welchStandardizer = function() private$.items[["welchStandardizer"]],
+        welchEffect = function() private$.items[["welchEffect"]],
         standardizedPlot = function() private$.items[["standardizedPlot"]],
         console = function() private$.items[["console"]]),
     private = list(),
@@ -374,6 +376,52 @@ pyjjbetweenstatsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6
                         `name`="status", 
                         `title`="Point Status", 
                         `type`="text"))))
+            self$add(jmvcore::Table$new(
+                options=options,
+                name="welchStandardizer",
+                title="Welch RMS Standardizer",
+                visible="(showStandardized && !varequal)",
+                rows=0,
+                columns=list(
+                    list(
+                        `name`="denominator", 
+                        `title`="Standardizer", 
+                        `type`="text"),
+                    list(
+                        `name`="sd", 
+                        `title`="RMS SD", 
+                        `type`="number"),
+                    list(
+                        `name`="welch_df", 
+                        `title`="Welch SE df", 
+                        `type`="number"),
+                    list(
+                        `name`="sd_moment_df", 
+                        `title`="SD Moment df", 
+                        `type`="number"))))
+            self$add(jmvcore::Table$new(
+                options=options,
+                name="welchEffect",
+                title="RMS Standardized Difference (Point Only)",
+                visible="(showStandardized && !varequal)",
+                rows=0,
+                columns=list(
+                    list(
+                        `name`="first", 
+                        `title`="First", 
+                        `type`="text"),
+                    list(
+                        `name`="second", 
+                        `title`="Second", 
+                        `type`="text"),
+                    list(
+                        `name`="estimate", 
+                        `title`="RMS Effect", 
+                        `type`="number"),
+                    list(
+                        `name`="status", 
+                        `title`="Status", 
+                        `type`="text"))))
             self$add(jmvcore::Image$new(
                 options=options,
                 name="standardizedPlot",
@@ -397,7 +445,7 @@ pyjjbetweenstatsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
             super$initialize(
                 package = "ClinicoPathPj",
                 name = "pyjjbetweenstats",
-                version = c(0,2,0),
+                version = c(0,3,0),
                 options = options,
                 results = pyjjbetweenstatsResults$new(options=options),
                 data = data,
@@ -437,6 +485,8 @@ pyjjbetweenstatsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
 #'   \code{results$standardizer} \tab \tab \tab \tab \tab a table \cr
 #'   \code{results$standardized} \tab \tab \tab \tab \tab a table \cr
 #'   \code{results$hedges} \tab \tab \tab \tab \tab a table \cr
+#'   \code{results$welchStandardizer} \tab \tab \tab \tab \tab a table \cr
+#'   \code{results$welchEffect} \tab \tab \tab \tab \tab a table \cr
 #'   \code{results$standardizedPlot} \tab \tab \tab \tab \tab an image \cr
 #'   \code{results$console} \tab \tab \tab \tab \tab a preformatted \cr
 #' }

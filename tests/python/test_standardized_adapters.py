@@ -76,9 +76,10 @@ class StandardizedAdapters(unittest.TestCase):
                 unsupported=execute(request(case,varequal=False))
                 raw=execute(request(case,varequal=False,showStandardized=False))
                 self.assertEqual(unsupported['status'],'ok')
-                self.assertEqual(unsupported['tables'],raw['tables'])
+                self.assertEqual({k:v for k,v in unsupported['tables'].items() if k not in ('welchStandardizer','welchEffect')},raw['tables'])
+                self.assertIn('welchEffect',unsupported['tables'])
                 self.assertEqual(unsupported['plots'],raw['plots'])
-                self.assertTrue(any('Raw Welch results are retained' in n['text'] for n in unsupported['notices']))
+                self.assertFalse(any('Raw Welch results are retained' in n['text'] for n in unsupported['notices']))
 
     def test_subprocess_bridge_both_designs(self):
         for paired in (False,True):
@@ -132,7 +133,7 @@ class StandardizedAdapters(unittest.TestCase):
             self.assertFalse(any(c['name'] in ('lower','upper') for c in results['hedges']['columns']))
             controls=[c for b in spec['ui']['children'] for c in b.get('children',[]) if c.get('name')=='showStandardized']
             self.assertEqual(len(controls),1)
-            if not paired:self.assertEqual(controls[0]['enable'],'(varequal)')
+            if not paired:self.assertNotIn('enable',controls[0])
 
 
 if __name__=='__main__':unittest.main()

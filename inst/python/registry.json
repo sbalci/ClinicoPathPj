@@ -84,7 +84,7 @@
       "source_name": "alluvial",
       "menu_group": "Descriptives Py",
       "menu_title": "Categorical alluvial flows (core)",
-      "supported_core": "Counts for 2–4 categorical axes, retain missing categories by default or complete-case exclusion, collision-free missing labels, native flow/marginal tables, shared count-scaled static/local geometry and local highlighting; 10,000 rows/60 paths/20 categories per axis without sampling",
+      "supported_core": "Counts for 2\u20134 categorical axes, retain missing categories by default or complete-case exclusion, collision-free missing labels, native flow/marginal tables, shared count-scaled static/local geometry and local highlighting; 10,000 rows/60 paths/20 categories per axis without sampling",
       "omissions": "Weights, condensation, numeric binning, marginal plot panels, alternative fill rules/orientations and baseline styling; no full parity"
     },
     {
@@ -301,7 +301,7 @@
       "source_name": "crosstable",
       "menu_group": "Descriptives Py",
       "menu_title": "Cross tables (core)",
-      "supported_core": "Grouped/overall native summaries; baseline numeric ≤6-level typing or explicit numeric override; per-variable or complete-case missingness; type-7 quartiles/sample SD; exact/normal Wilcoxon, Kruskal–Wallis, uncorrected Pearson with sparse 2×2 Fisher switch; five p-adjust methods",
+      "supported_core": "Grouped/overall native summaries; baseline numeric \u22646-level typing or explicit numeric override; per-variable or complete-case missingness; type-7 quartiles/sample SD; exact/normal Wilcoxon, Kruskal\u2013Wallis, uncorrected Pearson with sparse 2\u00d72 Fisher switch; five p-adjust methods",
       "omissions": "Larger exact RxC tests, alternate R table engines/styles, SMDs, copy-ready summaries and full baseline parity; unused group columns omitted"
     },
     {
@@ -556,7 +556,7 @@
       "source_name": "vartree",
       "menu_group": "Descriptives Py",
       "menu_title": "Categorical variable tree (core)",
-      "supported_core": "Observed prefix counts for 1–4 factors; common complete cohort; parent/cohort percentages; native node table; local expandable tree; optional top-30 leaf bar plot; maximum 200 non-root nodes and 10,000 input rows; optional continuous node mean/sample SD with valid/missing counts, leaf-only or all-node locations (0.3.39); explicit reference-level matches/valid-reference percentages, missing counts and combined numeric annotations (0.3.40)",
+      "supported_core": "Observed prefix counts for 1\u20134 factors; common complete cohort; parent/cohort percentages; native node table; local expandable tree; optional top-30 leaf bar plot; maximum 200 non-root nodes and 10,000 input rows; optional continuous node mean/sample SD with valid/missing counts, leaf-only or all-node locations (0.3.39); explicit reference-level matches/valid-reference percentages, missing counts and combined numeric annotations (0.3.40)",
       "omissions": "Pruning/follow rules, missing-category branches, baseline styling and full vtree parity; numeric and reference summaries supported in retained complete-cohort core"
     },
     {
@@ -724,10 +724,10 @@
     {
       "id": "pyjjbarstats",
       "family": "jjstatsplot",
-      "menu": "Statistical Plots",
+      "menu": "Categorical comparisons",
       "title": "Bar Charts",
       "aliases": [],
-      "source": null,
+      "source": "analyses/jjstatsplot/pyjjbarstats.py",
       "baseline": {
         "module": "jjstatsplot",
         "version": "1.0.82.03",
@@ -741,10 +741,10 @@
         }
       },
       "wave": 3,
-      "status": "planned",
+      "status": "partial",
       "coverage": {
         "full_parity": false,
-        "numerical": "pending",
+        "numerical": "Independent categorical bar partial: 8,837 frozen R/table/ggplot2 checks/28 datasets/47 configurations (9 refusals), 11 focused tests and six rejected mutations; byte-identical oracle replay. All 662 Python tests and 390 isolated native assertions pass, with counts/percentage geometry, clearing/recovery and drawing-state/native PNG restoration. New JMO/GUI/full baseline methods/platform gates pending (2026-11-13).",
         "gui": "pending",
         "compatibility": "existing Python identifier preserved",
         "platforms": []
@@ -759,7 +759,7 @@
       },
       "source_name": "jjbarstats",
       "menu_group": "Stats Plots Py",
-      "menu_title": "Bar Charts"
+      "menu_title": "Categorical bars (core)"
     },
     {
       "id": "pyjjbetweenstats",
@@ -784,11 +784,12 @@
       "status": "partial",
       "coverage": {
         "full_parity": false,
-        "numerical": "Raw-mean core: 20,380 independent R checks/255 configurations; qualified raw 0.3.67 archive has 1,071 runtime checks and 761 built/installed native assertions. New working-source standardized core: 2,060 independent checks, six adapters matching all 160 R configurations, 605 Python tests, 531 standardized and 761 raw isolated-native assertions. Compiler preparation/install/freshness, recovery and serialized rendering pass. New package/GUI and full baseline parity remain pending; see docs/python-standardized-native.md.",
-        "gui": "Raw results only: 0.3.67 GUI-Sideload on jamovi 28.17.0/macOS arm64; 1,452 installed files match archive, second-engine save/reopen/recalculation and both required-input recoveries, HTML/PNG artifacts and four corruption probes pass. New optional standardized tables/control/plot are isolated-source verified but not packaged or GUI-qualified (2026-11-12).",
+        "numerical": "Raw core: 20,380 R checks/255 configurations; standardized core: 2,060 independent checks and six adapters matching 160 R configurations. Source regressions: 605 Python tests. Actual 0.3.68 archive: 1,875 checks/102 configurations. Built and GUI-installed libraries each pass 531 standardized and 761 raw native assertions; compiler/install/freshness and serialized rendering pass. Saved native tables agree with R fixtures at display precision. Full baseline parity remains open; see docs/python-standardized-native.md. Welch RMS point-only source gate: five adapters match 110 independent R configurations; 627 Python tests and 446 Welch/531 standardized/761 raw native assertions pass. Welch standardized inference remains omitted after the frozen coverage study (2026-11-12). 0.3.69 actual archive: 2,008 checks/102 configurations; built and GUI-installed libraries each pass 446 Welch/531 standardized/761 raw assertions; 1,454 installed files match (2026-11-12).",
+        "gui": "0.3.68 GUI-Sideload on macOS arm64/jamovi 28.17.0: 1,453 installed files match archive. Prior 0.3.67 saved roles/defaults reopen correctly. Student/Welch, standardized off/on and paired input recovery, second-engine save/reopen/recalculation, HTML and two PNG exports pass. Sixteen tables/seven saved states retain source data/metadata and equivalent plot pixels; four corruption probes rejected (2026-11-12). The prior Welch source increment is now qualified within the 0.3.69 scope below. 0.3.69 GUI Sideload/macOS arm64: two fresh engines, prior-file compatibility, Student\u2192Welch/off/input recovery, save/reopen/recalculation and HTML/PNG export pass. Six saved states/data/pixel checks and four corruption probes pass (2026-11-12).",
         "compatibility": "existing Python identifier preserved",
         "platforms": [
-          "macOS arm64 / jamovi 28.17.0: raw 0.3.67 GUI; standardized source-native only, GUI pending"
+          "macOS arm64 / jamovi 28.17.0: bounded local 0.3.68 package/native GUI qualification",
+          "macOS arm64 / jamovi 28.17.0: bounded local 0.3.69 Welch point-only package/native GUI qualification"
         ]
       },
       "methods": "plot first: ggstatsplot::ggbetweenstats box-violin plot. Subtitle: Welch or Fisher one-way ANOVA (omega^2/eta^2 CI), Kruskal-Wallis (epsilon^2), trimmed-means ANOVA (WRS2::t1way) or anovaBF; with 2 groups: Welch t, Mann-Whitney, Yuen or ttestBF. Pairwise Games-Howell, Student, Dunn or Yuen with p-adjustment; Levene check; ggpubr variants.",
@@ -930,10 +931,10 @@
     {
       "id": "pyjjhistostats",
       "family": "jjstatsplot",
-      "menu": "Statistical Plots",
+      "menu": "Distribution",
       "title": "Histogram",
       "aliases": [],
-      "source": null,
+      "source": "analyses/jjstatsplot/pyjjhistostats.py",
       "baseline": {
         "module": "jjstatsplot",
         "version": "1.0.82.03",
@@ -947,13 +948,15 @@
         }
       },
       "wave": 3,
-      "status": "planned",
+      "status": "partial",
       "coverage": {
         "full_parity": false,
-        "numerical": "pending",
-        "gui": "pending",
+        "numerical": "Partial native histogram: 6,538 original R core comparisons and 3,502 ggplot2 geometry/cohort checks; exact-rational mean guard; retained 651-test source regression gate. Qualified 0.3.70 actual JMO: 6,692 checks/270 histogram configurations; built and GUI-installed libraries each pass 671 assertions. Six native saved states plus HTML/PNG artifacts and four corruption rejections pass (2026-11-13). Full baseline methods remain omitted.",
+        "gui": "0.3.70 macOS arm64/jamovi 28.17.0: GUI Sideload, Data Library/menu, two fresh engines, custom-null/confidence changes, outputs-off, required-role clearing/recovery, OMV save/reopen/rerun and native HTML/direct PNG exports verified; broader themes/accessibility/platforms pending",
         "compatibility": "existing Python identifier preserved",
-        "platforms": []
+        "platforms": [
+          "macOS arm64 / jamovi 28.17.0 (0.3.70 qualified partial core)"
+        ]
       },
       "methods": "plot first: gghistostats histogram with a centrality line. Optional one-sample test against test.value: t (Hedges' g), Wilcoxon signed-rank, trimmed-mean bootstrap-t, or ttestBF with a chosen prior. Shapiro-Wilk and a skewness interpretation; ggpubr histogram, density, QQ and ECDF panels.",
       "oracle": "statsExpressions::one_sample_test, stats::shapiro.test, WRS2::trimcibt, BayesFactor::ttestBF",
@@ -965,7 +968,7 @@
       },
       "source_name": "jjhistostats",
       "menu_group": "Stats Plots Py",
-      "menu_title": "Histogram"
+      "menu_title": "Histogram (core)"
     },
     {
       "id": "pyjjpiestats",
@@ -1190,11 +1193,11 @@
       "status": "partial",
       "coverage": {
         "full_parity": false,
-        "numerical": "Raw-mean core: 20,380 independent R checks/255 configurations; qualified raw 0.3.67 archive has 1,071 runtime checks and 761 built/installed native assertions. New working-source standardized core: 2,060 independent checks, six adapters matching all 160 R configurations, 605 Python tests, 531 standardized and 761 raw isolated-native assertions. Compiler preparation/install/freshness, recovery and serialized rendering pass. New package/GUI and full baseline parity remain pending; see docs/python-standardized-native.md.",
-        "gui": "Raw results only: 0.3.67 GUI-Sideload on jamovi 28.17.0/macOS arm64; 1,452 installed files match archive, second-engine save/reopen/recalculation and both required-input recoveries, HTML/PNG artifacts and four corruption probes pass. New optional standardized tables/control/plot are isolated-source verified but not packaged or GUI-qualified (2026-11-12).",
+        "numerical": "Raw core: 20,380 R checks/255 configurations; standardized core: 2,060 independent checks and six adapters matching 160 R configurations. Source regressions: 605 Python tests. Actual 0.3.68 archive: 1,875 checks/102 configurations. Built and GUI-installed libraries each pass 531 standardized and 761 raw native assertions; compiler/install/freshness and serialized rendering pass. Saved native tables agree with R fixtures at display precision. Full baseline parity remains open; see docs/python-standardized-native.md.",
+        "gui": "0.3.68 GUI-Sideload on macOS arm64/jamovi 28.17.0: 1,453 installed files match archive. Prior 0.3.67 saved roles/defaults reopen correctly. Student/Welch, standardized off/on and paired input recovery, second-engine save/reopen/recalculation, HTML and two PNG exports pass. Sixteen tables/seven saved states retain source data/metadata and equivalent plot pixels; four corruption probes rejected (2026-11-12).",
         "compatibility": "existing Python identifier preserved",
         "platforms": [
-          "macOS arm64 / jamovi 28.17.0: raw 0.3.67 GUI; standardized source-native only, GUI pending"
+          "macOS arm64 / jamovi 28.17.0: bounded local 0.3.68 package/native GUI qualification"
         ]
       },
       "methods": "plot first: ggwithinstats paired box-violin with connecting paths. Subtitle: repeated-measures ANOVA (afex), Friedman, WRS2 rmanova or anovaBF; with 2 levels: paired t, signed-rank, Yuen or BF. Pairwise Student, Durbin-Conover or Yuen with p-adjustment. Its own 'Paired Changes' table gives mean/median/Hodges-Lehmann changes with a t, signed-rank (normal approximation) or seeded whole-case bootstrap CI, plus geometric-mean time ratios.",

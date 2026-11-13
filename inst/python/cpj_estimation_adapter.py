@@ -56,10 +56,14 @@ def run(data, options, out, *, paired):
     if not isinstance(requested, bool):
         raise InputError('Choose explicitly whether to show standardized results.')
     effect = None
+    welch_effect = None
     if requested:
         if not paired and not options.get('varequal', False):
-            out.warn('Standardized results require the Student equal-variance model and have been cleared. '
-                     'Raw Welch results are retained; choose an equal-variance model only when justified by the design.')
+            from cpj_welch_standardized import between_welch_standardized
+            welch_effect = between_welch_standardized(first, data[names[1]],
+                options.get('firstLevel'), options.get('secondLevel'),
+                standardizer='rms_variance', interval='none', confidence=confidence,
+                subject_ids=ids)['standardized']
         else:
             from cpj_standardized import between_standardized, within_standardized
             if paired:
@@ -127,6 +131,21 @@ def run(data, options, out, *, paired):
         if effect['status'] == 'interval_unavailable':
             out.warn('Standardized confidence limits are unavailable: '+effect['reason']+
                      ' Finite standardized point estimates are retained without approximate limits.')
+    if welch_effect is not None:
+        out.row('welchStandardizer', denominator='Root mean of the two sample variances',
+                sd=welch_effect['standardizer_sd'], welch_df=welch_effect['welch_df'],
+                sd_moment_df=welch_effect['sd_moment_df'])
+        out.note('welchStandardizer',
+            'RMS SD = sqrt((s1^2 + s2^2)/2), using sample variances with Bessel correction. '
+            'The two variances have equal weight regardless of group size. '
+            'Welch SE df and SD moment df describe different quantities; neither supplies a standardized interval here.')
+        out.row('welchEffect', first=labels[0], second=labels[1],
+                estimate=welch_effect['d_rms'], status=welch_effect['status'])
+        out.note('welchEffect',
+            'First minus second, divided by RMS SD, on the same retained cohort as the raw Welch results. '
+            'Point only: no standardized confidence interval, adjusted point, effect-size test or standardized plot is supplied. '
+            'Raw mean confidence limits do not apply to this effect. No clinical interpretation bands are provided.'
+            + (' Availability: '+welch_effect['reason'] if welch_effect['reason'] else ''))
     if result['status'] == 'degenerate':
         out.warn('Inference is undefined because the standard error is zero or essentially constant at this numeric scale. '
                  'Only descriptive means and the raw contrast are available; no zero-width interval or infinite significance is reported.')
@@ -141,6 +160,7 @@ def run(data, options, out, *, paired):
         (' Supplied retained subject IDs are known and unique; IDs do not establish independence.' if subject else
          ' No subject IDs were supplied; independence must be established from the study design.')+
         ' Optional standardized results use pooled SD under Student or paired-difference SD; Cohen population-delta limits and Hedges point-only estimates are separate. '
-        'This partial core omits unequal-variance standardized effects, rank/robust/Bayesian tests, more than two groups or measurements, '
+        + ('Under Welch, RMS-SD standardized results are point only, with no standardized interval, adjusted point or standardized plot. ' if not paired else '')
+        + 'This partial core omits unequal-variance standardized inference, rank/robust/Bayesian tests, more than two groups or measurements, '
         'split analyses, multiple endpoints, box/violin plots and interactive inspection. The raw plot shows the raw contrast and its interval; the optional standardized plot shows the Cohen estimate and population-delta interval.')
     out.markdown('summary', md_escape(description))

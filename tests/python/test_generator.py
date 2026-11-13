@@ -63,10 +63,14 @@ class GeneratedFiles(unittest.TestCase):
         generate.validate(spec,'pyihcheatmap')
         tree=next(r for r in spec['results'] if r['name']=='rowDendrogram')
         self.assertEqual(tree['visible'],'(showDendrograms && clusterRows)')
-        tree['visible']='(showDendrograms || clusterRows)'
-        generate.validate(spec,'pyihcheatmap')
-        self.assertEqual(next(r for r in generate.r_yaml(spec)['items'] if r['name']=='rowDendrogram')['visible'],tree['visible'])
-        for invalid in ['(showDendrograms && scaling)','(showDendrograms || scaling)',
+        for expression in ('(showDendrograms || clusterRows)',
+                           '(showDendrograms && !clusterRows)',
+                           '(showDendrograms || !clusterRows)'):
+            tree['visible']=expression
+            generate.validate(spec,'pyihcheatmap')
+            self.assertEqual(next(r for r in generate.r_yaml(spec)['items']
+                                  if r['name']=='rowDendrogram')['visible'],expression)
+        for invalid in ['(showDendrograms && !!clusterRows)', '(showDendrograms && !scaling)', '(showDendrograms && scaling)','(showDendrograms || scaling)',
                         '(showDendrograms || clusterRows || clusterColumns)',
                         '(showDendrograms && clusterRows); print(1)']:
             tree['visible']=invalid
