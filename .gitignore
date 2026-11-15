@@ -19,3 +19,6 @@ docs/python-ecosystem-review-2026-11-07.md
 
 # Generated validation figures remain local.
 /docs/validation-exports/**/*.png
+
+# Saved validation runs stay local; curated analysis examples live in data/.
+/docs/validation-exports/**/*.omv
