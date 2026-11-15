@@ -156,11 +156,11 @@ Reproducible checks:
 - `tools/check-estimation-artifacts.py`: five saved states, ten tables, HTML/two PNGs,
   independent numerical targets, image pixels, source identity and corruption probes.
 
-Saved artifacts: [valid](validation-exports/python-estimation-0.3.67-valid.omv),
-[paired incomplete](validation-exports/python-estimation-0.3.67-incomplete.omv),
-[independent incomplete](validation-exports/python-estimation-0.3.67-independent-incomplete.omv),
-[recovered](validation-exports/python-estimation-0.3.67-recovered.omv),
-[reopened and recalculated](validation-exports/python-estimation-0.3.67-reopened.omv),
+Saved artifacts: valid (local validation snapshot: `validation-exports/python-estimation-0.3.67-valid.omv`),
+paired incomplete (local validation snapshot: `validation-exports/python-estimation-0.3.67-incomplete.omv`),
+independent incomplete (local validation snapshot: `validation-exports/python-estimation-0.3.67-independent-incomplete.omv`),
+recovered (local validation snapshot: `validation-exports/python-estimation-0.3.67-recovered.omv`),
+reopened and recalculated (local validation snapshot: `validation-exports/python-estimation-0.3.67-reopened.omv`),
 [HTML](validation-exports/python-estimation-0.3.67-recovered.html),
 [independent PNG](validation-exports/python-estimation-0.3.67-independent-plot.png),
 [paired PNG](validation-exports/python-estimation-0.3.67-paired-plot.png).

@@ -65,7 +65,7 @@ input columns and all displayed z values against Python `statistics.mean/stdev` 
 complete input rows (tolerance 1e-12). The two-selected/seven-unselected/three-missing nominal
 flag is unchanged. ZIP integrity and the saved native HTML table pass.
 
-- [Reopenable synthetic document](validation-exports/python-ihc-selected-values-0.3.16-validation.omv)
+- Reopenable synthetic document (local validation snapshot: `validation-exports/python-ihc-selected-values-0.3.16-validation.omv`)
 - [Independent saved-file checks](validation-exports/python-ihc-selected-values-0.3.16-saved-file.json)
 - [Package smoke evidence](validation-exports/python-ihc-selected-values-0.3.16-package.json)
 

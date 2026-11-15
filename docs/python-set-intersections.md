@@ -106,7 +106,7 @@ passes in 0.3.28. Seven focused Python tests, 89 native assertions and 18 packag
 pass; the full 265-test suite above belongs to 0.3.27. Broader theme/accessibility/platform
 qualification remains open. See [0.3.28 evidence](validation-exports/python-set-intersections-0.3.28-checks.json).
 See [desktop evidence](validation-exports/python-set-intersections-0.3.27-desktop.json)
-and the [clean saved example](validation-exports/python-set-intersections-0.3.27-desktop.omv).
+and the clean saved example (local validation snapshot: `validation-exports/python-set-intersections-0.3.27-desktop.omv`).
 
 
 ## Optional intersection matrix — 0.3.29
@@ -145,7 +145,7 @@ Desktop matrix qualification (macOS arm64, jamovi 28.13): GUI installation, rend
 off/on control, 1800×1200 native PNG export, second-engine OMV restoration/recalculation
 and missing-positive-level recovery pass. Counts and saved membership codes are unchanged.
 See [desktop record](validation-exports/python-set-matrix-0.3.29-desktop.json),
-[saved matrix example](validation-exports/python-set-matrix-0.3.29-desktop.omv) and
+saved matrix example (local validation snapshot: `validation-exports/python-set-matrix-0.3.29-desktop.omv`) and
 [native export](validation-exports/python-set-matrix-0.3.29-native.png). This is focused
 platform evidence, not full accessibility/platform or clinical qualification.
 
@@ -169,7 +169,7 @@ The synthetic CSV is reproducible with
 independent raw-CSV predicates, the runtime matrix and saved nominal output. The varied
 matrix was rendered/exported through jamovi using the unchanged 0.3.29 runtime; 0.3.30
 packages the new CSV in the Data Library. See the
-[varied-bar saved example](validation-exports/python-set-matrix-unequal-0.3.30-desktop.omv)
+[varied-bar saved example](../data/python_set_intersections_examples.omv)
 and [native PNG](validation-exports/python-set-matrix-unequal-0.3.30-native.png).
 
 Nine focused set tests and all 18 packaged runtime cases pass in 0.3.30, including

@@ -145,7 +145,7 @@ No Pj editor analysis was opened.
 | Packaged runtime | 33 smoke cases passed, including all three new utilities | Separate from full method parity |
 | GUI persistence/export | Passed on this Mac | Sideload, fresh engine, two analyses, `.omv` save/reopen, Pj percentage/count rerun, HTML with two native PNGs |
 
-Open the ready-configured [comparison file](validation-exports/python-age-pyramid-0.3.62-reopened.omv)
+Open the ready-configured [comparison file](../data/python_age_pyramid_comparison_examples.omv)
 or its [portable HTML results](validation-exports/python-age-pyramid-0.3.62-reopened.html).
 The [native count image](validation-exports/pyagepyramidpj-0.3.62-native-counts.png) is also available.
 Both saved files retain the source data bytes and factor codes/labels. The artifact validator

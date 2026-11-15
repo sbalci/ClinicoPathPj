@@ -135,13 +135,13 @@ SHA-256 `77dda13ba6530f4808dffcfb178518808a3708a171d4befc5fb55726d15174d1`.
 Only post-build numerical/GUI/platform coverage evidence may advance in the source
 registry; the packaged implementation, defaults, baselines and contracts stay fixed.
 
-Saved artifacts: [defaults/compatibility](validation-exports/python-standardized-0.3.68-defaults.omv),
-[valid](validation-exports/python-standardized-0.3.68-valid.omv),
-[Welch](validation-exports/python-standardized-0.3.68-welch.omv),
-[paired standardized off](validation-exports/python-standardized-0.3.68-off.omv),
-[incomplete](validation-exports/python-standardized-0.3.68-incomplete.omv),
-[recovered](validation-exports/python-standardized-0.3.68-recovered.omv),
-[reopened/recalculated](validation-exports/python-standardized-0.3.68-reopened.omv),
+Saved artifacts: defaults/compatibility (local validation snapshot: `validation-exports/python-standardized-0.3.68-defaults.omv`),
+valid (local validation snapshot: `validation-exports/python-standardized-0.3.68-valid.omv`),
+Welch (local validation snapshot: `validation-exports/python-standardized-0.3.68-welch.omv`),
+paired standardized off (local validation snapshot: `validation-exports/python-standardized-0.3.68-off.omv`),
+incomplete (local validation snapshot: `validation-exports/python-standardized-0.3.68-incomplete.omv`),
+recovered (local validation snapshot: `validation-exports/python-standardized-0.3.68-recovered.omv`),
+reopened/recalculated (local validation snapshot: `validation-exports/python-standardized-0.3.68-reopened.omv`),
 [HTML](validation-exports/python-standardized-0.3.68-reopened.html),
 [independent PNG](validation-exports/python-standardized-0.3.68-independent-plot.png),
 [paired PNG](validation-exports/python-standardized-0.3.68-paired-plot.png).

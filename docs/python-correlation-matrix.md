@@ -151,7 +151,7 @@ On 2026-10-28, macOS arm64 jamovi 28.13 passed native partial-control qualificat
 pairwise/constant-system rejection and valid recovery, new OMV save/second-engine
 reopen, zero-order/partial reruns and native PNG export. See the
 [desktop report](validation-exports/python-correlation-partial-0.3.24-desktop.json) and
-[saved example](validation-exports/python-correlation-partial-0.3.24-validation.omv).
+saved example (local validation snapshot: `validation-exports/python-correlation-partial-0.3.24-validation.omv`).
 Additional platforms and broader accessibility/theme checks remain open.
 
 ## Partial Spearman — 0.3.25
@@ -184,7 +184,7 @@ p=0.7969540733546533, one control, df=3, unavailable CI). See the
 On 2026-10-28, native tied-data controls, R agreement, second-engine
 save/reopen/rerun and PNG export passed on macOS arm64 / jamovi 28.13. See
 [desktop checks](validation-exports/python-correlation-partial-spearman-0.3.25-desktop.json)
-and the [saved example](validation-exports/python-correlation-partial-spearman-0.3.25-validation.omv).
+and the saved example (local validation snapshot: `validation-exports/python-correlation-partial-spearman-0.3.25-validation.omv`).
 Import `data/python_partial_spearman_examples.csv` to reproduce the tied fixture.
 Broader accessibility/theme and cross-platform qualification remain open.
 
@@ -238,7 +238,7 @@ On 2026-10-28, macOS arm64 / jamovi 28.13 passed previous-version saved-file
 recalculation, grouped cohort counts, local switching/remembered focus, constant-system
 recovery, fresh-engine save/reopen/rerun and native stacked PNG export. See the
 [desktop report](validation-exports/python-correlation-groups-0.3.26-desktop.json) and
-[saved example](validation-exports/python-correlation-groups-0.3.26-validation.omv).
+[saved example](../data/python_correlation_examples.omv).
 Broader maximum-size/theme/accessibility and cross-platform qualification remain open. R scripts should pass method arguments by name: the new
 optional `grvar` precedes them in the generated signature. Existing saved jamovi option
 names remain unchanged.

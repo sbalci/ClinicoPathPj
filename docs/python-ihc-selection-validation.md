@@ -64,7 +64,7 @@ z scores and saving retained both rows and all nine heatmap rows. Independent sa
 inspection verifies the nominal output metadata, labels, persisted definition, two Selected
 codes, seven Not selected codes and three missing codes. ZIP integrity passes.
 
-- [Reopenable synthetic document](validation-exports/python-ihc-selection-0.3.15-validation.omv)
+- Reopenable synthetic document (local validation snapshot: `validation-exports/python-ihc-selection-0.3.15-validation.omv`)
 - [Saved-file inspection](validation-exports/python-ihc-selection-0.3.15-saved-file.json)
 
 Broader keyboard/theme acceptance, maximum-size GUI behavior and other platforms remain

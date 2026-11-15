@@ -28,7 +28,7 @@ Student results and a static histogram/mean line. The actual JMO passes 6,692
 histogram checks; built and installed libraries each pass 671 native assertions.
 Two fresh engines verify missing-input/output recovery, custom null/confidence,
 OMV save/reopen/rerun and HTML/PNG export. All 1,461 installed files match; qualified
-0.3.69 is archived. [Open the saved example](docs/validation-exports/python-histogram-0.3.70-reopened.omv)
+0.3.69 is archived. [Open the saved example](data/python_histogram_examples.omv)
 or [view its exported plot](docs/validation-exports/python-histogram-0.3.70-plot.png).
 Full baseline methods and other platforms remain pending.
 

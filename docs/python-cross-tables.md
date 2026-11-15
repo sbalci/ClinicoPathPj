@@ -135,6 +135,6 @@ There is no plot in this table-analysis increment, so no plot-export claim is ma
 See [evidence](validation-exports/python-cross-tables-0.3.42-checks.json),
 [available-case native export](validation-exports/python-cross-tables-0.3.42-available.html),
 [complete-case native export](validation-exports/python-cross-tables-0.3.42-complete.html),
-and [saved example](validation-exports/python-cross-tables-0.3.42-complete.omv). Recheck
+and saved example (local validation snapshot: `validation-exports/python-cross-tables-0.3.42-complete.omv`). Recheck
 with `python3 tools/check-cross-table-artifacts.py`. Broader platform/accessibility,
 full baseline parity and clinical/release review remain open.

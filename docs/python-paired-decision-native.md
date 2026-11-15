@@ -156,10 +156,10 @@ Observed desktop checks:
   were switched off, recalculated, restored and saved as a separate reopened file.
 - Native HTML results and PNG image exports succeed after reopening.
 
-Saved fixtures: [valid](validation-exports/python-paired-0.3.66-valid.omv),
-[incomplete](validation-exports/python-paired-0.3.66-incomplete.omv),
-[recovered](validation-exports/python-paired-0.3.66-recovered.omv), and
-[fresh-engine recalculated](validation-exports/python-paired-0.3.66-reopened.omv).
+Saved fixtures: valid (local validation snapshot: `validation-exports/python-paired-0.3.66-valid.omv`),
+incomplete (local validation snapshot: `validation-exports/python-paired-0.3.66-incomplete.omv`),
+recovered (local validation snapshot: `validation-exports/python-paired-0.3.66-recovered.omv`), and
+[fresh-engine recalculated](../data/python_paired_decision_examples.omv).
 Exports: [native HTML](validation-exports/python-paired-0.3.66-recovered.html) and
 [native PNG](validation-exports/python-paired-0.3.66-native-plot.png).
 

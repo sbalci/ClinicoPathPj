@@ -140,7 +140,7 @@ The saved column contains 30 not-flagged rows, one flagged row and two missing f
 confirmed independently from the saved archive's row-aligned codes and labels.
 
 The [native percentile PNG](validation-exports/python-outlier-distributions-0.3.36-native.png)
-is 2000×1600. The [saved fixture](validation-exports/python-outlier-screening-0.3.36-desktop.omv)
+is 2000×1600. The [saved fixture](../data/python_outlier_screening_examples.omv)
 retains tables, flags, plot options and plot snapshots across fresh-engine reopening.
 The GUI configuration uses the default robust-Z method; the independent native R suite
 covers all three methods. Other GUI methods, table export, themes/accessibility, further

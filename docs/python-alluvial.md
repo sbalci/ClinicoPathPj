@@ -92,7 +92,7 @@ values/row order are unchanged. After another full restart, roles and settings r
 exclusion reversal forces 20 → 22 → 20 recalculation, with local highlighting reset.
 
 See [evidence](validation-exports/python-alluvial-0.3.41-checks.json),
-[saved example](validation-exports/python-alluvial-0.3.41-desktop.omv),
+[saved example](../data/python_alluvial_examples.omv),
 [native table export](validation-exports/python-alluvial-0.3.41-desktop.html) and
 [static PNG](validation-exports/python-alluvial-0.3.41-desktop.png). Recheck persisted
 artifacts with `python3 tools/check-alluvial-artifacts.py`. Plot geometry is independently

@@ -36,7 +36,7 @@ jamovi, and imported `data/python_single_quality_examples.csv`.
 - Enabling saved flags gives ten Not selected values, Selected at row 11 and missing at
   row 12. Clearing the required variable clears native results, HTML, plot and saved
   flags; restoring Measurement recalculates the results and flags.
-- Saved [the synthetic OMV](validation-exports/python-single-quality-0.3.6-validation.omv),
+- Saved [the synthetic OMV](../data/python_checkdata_examples.omv),
   quit/restarted jamovi and reopened it in a fresh engine. Native tables, saved flags,
   static image and local Observable controls restored. Local status resets to All.
 - Exported [the native plot](validation-exports/python-single-quality-0.3.6-screening.png)

@@ -131,9 +131,9 @@ does not include these native checks.
   calculations; verify unchanged data/metadata and cleared incomplete outputs.
   Reject four deliberate artifact corruptions.
 
-Saved artifacts: [initial comparison](validation-exports/python-roc-0.3.64-comparison.omv),
-[incomplete snapshot](validation-exports/python-roc-0.3.64-incomplete.omv),
-[fresh-engine recovered analysis](validation-exports/python-roc-0.3.64-reopened.omv),
+Saved artifacts: initial comparison (local validation snapshot: `validation-exports/python-roc-0.3.64-comparison.omv`),
+incomplete snapshot (local validation snapshot: `validation-exports/python-roc-0.3.64-incomplete.omv`),
+[fresh-engine recovered analysis](../data/python_roc_examples.omv),
 [HTML export](validation-exports/python-roc-0.3.64-reopened.html) and
 [native PNG export](validation-exports/python-roc-0.3.64-reopened.png).
 [Artifact checks](validation-exports/python-roc-0.3.64-artifacts-20261111.json)
@@ -194,7 +194,7 @@ Quit/relaunch, reopening and HTML export pass. The reopened empty Score 3
 control is visibly grey and disabled.
 
 Run `tools/check-roc-artifacts.py --ui-followup 0.3.65` in bundled Python to check
-the [saved fixture](validation-exports/python-roc-0.3.65-ui-recovered.omv) and
+the saved fixture (local validation snapshot: `validation-exports/python-roc-0.3.65-ui-recovered.omv`) and
 [HTML export](validation-exports/python-roc-0.3.65-ui-recovered.html). Their tables,
 threshold counts and source rows pass independent checks; dataset bytes and
 metadata equal the qualified 0.3.64 fixture, and cached/exported plot pixels

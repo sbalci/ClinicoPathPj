@@ -200,9 +200,9 @@ Measurement. Removing it cleared the table, route explanation and timing; restor
 it produced the same summary with a new backend timing in the fresh engine.
 Save As then wrote a separate reopened file, followed by another native HTML export.
 
-- [Initial comparison](validation-exports/python-summary-service-0.3.62-comparison.omv)
+- Initial comparison (local validation snapshot: `validation-exports/python-summary-service-0.3.62-comparison.omv`)
   and [HTML](validation-exports/python-summary-service-0.3.62-comparison.html).
-- [Reopened and recalculated comparison](validation-exports/python-summary-service-0.3.62-reopened.omv)
+- [Reopened and recalculated comparison](../data/python_summary_service_comparison_examples.omv)
   and [HTML](validation-exports/python-summary-service-0.3.62-reopened.html).
 - [Artifact evidence](validation-exports/python-summary-service-artifacts-20261110.json)
   and [read-only checker](../tools/check-summary-service-artifacts.py).

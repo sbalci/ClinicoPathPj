@@ -33,7 +33,7 @@ new OMV reopened. The restored cohort reported eight input and six common comple
 first-cell Left remained clamped and Right advanced correctly. The original 0.3.20 fixture
 was preserved. Local focus position itself is transient and is not promised across reopening.
 
-- [Saved repaired fixture](validation-exports/python-correlation-keyboard-0.3.22-validation.omv)
+- Saved repaired fixture (local validation snapshot: `validation-exports/python-correlation-keyboard-0.3.22-validation.omv`)
 - [Desktop checks and fixture hash](validation-exports/python-correlation-keyboard-0.3.22-desktop.json)
 - [Final package checks](validation-exports/python-correlation-keyboard-0.3.22-package.json)
 

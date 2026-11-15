@@ -73,4 +73,4 @@ or instruction to delete a record. Larger GUI payloads, additional platforms and
 omitted baseline features need separate qualification.
 
 See [validation evidence](python-single-quality-validation.md) and the
-[saved example](validation-exports/python-single-quality-0.3.6-validation.omv).
+[saved example](../data/python_checkdata_examples.omv).

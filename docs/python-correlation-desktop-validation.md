@@ -31,7 +31,7 @@ fixture was preserved.
 
 ## Artifacts
 
-- [Saved Spearman/pairwise fixture](validation-exports/python-correlation-0.3.20-validation.omv)
+- Saved Spearman/pairwise fixture (local validation snapshot: `validation-exports/python-correlation-0.3.20-validation.omv`)
 - [Native PNG export](validation-exports/python-correlation-0.3.20-native.png)
 - [Checks and artifact SHA-256 hashes](validation-exports/python-correlation-0.3.20-desktop.json)
 - [Methods and separate numerical/package evidence](python-correlation-matrix.md)
@@ -57,7 +57,7 @@ to Hochberg then recalculated the expected value. That temporary rerun was not s
 over the BY fixture. This extends macOS control/lifecycle evidence; it does not extend
 prior native export, full accessibility, other-platform or clinical evidence.
 
-- [BY saved example](validation-exports/python-correlation-adjustments-0.3.23-validation.omv)
+- BY saved example (local validation snapshot: `validation-exports/python-correlation-adjustments-0.3.23-validation.omv`)
 - [Desktop checks and file hash](validation-exports/python-correlation-adjustments-0.3.23-desktop.json)
 
 The package is rebuilt with updated registry evidence and its extracted runtime checked
@@ -83,7 +83,7 @@ and estimates. Switching to zero-order and back recalculated the same partial re
 The original fixture was preserved. This evidence covers one macOS arm64 configuration,
 not full method parity, all accessibility/theme combinations, other platforms or clinical use.
 
-- [Saved partial example](validation-exports/python-correlation-partial-0.3.24-validation.omv)
+- Saved partial example (local validation snapshot: `validation-exports/python-correlation-partial-0.3.24-validation.omv`)
 - [Native PNG](validation-exports/python-correlation-partial-0.3.24-native.png)
 - [Checks and hashes](validation-exports/python-correlation-partial-0.3.24-desktop.json)
 
@@ -107,7 +107,7 @@ and results. Toggling to zero-order and back reproduced the partial result. The 
 0.3.24 fixture and PNG hashes remained unchanged. One export attempt opened the whole
 results export panel; it was cancelled and the image-specific PNG route completed.
 
-- [Saved tied example](validation-exports/python-correlation-partial-spearman-0.3.25-validation.omv)
+- Saved tied example (local validation snapshot: `validation-exports/python-correlation-partial-spearman-0.3.25-validation.omv`)
 - [Native PNG](validation-exports/python-correlation-partial-spearman-0.3.25-native.png)
 - [Checks and hashes](validation-exports/python-correlation-partial-spearman-0.3.25-desktop.json)
 
@@ -143,7 +143,7 @@ reproduced Group_B's result. The tests cover one two-group macOS arm64 / jamovi 
 configuration, not exhaustive maximum-size/theme/accessibility/other-platform or clinical
 qualification. No between-group difference inference is supplied.
 
-- [Saved grouped example](validation-exports/python-correlation-groups-0.3.26-validation.omv)
+- [Saved grouped example](../data/python_correlation_examples.omv)
 - [Native stacked PNG](validation-exports/python-correlation-groups-0.3.26-native.png)
 - [Desktop checks and hashes](validation-exports/python-correlation-groups-0.3.26-desktop.json)
 

@@ -85,7 +85,7 @@ See [separate validation record](validation-exports/python-variable-tree-0.3.35-
 
 Computer use recovered. Installed 0.3.35 and reproduced its CSV-token discrepancy in
 jamovi 28.13/macOS arm64: 38 input, 34 complete, four excluded. The original fixture is
-[retained](validation-exports/python-variable-tree-0.3.35-import-failure.omv). Replacing
+retained (local validation snapshot: `validation-exports/python-variable-tree-0.3.35-import-failure.omv`). Replacing
 the synthetic label NA with Type C restores 36 complete/two excluded under blank/NA
 token parsing, without changing the Python engine. The R import fixture compares leaf
 counts independently of importer-defined factor order; other fixtures verify level order.
@@ -96,7 +96,7 @@ counts 12/7/6/5/4/2 when sorted for the plot. Mouse activation and Enter/Space o
 focused disclosure work. A second fresh engine reopens the saved OMV; toggling the plot
 off/on forces recalculation and restores the same cohort/counts. Expansion is transient.
 The native [PNG](validation-exports/python-variable-tree-0.3.36-native.png) is 2000×1300;
-the [saved fixture](validation-exports/python-variable-tree-0.3.36-desktop.omv) retains 38 rows.
+the saved fixture (local validation snapshot: `validation-exports/python-variable-tree-0.3.36-desktop.omv`) retains 38 rows.
 
 All 292 Python tests, seven focused tree tests, 83 native assertions and 20 packaged
 cases pass. Native R still prints environment-level Operation not permitted messages
@@ -192,7 +192,7 @@ at displayed precision; raw numeric estimates are checked by the native R suite.
 
 See [validation evidence](validation-exports/python-tree-summary-0.3.39-checks.json),
 [native all-node export](validation-exports/python-tree-summary-0.3.39-allnodes.html) and
-[saved example](validation-exports/python-tree-summary-0.3.39-allnodes.omv). Run
+saved example (local validation snapshot: `validation-exports/python-tree-summary-0.3.39-allnodes.omv`). Run
 `python3 tools/check-tree-summary-artifacts.py` to recheck persisted artifacts.
 
 
@@ -249,7 +249,7 @@ reference off/on forces fresh-engine recalculation and preserves numeric summari
 
 See [evidence](validation-exports/python-tree-reference-0.3.40-checks.json),
 [native HTML](validation-exports/python-tree-reference-0.3.40-desktop.html) and
-[saved example](validation-exports/python-tree-reference-0.3.40-desktop.omv). Reproduce
+[saved example](../data/python_variable_tree_examples.omv). Reproduce
 with `python3 tools/check-tree-reference-artifacts.py`. No new static plot geometry was
 introduced in this increment; earlier count-plot export evidence remains historical.
 Full baseline, broader platform/accessibility and clinical/release gates remain open.

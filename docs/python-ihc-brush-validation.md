@@ -73,7 +73,7 @@ Independent ZIP/protobuf inspection checks persisted row IDs, selection flags, s
 marker records and unchanged full-cohort marker means against the saved synthetic inputs.
 The saved document contains native results and the current rectangle-enabled HTML template.
 
-- [Reopenable synthetic document](validation-exports/python-ihc-brush-0.3.17-validation.omv)
+- Reopenable synthetic document (local validation snapshot: `validation-exports/python-ihc-brush-0.3.17-validation.omv`)
 - [Saved-file inspection](validation-exports/python-ihc-brush-0.3.17-saved-file.json)
 - [Packaged runtime checks](validation-exports/python-ihc-brush-0.3.17-package.json)
 

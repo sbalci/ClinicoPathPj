@@ -66,7 +66,7 @@ keyboard position reset to the first cell. Independent saved-file inspection ver
 persisted source IDs, nine raw/displayed marker records, nominal flag alignment and
 unchanged full-cohort means. The current keyboard instructions are present in saved HTML.
 
-- [Reopenable synthetic document](validation-exports/python-ihc-keyboard-0.3.18-validation.omv)
+- [Reopenable synthetic document](../data/python_ihc_heatmap_examples.omv)
 - [Independent saved-file inspection](validation-exports/python-ihc-keyboard-0.3.18-saved-file.json)
 - [Packaged runtime checks](validation-exports/python-ihc-keyboard-0.3.18-package.json)
 
