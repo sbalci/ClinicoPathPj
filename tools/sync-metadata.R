@@ -290,6 +290,30 @@ sync_module_metadata <- function(root = ".") {
             description = "Eleven synthetic subjects: elapsed months, explicit Event/Censored labels, tied times, a time-zero event and two incomplete pairs. Select Event as event and Censored as censoring; requested times are 12, 36 and 60 months.",
             tags = c("Python", "Survival", "Explicit event orientation"))
     }
+    saved_manifest <- file.path(root, "data", "saved-analysis-examples.tsv")
+    if (file.exists(saved_manifest)) {
+        examples <- utils::read.delim(saved_manifest, stringsAsFactors = FALSE,
+                                     check.names = FALSE)
+        stopifnot(all(c("file", "analyses", "saved_module_version") %in% names(examples)),
+                  !anyNA(examples$file), !anyDuplicated(examples$file),
+                  all(grepl("^python_[a-z0-9_]+_examples[.]omv$", examples$file)))
+        for (i in seq_len(nrow(examples))) {
+            example <- examples[i, ]
+            stopifnot(file.exists(file.path(root, "data", example$file)))
+            topic <- tools::toTitleCase(gsub("_", " ",
+                sub("_examples[.]omv$", "", sub("^python_", "", example$file))))
+            entry <- list(name = paste("Saved Analysis:", topic), path = example$file,
+                description = paste0("Configured synthetic ", topic,
+                    " workbook saved with ClinicoPathPj ", example$saved_module_version,
+                    ". Contains ", example$analyses,
+                    ". Use that version or a later compatible module to recalculate; Pj service comparisons also require Pj."),
+                tags = c("Python", "Saved analyses", topic))
+            index <- which(vapply(document$datasets, function(x)
+                identical(x$path, example$file), logical(1)))
+            if (length(index)) document$datasets[[index[[1]]]] <- entry else
+                document$datasets[[length(document$datasets) + 1L]] <- entry
+        }
+    }
     registry_path <- file.path(root, "inst", "python", "registry.json")
     if (file.exists(registry_path)) {
         registry <- jsonlite::fromJSON(registry_path, simplifyVector = FALSE)

@@ -5,21 +5,25 @@ analysis: a literal `SPEC` (options, results and organized UI) plus a `run()` fu
 into the jamovi files, and the statistics run in **the Python bundled with jamovi** (numpy, scipy),
 so users install nothing.
 
-**ClinicoPathPj 0.3.76** adds [waffle charts](docs/python-waffle-core.md) with
-organized controls, exact count/allocation tables, visible panel denominators
-and Python static plots. It is built and GUI-Sideloaded: 246,364 actual packaged
-checks, 859 assertions against each built/installed library, seven saved waffle
-profiles, native HTML/PNG exports and older lollipop compatibility pass. All
-1,487 installed files match. [Open the qualified example](data/python_waffle_examples.omv).
-Verified 0.3.75 is archived. Full methods and other-platform acceptance remain open.
+**ClinicoPathPj 0.3.77** adds [single-cohort survival](docs/python-kaplan-meier-core.md):
+explicit event/censoring roles, native survival/follow-up/person-time tables and
+a Python static Kaplan–Meier plot. The actual archive passes **347,807 checks
+across 1,409 configurations**, including existing waffle/lollipop/pie regressions.
+Built and GUI-installed libraries each pass 1,558 native survival assertions.
+Two fresh engines verify seven saved profiles, clearing/recovery, reopen/rerun,
+native HTML/PNG export and older waffle compatibility. All 1,544 installed files
+and 1,433 shipped R-library files match the archive/build.
 
-The next source-only increment adds [single-cohort survival](docs/python-kaplan-meier-core.md):
-explicit event/censoring roles, declared time units, native tables and a Python
-static Kaplan–Meier plot. The numerical core passes 58,635 independent R checks;
-the adapter and plot geometry match all 156 frozen configurations. All 757
-Python tests, 1,558 native source assertions and 14 hand-example checks pass. Registry:
-38 partial / 23 planned / 15 utilities, zero full parity. This addition is not
-included in installed 0.3.76; packaging and desktop acceptance remain open.
+The Data Library now includes the 24 [curated saved-analysis workbooks](data/README-saved-analyses.md)
+alongside existing example datasets. Validation `.omv`, PNG, JSON and log files
+remain local and ignored. Verified 0.3.76 is archived. Registry: **38 partial /
+23 planned / 15 utilities**, zero full parity. See the
+[executed desktop protocol](docs/python-singlearm-gui-checklist.md).
+Full baseline methods, clinical/accessibility review and other platforms remain open.
+
+Earlier **0.3.76** qualified the partial [waffle implementation](docs/python-waffle-core.md);
+its source data, native tables and cached PNG remain unchanged after a 0.3.77
+reopen/recalculation/save through the newly registered Data Library example.
 
 **ClinicoPathPj 0.3.75** fixes clipped lollipop hints with five short lines. It is
 built and GUI-Sideloaded: all 1,480 installed files match, and a fresh-engine

@@ -9,8 +9,9 @@ preserves those rules; no R analysis or statistical default is changed.
 
 The numerical foundation now has a generator-owned SPEC, native tables and a
 Python static step renderer under **Survival Py → Survival estimates**. The
-registry marks this source entry partial; installed 0.3.76 remains unchanged.
-Package installation and desktop acceptance for this increment remain open.
+registry marks the entry partial. Version 0.3.77 is now built, GUI-Sideloaded
+and locally qualified for bounded macOS arm64 desktop use; full methods and
+clinical/other-platform review remain open. See the executed desktop checklist.
 Dates, landmarking, delayed entry, competing risks, groups, weights,
 repeated subjects, RMST and regression remain outside this increment.
 
@@ -137,7 +138,7 @@ PYTHONHOME=/Applications/jamovi.app/Contents/Resources \
 | Raw person-time and exact Poisson intervals | R Poisson and chi-square references | Visible units/denominator and rate availability |
 | Near-tie normalization and original IDs | R timefix references and source audits | Native disclosures, saved-state alignment/lifecycle |
 | Factor event mapping, dates, landmarking, entry, competing risks, weights, RMST, Nelson–Aalen hazards, regression and specialized plots | Omitted | Separate contracts and validation |
-| Package, native/GUI and platform acceptance | Not supplied for this core | SPEC/run, compiler, lifecycle/export, archive and desktop gates |
+| Package, native/GUI and platform acceptance | Bounded macOS arm64 0.3.77 archive/desktop gate passed | Additional desktop, clinical, full methods and other platforms remain open |
 
 The maintained [survfit manual](https://www.stat.math.ethz.ch/R-manual/R-devel/library/survival/html/survfit.formula.html)
 documents interval choices and near-tie preprocessing. The
@@ -232,3 +233,36 @@ Local logs: `/private/tmp/cpj-singlearm-adapter.log`,
 `/private/tmp/cpj-singlearm-native-initial.log`,
 `/private/tmp/cpj-singlearm-native.log`, `/private/tmp/cpj-singlearm-example.log`.
 Rendered PNGs live in `/private/tmp` and remain outside version control.
+
+## Packaged and native desktop evidence — 2026-11-16
+
+Actual 0.3.77 runtime: **101,443 checks / 468 configurations** against the frozen
+26-dataset R contract. Existing waffle/lollipop/pie archive regressions add
+246,364 checks / 941 configurations. The built and installed native survival
+suites each pass 1,558 assertions. Metadata-only packaging changes retain the
+757-test statistical-source gate; all 33 generator tests pass.
+
+GUI Sideload installs exactly 1,544 archive files; 1,433 shipped R-library files
+match the tested build. Two fresh engines verify seven saved profiles (default,
+plotted, off, incomplete, invalid, recovered, reopened), role/level persistence,
+clearing/recovery and full-restart forced recalculation. Independent R table values
+agree at displayed precision, dataset bytes/metadata stay unchanged, and equivalent
+cached PNGs are byte-identical. HTML and cached/native 1038×718 pixels match;
+direct 1300×900 PNG export is byte-identical to native R, SHA-256
+`93cd6b36676de04d8054a4716a8d0ea86f6d2345fb3b66e205a2637affb2ba72`.
+Four deliberately corrupt artifacts are rejected. Older 0.3.76 waffle data,
+native tables and cached PNG remain unchanged after recalculation/save.
+
+Final archive: `ClinicoPathPj_0.3.77.jmo`, 27,480,773 bytes, SHA-256
+`f99c0cdbf6c82a1de7ea333e395251f2c11abf80e53877654d89d3e2a69a3801`.
+Verified 0.3.76 is archived. The module includes 24 curated saved-analysis
+Data Library entries plus the single-cohort synthetic CSV. Saved validation
+profiles stay ignored in `docs/validation-exports/`.
+
+Use `tools/check-singlearm-package.py`, `tools/check-singlearm-artifacts.py`,
+`tests/reference/singlearm-example.R` and `tools/render-singlearm-gui-example.R`
+to reproduce the package, independent native-table and same-dimension PNG checks.
+Initial archive missing unregistered examples and checker-only percentage spacing,
+PNG encoding and missing-image probe failures remain in `/private/tmp` logs;
+no statistical engine was changed to satisfy them. Environment startup/disk/sandbox
+diagnostics are separate. This is not full baseline parity or clinical clearance.

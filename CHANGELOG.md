@@ -1,3 +1,10 @@
+# 0.3.77 — single-cohort survival and curated examples (2026-11-16)
+
+- Package partial `pysinglearm` with explicit event/censor selection, declared units/origin, native survival/follow-up/person-time tables and Python static KM plots. Preserve validated defaults and the single module identity.
+- Pass 101,443 actual archived survival checks/468 configurations plus 246,364 existing waffle/lollipop/pie checks/941 configurations. Built and GUI-installed libraries each pass 1,558 native assertions; the unchanged statistical source retains its 757-test gate and all 33 current generator tests pass.
+- GUI-Sideload/restart and verify seven saved profiles, input/output clearing and recovery, full-restart reopen/rerun, native HTML/PNG exports and prior 0.3.76 waffle compatibility. Independent native tables/data and matching-resolution pixels agree; four corruptions rejected. All 1,544 installed / 1,433 shipped R-library files match the archive/build.
+- Generator-register and bundle the 24 curated saved `.omv` workbooks under `data/`. Keep generated validation workbooks, PNGs, JSON and logs ignored; archive verified 0.3.76. Preserve initial registration/checker and environment diagnostics separately. Clinical/accessibility/full-method and other-platform qualification, plus library submission, remain open. No commit or push is part of this increment.
+
 # Unreleased — native single-cohort survival source integration (2026-11-15)
 
 - Add generator-owned `pysinglearm` under Survival Py → Survival estimates, explicit distinct event/censoring levels, declared units and origin, native cohort/mapping/missingness/median/horizon tables and optional person-time/steps/source rows. Preserve months, 12/36/60 horizons and plot/CI/censor/person-time defaults off.

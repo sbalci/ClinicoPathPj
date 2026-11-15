@@ -2240,10 +2240,12 @@
       "status": "partial",
       "coverage": {
         "full_parity": false,
-        "numerical": "KM/log-log/median/reverse-KM/Poisson core: 58,635 independent R comparisons/26 datasets/156 configurations. All 156 native-adapter table/plot geometry configurations pass, plus 1,558 native source assertions/52 references, recovery and restored-state PNG export, and 14 independent hand-example assertions/native export. See docs/python-kaplan-meier-core.md; package and GUI gates remain open. All 757 Python tests pass; generator/compiler and source-only native export pass.",
-        "gui": "pending",
+        "numerical": "KM/log-log/median/reverse-KM/Poisson core: 58,635 independent R comparisons/26 datasets/156 configurations; 101,443 actual 0.3.77 archive checks/468 configurations. Native built and installed libraries each pass 1,558 assertions/52 references, recovery and restored-state export. Unchanged statistical source retains 757 Python tests; all 33 current generator tests pass. See docs/python-kaplan-meier-core.md. Full methods remain pending.",
+        "gui": "0.3.77 macOS arm64/jamovi 28.17.0: GUI Sideload and two fresh engines, explicit roles/event/censor/units, output/input clearing and recovery, seven OMV profiles, full-restart reopen/forced rerun and native HTML/PNG export. Independent R native tables, unchanged data and matching-resolution cached/direct pixels pass; four corruptions rejected. All 1,544 installed / 1,433 shipped R-library files match. Older 0.3.76 waffle data/tables/cached PNG unchanged after Data Library reopen/recalculation/save. Broader clinical/accessibility/full-method and other-platform gates remain open.",
         "compatibility": "existing Python identifier preserved",
-        "platforms": []
+        "platforms": [
+          "macOS arm64 / jamovi 28.17.0: bounded 0.3.77 synthetic desktop/runtime qualification; other platforms pending"
+        ]
       },
       "methods": "Single-cohort Kaplan-Meier: median survival with CI, survival at user cut points (Greenwood, survfit 'log-log' CI with boundary limits suppressed), reverse-KM follow-up, person-time incidence rates with exact Poisson CIs, competing-risk cumulative incidence (cmprsk::cuminc), Nelson-Aalen baseline hazard, landmark and date-derived follow-up; KM/cumulative-event/cumulative-hazard/KMunicate plots",
       "oracle": "survival::survfit + summary.survfit(times =) and its median/0.95LCL/0.95UCL table, cmprsk::cuminc, survival::basehaz, exact Poisson limits via stats::qchisq",

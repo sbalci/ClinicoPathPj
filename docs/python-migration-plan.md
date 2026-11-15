@@ -1,11 +1,55 @@
-# ClinicoPathPj implementation plan — revised 2026-11-15
+# ClinicoPathPj implementation plan — revised 2026-11-16
 
 This is the current delivery plan. It supersedes the implementation recommendations in
 `python-roadmap.md` (2026-10-18) and the initial `interactive-analysis-plan.md`.
 The original 61-analysis inventory remains the target; a menu entry does not establish parity.
 Detailed per-analysis evidence remains in the [generated status matrix](python-migration-status.md).
 
-## Current source increment — single-cohort survival foundation
+## Current qualified partial increment — single-cohort survival (0.3.77)
+
+**ClinicoPathPj_0.3.77.jmo** is built and GUI-Sideloaded on macOS arm64 /
+jamovi 28.17.0. It passes 101,443 actual survival runtime/native-payload/step-geometry
+checks over 468 configurations and 246,364 existing waffle/lollipop/pie checks over
+941 configurations: **347,807 checks / 1,409 configurations**. Built and installed
+native survival libraries each pass 1,558 assertions across 52 references and
+lifecycle/restored-state export. The unchanged statistical engines retain the
+757-test source gate; all 33 generator tests pass after metadata changes.
+
+Two fresh engines (64812 and 65134) verify explicit event/censor/subject roles,
+visible declared units/origin, safe defaults and optional outputs, invalid/incomplete
+clearing and recovery, seven saved `.omv` profiles, full-restart reopen/forced rerun
+and native HTML/PNG export. Independently generated R tables agree at display
+precision; source data/metadata are identical across profiles. Equivalent saved
+curves have identical cached PNG bytes. Direct export matches native R at
+1300×900; cached/HTML/native reference pixels match at 1038×718. Four deliberately
+corrupt artifacts are rejected. The prior 0.3.76 waffle workbook is unchanged in
+data, tables and cached PNG after recalculation/save through the Data Library.
+
+All **1,544 installed files / 1,433 shipped R-library files** match the final
+archive/build. Verified 0.3.76 is archived. The archive is 27,480,773 bytes, SHA-256
+`f99c0cdbf6c82a1de7ea333e395251f2c11abf80e53877654d89d3e2a69a3801`.
+The 24 curated `.omv` workbooks are now generator-registered Data Library entries
+and bundled byte-for-byte; validation snapshots/images/logs/reports remain ignored.
+See the [executed checklist](python-singlearm-gui-checklist.md).
+
+Initial missing Data Library registration, native HTML percentage whitespace, PNG
+encoding metadata and a too-permissive image-tag checker probe are retained as
+packaging/checker diagnostics. The long local rebuild, initial GUI-service startup
+failure and sandbox process stderr are environment evidence, not statistical
+failures. No statistical engine/default changed during packaging.
+
+Registry stays **38 partial / 23 planned / 15 utilities / 53 source entries**,
+with zero full-parity releases. Dates, landmarking, delayed entry, competing risks,
+RMST, weights, hazards, regression, interaction, broader accessibility/clinical
+review and other platforms remain open. This is bounded local package/desktop
+qualification, not library submission or full migration completion.
+
+Next freeze the `pysurvival` grouped KM/risk-set and log-rank contract against its
+released R baseline before implementing the next Python engine. Keep Cox,
+weighted/pairwise inference, RMST and competing risks as explicit later method
+gates; do not count a grouped core as full baseline parity.
+
+## Earlier source increment — single-cohort survival foundation
 
 The next planned `pysinglearm` target now has a [frozen numerical contract](python-kaplan-meier-core.md)
 and reusable right-censored Kaplan–Meier engine, with Greenwood pointwise log-log
@@ -36,7 +80,7 @@ corrupt drawing variants are refused. The compiler/roxygen pass; a synthetic
 11-subject Data Library example is included.
 
 Registry inventory is now **38 partial / 23 planned / 15 utilities / 53 source
-entries**, with zero full-parity releases. This source-only status does not
+entries**, with zero full-parity releases. At the source checkpoint this did not
 replace installed 0.3.76, whose archive hash and 1,487 files were reverified.
 Dates, landmarking, delayed entry, competing risks, RMST, weights, models,
 interactive exploration, package and GUI acceptance remain separate gates.

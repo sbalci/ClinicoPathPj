@@ -1,7 +1,7 @@
 ---
 title: ClinicoPathPj - Python-Backed Analyses
 name: ClinicoPathPj
-version: 0.3.76
+version: 0.3.77
 jms: '1.0'
 authors: Serdar Balci
 maintainer: Serdar Balci <serdarbalci@serdarbalci.com>
@@ -756,5 +756,248 @@ datasets:
       - Python
       - Survival
       - Explicit event orientation
+  - name: 'Saved Analysis: Age Pyramid Comparison'
+    path: python_age_pyramid_comparison_examples.omv
+    description: >-
+      Configured synthetic Age Pyramid Comparison workbook saved with
+      ClinicoPathPj 0.3.62. Contains pyagepyramid,pyagepyramidpj. Use that
+      version or a later compatible module to recalculate; Pj service
+      comparisons also require Pj.
+    tags:
+      - Python
+      - Saved analyses
+      - Age Pyramid Comparison
+  - name: 'Saved Analysis: Alluvial'
+    path: python_alluvial_examples.omv
+    description: >-
+      Configured synthetic Alluvial workbook saved with ClinicoPathPj 0.3.41.
+      Contains pyalluvial. Use that version or a later compatible module to
+      recalculate; Pj service comparisons also require Pj.
+    tags:
+      - Python
+      - Saved analyses
+      - Alluvial
+  - name: 'Saved Analysis: Barstats'
+    path: python_barstats_examples.omv
+    description: >-
+      Configured synthetic Barstats workbook saved with ClinicoPathPj 0.3.71.
+      Contains pyjjbarstats. Use that version or a later compatible module to
+      recalculate; Pj service comparisons also require Pj.
+    tags:
+      - Python
+      - Saved analyses
+      - Barstats
+  - name: 'Saved Analysis: Bridge Comparison'
+    path: python_bridge_comparison_examples.omv
+    description: >-
+      Configured synthetic Bridge Comparison workbook saved with ClinicoPathPj
+      0.3.60. Contains pybridgecompare. Use that version or a later compatible
+      module to recalculate; Pj service comparisons also require Pj.
+    tags:
+      - Python
+      - Saved analyses
+      - Bridge Comparison
+  - name: 'Saved Analysis: Calendar Intervals'
+    path: python_calendar_intervals_examples.omv
+    description: >-
+      Configured synthetic Calendar Intervals workbook saved with ClinicoPathPj
+      0.3.47. Contains pytimeinterval. Use that version or a later compatible
+      module to recalculate; Pj service comparisons also require Pj.
+    tags:
+      - Python
+      - Saved analyses
+      - Calendar Intervals
+  - name: 'Saved Analysis: Checkdata'
+    path: python_checkdata_examples.omv
+    description: >-
+      Configured synthetic Checkdata workbook saved with ClinicoPathPj 0.3.6.
+      Contains pycheckdata. Use that version or a later compatible module to
+      recalculate; Pj service comparisons also require Pj.
+    tags:
+      - Python
+      - Saved analyses
+      - Checkdata
+  - name: 'Saved Analysis: Composite Outcome'
+    path: python_composite_outcome_examples.omv
+    description: >-
+      Configured synthetic Composite Outcome workbook saved with ClinicoPathPj
+      0.3.49. Contains pyoutcomeorganizer. Use that version or a later
+      compatible module to recalculate; Pj service comparisons also require Pj.
+    tags:
+      - Python
+      - Saved analyses
+      - Composite Outcome
+  - name: 'Saved Analysis: Concordance'
+    path: python_concordance_examples.omv
+    description: >-
+      Configured synthetic Concordance workbook saved with ClinicoPathPj 0.3.63.
+      Contains pyagreement. Use that version or a later compatible module to
+      recalculate; Pj service comparisons also require Pj.
+    tags:
+      - Python
+      - Saved analyses
+      - Concordance
+  - name: 'Saved Analysis: Correlation'
+    path: python_correlation_examples.omv
+    description: >-
+      Configured synthetic Correlation workbook saved with ClinicoPathPj 0.3.26.
+      Contains pyjjcorrmat. Use that version or a later compatible module to
+      recalculate; Pj service comparisons also require Pj.
+    tags:
+      - Python
+      - Saved analyses
+      - Correlation
+  - name: 'Saved Analysis: Cutoff Explorers'
+    path: python_cutoff_explorers_examples.omv
+    description: >-
+      Configured synthetic Cutoff Explorers workbook saved with ClinicoPathPj
+      0.3.5. Contains pyd3cutoff,pydotdecision,pyobservablecutoff. Use that
+      version or a later compatible module to recalculate; Pj service
+      comparisons also require Pj.
+    tags:
+      - Python
+      - Saved analyses
+      - Cutoff Explorers
+  - name: 'Saved Analysis: Dataquality'
+    path: python_dataquality_examples.omv
+    description: >-
+      Configured synthetic Dataquality workbook saved with ClinicoPathPj 0.3.3.
+      Contains pydataquality. Use that version or a later compatible module to
+      recalculate; Pj service comparisons also require Pj.
+    tags:
+      - Python
+      - Saved analyses
+      - Dataquality
+  - name: 'Saved Analysis: Diagnostic Meta'
+    path: python_diagnostic_meta_examples.omv
+    description: >-
+      Configured synthetic Diagnostic Meta workbook saved with ClinicoPathPj
+      0.3.57. Contains pydiagnosticmeta. Use that version or a later compatible
+      module to recalculate; Pj service comparisons also require Pj.
+    tags:
+      - Python
+      - Saved analyses
+      - Diagnostic Meta
+  - name: 'Saved Analysis: Estimation'
+    path: python_estimation_examples.omv
+    description: >-
+      Configured synthetic Estimation workbook saved with ClinicoPathPj 0.3.69.
+      Contains pyjjbetweenstats,pyjjwithinstats. Use that version or a later
+      compatible module to recalculate; Pj service comparisons also require Pj.
+    tags:
+      - Python
+      - Saved analyses
+      - Estimation
+  - name: 'Saved Analysis: Histogram'
+    path: python_histogram_examples.omv
+    description: >-
+      Configured synthetic Histogram workbook saved with ClinicoPathPj 0.3.70.
+      Contains pyjjhistostats. Use that version or a later compatible module to
+      recalculate; Pj service comparisons also require Pj.
+    tags:
+      - Python
+      - Saved analyses
+      - Histogram
+  - name: 'Saved Analysis: Ihc Heatmap'
+    path: python_ihc_heatmap_examples.omv
+    description: >-
+      Configured synthetic Ihc Heatmap workbook saved with ClinicoPathPj 0.3.18.
+      Contains pyihcheatmap. Use that version or a later compatible module to
+      recalculate; Pj service comparisons also require Pj.
+    tags:
+      - Python
+      - Saved analyses
+      - Ihc Heatmap
+  - name: 'Saved Analysis: Lollipop'
+    path: python_lollipop_examples.omv
+    description: >-
+      Configured synthetic Lollipop workbook saved with ClinicoPathPj 0.3.75.
+      Contains pylollipop. Use that version or a later compatible module to
+      recalculate; Pj service comparisons also require Pj.
+    tags:
+      - Python
+      - Saved analyses
+      - Lollipop
+  - name: 'Saved Analysis: Outlier Screening'
+    path: python_outlier_screening_examples.omv
+    description: >-
+      Configured synthetic Outlier Screening workbook saved with ClinicoPathPj
+      0.3.36. Contains pyoutlierdetection. Use that version or a later
+      compatible module to recalculate; Pj service comparisons also require Pj.
+    tags:
+      - Python
+      - Saved analyses
+      - Outlier Screening
+  - name: 'Saved Analysis: Paired Decision'
+    path: python_paired_decision_examples.omv
+    description: >-
+      Configured synthetic Paired Decision workbook saved with ClinicoPathPj
+      0.3.66. Contains pydecisioncompare. Use that version or a later compatible
+      module to recalculate; Pj service comparisons also require Pj.
+    tags:
+      - Python
+      - Saved analyses
+      - Paired Decision
+  - name: 'Saved Analysis: Pie'
+    path: python_pie_examples.omv
+    description: >-
+      Configured synthetic Pie workbook saved with ClinicoPathPj 0.3.74.
+      Contains pyjjpiestats. Use that version or a later compatible module to
+      recalculate; Pj service comparisons also require Pj.
+    tags:
+      - Python
+      - Saved analyses
+      - Pie
+  - name: 'Saved Analysis: Roc'
+    path: python_roc_examples.omv
+    description: >-
+      Configured synthetic Roc workbook saved with ClinicoPathPj 0.3.64.
+      Contains pyenhancedroc. Use that version or a later compatible module to
+      recalculate; Pj service comparisons also require Pj.
+    tags:
+      - Python
+      - Saved analyses
+      - Roc
+  - name: 'Saved Analysis: Set Intersections'
+    path: python_set_intersections_examples.omv
+    description: >-
+      Configured synthetic Set Intersections workbook saved with ClinicoPathPj
+      0.3.30. Contains pyvenn. Use that version or a later compatible module to
+      recalculate; Pj service comparisons also require Pj.
+    tags:
+      - Python
+      - Saved analyses
+      - Set Intersections
+  - name: 'Saved Analysis: Summary Service Comparison'
+    path: python_summary_service_comparison_examples.omv
+    description: >-
+      Configured synthetic Summary Service Comparison workbook saved with
+      ClinicoPathPj 0.3.62. Contains pyservicedirect,pyservicepj. Use that
+      version or a later compatible module to recalculate; Pj service
+      comparisons also require Pj.
+    tags:
+      - Python
+      - Saved analyses
+      - Summary Service Comparison
+  - name: 'Saved Analysis: Variable Tree'
+    path: python_variable_tree_examples.omv
+    description: >-
+      Configured synthetic Variable Tree workbook saved with ClinicoPathPj
+      0.3.40. Contains pyvartree. Use that version or a later compatible module
+      to recalculate; Pj service comparisons also require Pj.
+    tags:
+      - Python
+      - Saved analyses
+      - Variable Tree
+  - name: 'Saved Analysis: Waffle'
+    path: python_waffle_examples.omv
+    description: >-
+      Configured synthetic Waffle workbook saved with ClinicoPathPj 0.3.76.
+      Contains pyjwaffle. Use that version or a later compatible module to
+      recalculate; Pj service comparisons also require Pj.
+    tags:
+      - Python
+      - Saved analyses
+      - Waffle
 
 ...

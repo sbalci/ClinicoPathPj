@@ -65,7 +65,7 @@ parity and GUI/platform acceptance remain separate gates.
 | pylassocox | lassocox | jsurvival | 4 | planned | pending | pending |
 | pymultisurvival | multisurvival | jsurvival | 4 | planned | pending | pending |
 | pyoddsratio | oddsratio | jsurvival | 4 | planned | pending | pending |
-| pysinglearm | singlearm | jsurvival | 4 | partial | pending | pending |
+| pysinglearm | singlearm | jsurvival | 4 | partial | pending | 0.3.77 macOS arm64/jamovi 28.17.0: GUI Sideload and two fresh engines, explicit roles/event/censor/units, output/input clearing and recovery, seven OMV profiles, full-restart reopen/forced rerun and native HTML/PNG export. Independent R native tables, unchanged data and matching-resolution cached/direct pixels pass; four corruptions rejected. All 1,544 installed / 1,433 shipped R-library files match. Older 0.3.76 waffle data/tables/cached PNG unchanged after Data Library reopen/recalculation/save. Broader clinical/accessibility/full-method and other-platform gates remain open. |
 | pysurvival | survival | jsurvival | 4 | planned | pending | pending |
 | pysurvivalcont | survivalcont | jsurvival | 4 | planned | pending | pending |
 | pyagreement | agreement | meddecide | 4 | partial | pending | 0.3.58 Bland-Altman observed; 0.3.63 CCC Sideload, fresh-engine save/reopen and HTML plot export observed on macOS arm64; live method switching, incomplete-role clearing and recovery after reopen pass with single-click selection; ICC GUI pending |
