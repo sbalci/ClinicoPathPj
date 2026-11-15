@@ -5,12 +5,75 @@ analysis: a literal `SPEC` (options, results and organized UI) plus a `run()` fu
 into the jamovi files, and the statistics run in **the Python bundled with jamovi** (numpy, scipy),
 so users install nothing.
 
-In development: [`pyjjbarstats` categorical bars](docs/python-barstats-core.md) now
-provides native counts/denominators, optional Pearson/Fisher association tables and
-raw/bias-corrected Cramér V points. Keep the default 100% stacked view, or select
-counts to show unequal group sizes. The [count-scale preview](docs/validation-exports/python-barstats-source-count.png)
-shows groups of 20 and 30. This source increment is not yet in the qualified 0.3.70
-JMO; packaging and desktop acceptance remain the next gate.
+**ClinicoPathPj 0.3.76** adds [waffle charts](docs/python-waffle-core.md) with
+organized controls, exact count/allocation tables, visible panel denominators
+and Python static plots. It is built and GUI-Sideloaded: 246,364 actual packaged
+checks, 859 assertions against each built/installed library, seven saved waffle
+profiles, native HTML/PNG exports and older lollipop compatibility pass. All
+1,487 installed files match. [Open the qualified example](data/python_waffle_examples.omv).
+Verified 0.3.75 is archived. Full methods and other-platform acceptance remain open.
+
+The next source-only increment adds [single-cohort survival](docs/python-kaplan-meier-core.md):
+explicit event/censoring roles, declared time units, native tables and a Python
+static Kaplan–Meier plot. The numerical core passes 58,635 independent R checks;
+the adapter and plot geometry match all 156 frozen configurations. All 757
+Python tests, 1,558 native source assertions and 14 hand-example checks pass. Registry:
+38 partial / 23 planned / 15 utilities, zero full parity. This addition is not
+included in installed 0.3.76; packaging and desktop acceptance remain open.
+
+**ClinicoPathPj 0.3.75** fixes clipped lollipop hints with five short lines. It is
+built and GUI-Sideloaded: all 1,480 installed files match, and a fresh-engine
+reopen/recalculation preserves the 0.3.74 tables, dataset, cached image and native
+PNG exactly. The archived runtime passes 25,016 lollipop checks; controls, defaults,
+results and shared engines are unchanged. [Open the refreshed example](data/python_lollipop_examples.omv).
+Verified 0.3.74 is archived for rollback; broader qualification below is retained.
+
+**ClinicoPathPj 0.3.74** includes [native lollipop controls,
+tables and static plots](docs/python-lollipop-core.md) plus optional pie GOF.
+Its archived runtimes pass 44,299 checks/983 configurations, including 25,016
+lollipop geometry/output checks. Built libraries pass 2,228 lollipop and 1,027
+pie/GOF native assertions; all 1,397 shipped R-library files match the tested build.
+The prior 720-test statistical-source gate is retained. It is now GUI-Sideloaded
+and qualified for the bounded lollipop/GOF examples on macOS arm64/jamovi 28.17.0:
+all 1,480 installed files match, three fresh sessions verify 15 saved profiles,
+legacy pie compatibility, recalculation and HTML/PNG export. Installed native
+libraries pass the same 3,255 assertions; independent artifact checks preserve
+dataset bytes/tables/pixels and reject eight corruptions. Open the
+lollipop example (local validation snapshot: `docs/validation-exports/python-lollipop-0.3.74-reopened.omv`) or
+[pie GOF example](data/python_pie_examples.omv).
+Previous 0.3.72 and 0.3.73 packages are archived with their qualification status.
+Full methods, clinical review and other platforms remain separate. See the
+[desktop checklist and evidence](docs/python-lollipop-gui-checklist.md).
+
+In development: [native pie goodness-of-fit controls and tables](docs/python-pie-gof-core.md)
+now expose the validated fixed-null engine, with an equal-probability default,
+strictly labelled custom ratios, expected-count mapping and sparse/unavailable
+messages. Inference remains off by default. All 695 Python tests and 1,027 isolated native assertions pass.
+The 0.3.73 candidate is built and passes 5,148 archived pie runtime checks and
+1,027 built-library native assertions, with bar/histogram/mean regressions passing.
+The original 0.3.73 candidate remained uninstalled; its desktop gate was subsequently
+completed through 0.3.74 above. Follow the
+[installation, compatibility and export checklist](docs/python-pie-gof-gui-checklist.md).
+
+[ClinicoPathPj 0.3.72 — Pie Chart (Core, Python)](docs/python-pie-core.md)
+is built and GUI-Sideloaded on macOS arm64/jamovi 28.17.0. Under **Stats Plots Py
+→ Categorical comparisons**, it provides native frequency/denominator/missingness
+tables, optional source-row audits and static pies with preserved zero categories.
+The actual JMO passes 4,428 pie checks; built and installed libraries each pass 172
+native assertions. Two fresh sessions verify labels, clearing/recovery, save/reopen/
+rerun and HTML/PNG export. Open the saved example (local validation snapshot: `docs/validation-exports/python-pie-0.3.72-reopened.omv`).
+Qualified 0.3.71 is archived. Inference, full baseline methods and other platforms
+remain pending.
+
+[ClinicoPathPj 0.3.71 — Categorical Bars (Core, Python)](docs/python-barstats-core.md)
+is built and GUI-Sideloaded on macOS arm64/jamovi 28.17.0. Under **Stats Plots Py
+→ Categorical comparisons**, choose percentage bars for within-group composition or
+count bars for unequal group totals. Native tables report denominators, missingness,
+optional Pearson/Fisher association and raw/bias-corrected Cramér V points.
+The actual package passes 5,435 bar checks; built and installed libraries each pass
+390 native assertions. Two fresh engines verify clearing/recovery, save/reopen/rerun
+and HTML/PNG export. [Open the saved example](data/python_barstats_examples.omv).
+Qualified 0.3.70 is archived. Full baseline methods and other platforms remain pending.
 
 Current direction and implemented/pending work: [revised migration plan](docs/python-migration-plan.md).
 The earlier [ClinicoPathPj 0.3.69](docs/python-welch-native.md) adds optional Welch RMS-SD
@@ -768,3 +831,6 @@ focused rerun, for example `CPJ_TEST_FILTER=age-pyramid-service bash tools/check
 Its optional local `CPJ_TEST_LIBRARY` fallback supplies test/oracle dependencies;
 these checks do not establish clean-machine dependency availability. Desktop and
 platform acceptance remain separate in the [qualification record](docs/validation-exports/python-0.3.62-qualification-20261110.json).
+
+Reusable saved analyses are curated in [data/](data/README-saved-analyses.md),
+with one workbook per topic. Validation `.omv` snapshots remain local and ignored.

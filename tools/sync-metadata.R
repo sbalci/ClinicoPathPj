@@ -258,6 +258,38 @@ sync_module_metadata <- function(root = ".") {
             description = "Seven synthetic frequency rows: four positive complete cells represent 50 observations in groups of 20 and 30; one complete row has zero frequency and two rows have missing roles. Compare equal-height percentage bars with unequal-height count bars.",
             tags = c("Python", "Categorical bars", "Frequency denominators"))
     }
+    lollipop_data <- "python_lollipop_examples.csv"
+    if (file.exists(file.path(root, "data", lollipop_data)) &&
+        !any(vapply(document$datasets, function(x) identical(x$path, lollipop_data), logical(1)))) {
+        document$datasets[[length(document$datasets) + 1L]] <- list(
+            name = "Lollipop Aggregation Examples", path = lollipop_data,
+            description = "Eight synthetic rows illustrate unequal category sizes and two missing pairs. Six complete observations have a raw mean of 30.67; the three plotted group means average 37.33. Compare raw and plotted denominators, sorting and the reference line.",
+            tags = c("Python", "Lollipop charts", "Group aggregation"))
+    }
+    pie_data <- "python_pie_examples.csv"
+    if (file.exists(file.path(root, "data", pie_data)) &&
+        !any(vapply(document$datasets, function(x) identical(x$path, pie_data), logical(1)))) {
+        document$datasets[[length(document$datasets) + 1L]] <- list(
+            name = "Pie Frequency Examples", path = pie_data,
+            description = "Six synthetic source rows: three positive categories represent 25 observations, one declared category has zero frequency, and two rows have missing selected roles. Pie and table retain the zero category without expanding observations.",
+            tags = c("Python", "Pie charts", "Declared categories"))
+    }
+    waffle_data <- "python_waffle_examples.csv"
+    if (file.exists(file.path(root, "data", waffle_data)) &&
+        !any(vapply(document$datasets, function(x) identical(x$path, waffle_data), logical(1)))) {
+        document$datasets[[length(document$datasets) + 1L]] <- list(
+            name = "Waffle Panel Denominator Examples", path = waffle_data,
+            description = "Nine synthetic frequency rows: active panels represent 4 and 1,000 observations, a zero-frequency panel is inactive, and two rows have missing roles. A rare positive category receives no tile; exact counts remain available.",
+            tags = c("Python", "Waffle charts", "Panel denominators"))
+    }
+    survival_data <- "python_singlearm_examples.csv"
+    if (file.exists(file.path(root, "data", survival_data)) &&
+        !any(vapply(document$datasets, function(x) identical(x$path, survival_data), logical(1)))) {
+        document$datasets[[length(document$datasets) + 1L]] <- list(
+            name = "Single-Cohort Survival Examples", path = survival_data,
+            description = "Eleven synthetic subjects: elapsed months, explicit Event/Censored labels, tied times, a time-zero event and two incomplete pairs. Select Event as event and Censored as censoring; requested times are 12, 36 and 60 months.",
+            tags = c("Python", "Survival", "Explicit event orientation"))
+    }
     registry_path <- file.path(root, "inst", "python", "registry.json")
     if (file.exists(registry_path)) {
         registry <- jsonlite::fromJSON(registry_path, simplifyVector = FALSE)

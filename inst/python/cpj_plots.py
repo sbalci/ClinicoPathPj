@@ -47,9 +47,82 @@ def figure(state, width=600, height=400, palette=None, background='white', foreg
     palette = palette or DEFAULT_PALETTE
     columns = state['columns']; kind = state['kind']
     n = len(next(iter(columns.values()), []))
-    if n > {'stackedbar':400, 'agreement':5000, 'alluvial':1, 'interval':200, 'line':20000, 'box':20000, 'bar':2000, 'scatter':5000, 'points':5000, 'histogram':2000, 'pyramid':200, 'qualitymap':4000, 'ihcheatmap':4000, 'dendrogram':199, 'setmatrix':16, 'screeningquantiles':2020}.get(kind, 0):
+    if n > {'km':1, 'waffle':1, 'lollipop':10000, 'pie':20, 'stackedbar':400, 'agreement':5000, 'alluvial':1, 'interval':200, 'line':20000, 'box':20000, 'bar':2000, 'scatter':5000, 'points':5000, 'histogram':2000, 'pyramid':200, 'qualitymap':4000, 'ihcheatmap':4000, 'dendrogram':199, 'setmatrix':16, 'screeningquantiles':2020}.get(kind, 0):
         raise ValueError('Unsupported plot kind or excessive plot rows')
     if any(len(c) != n for c in columns.values()): raise ValueError('Plot columns have unequal lengths')
+    if kind == 'km':
+        from cpj_kaplan_meier_plot import validate
+        from matplotlib.collections import PolyCollection
+        from matplotlib.ticker import FuncFormatter
+        import textwrap
+        if n!=1 or not isinstance(columns.get('payload',[None])[0],str) or len(columns['payload'][0])>2000000:
+            raise ValueError('KM chart requires one drawing payload of at most 2 MB')
+        payload=validate(json.loads(columns['payload'][0]));points=payload['points']
+        scale=payload['maximum'] if payload['maximum']>0 else 1.
+        # Normalize drawing coordinates to avoid axis-locator overflow for large
+        # finite times; tick labels remain in the declared, unconverted units.
+        xs=[0.]+[r['time']/scale for r in points]
+        ys=[1.]+[r['survival'] for r in points]
+        if points[-1]['time']<payload['maximum']:
+            xs.append(1.);ys.append(ys[-1])
+        ax.step(xs,ys,where='post',color=palette[0],linewidth=1.5,label='Kaplan–Meier')
+        if payload['show_ci']:
+            rectangles=[]
+            for i,r in enumerate(points):
+                end=points[i+1]['time'] if i+1<len(points) else payload['maximum']
+                if r['lower'] is not None and end>r['time']:
+                    a,b=r['time']/scale,end/scale
+                    rectangles.append([(a,r['lower']),(b,r['lower']),(b,r['upper']),(a,r['upper'])])
+            if rectangles:
+                ax.add_collection(PolyCollection(rectangles,facecolor=palette[0],edgecolor='none',alpha=.18,
+                    label=f'{100*payload["confidence"]:g}% pointwise limits'))
+        if payload['show_censors']:
+            marks=[r for r in points if r['censored']>0]
+            if marks:ax.scatter([r['time']/scale for r in marks],[r['survival'] for r in marks],
+                marker='|',s=35,color=palette[0],label='Censoring time',clip_on=False)
+        ax.set_xlim(0,1);ax.set_ylim(0,1.02)
+        ax.xaxis.set_major_formatter(FuncFormatter(lambda value,pos:f'{value*scale:.4g}'))
+        ax.set_xlabel('Elapsed time ('+payload['unit']+')',color=foreground)
+        ax.set_ylabel('Event-free probability',color=foreground)
+        ax.set_title(textwrap.fill('Event: '+payload['event_label'],65)+f'\nN={payload["n"]}',color=foreground,fontsize=10)
+        ax.legend(frameon=False,labelcolor=foreground,fontsize=8)
+        notes=[]
+        if payload['maximum']==0:notes.append('All observed follow-up times are zero.')
+        if payload['label_shortened']:notes.append('Event label shortened; full mapping is in native tables.')
+        if notes:fig.supxlabel(' '.join(notes),color=foreground,fontsize=8)
+        return fig
+    if kind == 'waffle':
+        from cpj_waffle_plot import validate
+        from matplotlib.patches import Rectangle, Patch
+        import textwrap
+        if n!=1 or not isinstance(columns.get('payload',[None])[0],str) or len(columns['payload'][0])>1000000:
+            raise ValueError('Waffle requires one bounded serialized drawing payload')
+        payload=validate(json.loads(columns['payload'][0]))
+        panels=payload['panels'];fig.delaxes(ax)
+        cols=min(len(panels),2 if len(panels)<=4 else 4)
+        axes=fig.subplots(int(np.ceil(len(panels)/cols)),cols,squeeze=False).flat
+        cells=panels[0]['cells'];colors={c['code']:palette[i%len(palette)] for i,c in enumerate(cells)}
+        hatches={c['code']:['','//','xx','..','++'][min(4,i//len(palette))] for i,c in enumerate(cells)}
+        for j,axis in enumerate(axes):
+            if j>=len(panels):axis.set_visible(False);continue
+            panel=panels[j];axis.set_facecolor(background)
+            for tile in panel['geometry']:
+                axis.add_patch(Rectangle((tile['xmin'],tile['ymin']),1,1,
+                    facecolor=colors[tile['code']],edgecolor=foreground,linewidth=.35,
+                    hatch=hatches[tile['code']]))
+            axis.set_xlim(0,max(t['x'] for t in panel['geometry'])+1)
+            axis.set_ylim(0,max(t['y'] for t in panel['geometry'])+1)
+            axis.set_aspect('equal');axis.set_axis_off()
+            axis.set_title(textwrap.fill(panel['label'],35)+'\nN='+str(panel['n_total']),
+                color=foreground,fontsize=9)
+        if payload['title']:fig.suptitle(textwrap.fill(payload['title'],80),color=foreground)
+        if payload['legend']:
+            handles=[Patch(facecolor=colors[c['code']],edgecolor=foreground,hatch=hatches[c['code']]) for c in cells]
+            legend=fig.legend(handles,[textwrap.fill(c['label'],30) for c in cells],
+                title=textwrap.fill(payload['legend_title'],60),loc='outside lower center',
+                ncol=min(4,len(cells)),fontsize=8,labelcolor=foreground,frameon=False)
+            legend.get_title().set_color(foreground)
+        return fig
     if kind == 'alluvial':
         from cpj_alluvial import validate_geometry
         from matplotlib.path import Path as MplPath
@@ -180,7 +253,7 @@ def figure(state, width=600, height=400, palette=None, background='white', foreg
             panel.set_ylabel(state.get('ylab',''),color=foreground)
         return fig
     reference = state.get('reference')
-    if reference is not None:
+    if reference is not None and kind != 'lollipop':
         (ax.axvline if kind in ('interval','scatter') else ax.axhline)(reference, color=foreground, alpha=.5, linestyle='--')
     if kind == 'dendrogram':
         labels={}
@@ -318,6 +391,82 @@ def figure(state, width=600, height=400, palette=None, background='white', foreg
         ax.axvline(0,color=foreground,linewidth=.8)
         ax.set_title(columns['title'][0],color=foreground)
         ax.legend()
+    elif kind == 'lollipop':
+        names=columns['label']; slots=columns['slot']
+        orientations=set(columns['orientation']); baselines=columns['baseline']
+        values=np.asarray(columns['value'],dtype=float)
+        if (not n or len(orientations)!=1 or next(iter(orientations)) not in ('vertical','horizontal')
+                or any(not isinstance(v,str) or not v for v in names)
+                or any(isinstance(v,bool) or not isinstance(v,(int,float)) or not np.isfinite(v)
+                       or v!=int(v) or not 1<=v<=50 for v in slots)
+                or not np.isfinite(values).all() or any(v is None or not np.isfinite(v) for v in baselines)
+                or len(set(baselines))!=1):
+            raise ValueError('Invalid lollipop positions, values, orientation or baseline')
+        mapping={}
+        for label,slot in zip(names,slots):
+            if slot in mapping and mapping[slot]!=label:
+                raise ValueError('Lollipop category mapping disagrees with axis slots')
+            mapping[slot]=label
+        if sorted(mapping)!=list(range(1,len(mapping)+1)) or len(set(mapping.values()))!=len(mapping):
+            raise ValueError('Lollipop category slots must be contiguous and unique')
+        horizontal=next(iter(orientations))=='horizontal'
+        baseline=baselines[0]
+        with np.errstate(over='ignore',invalid='ignore'):
+            if not np.isfinite(values-baseline).all():
+                raise ValueError('Lollipop stem span exceeds the supported range')
+        if horizontal:
+            ax.hlines(slots,baseline,values,color=palette[0],linewidth=1.2)
+            ax.scatter(values,slots,color=palette[0],s=28,zorder=3)
+            ax.set_yticks(sorted(mapping),[mapping[k] for k in sorted(mapping)])
+        else:
+            ax.vlines(slots,baseline,values,color=palette[0],linewidth=1.2)
+            ax.scatter(slots,values,color=palette[0],s=28,zorder=3)
+            ax.set_xticks(sorted(mapping),[mapping[k] for k in sorted(mapping)],rotation=45,ha='right')
+        for slot,value,annotation in zip(slots,values,columns.get('annotation',[None]*n)):
+            if annotation is not None:
+                if not isinstance(annotation,str):raise ValueError('Lollipop annotations must be text')
+                ax.annotate(annotation,(value,slot) if horizontal else (slot,value),
+                            xytext=(4,4),textcoords='offset points',color=foreground,fontsize=8)
+        reference=state.get('reference')
+        if reference is not None:
+            if isinstance(reference,bool) or not isinstance(reference,(int,float)) or not np.isfinite(reference):
+                raise ValueError('Lollipop reference must be finite')
+            draw=ax.axvline if horizontal else ax.axhline
+            draw(reference,color=foreground,linestyle='--',linewidth=.8,label='Mean of plotted values')
+            ax.legend()
+    elif kind == 'pie':
+        from matplotlib.patches import Patch, Wedge
+        names = columns['category']
+        totals = columns['total']
+        counts = columns['count']
+        if (not 1<=n<=20 or len(set(names))!=n or any(not isinstance(s,str) for s in names)
+                or any(v is None or not np.isfinite(v) for v in totals+counts)
+                or any(v!=int(v) or v<0 for v in counts)
+                or len(set(totals))!=1 or not 1<=totals[0]<=2**53-1
+                or totals[0]!=int(totals[0]) or sum(int(v) for v in counts)!=totals[0]):
+            raise ValueError('Pie geometry requires bounded unique categories and exact frequency totals')
+        above = int(totals[0]); handles = []
+        for j,name in enumerate(names):
+            below = above-int(counts[j])
+            lo,hi = columns['lower'][j],columns['upper'][j]
+            if (any(v is None or not np.isfinite(v) for v in (lo,hi))
+                    or lo!=below/totals[0] or hi!=above/totals[0]):
+                raise ValueError('Pie bounds disagree with ordered cumulative frequencies')
+            color = palette[j%len(palette)]; hatch = '//' if j>=len(palette) else None
+            handles.append(Patch(facecolor=color,edgecolor=foreground,hatch=hatch))
+            if counts[j]>0:
+                ax.add_patch(Wedge((0,0),1,90-360*hi,90-360*lo,
+                    facecolor=color,edgecolor=foreground,linewidth=.6,hatch=hatch))
+                annotation = columns.get('annotation',[None]*n)[j]
+                if annotation:
+                    theta = np.pi*(lo+hi)
+                    ax.text(.62*np.sin(theta),.62*np.cos(theta),annotation,
+                        ha='center',va='center',fontsize=8,color=foreground,
+                        bbox=dict(facecolor=background,edgecolor='none',alpha=.8,pad=1))
+            above = below
+        ax.set_xlim(-1.08,1.08); ax.set_ylim(-1.08,1.08)
+        ax.set_aspect('equal'); ax.set_axis_off()
+        ax.legend(handles,names,loc='center left',bbox_to_anchor=(1, .5),fontsize=8)
     elif kind == 'stackedbar':
         groups = list(dict.fromkeys(columns['group']))
         outcomes = list(dict.fromkeys(columns['outcome']))

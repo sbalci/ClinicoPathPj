@@ -1,5 +1,11 @@
 # R only displays a completed Python image. Both new and saved legacy states are supported.
 .cpjPlotColumns <- list(
+    km = c(payload = "text"),
+    waffle = c(payload = "text"),
+    lollipop = c(label = "text", slot = "integer", value = "number", baseline = "number",
+                 orientation = "text", annotation = "text"),
+    pie = c(category = "text", count = "number", total = "number", lower = "number",
+            upper = "number", annotation = "text"),
     agreement = c(x = "number", y = "number", bias = "number", lower = "number", upper = "number"),
     alluvial = c(payload = "text"),
     screeningquantiles = c(variable = "text", percentile = "number", value = "number",

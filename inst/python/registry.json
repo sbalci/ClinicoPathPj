@@ -84,7 +84,7 @@
       "source_name": "alluvial",
       "menu_group": "Descriptives Py",
       "menu_title": "Categorical alluvial flows (core)",
-      "supported_core": "Counts for 2\u20134 categorical axes, retain missing categories by default or complete-case exclusion, collision-free missing labels, native flow/marginal tables, shared count-scaled static/local geometry and local highlighting; 10,000 rows/60 paths/20 categories per axis without sampling",
+      "supported_core": "Counts for 2–4 categorical axes, retain missing categories by default or complete-case exclusion, collision-free missing labels, native flow/marginal tables, shared count-scaled static/local geometry and local highlighting; 10,000 rows/60 paths/20 categories per axis without sampling",
       "omissions": "Weights, condensation, numeric binning, marginal plot panels, alternative fill rules/orientations and baseline styling; no full parity"
     },
     {
@@ -301,7 +301,7 @@
       "source_name": "crosstable",
       "menu_group": "Descriptives Py",
       "menu_title": "Cross tables (core)",
-      "supported_core": "Grouped/overall native summaries; baseline numeric \u22646-level typing or explicit numeric override; per-variable or complete-case missingness; type-7 quartiles/sample SD; exact/normal Wilcoxon, Kruskal\u2013Wallis, uncorrected Pearson with sparse 2\u00d72 Fisher switch; five p-adjust methods",
+      "supported_core": "Grouped/overall native summaries; baseline numeric ≤6-level typing or explicit numeric override; per-variable or complete-case missingness; type-7 quartiles/sample SD; exact/normal Wilcoxon, Kruskal–Wallis, uncorrected Pearson with sparse 2×2 Fisher switch; five p-adjust methods",
       "omissions": "Larger exact RxC tests, alternate R table engines/styles, SMDs, copy-ready summaries and full baseline parity; unused group columns omitted"
     },
     {
@@ -556,7 +556,7 @@
       "source_name": "vartree",
       "menu_group": "Descriptives Py",
       "menu_title": "Categorical variable tree (core)",
-      "supported_core": "Observed prefix counts for 1\u20134 factors; common complete cohort; parent/cohort percentages; native node table; local expandable tree; optional top-30 leaf bar plot; maximum 200 non-root nodes and 10,000 input rows; optional continuous node mean/sample SD with valid/missing counts, leaf-only or all-node locations (0.3.39); explicit reference-level matches/valid-reference percentages, missing counts and combined numeric annotations (0.3.40)",
+      "supported_core": "Observed prefix counts for 1–4 factors; common complete cohort; parent/cohort percentages; native node table; local expandable tree; optional top-30 leaf bar plot; maximum 200 non-root nodes and 10,000 input rows; optional continuous node mean/sample SD with valid/missing counts, leaf-only or all-node locations (0.3.39); explicit reference-level matches/valid-reference percentages, missing counts and combined numeric annotations (0.3.40)",
       "omissions": "Pruning/follow rules, missing-category branches, baseline styling and full vtree parity; numeric and reference summaries supported in retained complete-cohort core"
     },
     {
@@ -744,10 +744,12 @@
       "status": "partial",
       "coverage": {
         "full_parity": false,
-        "numerical": "Independent categorical bar partial: 8,837 frozen R/table/ggplot2 checks/28 datasets/47 configurations (9 refusals), 11 focused tests and six rejected mutations; byte-identical oracle replay. All 662 Python tests and 390 isolated native assertions pass, with counts/percentage geometry, clearing/recovery and drawing-state/native PNG restoration. New JMO/GUI/full baseline methods/platform gates pending (2026-11-13).",
-        "gui": "pending",
+        "numerical": "Independent categorical partial: 8,837 frozen R/table/ggplot2 comparisons/28 datasets/47 configurations, six rejected mutations and byte-identical oracle replay. Frozen source gate: 662 Python tests. Actual 0.3.71 JMO: 5,435 bar checks/90 configurations; built and GUI-installed native libraries each pass 390 assertions. Histogram and existing mean runtime regressions pass. Full baseline methods and clinical review remain pending (2026-11-14).",
+        "gui": "0.3.71 macOS arm64 / jamovi 28.17.0: GUI Sideload, two fresh engines, Data Library/menu, percentage/count and combined labels, optional-output clearing, required-outcome removal/recovery, six OMV states, reopen/recalculation and HTML/native PNG export pass. Independent artifact checks preserve source data, tables and equivalent plot pixels; four corruptions rejected. See docs/python-barstats-core.md.",
         "compatibility": "existing Python identifier preserved",
-        "platforms": []
+        "platforms": [
+          "macOS arm64: jamovi 28.17.0; other platforms pending"
+        ]
       },
       "methods": "plot first: ggstatsplot::ggbarstats stacked bars with a statsExpressions subtitle: Pearson chi-square of independence with a Cramer's V CI, McNemar for paired data (no correction), a contingencyTableBF Bayes factor, and per-bar proportion (goodness-of-fit) tests. Its own Fisher exact fallback runs when expected counts are below 5; an optional ggpubr balloon plot is also offered.",
       "oracle": "statsExpressions::contingency_table, stats::chisq.test, stats::mcnemar.test(correct = FALSE), stats::fisher.test, BayesFactor::contingencyTableBF",
@@ -785,7 +787,7 @@
       "coverage": {
         "full_parity": false,
         "numerical": "Raw core: 20,380 R checks/255 configurations; standardized core: 2,060 independent checks and six adapters matching 160 R configurations. Source regressions: 605 Python tests. Actual 0.3.68 archive: 1,875 checks/102 configurations. Built and GUI-installed libraries each pass 531 standardized and 761 raw native assertions; compiler/install/freshness and serialized rendering pass. Saved native tables agree with R fixtures at display precision. Full baseline parity remains open; see docs/python-standardized-native.md. Welch RMS point-only source gate: five adapters match 110 independent R configurations; 627 Python tests and 446 Welch/531 standardized/761 raw native assertions pass. Welch standardized inference remains omitted after the frozen coverage study (2026-11-12). 0.3.69 actual archive: 2,008 checks/102 configurations; built and GUI-installed libraries each pass 446 Welch/531 standardized/761 raw assertions; 1,454 installed files match (2026-11-12).",
-        "gui": "0.3.68 GUI-Sideload on macOS arm64/jamovi 28.17.0: 1,453 installed files match archive. Prior 0.3.67 saved roles/defaults reopen correctly. Student/Welch, standardized off/on and paired input recovery, second-engine save/reopen/recalculation, HTML and two PNG exports pass. Sixteen tables/seven saved states retain source data/metadata and equivalent plot pixels; four corruption probes rejected (2026-11-12). The prior Welch source increment is now qualified within the 0.3.69 scope below. 0.3.69 GUI Sideload/macOS arm64: two fresh engines, prior-file compatibility, Student\u2192Welch/off/input recovery, save/reopen/recalculation and HTML/PNG export pass. Six saved states/data/pixel checks and four corruption probes pass (2026-11-12).",
+        "gui": "0.3.68 GUI-Sideload on macOS arm64/jamovi 28.17.0: 1,453 installed files match archive. Prior 0.3.67 saved roles/defaults reopen correctly. Student/Welch, standardized off/on and paired input recovery, second-engine save/reopen/recalculation, HTML and two PNG exports pass. Sixteen tables/seven saved states retain source data/metadata and equivalent plot pixels; four corruption probes rejected (2026-11-12). The prior Welch source increment is now qualified within the 0.3.69 scope below. 0.3.69 GUI Sideload/macOS arm64: two fresh engines, prior-file compatibility, Student→Welch/off/input recovery, save/reopen/recalculation and HTML/PNG export pass. Six saved states/data/pixel checks and four corruption probes pass (2026-11-12).",
         "compatibility": "existing Python identifier preserved",
         "platforms": [
           "macOS arm64 / jamovi 28.17.0: bounded local 0.3.68 package/native GUI qualification",
@@ -973,10 +975,10 @@
     {
       "id": "pyjjpiestats",
       "family": "jjstatsplot",
-      "menu": "Statistical Plots",
-      "title": "Pie Charts",
+      "menu": "Categorical comparisons",
+      "title": "Pie Chart (Core, Python)",
       "aliases": [],
-      "source": null,
+      "source": "analyses/jjstatsplot/pyjjpiestats.py",
       "baseline": {
         "module": "jjstatsplot",
         "version": "1.0.82.03",
@@ -990,25 +992,32 @@
         }
       },
       "wave": 3,
-      "status": "planned",
+      "status": "partial",
       "coverage": {
         "full_parity": false,
-        "numerical": "pending",
-        "gui": "pending",
+        "numerical": "Partial pie: frozen 757 independent R/ggplot2 count/geometry checks and 2,286 fixed-null GOF comparisons across 18 datasets/72 configurations, plus 12 bounded baseline subtitles. Native adapter matches all 54 enabled GOF reference runs; strict labelled-ratio refusal, missing/zero levels, disabled/invalid/input recovery and restored-state export verified. Actual 0.3.74 archive passes 5,148 pie checks/131 configurations; built and GUI-installed libraries each pass 1,027 native assertions. Nine desktop states and HTML/PNG artifacts agree with base R at display precision and reject four corruptions. Full methods, clinical review and broader platform/UI cases remain open (2026-11-15).",
+        "gui": "0.3.74 macOS arm64/jamovi 28.17.0: GUI Sideload and 1,480 installed-file matches; three fresh sessions include recalculation of the qualified 0.3.72 file with GOF off, equal/custom/duplicate-invalid/off/expected-hidden/input-clearing/recovery controls, nine saved OMV profiles, fresh-engine reopen/rerun and native HTML/PNG exports. Dataset/metadata bytes and equivalent pixels preserved; numeric percentage export spacing normalized with digits/precision retained. Direct PNG matches the descriptive export; four corruptions rejected. Weighted four-category example qualified; unweighted subject-role, single-category desktop, broader themes/accessibility and other platforms pending.",
         "compatibility": "existing Python identifier preserved",
-        "platforms": []
+        "platforms": [
+          "macOS arm64 / jamovi 28.17.0: bounded 0.3.74 weighted-example desktop qualification; other platforms pending"
+        ]
       },
       "methods": "plot first: ggpiestats pie, or a ggpubr donut. With one variable: chi-square goodness of fit (equal proportions or a user ratio). With two: chi-square of independence with a Cramer's V CI, McNemar for paired data, or a BF. Per-slice proportion tests, and its own Fisher fallback when expected counts are below 5.",
       "oracle": "statsExpressions::contingency_table, stats::chisq.test, stats::mcnemar.test(correct = FALSE), stats::fisher.test, BayesFactor::contingencyTableBF",
       "dependencies": {
-        "bundled": [],
-        "candidates": [
-          "plot renderer (excluded from effort)"
-        ]
+        "bundled": [
+          "numpy",
+          "scipy",
+          "matplotlib",
+          "pillow"
+        ],
+        "candidates": []
       },
       "source_name": "jjpiestats",
       "menu_group": "Stats Plots Py",
-      "menu_title": "Pie Charts"
+      "menu_title": "Pie chart (core)",
+      "supported_core": "Single-factor descriptive counts/proportions with integer frequencies and exact source/subject audits, declared zero categories, static polar geometry; optional fixed-null Pearson goodness-of-fit, strictly labelled positive ratios, native expected-count/residual/contribution mapping and sparse/unavailable notices. Inference off by default.",
+      "omissions": "Structural-zero probabilities, fitted nulls, exact/Monte Carlo inference, effect uncertainty, grouped/split/paired/Bayesian models, donut and interaction; no full parity"
     },
     {
       "id": "pyjjridges",
@@ -1133,10 +1142,10 @@
     {
       "id": "pyjwaffle",
       "family": "jjstatsplot",
-      "menu": "Statistical Plots",
+      "menu": "Categorical comparisons",
       "title": "Waffle Charts",
       "aliases": [],
-      "source": null,
+      "source": "analyses/jjstatsplot/pyjwaffle.py",
       "baseline": {
         "module": "jjstatsplot",
         "version": "1.0.82.03",
@@ -1150,13 +1159,15 @@
         }
       },
       "wave": 3,
-      "status": "planned",
+      "status": "partial",
       "coverage": {
         "full_parity": false,
-        "numerical": "pending",
-        "gui": "pending",
+        "numerical": "146,420 independent R source comparisons/14 datasets/140 configurations, with explicit waffle 1.0.2 truncation differences; 216,200 actual packaged waffle runtime/drawing checks/420 configurations; 859 assertions against each built and installed native R library; preceding unchanged statistical source gate: 739 Python tests. See docs/python-waffle-core.md.",
+        "gui": "0.3.76 macOS arm64/jamovi 28.17.0: GUI Sideload, 1,487 exact installed-file matches, two fresh engines, Data Library/single menu, weighted panels and exact denominators, seven-row/flip/title/legend controls, output/input recovery, optional-panel removal, seven OMV profiles, reopen/forced rerun and native HTML/PNG export. Independent base-R tables, data bytes and same-dimension cached/direct pixels agree; four corruptions rejected. Legacy 0.3.75 lollipop data/tables/pixels unchanged after reopen/recalculation. Broader accessibility, clinical/full-method and other-platform gates remain pending. See docs/python-waffle-gui-checklist.md.",
         "compatibility": "existing Python identifier preserved",
-        "platforms": []
+        "platforms": [
+          "macOS arm64 / jamovi 28.17.0: bounded 0.3.76 weighted-example desktop qualification; other platforms pending"
+        ]
       },
       "methods": "plot only: waffle chart of category proportions (waffle::geom_waffle), with optional facets and count or percent labels.",
       "oracle": "none (figure only); the square allocation in waffle::geom_waffle layer data",
@@ -1255,10 +1266,10 @@
     {
       "id": "pylollipop",
       "family": "jjstatsplot",
-      "menu": "Statistical Plots",
+      "menu": "Group comparisons",
       "title": "Lollipop Chart",
       "aliases": [],
-      "source": null,
+      "source": "analyses/jjstatsplot/pylollipop.py",
       "baseline": {
         "module": "jjstatsplot",
         "version": "1.0.82.03",
@@ -1272,25 +1283,31 @@
         }
       },
       "wave": 3,
-      "status": "planned",
+      "status": "partial",
       "coverage": {
         "full_parity": false,
-        "numerical": "pending",
-        "gui": "pending",
+        "numerical": "Partial native lollipop: 28,432 frozen independent R/ggplot2 comparisons across 12 datasets/384 configurations; eleven core tests/five rejected mutations and byte-identical replay. Six adapter/renderer tests match all 384 references and a subprocess. The 720-test frozen statistical-source gate passes. Actual 0.3.74 archive passes 25,016 lollipop checks/390 configurations and broader regressions; all analysis/helper bytes and 1,397 shipped R-library files verified. Built and GUI-installed native libraries each pass 2,228 assertions, including 96 reference configurations, clearing/recovery and restored-state PNG exports. Actual desktop artifacts pass independent base-R counts/summaries/source mappings and reject four corruptions. Full methods/clinical/additional-platform review remain open (2026-11-15). 0.3.75 text-only UI patch retains the same engines/contracts and passes 25,016 packaged lollipop checks/390 configurations; previous numerical evidence applies unchanged.",
+        "gui": "0.3.74 macOS arm64/jamovi 28.17.0: GUI Sideload, 1,480 exact installed-file matches, three fresh sessions, Data Library/single menu entry, mean/median/sum/no aggregation, ordering/orientation, output/input clearing and recovery, six OMV states, reopen/forced rerun and native HTML/PNG exports verified. Dataset/metadata bytes, tables/source mappings and equivalent cached pixels agree; direct PNG matches base-R-checked native CSV render. Four corruptions rejected. Broader themes/accessibility, full methods and other platforms pending. See docs/python-lollipop-gui-checklist.md. 0.3.75 UI patch: five short hints fully visible at the previously clipped pane width; GUI Sideload, all 1,480 installed-file matches, fresh-engine 0.3.74 reopen/rerun and unchanged saved tables/dataset/cached image/native PNG verified. Only UI/version changed; 25,016 packaged runtime checks pass.",
         "compatibility": "existing Python identifier preserved",
-        "platforms": []
+        "platforms": [
+          "macOS arm64 / jamovi 28.17.0: bounded 0.3.74 desktop/runtime qualification plus 0.3.75 UI-only compatibility/export verification; other platforms pending"
+        ]
       },
       "methods": "plot only: lollipop chart of a value per category, with optional mean/median aggregation, sorting, highlighting and a reference line. A data summary table gives n, mean, median, SD and quartiles.",
       "oracle": "stats::aggregate, stats::quantile (type 7)",
       "dependencies": {
-        "bundled": [],
-        "candidates": [
-          "plot renderer (excluded from effort)"
-        ]
+        "bundled": [
+          "numpy",
+          "scipy",
+          "matplotlib"
+        ],
+        "candidates": []
       },
       "source_name": "lollipop",
       "menu_group": "Stats Plots Py",
-      "menu_title": "Lollipop Chart"
+      "menu_title": "Lollipop Chart (Core, Python)",
+      "supported_core": "Native mean/median/sum/no aggregation, stable factor/value/Unicode ordering, orientation-aware static stems, optional plotted-mean reference and value labels. Separate raw/plotted summaries, declared-category/missingness audits and physical source-to-point membership; bounded listings disclose truncation.",
+      "omissions": "Highlighting, conditional colors, baseline style/theme presets, inferential uncertainty, interactive inspection, full method parity and desktop/platform qualification"
     },
     {
       "id": "pyraincloud",
@@ -2203,10 +2220,10 @@
     {
       "id": "pysinglearm",
       "family": "jsurvival",
-      "menu": "Survival",
+      "menu": "Survival estimates",
       "title": "Single Arm Survival",
       "aliases": [],
-      "source": null,
+      "source": "analyses/jsurvival/pysinglearm.py",
       "baseline": {
         "module": "jsurvival",
         "version": "1.1.1",
@@ -2220,15 +2237,15 @@
         }
       },
       "wave": 4,
-      "status": "planned",
+      "status": "partial",
       "coverage": {
         "full_parity": false,
-        "numerical": "pending",
+        "numerical": "KM/log-log/median/reverse-KM/Poisson core: 58,635 independent R comparisons/26 datasets/156 configurations. All 156 native-adapter table/plot geometry configurations pass, plus 1,558 native source assertions/52 references, recovery and restored-state PNG export, and 14 independent hand-example assertions/native export. See docs/python-kaplan-meier-core.md; package and GUI gates remain open. All 757 Python tests pass; generator/compiler and source-only native export pass.",
         "gui": "pending",
         "compatibility": "existing Python identifier preserved",
         "platforms": []
       },
-      "methods": "Single-cohort Kaplan-Meier: median survival with CI, survival at user cut points (Greenwood, survfit 'log' CI), reverse-KM follow-up, person-time incidence rates with exact Poisson CIs, competing-risk cumulative incidence (cmprsk::cuminc), Nelson-Aalen baseline hazard, landmark and date-derived follow-up; KM/cumulative-event/cumulative-hazard/KMunicate plots",
+      "methods": "Single-cohort Kaplan-Meier: median survival with CI, survival at user cut points (Greenwood, survfit 'log-log' CI with boundary limits suppressed), reverse-KM follow-up, person-time incidence rates with exact Poisson CIs, competing-risk cumulative incidence (cmprsk::cuminc), Nelson-Aalen baseline hazard, landmark and date-derived follow-up; KM/cumulative-event/cumulative-hazard/KMunicate plots",
       "oracle": "survival::survfit + summary.survfit(times =) and its median/0.95LCL/0.95UCL table, cmprsk::cuminc, survival::basehaz, exact Poisson limits via stats::qchisq",
       "dependencies": {
         "bundled": [],
@@ -2236,7 +2253,7 @@
       },
       "source_name": "singlearm",
       "menu_group": "Survival Py",
-      "menu_title": "Single Arm Survival"
+      "menu_title": "Single-cohort survival (core)"
     },
     {
       "id": "pysurvival",

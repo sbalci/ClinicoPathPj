@@ -73,7 +73,7 @@ def check(path):
             source = json.loads((ROOT/'inst/python/registry.json').read_text())
             # Only coverage evidence can advance after qualifying this immutable archive;
             # full_parity, baseline, source, methods and option/output contracts cannot.
-            for name in ('pyjjbetweenstats', 'pyjjwithinstats', 'pyjjhistostats'):
+            for name in ('pyjjbetweenstats', 'pyjjwithinstats', 'pyjjhistostats', 'pyjjbarstats', 'pyjjpiestats', 'pylollipop'):
                 p = next(e for e in packaged['analyses'] if e['id'] == name)
                 s = next(e for e in source['analyses'] if e['id'] == name)
                 for key in ('numerical', 'gui', 'platforms'):

@@ -1,11 +1,207 @@
-# ClinicoPathPj implementation plan — revised 2026-11-13
+# ClinicoPathPj implementation plan — revised 2026-11-15
 
 This is the current delivery plan. It supersedes the implementation recommendations in
 `python-roadmap.md` (2026-10-18) and the initial `interactive-analysis-plan.md`.
 The original 61-analysis inventory remains the target; a menu entry does not establish parity.
 Detailed per-analysis evidence remains in the [generated status matrix](python-migration-status.md).
 
-## Current source increment — independent categorical bars
+## Current source increment — single-cohort survival foundation
+
+The next planned `pysinglearm` target now has a [frozen numerical contract](python-kaplan-meier-core.md)
+and reusable right-censored Kaplan–Meier engine, with Greenwood pointwise log-log
+limits, summary-table median inversion, explicit horizon support/counts,
+reverse-KM follow-up and raw person-time/exact Poisson intervals. The actual
+frozen R backend uses log-log, correcting the inventory's older “log” wording.
+Zero/one survival boundary limits remain blank; unreached medians are not
+replaced by observed-time summaries. Code 2 is rejected as a competing event,
+not silently censored. Near-tie normalization and changed rows are audited.
+
+Independent R references were frozen before implementation: 26 datasets, 156
+configurations and 58,635 comparisons pass. Thirteen focused tests include
+manual identities, extreme/resource refusals, 100,000 tied observations and six
+rejected statistical mutations; R fixture replay is byte-identical. The initial
+oracle's expensive unused Poisson p-value computation is retained as a reference
+harness issue; interval checks now avoid it without changing the interval.
+All 752 final-source Python tests pass in 264.812 seconds without failures,
+errors or skips; generator/status freshness and diff checks pass. The archive
+hash and all 1,487 installed 0.3.76 files are unchanged.
+
+The source increment now includes a generator-owned `pysinglearm` interface,
+explicit event/censoring selectors, declared units and origin, native cohort,
+mapping, missingness, median and requested-time tables, optional person-time,
+steps and retained-row tables, and a Python static step plot. Baseline plot,
+confidence-band, censor-mark and person-time defaults remain off. All 156 R
+configurations pass adapter/table and saved-state geometry checks; seven
+corrupt drawing variants are refused. The compiler/roxygen pass; a synthetic
+11-subject Data Library example is included.
+
+Registry inventory is now **38 partial / 23 planned / 15 utilities / 53 source
+entries**, with zero full-parity releases. This source-only status does not
+replace installed 0.3.76, whose archive hash and 1,487 files were reverified.
+Dates, landmarking, delayed entry, competing risks, RMST, weights, models,
+interactive exploration, package and GUI acceptance remain separate gates.
+Native source qualification passes **1,558 assertions** across 52 reference
+configurations, optional-output clearing, valid → incomplete/invalid → valid
+recovery, reuse/fresh equivalence and restored-state PNG export with source
+data removed. The synthetic example passes 14 independent hand calculations
+and native export; its months plot and restored years plot were inspected.
+The initial native run exposed test-only all-missing logical/numeric column
+comparisons and rounded horizon strings; corrected tests retain blank native
+values and round-trip all requested times. Sandbox process-permission stderr
+remains visible and does not establish cancellation qualification.
+All **757 Python tests** pass without failures, errors or skips.
+Then follow the [single-cohort package/GUI checklist](python-singlearm-gui-checklist.md);
+Sideload and fresh-engine saved-file acceptance remain required.
+
+## Current qualified partial increment — waffle (0.3.76)
+
+Standard **ClinicoPathPj_0.3.76.jmo** is built and GUI-Sideloaded on macOS arm64 /
+jamovi 28.17.0. The actual archive passes 216,200 waffle checks/420 configurations
+and 30,164 existing lollipop/pie checks/521 configurations. Built and installed
+libraries each pass 859 native assertions. All 1,487 installed files and 1,402
+shipped R-library files match the qualified archive/build; verified 0.3.75 is
+archived. Existing statistical engines retain the preceding 739-test source gate.
+
+Two fresh engines verify seven waffle saved profiles, required/optional-role and
+output recovery, changed rows/orientation, reopen/rerun and native HTML/PNG exports.
+Independent base-R artifact checks preserve source data, exact native tables,
+cached pixels and direct exports at their respective native dimensions, reject
+four corruptions and verify unchanged 0.3.75 lollipop data/tables/pixels after a
+separate compatibility save. See [waffle evidence](python-waffle-core.md) and the
+[executed desktop protocol](python-waffle-gui-checklist.md).
+
+This closes the bounded package/desktop gate locally. Full method parity,
+interaction/fractional weights, clinical/accessibility review, long-job
+cancellation and additional platforms remain separate gates. Inventory stays
+37 partial / 24 planned / 15 utilities / 52 entries with zero full-parity releases.
+Next continue remaining planned analysis/method ports without treating this
+descriptive subset as full waffle or overall migration completion.
+
+## Earlier source increment — waffle allocation foundation
+
+Native source follow-up: the generator-owned `pyjwaffle` SPEC/run now supplies
+organized roles/method/results/plot controls, explicit panel denominators,
+rare/zero-category allocation tables, source-row audit and a bounded Python
+static renderer using saved geometry. Five adapter/renderer tests pass all 140
+reference configurations, with no source-data refit and nine corrupted saved
+states rejected. Compiler/roxygen and isolated installation pass. Native
+lifecycle/export now passes 859 assertions across 56 configurations and recovery/
+restored-state exports; all 739 Python tests pass in 515.671 seconds. Package/GUI
+gates stay open. Registry advances to 37 partial / 24 planned / 15 utilities and 52 source
+entries, with zero full-parity completion; installed 0.3.75 remains unchanged.
+The preceding numerical-only milestone below retains its earlier planned status.
+
+Next build/inspect/execute the actual next-version archive, then GUI-Sideload and
+qualify fresh-engine controls, OMV persistence/recalculation and table/PNG exports.
+Retain process-inspection sandbox diagnostics and initial native harness mapping
+failures separately from passing numerical/native assertions. No desktop or
+broader-platform completion is inferred.
+
+### Earlier numerical-only milestone
+
+The next `pyjwaffle` port has a [bounded source contract](python-waffle-core.md),
+independent R oracle and reusable integer allocation/geometry engine. Fourteen
+datasets and 140 configurations pass 146,420 comparisons; twelve focused tests
+include five rejected corruptions, rational extreme-count checks, missingness,
+factor ordering and separate facet denominators. R fixture replay is byte-identical.
+
+Actual waffle 1.0.2 builds expose a floating-point truncation defect for rounded
+29/57/58-tile allocations: 20 of 170 panel builds lose tiles; 150 agree. The Python
+engine uses exact integer largest remainders and preserves the baseline's later-
+category tie rule, deliberately ensuring exactly 100 tiles. These differences
+are recorded and checked rather than described as full baseline agreement.
+
+This remains source-only, with integer observation frequencies, exact per-panel
+counts/proportions, rounded-area error/rare-category audits and bounded flip/row
+geometry. Fractional weights, native controls/tables, Python rendering, interaction
+and package/GUI qualification remain explicit follow-ups. The registry stays
+planned; installed/package 0.3.75 and inventory counts are unchanged. Next add
+organized SPEC/run and a static renderer, then native lifecycle/export checks.
+All 734 final-source Python tests pass in 373.343 seconds without failures,
+errors or skips; generator/status freshness and diff checks pass. All 1,480
+installed 0.3.75 files and its archive SHA-256 remain unchanged.
+
+## Current UI patch — lollipop help layout (0.3.75)
+
+Two clipped secondary hints are now five short conditional lines (maximum 40
+characters). The analysis interface version is 0.1.1. Options/defaults/results,
+control structure/bindings and the run body are unchanged from 0.3.74; all 56
+shared Python helpers and all other packaged Python analyses are byte-identical.
+Only the lollipop SPEC version/UI differs. The compiled UI contains all five hints.
+
+Standard 0.3.75 builds and passes 25,016 archived lollipop checks/390 configurations.
+GUI Sideload installs the same module identity; all 1,480 installed files match.
+Fresh engine 59646 reopens the 0.3.74 saved example, displays complete hints at the
+pane width that previously clipped them and forces recalculation. The new saved
+tables, dataset/metadata, cached plot and direct PNG match 0.3.74 exactly. Generator/
+status freshness and diff checks pass; the verified 0.3.74 archive is retained for
+rollback. No broad statistical/native suite rerun is needed or claimed for these
+unchanged engines; the earlier evidence below remains separate. Inventory stays
+36 partial / 25 planned / 15 utilities and no full-parity completion.
+
+## Current qualified partial increment — lollipop and GOF (0.3.74)
+
+While desktop access for candidate 0.3.73 is unavailable, the next planned
+`pylollipop` port now has a [frozen source contract](python-lollipop-core.md) and
+reusable Python computation. Independent base-R aggregation/type-7 summaries and
+actual ggplot2 stem geometry were frozen first: 12 datasets, 384 configurations
+and 28,432 comparisons agree. All four baseline file hashes verify and the R
+reference replays byte-for-byte. Eleven focused tests pass, including five rejected
+corruptions, source membership, ties, missing levels and extreme numeric guards.
+The final-source suite passes all 714 Python tests in 290.651 seconds, with no
+failures/errors/skips; generator/status freshness and diff checks pass.
+
+The source supports mean/median/sum/no aggregation, stable value/alphabetic sorting,
+orientation-aware axis levels and a finite stem baseline. Raw-observation and
+plotted-value summaries are distinct: the mean reference is the unweighted mean
+of plotted group summaries when aggregation is enabled. Sorting and zero-based
+source membership remain explicit. Alphabetic collation is deterministic Unicode
+order, not locale-dependent; infinities are refused rather than silently dropped.
+No inferential intervals, clinical categories, native menu, renderer or interactive
+view is introduced in this increment.
+
+The native SPEC/run source entry is now partial under Stats Plots Py → Group
+comparisons, with organized roles/aggregation/order/reference controls, separate
+raw/plotted tables, source membership and bounded Python static rendering. All six
+adapter/renderer tests pass, including 384 independent configurations and an actual
+subprocess; compiler/roxygen and isolated installation pass. The isolated native
+suite passes 2,228 assertions across 96 independent configurations plus lifecycle,
+recovery, reuse-versus-fresh and restored-state exports in both orientations;
+the PNGs were visually inspected. Counts advance to 36 partial / 25 planned /
+15 utilities and 51 entries. All 720 final-source Python tests pass in 356.119
+seconds, without failures/errors/skips; generator/status freshness and diff checks
+pass.
+
+Candidate **0.3.74** now builds and passes 25,016 actual lollipop runtime/geometry
+checks/390 configurations plus 5,148 pie, 5,435 bar, 6,692 histogram and 2,008 mean
+regression checks. Total packaged coverage is 44,299 checks/983 configurations.
+The built library passes 2,228 lollipop and 1,027 pie/GOF assertions; all 1,397
+shipped R-library files match the tested build. The archived analysis inventory,
+every registered Python analysis and all shared Python helpers match source.
+Nine focused tests qualify versioned GOF artifact selection; the prior 720-test
+statistical source gate remains applicable, with no calculation changes for packaging.
+
+Desktop access was restored after an initial connection timeout. GUI Sideload and
+three fresh sessions now verify both analyses on macOS arm64/jamovi 28.17.0, with
+all 1,480 installed files matching the archive before and after testing. The older
+0.3.72 pie file reopens and recalculates with inference still off; equal/custom/
+invalid/off/expected-hidden/required-input GOF transitions pass. Lollipop verifies
+mean/median/sum/no aggregation, descending/horizontal geometry, overplotting
+disclosure, output/input clearing and recovery, reopen and forced recalculation.
+Nine GOF and six lollipop OMV profiles plus native HTML/PNG exports pass independent
+base-R checks, unchanged dataset/metadata bytes, table/source mapping consistency
+and equivalent plot pixels; eight deliberate corruptions are rejected. Installed
+native suites pass the same 3,255 assertions. Percentage export whitespace is
+normalized without changing digits, precision or statistical tolerances.
+
+Verified rollback 0.3.72 and prior runtime-only candidate 0.3.73 are archived.
+Follow the [executed 0.3.74 desktop protocol](python-lollipop-gui-checklist.md) for
+reproduction. Full-method/clinical/additional-platform gates remain open. A minor
+UI follow-up was to split or wrap long secondary lollipop hints; this is completed
+in 0.3.75 above. Source inventory is still 36 partial /
+25 planned / 15 utilities and no full-parity release.
+
+## Current qualified partial increment — independent categorical bars (0.3.71)
 
 The bounded [`pyjjbarstats` core](python-barstats-core.md) now has a partial native
 SPEC/run adapter under Stats Plots Py → Categorical comparisons. Independent R
@@ -23,15 +219,120 @@ missing/zero-frequency/unused-level tables and organized UI controls are present
 A synthetic seven-row frequency CSV represents 50 observations in groups of 20
 and 30; the native static images were inspected in both scales. The isolated
 native suite passes 390 assertions, including result clearing/recovery and
-serialized drawing-state export after data removal. Package/GUI/platform gates
+serialized drawing-state export after data removal. Other platform and full-parity gates
 remain separate, alongside paired/Bayesian models, multiple outcomes/splits,
 per-bar proportion tests, full effect uncertainty and clinical presets.
 
-Source inventory is now **34 partial / 27 planned / 15 utilities**, with 49 entries
-and no full-parity releases. All 662 final-source Python tests and generator/status
-freshness pass. Next build the next standard-version JMO and validate its actual runtime before GUI
-Sideload/fresh-engine OMV save/reopen/rerun and HTML/PNG export. Preserve qualified
-0.3.70 and all 1,461 installed files until that next package is qualified.
+At bar qualification, source inventory was **34 partial / 27 planned / 15 utilities**, with 49 entries
+and no full-parity releases. The frozen source gate remains 662 Python tests.
+
+The next-package gate is now complete as **0.3.71**: actual archived bar runtime
+5,435 checks/90 configurations, 390 assertions each in built/installed native libraries,
+6,692 histogram and 2,008 existing mean runtime regression checks, and 1,467 exact
+installed-file matches. GUI Sideload and two fresh engines verify the Data Library/menu,
+percentage/count labels, optional-output clearing, required-input recovery, six saved
+OMV profiles, reopening/recalculation and HTML/PNG exports. Independent base-R artifact
+checks preserve dataset bytes, numerical tables and equivalent plot pixels; four
+corruptions are rejected. Qualified 0.3.70 is archived for rollback.
+
+## Current qualified partial increment — native descriptive pie chart (0.3.72)
+
+The next `pyjjpiestats` increment now has a [frozen source contract](python-pie-core.md)
+and an executable reusable count/geometry engine. Independent R fixtures were written
+before the Python implementation: 12 datasets and 757 comparisons pass, with 11
+focused tests, four rejected corruptions and byte-identical R replay. The full
+source suite passes 673 Python tests. Preserve all
+nonmissing declared levels, including zero-count categories; exclude actual missing
+levels while retaining a literal NA category. Slice fractions and clockwise angles
+come from exact integer frequency accumulation, without expanding aggregated rows.
+
+A recorded baseline limit matters for large frequencies: the actual ggpiestats path
+uses tidyr::uncount and refuses the large-count fixture at its integer conversion.
+The independently aggregated ggplot2 geometry remains usable and agrees with the
+Python core. This is an explicit supported extension, not evidence of full baseline
+behavior at large counts. Statistical inference is deferred: unused declared levels
+must not silently disappear from a future expected-proportion hypothesis.
+
+The single-factor native SPEC/run interface, frequency/denominator/missingness tables,
+optional contributing-row audit and static pie renderer are now implemented in source.
+Controls keep the categorical outcome and optional frequency/subject roles first;
+secondary results and plot settings use organized sections. Six adapter/renderer tests
+compare the actual wedges with frozen R angles, check no refit during rendering and
+reject six corrupted payloads. The isolated native library passes 172 assertions for
+all 12 datasets, clearing/recovery, exact identities and serialized-state PNG export
+after analysis-data removal. All 679 final-source Python tests and 390 existing
+bar native assertions pass. A synthetic CSV retains a zero-frequency legend category.
+
+The new-package gate is now complete as **0.3.72**: 4,428 actual pie runtime checks/
+77 configurations, 172 assertions each in built/GUI-installed libraries, and 1,473
+exact installed-file matches. The same archive passes 5,435 bar, 6,692 histogram
+and 2,008 mean-route regression checks. GUI Sideload and two fresh sessions verify
+Data Library/menu, zero-count legend, percentage/combined labels and decimals,
+output/input clearing and recovery, six saved OMV states, reopen/recalculation and
+HTML/PNG export. Independent R artifact checks preserve dataset bytes, tables and
+equivalent plot pixels; four corruptions are rejected. Direct PNG matches native
+rendering at the same 1300×900 resolution. Archive qualified 0.3.71 for rollback.
+
+At pie qualification the registry had **35 partial / 26 planned / 15 utilities**, with **50 entry
+points** and no full-parity release. Group/split pies, donut,
+paired/Bayesian methods, uncertainty and interactive inspection remain omitted.
+The next candidate implements optional fixed-null GOF and labelled expected ratios;
+its desktop gate is tracked below.
+Unweighted subject-role desktop tests and broader theme/accessibility/platform
+qualification remain open.
+
+## In progress — native single-factor goodness-of-fit
+
+The [fixed-null GOF contract](python-pie-gof-core.md) was frozen before a new reusable
+Python engine. It preserves all declared nonmissing categories, including zeros,
+requires exactly labelled positive expected ratios, and defaults inference off.
+Independent base-R fixtures cover 18 datasets and 54 enabled configurations; 18
+disabled runs bring the checker to 72 configurations and 2,286 comparisons. Twelve
+bounded ggpiestats subtitle comparisons also agree. R replay is byte-identical.
+The earlier source-only gate passed 689 Python tests. Ten focused tests cover
+closed-form df=2 tails, retained null support, labelled
+ratio scaling/reordering, the E=5 boundary, unavailability with one category,
+missingness/identity preservation, disabled calculation gates, invalid/extreme
+ratios and five rejected corruptions.
+
+Pearson inference remains an explicit asymptotic approximation, with sparse flags
+when expected counts are below five. No automatic exact/Fisher/Monte Carlo switch,
+fitted null, effect points/intervals or per-cell tests are supplied. Native GOF source
+integration is now validated; installed 0.3.72 remains descriptive and unchanged.
+At this GOF integration checkpoint, registry counts were 35 partial / 26 planned /
+15 utilities and 50 entries.
+The native source interface now has an off-by-default Pearson switch,
+optional custom named-ratio input, and test/expected-count/residual/contribution
+tables. The parser rejects duplicate (including escaped duplicate) labels, malformed
+or executable text, nonfinite values and inexact category support. It ignores stale
+ratio text when the relevant controls are off. Equal/custom ratio mapping and
+statistical assumptions are visible; sparse/one-category results have distinct
+native notices. The category code is labelled as a transported index rather than
+an original pre-normalization code. Six adapter tests pass across all 54 enabled
+reference runs; all six descriptive-renderer tests pass. A native CSV example agrees
+with base R and its PNG byte-matches qualified 0.3.72. The full source suite passes
+695 Python tests; the isolated native suite passes 1,027 assertions, including
+invalid-ratio/disabled/required-input recovery and restored-state PNG export. All six
+relevant isolated Python files byte-match final source; compiler/roxygen and
+generator/status freshness pass.
+
+The **0.3.73 candidate** is now built. Actual archived runtimes pass 5,148 pie
+checks/131 configurations, 5,435 bar, 6,692 histogram and 2,008 mean-route
+regression checks. The built native library passes 1,027 assertions without
+failures/errors/warnings/skips, and all 1,393 shipped R-library files match it.
+GUI automation could not connect (`Sky Computer Use native pipe startup failed`),
+so this candidate is not desktop-qualified. All 1,473 installed 0.3.72 files still
+match the qualified archive; preserve that installation and rollback package.
+Next follow the [desktop checklist](python-pie-gof-gui-checklist.md): GUI Sideload,
+prior descriptive-file compatibility, fresh-engine rerun, equal/custom/invalid/off
+recovery and saved/exported inference tables. Clinical/full-method and other-platform
+gates remain separate.
+
+On 2026-11-15 the GUI connection still fails. Preparation continues in the
+saved-artifact checker: eight focused tests now pass after five malformed-row/state
+failures were reproduced and repaired; exported HTML must preserve saved tables
+and plot pixels. Existing real 0.3.72 artifacts still pass their checker. This is
+test-harness evidence, not new desktop acceptance; the 0.3.73 archive is unchanged.
 
 ## Current qualified partial increment — native histogram core (0.3.70)
 

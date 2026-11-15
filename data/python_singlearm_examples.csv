@@ -1,0 +1,12 @@
+Subject,Months,Status
+S01,0,Event
+S02,6,Censored
+S03,12,Event
+S04,12,Censored
+S05,18,Event
+S06,24,Censored
+S07,36,Event
+S08,48,Censored
+S09,60,Censored
+S10,,Event
+S11,72,

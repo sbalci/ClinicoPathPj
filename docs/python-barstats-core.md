@@ -235,3 +235,58 @@ across all 1,461 files; its JMO SHA-256 is
 No new package was built, installed, committed or published for this increment.
 Next build the next standard-version JMO, execute the archived bar runtime and
 qualify Sideload/fresh-engine/OMV/export behavior before advancing GUI status.
+
+
+## Packaged and desktop increment — 0.3.71 (2026-11-14)
+
+The source-only freeze above records the earlier milestone. Version 0.3.71 now
+contains that same statistical implementation. The actual extracted JMO runtime
+passes **5,435 checks / 90 configurations**, including both scales, inference gates,
+source identities and invalid requests. Existing histogram (**6,692 checks / 270
+configurations**) and independent/paired mean routes (**2,008 / 102**) pass in the
+same archive. The built native histogram regression also passes **671 assertions**.
+Built and GUI-installed categorical libraries each pass **390 native assertions**
+without failures, errors, warnings or skips. The initial sandbox run emitted process
+supervision denials despite passing assertions; the unrestricted rerun is clean.
+No production process controls were weakened.
+
+Installed through **Modules → Manage installed → Sideload**; all **1,467 files**
+byte-match the archive, with no extra files. Two fresh macOS arm64/jamovi 28.17.0
+sessions (ports 55297 and 55535) verify the new Data Library example and single
+Stats Plots Py → Categorical comparisons menu entry. The weighted cohort is seven
+source rows, five complete rows, two excluded rows, one zero-frequency row, four
+contributing rows and total N=50. Group denominators are 20 and 30. Count bars show
+heights 20/30, with segments 12/8 and 3/27; percentage bars retain equal total heights.
+Combined count/percentage labels preserve the same within-group denominators.
+
+Six actual desktop saves cover percentage, count, outputs off, incomplete required
+outcome, recovered and reopened states. Optional tests/cells/source rows/plots clear;
+removing the outcome clears all computed rows, notes and cached plots. Restoring it
+recovers the reference. A second fresh engine reopens and recalculates the result.
+Native HTML and PNG exports complete. Independent base-R artifact checks verify the
+displayed counts, expectations, denominators, Pearson p/statistic and both V points.
+All six saves preserve dataset/metadata bytes. Equivalent count-state tables and
+cached plot pixels agree across recovery/reopen and HTML export. Four corrupted
+artifacts (count, denominator, effect, missing plot) are rejected.
+
+The first artifact check exposed an export-format difference: saved OMV HTML adds
+an empty row to an empty removed-level table, while standalone HTML omits that row.
+The checker accepts both empty forms; calculated rows and expected values were not
+changed. The failed check remains in /private/tmp/cpj-barstats-artifacts-20261114.log.
+
+Direct PNG is **1300×900**, byte-identical to the separately rendered native source
+example: SHA-256 `b98ede57630d49b36ac6616fa029da21dff5cd00d564f340977fb36d76429a1c`.
+PNG assets and JSON/log reports remain local ignored evidence. Saved OMV examples
+and validation scripts are available for review. Package SHA-256:
+`145cbc164a84c4fc4bf75fdaac7336610d5eb5a954a8b0678f8cf8e8fb0d4b5e`
+(23,505,164 bytes). Qualified 0.3.70 is retained under packages/archive for rollback.
+Full baseline methods, broader accessibility/themes, clinical review and other
+platforms remain pending; this is a qualified partial core, not a full-parity claim.
+
+Reproduce package/artifact checks with jamovi's bundled Python:
+
+```sh
+python -B tools/check-barstats-package.py ClinicoPathPj_0.3.71.jmo
+Rscript --vanilla tools/render-barstats-example.R <library> docs/validation-exports/python-barstats-0.3.71-native-source.png
+python -B tools/check-barstats-artifacts.py
+```

@@ -1,0 +1,10 @@
+Category,Panel,Frequency
+Negative,Small,1
+Positive,Small,3
+Rare,Small,0
+Negative,Large,899
+Positive,Large,100
+Rare,Large,1
+Negative,Zero,0
+,Large,8
+Positive,,2

@@ -1,11 +1,11 @@
 ---
 title: ClinicoPathPj - Python-Backed Analyses
 name: ClinicoPathPj
-version: 0.3.70
+version: 0.3.76
 jms: '1.0'
 authors: Serdar Balci
 maintainer: Serdar Balci <serdarbalci@serdarbalci.com>
-date: '2026-11-13'
+date: '2026-11-15'
 type: R
 description: >-
   Experimental analyses generated from Python specifications and computed in the
@@ -404,6 +404,38 @@ analyses:
     menuSubgroup: Categorical comparisons
     menuTitle: Categorical bars (core)
     hidden: false
+  - title: Pie Chart (Core, Python)
+    name: pyjjpiestats
+    ns: ClinicoPathPj
+    category: analyses
+    menuGroup: Stats Plots Py
+    menuSubgroup: Categorical comparisons
+    menuTitle: Pie chart (core)
+    hidden: false
+  - title: Lollipop Chart (Core, Python)
+    name: pylollipop
+    ns: ClinicoPathPj
+    category: analyses
+    menuGroup: Stats Plots Py
+    menuSubgroup: Group comparisons
+    menuTitle: Lollipop Chart (Core, Python)
+    hidden: false
+  - name: pyjwaffle
+    ns: ClinicoPathPj
+    hidden: false
+    menuGroup: Stats Plots Py
+    menuSubgroup: Categorical comparisons
+    menuTitle: Waffle Charts
+    title: Waffle Charts (Core, Python)
+    category: analyses
+  - name: pysinglearm
+    ns: ClinicoPathPj
+    hidden: false
+    menuGroup: Survival Py
+    menuSubgroup: Survival estimates
+    menuTitle: Single-cohort survival (core)
+    title: Single-Cohort Survival (Core, Python)
+    category: analyses
 usesNative: 'yes'
 datasets:
   - name: Python Core Examples
@@ -681,5 +713,48 @@ datasets:
       - Python
       - Categorical bars
       - Frequency denominators
+  - name: Pie Frequency Examples
+    path: python_pie_examples.csv
+    description: >-
+      Six synthetic source rows: three positive categories represent 25
+      observations, one declared category has zero frequency, and two rows have
+      missing selected roles. Pie and table retain the zero category without
+      expanding observations.
+    tags:
+      - Python
+      - Pie charts
+      - Declared categories
+  - name: Lollipop Aggregation Examples
+    path: python_lollipop_examples.csv
+    description: >-
+      Eight synthetic rows illustrate unequal category sizes and two missing
+      pairs. Six complete observations have a raw mean of 30.67; the three
+      plotted group means average 37.33. Compare raw and plotted denominators,
+      sorting and the reference line.
+    tags:
+      - Python
+      - Lollipop charts
+      - Group aggregation
+  - name: Waffle Panel Denominator Examples
+    path: python_waffle_examples.csv
+    description: >-
+      Nine synthetic frequency rows: active panels represent 4 and 1,000
+      observations, a zero-frequency panel is inactive, and two rows have
+      missing roles. A rare positive category receives no tile; exact counts
+      remain available.
+    tags:
+      - Python
+      - Waffle charts
+      - Panel denominators
+  - name: Single-Cohort Survival Examples
+    path: python_singlearm_examples.csv
+    description: >-
+      Eleven synthetic subjects: elapsed months, explicit Event/Censored labels,
+      tied times, a time-zero event and two incomplete pairs. Select Event as
+      event and Censored as censoring; requested times are 12, 36 and 60 months.
+    tags:
+      - Python
+      - Survival
+      - Explicit event orientation
 
 ...

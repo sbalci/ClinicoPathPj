@@ -259,7 +259,7 @@ class NewTypes(unittest.TestCase):
         self.assertRejected(lambda s: s["options"][4].update(default=50), "between min and max")
 
     def test_image_rules(self):
-        self.assertRejected(lambda s: s["results"][2].update(plot="pie"), "plot must be one of")
+        self.assertRejected(lambda s: s["results"][2].update(plot="unsupported_plot_kind"), "plot must be one of")
         self.assertRejected(lambda s: s["results"][2].update(width=5000), "between 200 and 2000")
         self.assertRejected(lambda s: s["results"][2].update(visible="(nope)"), "naming a Bool option")
 

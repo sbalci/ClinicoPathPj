@@ -59,6 +59,13 @@ PLOT_COLUMNS = {  # column -> (type, required); drawn by R/utils-plots.R
     "histogram": {"group": ("text", True), "lower": ("number", True), "upper": ("number", True), "count": ("integer", True)},
 }
 MAX_PLOT_ROWS['stackedbar'] = 400
+MAX_PLOT_ROWS['pie'] = 20
+MAX_PLOT_ROWS['lollipop'] = 10000
+PLOT_COLUMNS['lollipop'] = {'label': ('text', True), 'slot': ('integer', True), 'value': ('number', True),
+    'baseline': ('number', True), 'orientation': ('text', True), 'annotation': ('text', False)}
+PLOT_COLUMNS['pie'] = {'category': ('text', True), 'count': ('number', True),
+    'total': ('number', True), 'lower': ('number', True), 'upper': ('number', True),
+    'annotation': ('text', False)}
 PLOT_COLUMNS['stackedbar'] = {'group': ('text', True), 'outcome': ('text', True),
     'x': ('number', True), 'lower': ('number', True), 'upper': ('number', True),
     'scale': ('text', True), 'annotation': ('text', False)}
@@ -69,6 +76,10 @@ PLOT_COLUMNS['screeningquantiles'] = {key: (kind, True) for key,kind in [('varia
 MAX_PLOT_ROWS['dendrogram'] = 199
 MAX_PLOT_ROWS['setmatrix'] = 16
 PLOT_COLUMNS['setmatrix'] = {'pattern': ('text', True), 'count': ('integer', True), 'sets': ('text', True)}
+MAX_PLOT_ROWS['km'] = 1
+PLOT_COLUMNS['km'] = {'payload': ('text', True)}
+MAX_PLOT_ROWS['waffle'] = 1
+PLOT_COLUMNS['waffle'] = {'payload': ('text', True)}
 MAX_PLOT_ROWS['alluvial'] = 1
 PLOT_COLUMNS['alluvial'] = {'payload': ('text', True)}
 
