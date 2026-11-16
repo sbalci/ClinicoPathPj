@@ -104,7 +104,7 @@ class GeneratedFiles(unittest.TestCase):
         with self.assertRaisesRegex(generate.SpecError,'optional must be'):
             generate.validate(bad,'pyvartree')
         bad['options'][-1].update(optional=True,role='event')
-        with self.assertRaisesRegex(generate.SpecError,'global event gate'):
+        with self.assertRaisesRegex(generate.SpecError,'required level gate'):
             generate.validate(bad,'pyvartree')
 
     def test_committed_files_are_current(self):
@@ -243,6 +243,29 @@ class NewTypes(unittest.TestCase):
         self.assertIn('events = c(lvl = "dep")', b_r)
         self.assertIn("checkpoint = function() private$.checkpoint(flush = FALSE)", b_r)
         self.assertIn(".plot = function(image, ggtheme, theme, ...) .cpjPlot(image, ggtheme, theme)", b_r)
+
+    def test_censor_role_requires_explicit_choice_and_generates_only_censor_metadata(self):
+        spec=self.spec();spec['options'][1].update(role='censor',allowNone=False)
+        generate.validate(spec,'probe')
+        level=next(o for o in generate.a_yaml(spec)['options'] if o['name']=='lvl')
+        self.assertTrue(level['allowNone']);self.assertNotIn('role',level)
+        code=generate.b_r(spec,'header')
+        self.assertIn('events = c(lvl = "dep")',code)
+        self.assertIn('censors = c("lvl")',code)
+        event=self.spec();generate.validate(event,'probe')
+        self.assertNotIn('censors =',generate.b_r(event,'header'))
+        # The new role changes only bridge metadata, not the public option/result/UI contracts.
+        self.assertEqual(generate.a_yaml(spec),generate.a_yaml(event))
+        self.assertEqual(generate.r_yaml(spec),generate.r_yaml(event))
+        for name in ('pysinglearm','pysurvival'):
+            actual=generate.read_spec(generate.ANALYSES/'jsurvival'/f'{name}.py')
+            previous=copy.deepcopy(actual)
+            next(o for o in previous['options'] if o['name']=='censorLevel')['role']='event'
+            for renderer in (generate.a_yaml,generate.r_yaml,generate.u_yaml):
+                self.assertEqual(renderer(actual),renderer(previous))
+        spec['options'][1]['optional']=True
+        with self.assertRaisesRegex(generate.SpecError,'required level gate'):
+            generate.validate(spec,'probe')
 
     def assertRejected(self, change, fragment):
         spec = self.spec()

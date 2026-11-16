@@ -1,0 +1,13 @@
+Subject,Months,Status,Group
+S01,0,Event,B
+S02,6,Censored,A
+S03,12,Event,B
+S04,12,Censored,A
+S05,18,Event,B
+S06,24,Censored,A
+S07,36,Event,C
+S08,48,Censored,C
+S09,60,Censored,C
+S10,,Event,B
+S11,72,,A
+S12,24,Event,

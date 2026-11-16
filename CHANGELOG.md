@@ -1,3 +1,34 @@
+# Unreleased 0.3.79 — explicit censoring prompts and saved grouped example
+
+- Add generator-only `role: censor` and bridge metadata for explicit pending censoring notices/console reasons. Preserve event-only wording, blank selectors, public options/defaults/results/UI and all statistical calculations; regenerate only the two affected backend calls.
+- Confirm six original wording failures without errors; 92 repaired native assertions cover both survival analyses, clearing/recovery, reused/fresh equality and legacy event-only compatibility. All 34 generator tests pass, including unchanged public contracts. Preserve red/green and corrected test-fixture diagnostics separately.
+- Curate one byte-identical grouped 0.3.78 workbook under data/, with original version/source/hash provenance and generated Data Library registration. All 25 curated workbooks/30 declared analyses pass manifest/ZIP checks; independent grouped R tables and cached pixels remain unchanged.
+- Pass the complete 773-test Python suite (367.293 seconds) and 3,705 native assertions in an isolated 0.3.79 library: 92 role/lifecycle/event-only, 1,558 single-cohort and 2,055 grouped. Compiler, generator/status freshness and diff checks pass; environment stderr remains separate.
+- Advance source metadata to 0.3.79. Installed 0.3.78 and its qualified JMO remain unchanged; packaging and new native GUI prompt/Data Library qualification are pending. Inventory and full-parity status remain unchanged.
+
+# 0.3.78 — grouped survival packaged and GUI-qualified core (2026-11-16)
+
+- Package partial `pysurvival` under the single ClinicoPathPj identity, with organized explicit roles, native group/KM/log-rank/risk audits and a bounded static multi-curve plot. Preserve the frozen grouped baseline's log limits, strict group horizons and global near-tie normalization; full weighted/pairwise/model methods remain pending.
+- Pass 638,569 actual archive checks/1,428 configurations (320,926 grouped/540, 101,443 single-cohort/468, 216,200 waffle/420). Built and GUI-installed libraries each pass 2,055 native assertions/60 references, including lifecycle and restored-state PNG export. Statistical source retains its 772-test Python pass.
+- GUI Sideload on macOS arm64/jamovi 28.17.0, two fresh engines, seven OMV profiles, clearing/recovery, cold reopen/rerun and native HTML/PNG export pass. Independent R tables/data/matching-resolution pixels agree; four corruptions rejected. Prior 0.3.77 single-cohort data/tables/cached PNG are unchanged after rerun/save. All 1,551 installed / 1,438 shipped R-library files match.
+- Pass final 54 focused tests (14.599 seconds, no failures/errors/skips), all ten locked wheels, generator/status freshness and diff checks. Only the current JMO remains locally.
+- Retain an initial concurrent native timeout (108 assertions, one error) separately from the isolated 2,055-assertion success; keep the 60-second limit unchanged. No other-platform, full-method or clinical readiness claim, commit/push or library submission. Remove superseded local 0.3.77 after replacement qualification, following the user's cleanup request; historical hashes remain documented.
+
+# Unreleased — native grouped survival source integration (2026-11-16)
+
+- Add stable `pysurvival` with generator-owned grouped time/event/censor/ID controls and organized methods/results/plot settings. Preserve declared months and 12/36/60 cutpoints, explicit event orientation and the grouped baseline's log limits and strict horizon support.
+- Add native cohort/mapping/missingness, group follow-up/medians/horizons, overall log-rank/contributions/covariance, bounded pooled-risk/step/source-row audits and a saved-state Python multi-curve plot. All 180 frozen R configurations agree in native Python tables and drawing geometry without refitting. Add twelve synthetic Data Library rows, nine complete subjects and three groups.
+- Pass compiler preparation, isolated R installation and 2,055 native assertions/60 reference configurations, including stale-output clearing, invalid-input recovery, reused/fresh equality and restored-state PNG export without data access. Preserve recurring environment stderr diagnostics separately. Independent synthetic-example R log-rank and visual source-preview checks pass.
+- Pass all 772 Python tests in 330.129 seconds (no failures/errors/skips), six focused migration regressions, generator/status freshness and diff checks. Correct a stale test that assumed `pysurvival` remained planned; retain its failing full-run evidence separately. Prepare an explicitly unexecuted grouped GUI/package checklist.
+- Source registry: 39 partial / 22 planned / 15 utilities / 54 entries; no full parity. Installed 0.3.77 is preserved. Package/runtime/GUI and broader platform qualification remain separate future gates.
+
+# Unreleased — grouped survival numerical foundation (2026-11-16)
+
+- Add source-only grouped right-censored KM/log-scale limits, medians, supported horizons and unweighted log-rank counts/score/covariance/chi-square with explicit unavailable-test reasons. Preserve labelled groups, common complete cases and global near-tie normalization; bound event-time audits. Keep Cox, weighted/pairwise tests, RMST and advanced methods outside this increment.
+- Extend private shared KM helpers with explicit log/boundary/support settings while preserving single-cohort defaults. All 156 prior single-cohort configurations remain exactly unchanged and thirteen independent regressions pass.
+- Pass 133,020 independent R comparisons across 30 datasets/180 configurations; eleven focused tests include hand calculations, invalid/degenerate/resource cases and seven rejected statistical mutations. Retain corrected R timefix/factor-order and test-label harness diagnostics separately; replay the final R fixture byte-for-byte.
+- At the numerical-foundation checkpoint, `pysurvival` stayed planned without a native entry. Inventory at that checkpoint was 38 partial / 23 planned / 15 utilities / 53 entries, zero full parity; installed 0.3.77 remains unchanged. All 768 Python source tests pass in 326.139 seconds, with no failures/errors/skips; generator/status freshness and diff checks pass. A separate ill-conditioned 100,000-row rare-group comparison agrees with R.
+
 # 0.3.77 — single-cohort survival and curated examples (2026-11-16)
 
 - Package partial `pysinglearm` with explicit event/censor selection, declared units/origin, native survival/follow-up/person-time tables and Python static KM plots. Preserve validated defaults and the single module identity.

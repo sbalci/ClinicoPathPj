@@ -7,6 +7,7 @@ pysinglearmClass <- R6::R6Class(
         .run = function() {
             .cpjRun(self, "pysinglearm",
                 clearOnInputError = TRUE,
+                censors = c("censorLevel"),
                 options = c("elapsedtime", "outcome", "subject", "outcomeLevel", "censorLevel", "timetypeoutput", "cutp", "ciWidth", "showFollowup", "person_time", "showSteps", "showCases", "showExplanations", "sc", "ci95", "censored", "timefix"),
                 arrays = character(0),
                 terms = character(0),

@@ -5,21 +5,39 @@ analysis: a literal `SPEC` (options, results and organized UI) plus a `run()` fu
 into the jamovi files, and the statistics run in **the Python bundled with jamovi** (numpy, scipy),
 so users install nothing.
 
-**ClinicoPathPj 0.3.77** adds [single-cohort survival](docs/python-kaplan-meier-core.md):
-explicit event/censoring roles, native survival/follow-up/person-time tables and
-a Python static Kaplan–Meier plot. The actual archive passes **347,807 checks
-across 1,409 configurations**, including existing waffle/lollipop/pie regressions.
-Built and GUI-installed libraries each pass 1,558 native survival assertions.
-Two fresh engines verify seven saved profiles, clearing/recovery, reopen/rerun,
-native HTML/PNG export and older waffle compatibility. All 1,544 installed files
-and 1,433 shipped R-library files match the archive/build.
+The **0.3.79 source increment** adds [explicit censoring prompts](docs/python-survival-level-prompts.md)
+and the [configured grouped-survival workbook](data/python_grouped_survival_examples.omv).
+The 25-workbook manifest and next-version Data Library registration are updated;
+773 Python tests and 3,705 isolated native R assertions pass. Packaging and GUI
+verification of this increment remain pending. Installed 0.3.78
+and its qualified JMO are preserved.
 
-The Data Library now includes the 24 [curated saved-analysis workbooks](data/README-saved-analyses.md)
-alongside existing example datasets. Validation `.omv`, PNG, JSON and log files
-remain local and ignored. Verified 0.3.76 is archived. Registry: **38 partial /
-23 planned / 15 utilities**, zero full parity. See the
-[executed desktop protocol](docs/python-singlearm-gui-checklist.md).
-Full baseline methods, clinical/accessibility review and other platforms remain open.
+**ClinicoPathPj 0.3.78** adds [grouped KM/log-rank survival](docs/python-grouped-survival-package-validation.md):
+organized explicit time/event/censor/group/ID controls, native estimates and risk
+audits, and Python static multi-curve plots. Full survival-model parity is pending.
+
+The actual archive passes **638,569 checks across 1,428 configurations**, including
+single-cohort and waffle regressions. Built and installed R libraries each pass
+**2,055 native assertions**. The statistical source retains its **772-test Python
+pass**. macOS arm64/jamovi 28.17.0 GUI checks cover Sideload, two fresh engines,
+seven saved profiles, clearing/recovery, cold reopen/rerun and native HTML/PNG
+export. Independent R tables and matching-resolution images agree; four corrupt
+artifacts are rejected. Older 0.3.77 single-cohort data, tables and cached pixels
+remain unchanged after rerun/save. All 1,551 installed files and 1,438 shipped
+R-library files match the archive/build.
+
+One initial native run timed out while build/render jobs overlapped; an isolated
+rerun passed with the 60-second limit unchanged. Logs preserve the failed attempt
+separately. See the [executed desktop protocol](docs/python-grouped-survival-gui-checklist.md).
+
+Current registry: **39 partial / 22 planned / 15 utilities**, zero full baseline
+parity. The Data Library includes a grouped synthetic CSV and 24 curated saved
+workbooks in the installed package; the configured grouped workbook is now
+curated in source for the next package.
+Validation OMV/PNG/JSON/log exports remain local and ignored. Superseded local JMO
+files are removed at the user's request; archive references in older checkpoints
+below describe their historical state. Other platforms, full methods,
+accessibility/clinical review and library submission remain open.
 
 Earlier **0.3.76** qualified the partial [waffle implementation](docs/python-waffle-core.md);
 its source data, native tables and cached PNG remain unchanged after a 0.3.77
@@ -427,7 +445,7 @@ panel, so the generator refuses that order.
 |---|---|---|
 | `Variable` | `permitted`, `suggested`, `required` | column name or `None` |
 | `Variables` | `permitted`, `suggested`, `required` | list of column names (always a list) |
-| `Level` | `variable: "(x)"` (an earlier single Variable), `allowNone`, `role: "event"` | level label or `None` |
+| `Level` | `variable: "(x)"` (an earlier single Variable), `allowNone`, `role: "event"` or `"censor"` | level label or `None` |
 | `Number` | `default`, `min`, `max` | number |
 | `Integer` | `default`, `min`, `max` (whole numbers) | int |
 | `Bool` | `default` | `True` / `False` |
@@ -438,6 +456,10 @@ panel, so the generator refuses that order.
 guessed. The dropdown starts at "- None -", and until the user chooses, the analysis lists the levels
 with their counts and does not run. A Level without the role, such as pywelch's reference group, may
 use `allowNone` and treat `None` as a documented default.
+
+**`role: "censor"`** uses the same explicit-choice gate and blank initial selector,
+but its prompt asks which level indicates censoring. Roles are generator metadata;
+they are not jamovi option properties. Existing event prompts stay unchanged.
 
 **`required`.** If nothing required is chosen, the analysis stays silent. If only some required
 boxes are chosen, it shows a note naming the missing ones, and Python is not started.

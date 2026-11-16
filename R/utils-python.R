@@ -157,7 +157,7 @@
 .cpjRun <- function(self, name, options, arrays = character(0), numeric = character(0),
                     required = character(0), events = character(0), terms = character(0), checkpoint = NULL,
                     backend = "processx", timing = NULL, clearOnInputError = FALSE,
-                    allowInfinite = character(0)) {
+                    allowInfinite = character(0), censors = character(0)) {
     # jmvcore restores Preformatted and Text content from the saved state, so clear it first:
     # otherwise an earlier run's traceback or interpretation would still show under this run's results.
     for (item in self$results$items)
@@ -182,15 +182,16 @@
                                             paste(required[unset], collapse = ", "), "."), 1)
         return(notStarted(paste0("choose ", paste(required[unset], collapse = ", "), ".")))
     }
-    # An event level is never guessed: until it is chosen, list the levels and wait.
+    # Event and censoring levels are never guessed: list levels and wait for an explicit choice.
     for (level in names(events)) {
         variable <- values[[events[[level]]]]
         if (length(variable) == 1 && is.null(values[[level]])) {
             .cpjClearNative(self, clearOutputs = TRUE)
             counts <- table(self$data[[variable]])  # data rows, not weighted counts
-            .cpjNotice(self, "INFO", paste0("Choose which level of ", variable, " is the event: ",
+            meaning <- if (level %in% censors) "indicates censoring" else "is the event"
+            .cpjNotice(self, "INFO", paste0("Choose which level of ", variable, " ", meaning, ": ",
                 paste0(names(counts), " (", as.integer(counts), " rows)", collapse = ", "), "."), 1)
-            return(notStarted(paste0("choose which level of ", variable, " is the event.")))
+            return(notStarted(paste0("choose which level of ", variable, " ", meaning, ".")))
         }
     }
     for (option in arrays)  # a single chosen variable must still reach Python as a list

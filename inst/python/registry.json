@@ -84,7 +84,7 @@
       "source_name": "alluvial",
       "menu_group": "Descriptives Py",
       "menu_title": "Categorical alluvial flows (core)",
-      "supported_core": "Counts for 2–4 categorical axes, retain missing categories by default or complete-case exclusion, collision-free missing labels, native flow/marginal tables, shared count-scaled static/local geometry and local highlighting; 10,000 rows/60 paths/20 categories per axis without sampling",
+      "supported_core": "Counts for 2\u20134 categorical axes, retain missing categories by default or complete-case exclusion, collision-free missing labels, native flow/marginal tables, shared count-scaled static/local geometry and local highlighting; 10,000 rows/60 paths/20 categories per axis without sampling",
       "omissions": "Weights, condensation, numeric binning, marginal plot panels, alternative fill rules/orientations and baseline styling; no full parity"
     },
     {
@@ -301,7 +301,7 @@
       "source_name": "crosstable",
       "menu_group": "Descriptives Py",
       "menu_title": "Cross tables (core)",
-      "supported_core": "Grouped/overall native summaries; baseline numeric ≤6-level typing or explicit numeric override; per-variable or complete-case missingness; type-7 quartiles/sample SD; exact/normal Wilcoxon, Kruskal–Wallis, uncorrected Pearson with sparse 2×2 Fisher switch; five p-adjust methods",
+      "supported_core": "Grouped/overall native summaries; baseline numeric \u22646-level typing or explicit numeric override; per-variable or complete-case missingness; type-7 quartiles/sample SD; exact/normal Wilcoxon, Kruskal\u2013Wallis, uncorrected Pearson with sparse 2\u00d72 Fisher switch; five p-adjust methods",
       "omissions": "Larger exact RxC tests, alternate R table engines/styles, SMDs, copy-ready summaries and full baseline parity; unused group columns omitted"
     },
     {
@@ -556,7 +556,7 @@
       "source_name": "vartree",
       "menu_group": "Descriptives Py",
       "menu_title": "Categorical variable tree (core)",
-      "supported_core": "Observed prefix counts for 1–4 factors; common complete cohort; parent/cohort percentages; native node table; local expandable tree; optional top-30 leaf bar plot; maximum 200 non-root nodes and 10,000 input rows; optional continuous node mean/sample SD with valid/missing counts, leaf-only or all-node locations (0.3.39); explicit reference-level matches/valid-reference percentages, missing counts and combined numeric annotations (0.3.40)",
+      "supported_core": "Observed prefix counts for 1\u20134 factors; common complete cohort; parent/cohort percentages; native node table; local expandable tree; optional top-30 leaf bar plot; maximum 200 non-root nodes and 10,000 input rows; optional continuous node mean/sample SD with valid/missing counts, leaf-only or all-node locations (0.3.39); explicit reference-level matches/valid-reference percentages, missing counts and combined numeric annotations (0.3.40)",
       "omissions": "Pruning/follow rules, missing-category branches, baseline styling and full vtree parity; numeric and reference summaries supported in retained complete-cohort core"
     },
     {
@@ -787,7 +787,7 @@
       "coverage": {
         "full_parity": false,
         "numerical": "Raw core: 20,380 R checks/255 configurations; standardized core: 2,060 independent checks and six adapters matching 160 R configurations. Source regressions: 605 Python tests. Actual 0.3.68 archive: 1,875 checks/102 configurations. Built and GUI-installed libraries each pass 531 standardized and 761 raw native assertions; compiler/install/freshness and serialized rendering pass. Saved native tables agree with R fixtures at display precision. Full baseline parity remains open; see docs/python-standardized-native.md. Welch RMS point-only source gate: five adapters match 110 independent R configurations; 627 Python tests and 446 Welch/531 standardized/761 raw native assertions pass. Welch standardized inference remains omitted after the frozen coverage study (2026-11-12). 0.3.69 actual archive: 2,008 checks/102 configurations; built and GUI-installed libraries each pass 446 Welch/531 standardized/761 raw assertions; 1,454 installed files match (2026-11-12).",
-        "gui": "0.3.68 GUI-Sideload on macOS arm64/jamovi 28.17.0: 1,453 installed files match archive. Prior 0.3.67 saved roles/defaults reopen correctly. Student/Welch, standardized off/on and paired input recovery, second-engine save/reopen/recalculation, HTML and two PNG exports pass. Sixteen tables/seven saved states retain source data/metadata and equivalent plot pixels; four corruption probes rejected (2026-11-12). The prior Welch source increment is now qualified within the 0.3.69 scope below. 0.3.69 GUI Sideload/macOS arm64: two fresh engines, prior-file compatibility, Student→Welch/off/input recovery, save/reopen/recalculation and HTML/PNG export pass. Six saved states/data/pixel checks and four corruption probes pass (2026-11-12).",
+        "gui": "0.3.68 GUI-Sideload on macOS arm64/jamovi 28.17.0: 1,453 installed files match archive. Prior 0.3.67 saved roles/defaults reopen correctly. Student/Welch, standardized off/on and paired input recovery, second-engine save/reopen/recalculation, HTML and two PNG exports pass. Sixteen tables/seven saved states retain source data/metadata and equivalent plot pixels; four corruption probes rejected (2026-11-12). The prior Welch source increment is now qualified within the 0.3.69 scope below. 0.3.69 GUI Sideload/macOS arm64: two fresh engines, prior-file compatibility, Student\u2192Welch/off/input recovery, save/reopen/recalculation and HTML/PNG export pass. Six saved states/data/pixel checks and four corruption probes pass (2026-11-12).",
         "compatibility": "existing Python identifier preserved",
         "platforms": [
           "macOS arm64 / jamovi 28.17.0: bounded local 0.3.68 package/native GUI qualification",
@@ -2240,7 +2240,7 @@
       "status": "partial",
       "coverage": {
         "full_parity": false,
-        "numerical": "KM/log-log/median/reverse-KM/Poisson core: 58,635 independent R comparisons/26 datasets/156 configurations; 101,443 actual 0.3.77 archive checks/468 configurations. Native built and installed libraries each pass 1,558 assertions/52 references, recovery and restored-state export. Unchanged statistical source retains 757 Python tests; all 33 current generator tests pass. See docs/python-kaplan-meier-core.md. Full methods remain pending.",
+        "numerical": "KM/log-log/median/reverse-KM/Poisson core: 58,635 independent R comparisons/26 datasets/156 configurations; 101,443 actual 0.3.77 archive checks/468 configurations. Native built and installed libraries each pass 1,558 assertions/52 references, recovery and restored-state export. Unchanged statistical source retains 757 Python tests; all 33 current generator tests pass. See docs/python-kaplan-meier-core.md. Full methods remain pending. Source 0.3.79 censor-prompt follow-up preserves public contracts: 773 Python tests and 3,705 native assertions across both survival analyses pass in isolation; installed 0.3.78 remains unchanged and new package/GUI qualification is pending. See docs/python-survival-level-prompts.md.",
         "gui": "0.3.77 macOS arm64/jamovi 28.17.0: GUI Sideload and two fresh engines, explicit roles/event/censor/units, output/input clearing and recovery, seven OMV profiles, full-restart reopen/forced rerun and native HTML/PNG export. Independent R native tables, unchanged data and matching-resolution cached/direct pixels pass; four corruptions rejected. All 1,544 installed / 1,433 shipped R-library files match. Older 0.3.76 waffle data/tables/cached PNG unchanged after Data Library reopen/recalculation/save. Broader clinical/accessibility/full-method and other-platform gates remain open.",
         "compatibility": "existing Python identifier preserved",
         "platforms": [
@@ -2260,10 +2260,10 @@
     {
       "id": "pysurvival",
       "family": "jsurvival",
-      "menu": "Survival",
+      "menu": "Survival estimates",
       "title": "Survival Analysis",
       "aliases": [],
-      "source": null,
+      "source": "analyses/jsurvival/pysurvival.py",
       "baseline": {
         "module": "jsurvival",
         "version": "1.1.1",
@@ -2277,13 +2277,15 @@
         }
       },
       "wave": 4,
-      "status": "planned",
+      "status": "partial",
       "coverage": {
         "full_parity": false,
-        "numerical": "pending",
-        "gui": "pending",
+        "numerical": "Grouped KM/log-CI/median/horizon/log-rank partial core: 133,020 independent R comparisons/30 datasets/180 configurations; 320,926 actual 0.3.78 packaged checks/540 configurations. All 772 source Python tests pass. Built and installed R libraries each pass 2,055 native assertions/60 references, clearing/recovery and restored-state PNG export. Exact prior single-cohort equality/156 configurations. One initial concurrent native run hit the unchanged 60-second timeout; isolated rerun passed. Full methods/clinical review remain pending. See docs/python-grouped-survival-package-validation.md. Source 0.3.79 censor-prompt follow-up preserves public contracts: 773 Python tests and 3,705 native assertions across both survival analyses pass in isolation; installed 0.3.78 remains unchanged and new package/GUI qualification is pending. See docs/python-survival-level-prompts.md.",
+        "gui": "0.3.78 macOS arm64/jamovi 28.17.0: GUI Sideload, two fresh engines, explicit time/outcome/group/ID/event/censor/unit controls, optional-output and incomplete/invalid clearing/recovery, seven OMV profiles, cold reopen/forced rerun and native HTML/PNG export. Independent R native tables and matching-resolution cached/direct pixels agree; four corruptions rejected. Prior 0.3.77 single-cohort data/tables/cached PNG unchanged after rerun/save. All 1,551 installed / 1,438 shipped R-library files match. Broader accessibility/clinical/full-method and other-platform gates remain open.",
         "compatibility": "existing Python identifier preserved",
-        "platforms": []
+        "platforms": [
+          "macOS arm64 / jamovi 28.17.0: bounded 0.3.78 synthetic desktop/runtime qualification; other platforms pending"
+        ]
       },
       "methods": "Univariable time-to-event comparison: KM by group, log-rank and Fleming-Harrington weighted log-rank (survdiff rho), pairwise tests with p-adjust, Cox HR (coxph Efron) with cox.zph, stratified and age-adjusted Cox (including age as time scale), RMST (survfit rmean), person-time rates, adjusted curves, flexsurv parametric fits, calibration, restricted cubic splines; many plots",
       "oracle": "survival::survfit, survival::survdiff(rho =), survminer::pairwise_survdiff, survival::coxph, survival::cox.zph, summary(survfit, rmean =), flexsurv::flexsurvreg",
@@ -2293,7 +2295,7 @@
       },
       "source_name": "survival",
       "menu_group": "Survival Py",
-      "menu_title": "Survival Analysis"
+      "menu_title": "Grouped survival (core)"
     },
     {
       "id": "pysurvivalcont",

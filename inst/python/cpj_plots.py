@@ -47,9 +47,14 @@ def figure(state, width=600, height=400, palette=None, background='white', foreg
     palette = palette or DEFAULT_PALETTE
     columns = state['columns']; kind = state['kind']
     n = len(next(iter(columns.values()), []))
-    if n > {'km':1, 'waffle':1, 'lollipop':10000, 'pie':20, 'stackedbar':400, 'agreement':5000, 'alluvial':1, 'interval':200, 'line':20000, 'box':20000, 'bar':2000, 'scatter':5000, 'points':5000, 'histogram':2000, 'pyramid':200, 'qualitymap':4000, 'ihcheatmap':4000, 'dendrogram':199, 'setmatrix':16, 'screeningquantiles':2020}.get(kind, 0):
+    if n > {'groupkm':1, 'km':1, 'waffle':1, 'lollipop':10000, 'pie':20, 'stackedbar':400, 'agreement':5000, 'alluvial':1, 'interval':200, 'line':20000, 'box':20000, 'bar':2000, 'scatter':5000, 'points':5000, 'histogram':2000, 'pyramid':200, 'qualitymap':4000, 'ihcheatmap':4000, 'dendrogram':199, 'setmatrix':16, 'screeningquantiles':2020}.get(kind, 0):
         raise ValueError('Unsupported plot kind or excessive plot rows')
     if any(len(c) != n for c in columns.values()): raise ValueError('Plot columns have unequal lengths')
+    if kind == 'groupkm':
+        from cpj_grouped_survival_plot import validate,draw
+        if n!=1 or not isinstance(columns.get('payload',[None])[0],str) or len(columns['payload'][0])>2000000:
+            raise ValueError('Grouped KM requires one drawing payload of at most 2 MB')
+        return draw(fig,ax,validate(json.loads(columns['payload'][0])),palette,foreground)
     if kind == 'km':
         from cpj_kaplan_meier_plot import validate
         from matplotlib.collections import PolyCollection

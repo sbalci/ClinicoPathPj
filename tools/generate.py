@@ -57,7 +57,7 @@ SUGGESTED = {"continuous", "nominal", "ordinal", "id"}
 COLUMN_KEYS = {"name", "title", "type", "format", "superTitle", "visible"}
 COLUMN_TYPES = {"text", "integer", "number"}
 FORMAT_TOKENS = {"zto", "pvalue", "pc", "log10"}
-PLOT_KINDS = {"km", "waffle", "lollipop", "pie", "stackedbar", "agreement", "alluvial", "screeningquantiles", "setmatrix", "interval", "line", "box", "bar", "scatter", "points", "histogram", "pyramid", "qualitymap", "ihcheatmap", "dendrogram"}
+PLOT_KINDS = {"groupkm", "km", "waffle", "lollipop", "pie", "stackedbar", "agreement", "alluvial", "screeningquantiles", "setmatrix", "interval", "line", "box", "bar", "scatter", "points", "histogram", "pyramid", "qualitymap", "ihcheatmap", "dendrogram"}
 IMAGE_KEYS = {"name", "type", "title", "plot", "width", "height", "xlab", "ylab", "visible"}
 
 
@@ -182,10 +182,10 @@ def validate(spec, stem):
                 fail(f"Level {name!r}: allowNone must be True or False")
             if not isinstance(option.get('optional',False),bool):
                 fail(f"Level {name!r}: optional must be True or False")
-            if option.get('optional') and option.get('role')=='event':
-                fail(f"Level {name!r}: optional levels cannot use the global event gate")
-            if option.get("role", "event") != "event":
-                fail(f"Level {name!r}: role must be 'event' (the user must choose it; nothing is preselected)")
+            if option.get('optional') and option.get('role') in ('event','censor'):
+                fail(f"Level {name!r}: optional levels cannot use a required level gate")
+            if option.get("role", "event") not in ("event", "censor"):
+                fail(f"Level {name!r}: role must be 'event' or 'censor' (the user must choose it; nothing is preselected)")
         if "coerceNumeric" in option:
             if not isinstance(option["coerceNumeric"], bool) or "numeric" not in option.get("permitted", []):
                 fail(f"{kind} {name!r}: coerceNumeric requires a boolean and permitted numeric input")
@@ -401,8 +401,8 @@ def a_yaml(spec):
         out.update((k, v) for k, v in option.items() if k not in ("name", "title", "type", "required", "role", "coerceNumeric", "optional"))
         if option["type"] in ("Variable", "Variables"):
             out["default"] = None  # optional wrapper argument
-        if option.get("role") == "event" or option.get("optional"):
-            out["allowNone"] = True  # the dropdown starts at '- None -': an event level is never guessed
+        if option.get("role") in ("event", "censor") or option.get("optional"):
+            out["allowNone"] = True  # explicitly defined event/censor levels are never guessed
         options.append(out)
     options.append({"name": "showConsole", "title": "Python console output", "type": "Bool", "default": False})
     head = {key: spec[key] for key in ("name", "title", "menuGroup", "menuSubgroup", "menuTitle", "version") if key in spec}
@@ -444,13 +444,15 @@ def b_r(spec, header):
     numeric = [option["name"] for option in spec["options"] if option["type"] in ("Variable", "Variables")
                and (option.get("coerceNumeric", False) or (option.get("permitted") and "factor" not in option["permitted"]))]
     required = [option for option in spec["options"] if option.get("required")]
-    events = [option for option in spec["options"] if option.get("role") == "event"]
+    events = [option for option in spec["options"] if option.get("role") in ("event", "censor")]
+    censors = [option["name"] for option in events if option.get("role") == "censor"]
     plots = any(result["type"] == "Image" for result in spec["results"])
 
     def vector(items):
         items = list(items)
         return "c(" + ", ".join(items) + ")" if items else "character(0)"
 
+    censor_policy = (f"                censors = {vector(r_string(o) for o in censors)},\n" if censors else "")
     execution = (f"                backend = self$options${spec['executionOption']},\n" if "executionOption" in spec else "")
     if "executionBackend" in spec:
         execution = f"                backend = {r_string(spec['executionBackend'])},\n"
@@ -472,7 +474,7 @@ def b_r(spec, header):
         + f"        .run = function() {{\n"
         f"{scripts}"
         f"            .cpjRun(self, \"{name}\",\n"
-        f"{execution}{timing}{failure_policy}{infinity_policy}"
+        f"{execution}{timing}{failure_policy}{infinity_policy}{censor_policy}"
         f"                options = {vector(r_string(o) for o in options)},\n"
         f"                arrays = {vector(r_string(o) for o in arrays)},\n"
         f"                terms = {vector(r_string(o) for o in terms)},\n"

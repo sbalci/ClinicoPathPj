@@ -1,0 +1,10 @@
+args <- commandArgs(TRUE)
+.libPaths(c(normalizePath(args[[1]],mustWork=TRUE),
+    '/Applications/jamovi.app/Contents/Resources/modules/base/R',.libPaths()))
+suppressPackageStartupMessages({library(ClinicoPathPj);library(testthat)})
+jmvcore:::initProtoBuf();testthat::set_max_fails(Inf)
+result <- testthat::test_file('tests/testthat/test-survival-level-prompts.R',reporter='summary')
+d <- as.data.frame(result)
+counts <- list(passed=sum(d$passed),failed=sum(d$failed),errors=sum(d$error),warnings=sum(d$warning),skipped=sum(d$skipped))
+cat(jsonlite::toJSON(counts,auto_unbox=TRUE,pretty=TRUE),'\n')
+stopifnot(counts$failed==0,counts$errors==0,counts$warnings==0,counts$skipped==0)

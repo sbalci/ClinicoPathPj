@@ -12,6 +12,7 @@ python_cutoff_explorers_examples.omv	pyd3cutoff,pydotdecision,pyobservablecutoff
 python_dataquality_examples.omv	pydataquality	0.3.3	121bf25a46f1ba172a5688a88bb40d2be684eabdd880fdb1562262aa99388583	python-dataquality-0.3.3-validation.omv
 python_diagnostic_meta_examples.omv	pydiagnosticmeta	0.3.57	5124074bc1a110625e938cd8ba6821464f1b6d014375557c2b0413608d46f188	python-study-inclusion-0.3.57-reopened.omv
 python_estimation_examples.omv	pyjjbetweenstats,pyjjwithinstats	0.3.69	dc160a13a8205867d85731df17a07665a565eb99daa908f3ac861e4c4f24b49b	python-welch-0.3.69-reopened.omv
+python_grouped_survival_examples.omv	pysurvival	0.3.78	4135759f6a1f597c2f586c971ce857fda201d6d6873cb8eea93b5f8766ee8684	python-grouped-survival-0.3.78-reopened.omv
 python_histogram_examples.omv	pyjjhistostats	0.3.70	7506df8bd0f1192673360eb305435015b105041992f7da4e1d27bbe63d6b61b5	python-histogram-0.3.70-reopened.omv
 python_ihc_heatmap_examples.omv	pyihcheatmap	0.3.18	49c5d0086aaf3925d21f0d2e0d467a4ffd7ded705dcbce39dfa767e8948db07b	python-ihc-keyboard-0.3.18-validation.omv
 python_lollipop_examples.omv	pylollipop	0.3.75	7b37580afb946931ec504002cc93a10ed07c5a29ba5f9c8191efa544ad0626d8	python-lollipop-0.3.75-reopened.omv

@@ -5,7 +5,72 @@ This is the current delivery plan. It supersedes the implementation recommendati
 The original 61-analysis inventory remains the target; a menu entry does not establish parity.
 Detailed per-analysis evidence remains in the [generated status matrix](python-migration-status.md).
 
-## Current qualified partial increment — single-cohort survival (0.3.77)
+## Current source increment — prompts and curated workbook (0.3.79)
+
+Implemented in source: a generator-only `role: censor`, explicit censoring wording
+for native pending notices/console reasons, and unchanged event prompts/public
+option/result/UI contracts. Native red/green evidence confirms the defect and
+recovery behavior: 773 Python tests and 3,705 isolated native R assertions pass,
+including both survival reference suites. The source [qualification record](python-survival-level-prompts.md)
+separates it from the installed GUI build. The configured grouped workbook is
+copied byte-for-byte into `data/`, hashed in the saved-example manifest and
+registered by generated metadata. There are 25 curated workbooks/30 declared
+analyses; integrity checks and the grouped workbook's independent R artifact
+checks pass. Source version is 0.3.79; installed 0.3.78 remains qualified and intact.
+
+Next ship this source increment: build/inspect/execute the 0.3.79 archive, GUI
+Sideload, fresh-engine pending-censor/event-only/recovery checks, open the new
+saved Data Library entry and verify rerun/save/reopen/HTML/PNG export. Only then
+remove the superseded JMO. Continue method-contract work after this bounded gate.
+
+## Current qualified partial increment — grouped survival (0.3.78)
+
+The single ClinicoPathPj module now installs `pysurvival` with explicit time,
+outcome/event/censor, independent group and optional subject-ID roles. Native
+cohort/mapping/missingness, group follow-up/medians/horizons, overall log-rank,
+contribution/covariance/pooled-risk and source-row audits have a static multi-curve
+KM counterpart. Declared months and 12/36/60 horizons, pointwise log limits,
+group-specific support and globally normalized near ties preserve the frozen
+baseline. Weighted/pairwise tests, Cox, PH diagnostics, RMST and advanced methods
+are separate future engines, not implied by this core entry.
+
+Actual archive qualification passes **638,569 checks / 1,428 configurations**:
+320,926 grouped checks/540 configurations plus existing single-cohort and waffle
+regressions. Built and installed libraries each pass **2,055 native assertions**
+across 60 reference configurations, lifecycle and restored-state PNG export.
+The statistical source retains its **772-test Python pass**. One initial concurrent
+native run timed out; isolated rerun passed with the 60-second limit unchanged.
+Preserve both records and recurring environment stderr separately.
+
+On macOS arm64/jamovi 28.17.0, GUI Sideload and two fresh engines qualify seven
+OMV profiles, explicit controls, optional/incomplete/invalid clearing/recovery,
+cold reopen/forced rerun, native HTML/PNG export and prior 0.3.77 single-cohort
+compatibility. Independent R tables, unchanged source data and matching-resolution
+cached/direct pixels agree; four corruptions are rejected. All **1,551 installed /
+1,438 shipped R-library files** match the actual archive. See the [package record](python-grouped-survival-package-validation.md)
+and [executed desktop protocol](python-grouped-survival-gui-checklist.md).
+
+Inventory remains **39 partial / 22 planned / 15 utilities / 54 entries**, zero
+full parity. This is bounded desktop evidence on the named setup, not full
+survival-method, clinical or cross-platform qualification. Superseded local JMO
+files are removed after replacement qualification at the user's request; older
+archive references below are historical checkpoints.
+
+### Next implementation priorities
+
+1. Package and GUI-qualify the implemented censoring prompts, preserving explicit
+   blank levels and existing event prompts across both survival analyses.
+2. Include the now-curated grouped `.omv` and manifest registration in the next
+   package; qualify Data Library reopening and compatibility. Keep generated
+   validation exports ignored and avoid duplicate example workbooks.
+3. Freeze independent contracts for remaining grouped survival methods (weighted
+   and pairwise tests, multiplicity, then model/diagnostic engines) before coding.
+   Preserve original defaults and report source/native/GUI evidence separately.
+4. Resolve the declared `minApp: 28.3.0` contract against current Text/runtime/vendor
+   requirements before claiming older-version support; qualify other platforms
+   independently. Broader accessibility and clinical review remain open.
+
+## Historical qualification — single-cohort survival (0.3.77)
 
 **ClinicoPathPj_0.3.77.jmo** is built and GUI-Sideloaded on macOS arm64 /
 jamovi 28.17.0. It passes 101,443 actual survival runtime/native-payload/step-geometry

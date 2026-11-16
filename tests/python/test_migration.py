@@ -34,7 +34,12 @@ class Registry(unittest.TestCase):
     def test_planned_sources_and_invalid_paths_cannot_execute(self):
         for name in ['../decision','Decision/evil','decision.py','kappaSizeCI;print(1)']:
             with self.assertRaises(ValueError): cpj_registry.resolve(name)
-        with self.assertRaisesRegex(FileNotFoundError,'planned'):cpj_registry.resolve('pysurvival')
+        planned=[e for e in cpj_registry.read_registry()['analyses'] if e['status']=='planned']
+        self.assertTrue(planned)
+        for entry in planned:
+            self.assertIsNone(entry['source'])
+            with self.subTest(analysis=entry['id']):
+                with self.assertRaisesRegex(FileNotFoundError,'planned'):cpj_registry.resolve(entry['id'])
 
     def test_existing_python_contracts_are_preserved(self):
         import tarfile, ast

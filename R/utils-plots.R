@@ -1,5 +1,6 @@
 # R only displays a completed Python image. Both new and saved legacy states are supported.
 .cpjPlotColumns <- list(
+    groupkm = c(payload = "text"),
     km = c(payload = "text"),
     waffle = c(payload = "text"),
     lollipop = c(label = "text", slot = "integer", value = "number", baseline = "number",

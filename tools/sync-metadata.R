@@ -290,6 +290,14 @@ sync_module_metadata <- function(root = ".") {
             description = "Eleven synthetic subjects: elapsed months, explicit Event/Censored labels, tied times, a time-zero event and two incomplete pairs. Select Event as event and Censored as censoring; requested times are 12, 36 and 60 months.",
             tags = c("Python", "Survival", "Explicit event orientation"))
     }
+    grouped_survival_data <- "python_grouped_survival_examples.csv"
+    if (file.exists(file.path(root, "data", grouped_survival_data)) &&
+        !any(vapply(document$datasets, function(x) identical(x$path, grouped_survival_data), logical(1)))) {
+        document$datasets[[length(document$datasets) + 1L]] <- list(
+            name = "Grouped Survival Examples", path = grouped_survival_data,
+            description = "Twelve synthetic subjects in three independent groups, nine complete time/outcome/group records, tied times, a time-zero event and three incomplete records. Select Months, Status and Group, Event as event and Censored as censoring. Declared units are months; no unit conversion.",
+            tags = c("Python", "Grouped survival", "Log-rank", "Explicit event orientation"))
+    }
     saved_manifest <- file.path(root, "data", "saved-analysis-examples.tsv")
     if (file.exists(saved_manifest)) {
         examples <- utils::read.delim(saved_manifest, stringsAsFactors = FALSE,

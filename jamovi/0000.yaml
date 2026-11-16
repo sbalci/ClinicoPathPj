@@ -1,11 +1,11 @@
 ---
 title: ClinicoPathPj - Python-Backed Analyses
 name: ClinicoPathPj
-version: 0.3.77
+version: 0.3.79
 jms: '1.0'
 authors: Serdar Balci
 maintainer: Serdar Balci <serdarbalci@serdarbalci.com>
-date: '2026-11-15'
+date: '2026-11-16'
 type: R
 description: >-
   Experimental analyses generated from Python specifications and computed in the
@@ -435,6 +435,14 @@ analyses:
     menuSubgroup: Survival estimates
     menuTitle: Single-cohort survival (core)
     title: Single-Cohort Survival (Core, Python)
+    category: analyses
+  - name: pysurvival
+    ns: ClinicoPathPj
+    hidden: false
+    menuGroup: Survival Py
+    menuSubgroup: Survival estimates
+    menuTitle: Grouped survival (core)
+    title: Grouped Survival (Core, Python)
     category: analyses
 usesNative: 'yes'
 datasets:
@@ -999,5 +1007,27 @@ datasets:
       - Python
       - Saved analyses
       - Waffle
+  - name: Grouped Survival Examples
+    path: python_grouped_survival_examples.csv
+    description: >-
+      Twelve synthetic subjects in three independent groups, nine complete
+      time/outcome/group records, tied times, a time-zero event and three
+      incomplete records. Select Months, Status and Group, Event as event and
+      Censored as censoring. Declared units are months; no unit conversion.
+    tags:
+      - Python
+      - Grouped survival
+      - Log-rank
+      - Explicit event orientation
+  - name: 'Saved Analysis: Grouped Survival'
+    path: python_grouped_survival_examples.omv
+    description: >-
+      Configured synthetic Grouped Survival workbook saved with ClinicoPathPj
+      0.3.78. Contains pysurvival. Use that version or a later compatible module
+      to recalculate; Pj service comparisons also require Pj.
+    tags:
+      - Python
+      - Saved analyses
+      - Grouped Survival
 
 ...

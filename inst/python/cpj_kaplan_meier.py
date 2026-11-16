@@ -35,7 +35,9 @@ def _median(times, values):
     return first_time
 
 
-def _fit(times, events, confidence):
+def _fit(times, events, confidence, *, confidence_method='log-log', suppress_boundaries=True):
+    if confidence_method not in ('log','log-log'):
+        raise InputError('Unsupported Kaplan–Meier confidence method.')
     order = np.argsort(times, kind='stable')
     ordered = times[order]
     grid, starts, totals = np.unique(ordered, return_index=True, return_counts=True)
@@ -59,6 +61,10 @@ def _fit(times, events, confidence):
             se = survival*math.sqrt(greenwood)
             if survival == 1:
                 lo = hi = 1.
+            elif confidence_method == 'log':
+                spread = z*math.sqrt(greenwood)
+                lo = survival*math.exp(-spread)
+                hi = min(1.,survival*math.exp(spread))
             else:
                 log_hazard = math.log(-math.log(survival))
                 spread = z*math.sqrt(greenwood)/(-math.log(survival))
@@ -70,11 +76,33 @@ def _fit(times, events, confidence):
         curve.append(dict(time=at, n_risk=risk, events=death, censored=censored,
             cumulative_events=cumulative_events, cumulative_censored=cumulative_censored,
             survival=survival, greenwood=greenwood, se=se,
-            lower=None if boundary else lo, upper=None if boundary else hi))
+            lower=None if boundary and suppress_boundaries else lo,
+            upper=None if boundary and suppress_boundaries else hi))
         risk -= count
     median = dict(estimate=_median(grid.tolist(),[r['survival'] for r in curve]),
         lower=_median(grid.tolist(),raw_lower), upper=_median(grid.tolist(),raw_upper))
     return curve, median, ordered
+
+
+def _summarize_queries(curve, ordered, max_time, q, *, extend_terminal_zero=True, initial_bounds=None):
+    extend_zero = extend_terminal_zero and curve[-1]['survival']==0
+    omitted = [float(v) for v in q if v>max_time and not extend_zero]
+    supported = [float(v) for v in q if v<=max_time or extend_zero]
+    grid = np.array([r['time'] for r in curve])
+    selected = []
+    previous_events = previous_censored = 0
+    for at in supported:
+        position = int(np.searchsorted(grid,at,side='right'))-1
+        point = curve[position] if position>=0 else dict(survival=1.,se=0.,lower=initial_bounds,upper=initial_bounds,
+            cumulative_events=0,cumulative_censored=0)
+        deaths, censors = point['cumulative_events'], point['cumulative_censored']
+        selected.append(dict(time=at,n_risk=len(ordered)-int(np.searchsorted(ordered,at,side='left')),
+            events=deaths-previous_events,censored=censors-previous_censored,
+            cumulative_events=deaths,cumulative_censored=censors,
+            **{k:point[k] for k in ('survival','se','lower','upper')},
+            status='terminal_zero_extension' if at>max_time else 'within_followup'))
+        previous_events, previous_censored = deaths, censors
+    return selected, omitted
 
 
 def kaplan_meier_core(time, event, *, queries=(), confidence=.95, timefix=True,
@@ -125,22 +153,7 @@ def kaplan_meier_core(time, event, *, queries=(), confidence=.95, timefix=True,
     curve, median, ordered = _fit(effective,ee,confidence)
     reverse_curve, reverse_median, _ = _fit(effective,1-ee,confidence)
     max_time = float(tt.max())
-    omitted = [float(v) for v in q if v>max_time and curve[-1]['survival']!=0]
-    supported = [float(v) for v in q if v<=max_time or curve[-1]['survival']==0]
-    grid = np.array([r['time'] for r in curve])
-    selected = []
-    previous_events = previous_censored = 0
-    for at in supported:
-        position = int(np.searchsorted(grid,at,side='right'))-1
-        point = curve[position] if position>=0 else dict(survival=1.,se=0.,lower=None,upper=None,
-            cumulative_events=0,cumulative_censored=0)
-        deaths, censors = point['cumulative_events'], point['cumulative_censored']
-        selected.append(dict(time=at,n_risk=len(ordered)-int(np.searchsorted(ordered,at,side='left')),
-            events=deaths-previous_events,censored=censors-previous_censored,
-            cumulative_events=deaths,cumulative_censored=censors,
-            **{k:point[k] for k in ('survival','se','lower','upper')},
-            status='terminal_zero_extension' if at>max_time else 'within_followup'))
-        previous_events, previous_censored = deaths, censors
+    selected, omitted = _summarize_queries(curve,ordered,max_time,q)
     events = int(ee.sum())
     rate = dict(person_time=exposure,events=events,estimate=None,lower=None,upper=None,
         status='unavailable_zero_person_time')
